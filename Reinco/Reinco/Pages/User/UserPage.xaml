@@ -5,17 +5,42 @@
              Title="PERFIL"
              >
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2"/>
-                <RowDefinition Height="1"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Label Text="Test" Grid.Row="1" BackgroundColor="Red"></Label>
-            <Label Text="Otra" Grid.Row="0" BackgroundColor="Blue"></Label>
-        </Grid>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Row="0" BackgroundColor="{DynamicResource MenuColor}" Padding="0,30,0,20">
+                    <Label Text="Don Quijote de la Mancha" FontSize="30" TextColor="#FFFFFF"  VerticalOptions="End" HorizontalOptions="Center"></Label>
+                    <Label Text="Gerente" VerticalOptions="End" HorizontalOptions="Center" TextColor="#FFFFFF" FontSize="18"></Label>
+                </StackLayout>
+                <StackLayout Grid.Row="1" Spacing="30" Padding="8">
+                    
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                    <Label Text="Texto De Prueba"></Label>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
