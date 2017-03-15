@@ -10,17 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Pages.Template
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TemplatePage : ContentPage
+    public partial class AddItemPage : ContentPage
     {
-        public TemplatePage()
+        public AddItemPage()
         {
             InitializeComponent();
-            addTemplate.Clicked += AddTemplate_Clicked;
-        }
-
-        private void AddTemplate_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new AddTemplatePage());
         }
     }
 }

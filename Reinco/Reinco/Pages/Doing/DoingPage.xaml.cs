@@ -15,6 +15,12 @@ namespace Reinco.Pages.Doing
         public DoingPage()
         {
             InitializeComponent();
+            addDoing.Clicked += AddDoing_Clicked;
+        }
+
+        private void AddDoing_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AddDoingPage());
         }
     }
 }

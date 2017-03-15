@@ -25,16 +25,16 @@
                 <!-- Cargo Que Ocupa -->
                 <Label Text="Cargo"></Label>
                 <StackLayout Orientation="Horizontal">
+                    <Switch></Switch>
                     <Label Text="Gerente"></Label>
-                    <Switch></Switch>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
+                    <Switch></Switch>
                     <Label Text="Responsable"></Label>
-                    <Switch></Switch>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="Supervisor"></Label>
                     <Switch></Switch>
+                    <Label Text="Supervisor"></Label>
                 </StackLayout>
 
                 <!-- CIP -->
@@ -42,7 +42,7 @@
                 <Entry x:Name="cip"></Entry>
 
                 <!-- Buttons Action -->
-                <StackLayout Orientation="Horizontal" >
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancel"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
                     <Button x:Name="save"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
                 </StackLayout>

@@ -15,6 +15,16 @@ namespace Reinco.Pages.Staff
         public AddStaffPage()
         {
             InitializeComponent();
+            cancel.Clicked += Cancel_Clicked;
+            save.Clicked += Save_Clicked;
+        }
+        private void Save_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
+        private void Cancel_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
         }
     }
 }

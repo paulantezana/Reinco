@@ -15,6 +15,12 @@ namespace Reinco.Pages.Owner
         public OwnerPage()
         {
             InitializeComponent();
+            addOwner.Clicked += AddOwner_Clicked;
+        }
+
+        private void AddOwner_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AddOwnerPage());
         }
     }
 }

@@ -4,4 +4,11 @@
              x:Class="Reinco.Pages.Doing.DoingPage"
              Title="OBRAS"
              >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="8">
+                <Button x:Name="addDoing" Text="Crear Obra" BackgroundColor="{StaticResource AuxiliarColor}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

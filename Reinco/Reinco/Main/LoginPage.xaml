@@ -14,7 +14,7 @@
                 FontSize="50"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
-                Margin="40"
+                Margin="50"
                 >
             </Label>
             <!-- Mensaje de error de inicio de sesión-->

@@ -3,5 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Pages.Owner.OwnerPage"
              Title="PROPIETARIO"
+             BackgroundColor="{StaticResource BackgroundColor}"
              >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="8">
+                <Button x:Name="addOwner" Text="Añadir Propietario" BackgroundColor="{StaticResource AuxiliarColor}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

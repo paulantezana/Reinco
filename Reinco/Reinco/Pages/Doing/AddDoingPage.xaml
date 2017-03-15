@@ -1,5 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Reinco.Pages.Doing.AddDoingPage">
+             x:Class="Reinco.Pages.Doing.AddDoingPage"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Title="CREAR OBRA"
+             >
+    <ContentPage.Content>
+        <StackLayout Padding="10" Spacing="15">
+            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                <Label Text="Nonbre De La Obra"></Label>
+                <Entry></Entry>
+            </StackLayout>
+            <!-- Añadir Propietario De la Obra-->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label Text="Propietario De la Obra"></Label>
+                    <Entry></Entry>
+                </StackLayout>
+                <Button 
+                    Text="Añadir" 
+                    BackgroundColor="{StaticResource AuxiliarColor}" 
+                    TextColor="#ffffff"
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    ></Button>
+            </StackLayout>
+            <!-- Añadir Responsable de la Obra -->
+            <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label 
+                        Text="Responsable De La Obra"
+                        ></Label>
+                    <Entry></Entry>
+                </StackLayout>
+                <Button 
+                    Text="Añadir" 
+                    BackgroundColor="{StaticResource AuxiliarColor}" 
+                    TextColor="#ffffff" 
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    ></Button>
+            </StackLayout>
+            <!-- Buttons Action -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button x:Name="cancel"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
+                <Button x:Name="save"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+            </StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
