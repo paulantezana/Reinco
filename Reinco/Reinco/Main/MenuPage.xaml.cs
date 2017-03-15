@@ -27,31 +27,31 @@ namespace Reinco.Main
             items.Add(new MenuPageItem
             {
                 Title = "Perfil",
-                IconSource = "icon.png",
+                IconSource = "ic_profile.png",
                 TargetType = typeof(UserPage)
             });
             items.Add(new MenuPageItem
             {
                 Title = "Obras",
-                IconSource = "icon.png",
+                IconSource = "ic_profile.png",
                 TargetType = typeof(DoingPage)
             });
             items.Add(new MenuPageItem
             {
                 Title = "Personal",
-                IconSource = "icon.png",
+                IconSource = "ic_profile.png",
                 TargetType = typeof(StaffPage)
             });
             items.Add(new MenuPageItem
             {
                 Title = "Plantillas",
-                IconSource = "icon.png",
+                IconSource = "ic_profile.png",
                 TargetType = typeof(TemplatePage)
             });
             items.Add(new MenuPageItem
             {
                 Title = "Propietario",
-                IconSource = "icon.png",
+                IconSource = "ic_profile.png",
                 TargetType = typeof(OwnerPage)
             });
             listView.ItemsSource = items;

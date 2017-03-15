@@ -3,12 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Main.MenuPage"
              Title="Menu Page"
+             BackgroundColor="{StaticResource MenuColor}"
              >
-    <ListView x:Name="listView">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ImageCell Text="{Binding Title}" ImageSource="{Binding IconSource}"></ImageCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <StackLayout>
+        <ListView x:Name="listView" Margin="8,40,8,8" SeparatorVisibility="None" VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ImageCell 
+                        Text="{Binding Title}" 
+                        ImageSource="{Binding IconSource}"
+                        TextColor="{StaticResource MenuFontColor}"
+                        >
+                    </ImageCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Orientation="Horizontal" Margin="8,40,8,8" Padding="10">
+            <Image 
+                Source="ic_profile.png"
+                HeightRequest="50"
+                WidthRequest="50"
+                >
+            </Image>
+            <Label 
+                Text="Salir"
+                HeightRequest="20"
+                VerticalOptions="Center"
+                TextColor="{StaticResource MenuFontColor}"
+                >
+            </Label>
+        </StackLayout>
+    </StackLayout>
 </ContentPage>

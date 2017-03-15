@@ -4,4 +4,18 @@
              x:Class="Reinco.Pages.User.UserPage"
              Title="PERFIL"
              >
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Test" Grid.Row="1" BackgroundColor="Red"></Label>
+            <Label Text="Otra" Grid.Row="0" BackgroundColor="Blue"></Label>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>
