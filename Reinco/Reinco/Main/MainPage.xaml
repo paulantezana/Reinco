@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Main.MainPage"
+             xmlns:Local="clr-namespace:Reinco.Main"
+             xmlns:Page="clr-namespace:Reinco.Pages.User"
+             Title="MainPage"
+             >
+    <MasterDetailPage.Master>
+        <Local:MenuPage x:Name="menuPage"></Local:MenuPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage
+            BackgroundColor="{StaticResource BackgroundColor}"
+            >
+            <x:Arguments>
+                <Page:UserPage></Page:UserPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

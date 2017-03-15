@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Pages.Staff.AddStaffPage"
+             Title="AÑADIR PERSONAL"
+             >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="15">
+                <!-- Nombres Y Apellidos -->
+                <Label Text="Nombre"></Label>
+                <Entry x:Name="firtsName" ></Entry>
+                <Label Text="Apellidos"></Label>
+                <Entry x:Name="lastName" ></Entry>
+
+                <!-- Email -->
+                <Label Text="Email"></Label>
+                <Entry x:Name="email"></Entry>
+
+                <!-- Password -->
+                <Label Text="Contraseña"></Label>
+                <Entry x:Name="password" IsPassword="True"></Entry>
+                <Label Text="Confirmar Contraseña"></Label>
+                <Entry x:Name="confirmPassword" IsPassword="True"></Entry>
+                <!-- Cargo Que Ocupa -->
+                <Label Text="Cargo"></Label>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Gerente"></Label>
+                    <Switch></Switch>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Responsable"></Label>
+                    <Switch></Switch>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Supervisor"></Label>
+                    <Switch></Switch>
+                </StackLayout>
+
+                <!-- CIP -->
+                <Label Text="CIP"></Label>
+                <Entry x:Name="cip"></Entry>
+
+                <!-- Buttons Action -->
+                <StackLayout Orientation="Horizontal" >
+                    <Button x:Name="cancel"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
+                    <Button x:Name="save"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

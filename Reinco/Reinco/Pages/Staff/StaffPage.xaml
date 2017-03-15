@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Pages.Staff.StaffPage"
+             Title="PERSONAL"
+             >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="8">
+                <Button x:Name="addStaff" Text="Añadir Personal" BackgroundColor="{StaticResource AuxiliarColor}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
