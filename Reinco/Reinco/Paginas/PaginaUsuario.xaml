@@ -6,6 +6,7 @@
              >
     <ContentPage.Content>
         <StackLayout>
+            <Button x:Name="paginaSupervision" Text="Supervisar"></Button>
             <!-- Listando las tareas a realizar de cada susario -->
             <ListView 
                 ItemsSource="{Binding userTask}" 

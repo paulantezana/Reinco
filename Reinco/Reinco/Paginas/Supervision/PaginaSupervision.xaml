@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Paginas.Supervision.PaginaSupervision"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="PAGINA DE SUPERVISION">
+    <ContentPage.Content>
+        <Grid RowSpacing="1" ColumnSpacing="1">
+
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="CONCRETO" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" BackgroundColor="{StaticResource BoxColor}"></Label>
+            <Label Text="ITEM" Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource BoxColor}"></Label>
+            <Label Text="ACTIVIDAD INSPECCIONADA" Grid.Column="1" Grid.Row="1" BackgroundColor="{StaticResource BoxColor}"></Label>
+            <Label Text="APROBACION" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" BackgroundColor="{StaticResource BoxColor}"></Label>
+            <Label Text="Si" Grid.Row="1" Grid.Column="2" BackgroundColor="{StaticResource BoxColor}"></Label>
+            <Label Text="No" Grid.Row="1" Grid.Column="3" BackgroundColor="{StaticResource BoxColor}"></Label>
+            <Label Text="OBS. LEV." Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" BackgroundColor="{StaticResource BoxColor}"></Label>
+
+            <ListView 
+                Grid.Row="2"
+                Grid.ColumnSpan="5"
+                ItemsSource="{Binding plantillaItem}"
+                HasUnevenRows="True" 
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid 
+                            Padding="5,20,5,20"
+                            BackgroundColor="{StaticResource BoxColor}"
+                            Margin="0,3,0,3"
+                            >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label 
+                                Text="{Binding item}" 
+                                Grid.Column="0"
+                                FontSize="Large"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Start"
+                                ></Label>
+                                <Label Text="{Binding actividad}" Grid.Column="1"></Label>
+                                <StackLayout Grid.Column="2" Orientation="Horizontal">
+                                    <Switch BackgroundColor="Green"></Switch>
+                                    <Switch></Switch>
+                                    <Switch></Switch>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reinco.Models
 {
-    class PlantillaItem
+    public class PlantillaItem
     {
         public string item { get; set; }
         public string actividad { get; set; }

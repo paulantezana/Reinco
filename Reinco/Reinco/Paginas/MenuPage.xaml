@@ -16,7 +16,7 @@
                         >
                     </ImageCell>
                 </DataTemplate>
-            </ListView.ItemTemplate>s
+            </ListView.ItemTemplate>
         </ListView>
         <StackLayout Orientation="Horizontal" Margin="8,40,8,8" Padding="10">
             <Image 

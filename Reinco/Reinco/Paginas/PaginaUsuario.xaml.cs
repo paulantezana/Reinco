@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reinco.Paginas.Supervision;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,12 @@ namespace Reinco.Paginas
         public PaginaUsuario()
         {
             InitializeComponent();
+            paginaSupervision.Clicked += PaginaSupervision_Clicked;
+        }
+
+        private void PaginaSupervision_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new PaginaSupervision());
         }
     }
 }
