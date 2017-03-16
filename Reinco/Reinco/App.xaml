@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:infra="clr-namespace:Reinco.Infrastructure;assembly=Reinco" 
              x:Class="Reinco.App">
 	<Application.Resources>
 
@@ -15,6 +16,9 @@
             <Color x:Key="AuxiliarColor">#8AC22D</Color>
             <Color x:Key="AuxiliarColor_2">#A8A8A8</Color>
             <!-- End Color -->
+            
+            <!-- Locator -->
+            <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
         </ResourceDictionary>
 
 	</Application.Resources>

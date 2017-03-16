@@ -1,4 +1,4 @@
-﻿using Reinco.Main;
+﻿using Reinco.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,6 @@ namespace Reinco
         public App()
         {
             InitializeComponent();
-
             MainPage = new LoginPage();
         }
 

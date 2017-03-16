@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Pages.User.UserPage"
              Title="PERFIL"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
              >
     <ContentPage.Content>
         <ScrollView>
@@ -19,26 +20,25 @@
                     <Label Text="Gerente" VerticalOptions="End" HorizontalOptions="Center" TextColor="#FFFFFF" FontSize="18"></Label>
                 </StackLayout>
                 <StackLayout Grid.Row="1" Spacing="30" Padding="8">
-                    
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
-                    <Label Text="Texto De Prueba"></Label>
+                    <ListView ItemsSource="{Binding userTask}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Grid.Column="0">
+                                            <Label Text="{Binding title}"></Label>
+                                            <Label Text="{Binding description}"></Label>
+                                        </StackLayout>
+                                        <Label Text="{Binding taskNumber}" Grid.Column="1"></Label>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackLayout>
             </Grid>
         </ScrollView>
