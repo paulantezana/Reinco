@@ -11,7 +11,7 @@ namespace Reinco.Models
     {
         #region Properties
         public ObservableCollection<UserTaskItems> userTask { get; set; }
-
+        // public ObservableCollection<PlantillaItem> plantillaItem { get; set; }
         #endregion
 
         #region Constructors
@@ -19,19 +19,37 @@ namespace Reinco.Models
         {
             userTask = new ObservableCollection<UserTaskItems>();
             LoadUserTask();
+            // cargarPlantillaItem();
         }
         #endregion
 
         #region Methods
-        private void LoadUserTask()
+        private  void LoadUserTask()
         {
-            userTask.Add(new UserTaskItems
+            for (int i = 0; i < 100; i++)
             {
-                title = "Title 1",
-                description = "description",
-                taskNumber = "25"
-            });
+                userTask.Add(new UserTaskItems
+                {
+                    title = "Obra A Supervisar",
+                    description = "Descripcion Corta",
+                    taskNumber = Convert.ToString(i)
+                });
+            }
         }
+        /*private void cargarPlantillaItem()
+        {
+            for (int i = 0; i < 11; i++)
+            {
+                plantillaItem.Add(new PlantillaItem
+                {
+                    item = Convert.ToString(i),
+                    actividad = "Previo Condición Bomba",
+                    aprobacionNo = true,
+                    aprobacionSi = false,
+                    observacionLevantada = false
+                });
+            }
+        }*/
         #endregion
     }
 }

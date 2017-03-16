@@ -38,7 +38,7 @@
                 >
             </Entry>
             <!-- Button Inicio De Sesión -->
-            <Button  
+            <Button
                 x:Name="startSession"
                 Text="Iniciar sesión" 
                 BackgroundColor="{StaticResource AuxiliarColor}" 
