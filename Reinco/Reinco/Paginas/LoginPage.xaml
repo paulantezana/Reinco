@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Paginas.LoginPage"
+             Title="Reinco"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Padding="35"
+             >
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center">
+            <!-- Header -->
+            <Label 
+                Text="REINCO"
+                FontSize="50"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Margin="50"
+                >
+            </Label>
+            <!-- Mensaje de error de inicio de sesión-->
+            <Label
+                x:Name="errorLoginMessage" TextColor="#ff5555">
+            </Label>
+            <!-- Username -->
+            <Label Text="Nombre De Usuario"></Label>
+            <Entry 
+                x:Name="userName"
+                >
+            </Entry>
+            <!-- Password -->
+            <Label 
+                Text="Contraseña"
+                >
+            </Label>
+            <Entry 
+                x:Name="password"
+                IsPassword="True"
+                >
+            </Entry>
+            <!-- Button Inicio De Sesión -->
+            <Button
+                x:Name="startSession"
+                Text="Iniciar sesión" 
+                BackgroundColor="{StaticResource ColorAuxiliar}" 
+                HorizontalOptions="Center" 
+                TextColor="{StaticResource ColorMenuFuente}"
+                >
+            </Button>
+            <!-- Recordar Contraseña -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Recordar Contraseña"></Label>
+                <Switch></Switch>
+            </StackLayout>
+            <!-- Recuperar Contraseña -->
+            <Label 
+                Text="¿Has olvidado la contraseña?" 
+                HorizontalOptions="Center"
+                TextColor="{StaticResource ColorMenu}"
+                ></Label>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

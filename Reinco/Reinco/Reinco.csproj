@@ -40,47 +40,42 @@
     </Compile>
     <Compile Include="Infrastructure\InstanceLocator.cs" />
     <Compile Include="Models\PlantillaItem.cs" />
-    <Compile Include="Pages\LoginPage.xaml.cs">
+    <Compile Include="Paginas\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPage.xaml.cs">
+    <Compile Include="Paginas\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MenuPage.xaml.cs">
+    <Compile Include="Paginas\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\MainViewModel.cs" />
-    <Compile Include="Models\MenuPageItem.cs" />
-    <Compile Include="Models\UserTaskItems.cs" />
-    <Compile Include="Pages\Doing\AddDoingPage.xaml.cs">
-      <DependentUpon>AddDoingPage.xaml</DependentUpon>
+    <Compile Include="Models\MenuPrincipalItem.cs" />
+    <Compile Include="Paginas\Obra\AgregarObra.xaml.cs">
+      <DependentUpon>AgregarObra.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Doing\DoingPage.xaml.cs">
-      <DependentUpon>DoingPage.xaml</DependentUpon>
+    <Compile Include="Paginas\Obra\PaginaObra.xaml.cs">
+      <DependentUpon>PaginaObra.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Owner\AddOwnerPage.xaml.cs">
-      <DependentUpon>AddOwnerPage.xaml</DependentUpon>
+    <Compile Include="Paginas\PaginaUsuario.xaml.cs">
+      <DependentUpon>PaginaUsuario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Owner\OwnerPage.xaml.cs">
-      <DependentUpon>OwnerPage.xaml</DependentUpon>
+    <Compile Include="Paginas\Personal\AgregarPersonal.xaml.cs">
+      <DependentUpon>AgregarPersonal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Staff\AddStaffPage.xaml.cs">
-      <DependentUpon>AddStaffPage.xaml</DependentUpon>
+    <Compile Include="Paginas\Personal\PaginaPersonal.xaml.cs">
+      <DependentUpon>PaginaPersonal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Staff\StaffPage.xaml.cs">
-      <DependentUpon>StaffPage.xaml</DependentUpon>
+    <Compile Include="Paginas\Plantilla\AgregarPlantilla.xaml.cs">
+      <DependentUpon>AgregarPlantilla.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Template\AddItemPage.xaml.cs">
-      <DependentUpon>AddItemPage.xaml</DependentUpon>
+    <Compile Include="Paginas\Plantilla\PaginaPlantilla.xaml.cs">
+      <DependentUpon>PaginaPlantilla.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Template\AddTemplatePage.xaml.cs">
-      <DependentUpon>AddTemplatePage.xaml</DependentUpon>
+    <Compile Include="Paginas\Propietario\AgregarPropietario.xaml.cs">
+      <DependentUpon>AgregarPropietario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Template\TemplatePage.xaml.cs">
-      <DependentUpon>TemplatePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\User\UserPage.xaml.cs">
-      <DependentUpon>UserPage.xaml</DependentUpon>
+    <Compile Include="Paginas\Propietario\PaginaPropietario.xaml.cs">
+      <DependentUpon>PaginaPropietario.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -108,84 +103,77 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\MainPage.xaml">
+    <EmbeddedResource Include="Paginas\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\LoginPage.xaml">
+    <EmbeddedResource Include="Paginas\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\MenuPage.xaml">
+    <EmbeddedResource Include="Paginas\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Staff\StaffPage.xaml">
+    <EmbeddedResource Include="Paginas\Plantilla\AgregarPlantilla.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Staff\AddStaffPage.xaml">
+    <EmbeddedResource Include="Paginas\Plantilla\PaginaPlantilla.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Doing\DoingPage.xaml">
+    <EmbeddedResource Include="Paginas\Propietario\AgregarPropietario.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Doing\AddDoingPage.xaml">
+    <EmbeddedResource Include="Paginas\Propietario\PaginaPropietario.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Template\TemplatePage.xaml">
+    <EmbeddedResource Include="Paginas\Personal\AgregarPersonal.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Template\AddTemplatePage.xaml">
+    <EmbeddedResource Include="Paginas\Personal\PaginaPersonal.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Owner\OwnerPage.xaml">
+    <EmbeddedResource Include="Paginas\Obra\AgregarObra.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\Owner\AddOwnerPage.xaml">
+    <EmbeddedResource Include="Paginas\Obra\PaginaObra.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\User\UserPage.xaml">
+    <EmbeddedResource Include="Paginas\PaginaUsuario.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\Template\AddItemPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

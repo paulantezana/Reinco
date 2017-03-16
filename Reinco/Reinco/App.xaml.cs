@@ -1,4 +1,4 @@
-﻿using Reinco.Pages;
+﻿using Reinco.Paginas;
 using System;
 using System.Collections.Generic;
 using System.Linq;

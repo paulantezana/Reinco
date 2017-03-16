@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Paginas.PaginaUsuario"
+             Title="USUARIO"
+             >
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- Listando las tareas a realizar de cada susario -->
+            <ListView 
+                ItemsSource="{Binding userTask}" 
+                HasUnevenRows="True"
+                SeparatorVisibility="None"
+                Margin="8"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid 
+                                BackgroundColor="{StaticResource BoxColor}" 
+                                Padding="8" Margin="0,5,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout 
+                                    Grid.Column="0">
+                                    <Label 
+                                        Text="{Binding title}"
+                                        >
+                                    </Label>
+                                    <Label 
+                                        Text="{Binding description}"
+                                        >
+                                    </Label>
+                                </StackLayout>
+                                <Label 
+                                    Text="{Binding taskNumber}" 
+                                    Grid.Column="1" 
+                                    TextColor="{StaticResource ColorPrincipal}"
+                                    FontSize="20"
+                                    VerticalOptions="Center"
+                                    >
+                                </Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!-- End List -->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
