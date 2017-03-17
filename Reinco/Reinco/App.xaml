@@ -19,6 +19,12 @@
             
             <!-- Locator -->
             <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
+            <!-- Styles -->
+            <Style x:Key="BontonPrimario" TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorAuxiliar}"/>
+                <Setter Property="TextColor" Value="#ffffff"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+            </Style>
         </ResourceDictionary>
 
 	</Application.Resources>

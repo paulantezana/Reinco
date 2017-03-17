@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="8">
-                <Button x:Name="agregarPropietario" Text="Agregar Propietario" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+                <Button x:Name="agregarPropietario" Text="Agregar Propietario" Style="{StaticResource BontonPrimario}"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
