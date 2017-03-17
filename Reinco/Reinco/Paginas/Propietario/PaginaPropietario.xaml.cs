@@ -15,6 +15,12 @@ namespace Reinco.Paginas.Propietario
         public PaginaPropietario()
         {
             InitializeComponent();
+            agregarPropietario.Clicked += AgregarPropietario_Clicked;
+        }
+
+        private void AgregarPropietario_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AgregarPropietario());
         }
     }
 }

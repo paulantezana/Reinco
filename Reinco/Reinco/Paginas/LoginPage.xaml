@@ -3,11 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Paginas.LoginPage"
              Title="Reinco"
+             xmlns:controls="clr-namespace:Reinco.Resources;assembly=Reinco"
              BackgroundColor="{StaticResource BackgroundColor}"
              Padding="35"
              >
     <ContentPage.Content>
         <ScrollView>
+
+            <!--
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <controls:Checkbox x:Name="cbHello" Text="Hello CheckBox" Checked="{Binding Path=My.Binding.Path, Converter={StaticResource StringToBoolean}, Mode=TwoWay}" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Padding="16,0,0,0">
+                    <controls:Checkbox x:Name="cbDisabled" Text="Disabled Example" IsEnabled="False" Checked="{Binding Path=My.Binding.PathTwo, Converter={StaticResource StringToBoolean}, Mode=TwoWay}" />
+                </StackLayout>
+            </StackLayout>
+            -->
+
+
+
             <StackLayout VerticalOptions="Center">
                 <!-- Header -->
                 <Label 

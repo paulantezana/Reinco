@@ -15,6 +15,12 @@ namespace Reinco.Paginas.Plantilla
         public PaginaPlantilla()
         {
             InitializeComponent();
+            agregarPlantilla.Clicked += AgregarPlantilla_Clicked;
+        }
+
+        private void AgregarPlantilla_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AgregarPlantilla());
         }
     }
 }

@@ -10,17 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Paginas.Supervision
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaSupervision : ContentPage
+    public partial class NotasSupervision : ContentPage
     {
-        public PaginaSupervision()
+        public NotasSupervision()
         {
             InitializeComponent();
-            continuar.Clicked += Continuar_Clicked;
-        }
-
-        private void Continuar_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new NotasSupervision());
         }
     }
 }

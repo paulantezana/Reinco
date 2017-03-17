@@ -15,6 +15,12 @@ namespace Reinco.Paginas.Personal
         public PaginaPersonal()
         {
             InitializeComponent();
+            agregarPersonal.Clicked += AgregarPersonal_Clicked;
+        }
+
+        private void AgregarPersonal_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AgregarPersonal());
         }
     }
 }

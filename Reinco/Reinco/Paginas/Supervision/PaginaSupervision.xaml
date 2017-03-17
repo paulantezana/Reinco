@@ -29,7 +29,7 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="70"/>
@@ -101,7 +101,7 @@
                                 Margin="0,3,0,3"
                                 >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="60"/>
                                     <ColumnDefinition Width="70"/>
@@ -112,7 +112,7 @@
                                     Grid.Column="0"
                                     FontSize="Large"
                                     FontAttributes="Bold"
-                                    HorizontalOptions="Start"
+                                    HorizontalOptions="Center"
                                     ></Label>
                                 <Label Text="{Binding actividad}" Grid.Column="1"></Label>
                                 <Switch Grid.Column="2"></Switch>

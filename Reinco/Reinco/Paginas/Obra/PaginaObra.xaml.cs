@@ -15,6 +15,12 @@ namespace Reinco.Paginas.Obra
         public PaginaObra()
         {
             InitializeComponent();
+            agregarObra.Clicked += AgregarObra_Clicked;
+        }
+
+        private void AgregarObra_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AgregarObra());
         }
     }
 }
