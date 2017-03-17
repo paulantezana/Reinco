@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <!-- Color -->
             <Color x:Key="ColorPrincipal">#3498DB</Color>
+            <Color x:Key="ColorSecundario">#FF5555</Color>
             <Color x:Key="ColorPrincipalFuente">#2C3E50</Color>
             <Color x:Key="ColorMenu">#2980B9</Color>
             <Color x:Key="ColorMenuFuente">#ECF0F1</Color>

@@ -10,6 +10,8 @@
             <Style x:Key="EstiloFunteHeader" TargetType="Label">
                 <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
                 <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#FFFFFF"/>
             </Style>
 
         </ResourceDictionary>
@@ -23,78 +25,70 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="70"/>
             </Grid.ColumnDefinitions>
+
+
             <StackLayout
                 Grid.Row="0" 
-                Grid.ColumnSpan="2" 
+                Grid.ColumnSpan="4" 
                 Grid.Column="0"
+                BackgroundColor="{StaticResource ColorPrincipal}"
                 >
                 <Label 
                     Text="CONCRETO"
                     Style="{StaticResource EstiloFunteHeader}"
                     ></Label>
             </StackLayout>
+
             <StackLayout
-                Grid.Row="1" 
-                Grid.Column="0" 
-                >
-                <Label 
-                    Text="ITEM" ></Label>
+                Grid.Column="0"
+                Grid.Row="1"
+                BackgroundColor="{StaticResource ColorPrincipal}">
+                
             </StackLayout>
+            
             <StackLayout 
                 Grid.Column="1" Grid.Row="1"
-                BackgroundColor="{StaticResource BoxColor}
-                "><Label 
-                    Text="ACTIVIDAD INSPECCIONADA"
+                BackgroundColor="{StaticResource ColorPrincipal}
+                ">
+                <Label 
+                    Text="Actividad"
                     Style="{StaticResource EstiloFunteHeader}"
                     ></Label>
             </StackLayout>
-            <StackLayout
-                Grid.Row="0" 
-                Grid.Column="2" 
-                Grid.ColumnSpan="2"
-                BackgroundColor="{StaticResource BoxColor}">
-                <Label 
-                    Text="APROBACION" 
-                    ></Label>
-            </StackLayout>
+            
             <StackLayout
                 Grid.Row="1" 
-                Grid.Column="2" 
-                BackgroundColor="{StaticResource BoxColor}"
+                Grid.Column="2"
+                BackgroundColor="{StaticResource ColorPrincipal}"
                 >
-                <Label 
-                    Text="Si" 
+                <Label
+                    Style="{StaticResource EstiloFunteHeader}"
+                    Text="Si / No" 
                     ></Label>
             </StackLayout>
+            
             <StackLayout
                 Grid.Row="1" 
                 Grid.Column="3" 
-                BackgroundColor="{StaticResource BoxColor}">
+                BackgroundColor="{StaticResource ColorPrincipal}">
                 <Label 
-                    Text="No" 
+                    Text="OBS. LEV."
+                    Style="{StaticResource EstiloFunteHeader}"
                     ></Label>
             </StackLayout>
-            <StackLayout
-                Grid.Row="0" 
-                Grid.Column="4" 
-                Grid.RowSpan="2"
-                BackgroundColor="{StaticResource BoxColor}">
-                <Label 
-                    Text="OBS. LEV." 
-                    ></Label>
-            </StackLayout>
+            
             <ListView 
                 Grid.Row="2"
-                Grid.ColumnSpan="5"
+                Grid.ColumnSpan="4"
                 ItemsSource="{Binding plantillaItem}"
                 HasUnevenRows="True" 
                 SeparatorVisibility="None">
@@ -102,29 +96,27 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid 
-                            Padding="5,20,5,20"
-                            BackgroundColor="{StaticResource BoxColor}"
-                            Margin="0,3,0,3"
-                            >
+                                Padding="5,20,5,20"
+                                BackgroundColor="{StaticResource BoxColor}"
+                                Margin="0,3,0,3"
+                                >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="70"/>
                                 </Grid.ColumnDefinitions>
                                 
                                 <Label 
-                                Text="{Binding item}" 
-                                Grid.Column="0"
-                                FontSize="Large"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Start"
-                                ></Label>
+                                    Text="{Binding item}" 
+                                    Grid.Column="0"
+                                    FontSize="Large"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Start"
+                                    ></Label>
                                 <Label Text="{Binding actividad}" Grid.Column="1"></Label>
                                 <Switch Grid.Column="2"></Switch>
                                 <Switch Grid.Column="3"></Switch>
-                                <Switch Grid.Column="4"></Switch>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -132,6 +124,13 @@
             </ListView>
 
 
+            <Button 
+                x:Name="continuar"
+                Text="Continuar"
+                Grid.ColumnSpan="4"
+                Grid.Row="3"
+                Style="{StaticResource BontonPrimario}"
+                ></Button>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
