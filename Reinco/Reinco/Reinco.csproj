@@ -39,8 +39,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\InstanceLocator.cs" />
+    <Compile Include="Models\ActividadItems.cs" />
     <Compile Include="Models\MainViewModel.cs" />
+    <Compile Include="Models\ObraItem.cs" />
+    <Compile Include="Models\PersonalItem.cs" />
     <Compile Include="Models\PlantillaItem.cs" />
+    <Compile Include="Models\PlantillaLista.cs" />
+    <Compile Include="Models\PropietarioItem.cs" />
+    <Compile Include="Models\TareaUsuarioItems.cs" />
     <Compile Include="Paginas\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -66,8 +72,14 @@
     <Compile Include="Paginas\Personal\PaginaPersonal.xaml.cs">
       <DependentUpon>PaginaPersonal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Paginas\Plantilla\AgregarActividad.xaml.cs">
+      <DependentUpon>AgregarActividad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Paginas\Plantilla\AgregarPlantilla.xaml.cs">
       <DependentUpon>AgregarPlantilla.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Plantilla\PaginaActividad.xaml.cs">
+      <DependentUpon>PaginaActividad.xaml</DependentUpon>
     </Compile>
     <Compile Include="Paginas\Plantilla\PaginaPlantilla.xaml.cs">
       <DependentUpon>PaginaPlantilla.xaml</DependentUpon>
@@ -190,6 +202,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Paginas\Supervision\NotasSupervision.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Paginas\Plantilla\PaginaActividad.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Paginas\Plantilla\AgregarActividad.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

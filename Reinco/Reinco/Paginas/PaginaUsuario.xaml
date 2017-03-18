@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Paginas.PaginaUsuario"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="USUARIO"
              >
     <ContentPage.Content>
@@ -9,7 +10,7 @@
             <Button x:Name="paginaSupervision" Text="Supervisar"></Button>
             <!-- Listando las tareas a realizar de cada susario -->
             <ListView 
-                ItemsSource="{Binding userTask}" 
+                ItemsSource="{Binding tareaUsuarioItems}" 
                 HasUnevenRows="True"
                 SeparatorVisibility="None"
                 Margin="8"
@@ -27,16 +28,16 @@
                                 <StackLayout 
                                     Grid.Column="0">
                                     <Label 
-                                        Text="{Binding title}"
+                                        Text="{Binding titulo}"
                                         >
                                     </Label>
                                     <Label 
-                                        Text="{Binding description}"
+                                        Text="{Binding descripcion}"
                                         >
                                     </Label>
                                 </StackLayout>
                                 <Label 
-                                    Text="{Binding taskNumber}" 
+                                    Text="{Binding numeroTarea}" 
                                     Grid.Column="1" 
                                     TextColor="{StaticResource ColorPrincipal}"
                                     FontSize="20"

@@ -2,12 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Paginas.Obra.PaginaObra"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="PAGINA OBRA">
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Padding="8">
-                <Button x:Name="agregarObra" Text="Crear Obra" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
-            </StackLayout>
-        </ScrollView>
+        <StackLayout Padding="8">
+            <Button x:Name="agregarObra" Text="Crear Obra" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            <ListView
+                ItemsSource="{Binding obraItem}"
+                HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <StackLayout Grid.Row="0">
+                                    <Label Text="{Binding titulo}"></Label>
+                                    <Label Text="{Binding responsable}"></Label>
+                                </StackLayout>
+                                <StackLayout Grid.Row="1">
+                                    <Label Text="{Binding platilla}"></Label>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
