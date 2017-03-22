@@ -40,7 +40,8 @@
     </Compile>
     <Compile Include="Infrastructure\InstanceLocator.cs" />
     <Compile Include="Models\ActividadItems.cs" />
-    <Compile Include="Models\MainViewModel.cs" />
+    <Compile Include="ModelViews\LoginViewModel.cs" />
+    <Compile Include="ModelViews\MainViewModel.cs" />
     <Compile Include="Models\ObraItem.cs" />
     <Compile Include="Models\PersonalItem.cs" />
     <Compile Include="Models\PlantillaItem.cs" />

@@ -4,74 +4,65 @@
              x:Class="Reinco.Paginas.LoginPage"
              Title="Reinco"
              xmlns:controls="clr-namespace:Reinco.Resources;assembly=Reinco"
-             BackgroundColor="{StaticResource BackgroundColor}"
-             Padding="35"
-             >
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             BackgroundColor="{StaticResource BackgroundColor}">
     <ContentPage.Content>
-        <ScrollView>
-
-            <!--
-            <StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <controls:Checkbox x:Name="cbHello" Text="Hello CheckBox" Checked="{Binding Path=My.Binding.Path, Converter={StaticResource StringToBoolean}, Mode=TwoWay}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" Padding="16,0,0,0">
-                    <controls:Checkbox x:Name="cbDisabled" Text="Disabled Example" IsEnabled="False" Checked="{Binding Path=My.Binding.PathTwo, Converter={StaticResource StringToBoolean}, Mode=TwoWay}" />
-                </StackLayout>
-            </StackLayout>
-            -->
-
-
-
-            <StackLayout VerticalOptions="Center">
+        <ScrollView Padding="35">
+            <StackLayout VerticalOptions="Center" BindingContext="{Binding nuevoLogin}">
                 <!-- Header -->
                 <Label 
                     Text="REINCO"
                     FontSize="50"
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
-                    Margin="50"
+                    Margin="0,0,0,50"
+                    TextColor="{StaticResource ColorPrincipal}"
                     >
                 </Label>
-                <!-- Mensaje de error de inicio de sesión-->
-                <Label
-                    x:Name="errorLoginMessage" TextColor="#ff5555">
-                </Label>
+                
+                
                 <!-- Username -->
                 <Label Text="Nombre De Usuario"></Label>
-                <Entry 
-                    x:Name="userName"
-                    >
-                </Entry>
+                <Entry Text="{Binding nombreUsuario, Mode=TwoWay}"></Entry>
+                
+                
                 <!-- Password -->
-                <Label 
-                    Text="Contraseña"
-                    >
-                </Label>
-                <Entry 
-                    x:Name="password"
-                    IsPassword="True"
-                    >
-                </Entry>
+                <Label Text="Contraseña"></Label>
+                <Entry IsPassword="True" Text="{Binding password, Mode=TwoWay}"></Entry>
+                
+                
                 <!-- Button Inicio De Sesión -->
                 <Button
-                    x:Name="startSession"
-                    Text="Iniciar sesión" 
-                    Style="{StaticResource BontonPrimario}"
-                    >
+                    Text="Iniciar sesión"
+                    Command="{Binding loginCommand, Mode=TwoWay}"
+                    Style="{StaticResource BontonPrimario}">
                 </Button>
-                <ActivityIndicator IsRunning="True" Color="{StaticResource ColorPrincipal}"></ActivityIndicator>
+                
+                
+                <!-- Indicador de actividad -->
+                <ActivityIndicator 
+                    IsRunning="{Binding isRunning, Mode=TwoWay}" 
+                    Color="{StaticResource ColorPrincipal}">
+                </ActivityIndicator>
+                
+                
                 <!-- Recordar Contraseña -->
+                <!--
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="Recordar Contraseña"></Label>
-                    <Switch></Switch>
+                    <Switch IsToggled="{Binding recordar, Mode=TwoWay}"></Switch>
                 </StackLayout>
+                -->
+                
+                
                 <!-- Recuperar Contraseña -->
                 <Label 
                     Text="¿Has olvidado la contraseña?" 
                     HorizontalOptions="Center"
-                    TextColor="{StaticResource ColorMenu}"
-                    ></Label>
+                    TextColor="{StaticResource ColorMenu}">
+                </Label>
+                
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

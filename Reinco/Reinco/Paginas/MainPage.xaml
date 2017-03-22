@@ -10,8 +10,7 @@
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <NavigationPage
-            BackgroundColor="{StaticResource BackgroundColor}"
-            >
+            BackgroundColor="{StaticResource BackgroundColor}">
             <x:Arguments>
                 <Pagina:PaginaUsuario></Pagina:PaginaUsuario>
             </x:Arguments>

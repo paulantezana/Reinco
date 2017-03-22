@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Reinco.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reinco.Models
+namespace Reinco.ModelViews
 {
     public class MainViewModel
     {
@@ -20,6 +21,8 @@ namespace Reinco.Models
         public ObservableCollection<ActividadItems> actividadItems { get; set; }
         #endregion
 
+        public LoginViewModel nuevoLogin { get; set; }
+
         #region Constructor
         public MainViewModel()
         {
@@ -30,6 +33,9 @@ namespace Reinco.Models
             tareaUsuarioItems = new ObservableCollection<TareaUsuarioItems>();
             plantillaLista = new ObservableCollection<PlantillaLista>();
             actividadItems = new ObservableCollection<ActividadItems>();
+
+            nuevoLogin = new LoginViewModel();
+
             CargarPlantillaItem();
             CargarPersonalItem();
             CargarPropietarioItem();
