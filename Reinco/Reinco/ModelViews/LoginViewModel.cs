@@ -68,11 +68,18 @@ namespace Reinco.ModelViews
                 return;
             }
             #endregion
-            isRunning = true;
-            var usuario = await apiService.Get<Usuario>("http://192.168.1.37:8091/ServicioUsuario.asmx/MostrarUsuarioLogueo?usuario=admin&contrase%C3%B1a=admin");
-            
-            isRunning = false;
+            isRunning = true; // efecto loading true
+            string peticion = "?usuario=" + nombreUsuario + "&contrasenia=" + password;
+            var usuario = await apiService.Get<Usuario>("http://192.168.1.37:8081/ServicioUsuario.asmx/LogueoUsuarioAdmin", peticion);
+            isRunning = false; // efecto loading false
 
+            // Validacion de suario y contraseña
+            if (usuario == null)
+            {
+                await dialogService.MostrarMensaje("Iniciar Session", "Nombre de usuario o contraseña incorrecta");
+                return;
+            }
+            await dialogService.MostrarMensaje("Iniciar Session", "Ok Todo Correcto");
             App.Current.MainPage = new PaginaUsuario();
         } 
         #endregion

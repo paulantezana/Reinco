@@ -10,25 +10,21 @@ namespace Reinco.Services
 {
     public class ApiService
     {
-        public async Task<List<T>> Get<T>(string urlBase)
+        public async Task<List<T>> Get<T>(string urlBase, string servicePrefix = "", string controller = "")
         {
             try
             {
                 var client = new HttpClient();
-                // client.BaseAddress = new Uri(urlBase);
-                // var url = string.Format("{0}{1}", servicePrefix, controller);
-                var response = await client.GetAsync(urlBase);
+                client.BaseAddress = new Uri(urlBase);
+                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var response = await client.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)
                 {
                     return null;
                 }
-
-                string result = "[{'idUsuario':3,'dni':'23334334','nombres':'administrador','apellidos':'admin','usuario':'admin','contrasena':'admin','correo':'correo','cip':'014'}]";
-
-                // var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync();
                 var list = JsonConvert.DeserializeObject<List<T>>(result);
-                // var list = JsonConvert.DeserializeObject<List<T>>(result);
                 return list;
             }
             catch
