@@ -1,6 +1,8 @@
-﻿using Reinco.Paginas.Supervision;
+﻿using Reinco.Models;
+using Reinco.Paginas.Supervision;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,15 +15,26 @@ namespace Reinco.Paginas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaUsuario : ContentPage
     {
+        public ObservableCollection<TareaUsuarioItems> tareaUsuarioItems { get; set; }
         public PaginaUsuario()
         {
             InitializeComponent();
-            paginaSupervision.Clicked += PaginaSupervision_Clicked;
+            tareaUsuarioItems = new ObservableCollection<TareaUsuarioItems>();
+            CargarTareaUsuarioItems();
+            tarea.ItemsSource = tareaUsuarioItems;
         }
 
-        private void PaginaSupervision_Clicked(object sender, EventArgs e)
+        private void CargarTareaUsuarioItems()
         {
-            Navigation.PushAsync(new PaginaSupervision());
+            for (int i = 0; i < 50; i++)
+            {
+                tareaUsuarioItems.Add(new TareaUsuarioItems
+                {
+                    titulo = "Titulo De La Tarea",
+                    descripcion = "Descripcion De La Tarea",
+                    numeroTarea = "67"
+                });
+            }
         }
     }
 }

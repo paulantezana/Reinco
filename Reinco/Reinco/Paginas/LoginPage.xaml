@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Paginas.LoginPage"
              Title="Reinco"
-             xmlns:controls="clr-namespace:Reinco.Resources;assembly=Reinco"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}"
              BackgroundColor="{StaticResource BackgroundColor}">
     <ContentPage.Content>
         <ScrollView Padding="35">
-            <StackLayout VerticalOptions="Center" BindingContext="{Binding nuevoLogin}">
+            <StackLayout VerticalOptions="Center">
                 <!-- Header -->
                 <Label 
                     Text="REINCO"
@@ -23,36 +21,26 @@
                 
                 <!-- Username -->
                 <Label Text="Nombre De Usuario"></Label>
-                <Entry Text="{Binding nombreUsuario, Mode=TwoWay}"></Entry>
+                <Entry x:Name="usuario"></Entry>
                 
                 
                 <!-- Password -->
                 <Label Text="Contraseña"></Label>
-                <Entry IsPassword="True" Text="{Binding password, Mode=TwoWay}"></Entry>
+                <Entry x:Name="password"></Entry>
                 
                 
                 <!-- Button Inicio De Sesión -->
                 <Button
                     Text="Iniciar sesión"
-                    Command="{Binding loginCommand, Mode=TwoWay}"
+                    x:Name="enviar"
                     Style="{StaticResource BontonPrimario}">
                 </Button>
                 
                 
                 <!-- Indicador de actividad -->
-                <ActivityIndicator 
-                    IsRunning="{Binding isRunning, Mode=TwoWay}" 
+                <ActivityIndicator x:Name="indicador"
                     Color="{StaticResource ColorPrincipal}">
                 </ActivityIndicator>
-                
-                
-                <!-- Recordar Contraseña -->
-                <!--
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Recordar Contraseña"></Label>
-                    <Switch IsToggled="{Binding recordar, Mode=TwoWay}"></Switch>
-                </StackLayout>
-                -->
                 
                 
                 <!-- Recuperar Contraseña -->

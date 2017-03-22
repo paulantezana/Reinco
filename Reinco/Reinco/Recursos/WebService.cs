@@ -6,10 +6,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reinco.Services
+namespace Reinco.Recursos
 {
-    public class ApiService
+    public class WebService
     {
+         
         public async Task<List<T>> Get<T>(string urlBase, string servicePrefix = "", string controller = "")
         {
             try

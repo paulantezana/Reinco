@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:infra="clr-namespace:Reinco.Infrastructure;assembly=Reinco" 
              x:Class="Reinco.App">
 	<Application.Resources>
 
@@ -18,14 +17,14 @@
             <Color x:Key="ColorAuxiliar_2">#A8A8A8</Color>
             <!-- End Color -->
             
-            <!-- Locator -->
-            <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
             <!-- Styles -->
             <Style x:Key="BontonPrimario" TargetType="Button" >
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorAuxiliar}"/>
                 <Setter Property="TextColor" Value="#ffffff"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
             </Style>
+            <!-- End Styles -->
+            
         </ResourceDictionary>
 
 	</Application.Resources>

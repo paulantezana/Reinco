@@ -2,18 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Paginas.PaginaUsuario"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="USUARIO"
              >
     <ContentPage.Content>
         <StackLayout>
-            <Button x:Name="paginaSupervision" Text="Supervisar"></Button>
+
             <!-- Listando las tareas a realizar de cada susario -->
             <ListView 
                 ItemsSource="{Binding tareaUsuarioItems}" 
                 HasUnevenRows="True"
                 SeparatorVisibility="None"
                 Margin="8"
+                x:Name="tarea"
                 >
                 <ListView.ItemTemplate>
                     <DataTemplate>

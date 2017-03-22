@@ -38,9 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\InstanceLocator.cs" />
     <Compile Include="Models\ActividadItems.cs" />
-    <Compile Include="Models\Usuario.cs" />
     <Compile Include="ModelViews\LoginViewModel.cs" />
     <Compile Include="ModelViews\MainViewModel.cs" />
     <Compile Include="Models\ObraItem.cs" />
@@ -99,9 +97,9 @@
       <DependentUpon>PaginaSupervision.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Checkbox.cs" />
-    <Compile Include="Services\ApiService.cs" />
-    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Recursos\Checkbox.cs" />
+    <Compile Include="Recursos\DialogService.cs" />
+    <Compile Include="Recursos\WebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
