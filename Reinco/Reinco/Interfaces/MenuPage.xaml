@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.MenuPage"
+             Title="Menu Page"
+             BackgroundColor="{StaticResource ColorMenu}"
+             >
+    <StackLayout>
+        <ListView x:Name="listView" Margin="8,40,8,8" SeparatorVisibility="None" VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ImageCell 
+                        Text="{Binding Titulo}" 
+                        ImageSource="{Binding Icono}"
+                        TextColor="{StaticResource ColorMenuFuente}"
+                        >
+                    </ImageCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Orientation="Horizontal" Margin="8,40,8,8" Padding="10">
+            <Image 
+                Source="ic_power.png"
+                HeightRequest="30"
+                WidthRequest="30"
+                >
+            </Image>
+            <Label 
+                Text="Salir"
+                HeightRequest="20"
+                VerticalOptions="Center"
+                TextColor="{StaticResource ColorMenuFuente}"
+                >
+            </Label>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

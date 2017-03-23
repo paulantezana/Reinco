@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Supervision.PaginaSupervision"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Title="PAGINA DE SUPERVISION">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="EstiloFunteHeader" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#FFFFFF"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowSpacing="1" ColumnSpacing="1">
+
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="70"/>
+            </Grid.ColumnDefinitions>
+
+
+            <StackLayout
+                Grid.Row="0" 
+                Grid.ColumnSpan="4" 
+                Grid.Column="0"
+                BackgroundColor="{StaticResource ColorPrincipal}"
+                >
+                <Label 
+                    Text="CONCRETO"
+                    Style="{StaticResource EstiloFunteHeader}"
+                    ></Label>
+            </StackLayout>
+
+            <StackLayout
+                Grid.Column="0"
+                Grid.Row="1"
+                BackgroundColor="{StaticResource ColorPrincipal}">
+                
+            </StackLayout>
+            
+            <StackLayout 
+                Grid.Column="1" Grid.Row="1"
+                BackgroundColor="{StaticResource ColorPrincipal}
+                ">
+                <Label 
+                    Text="Actividad"
+                    Style="{StaticResource EstiloFunteHeader}"
+                    ></Label>
+            </StackLayout>
+            
+            <StackLayout
+                Grid.Row="1" 
+                Grid.Column="2"
+                BackgroundColor="{StaticResource ColorPrincipal}"
+                >
+                <Label
+                    Style="{StaticResource EstiloFunteHeader}"
+                    Text="Si / No" 
+                    ></Label>
+            </StackLayout>
+            
+            <StackLayout
+                Grid.Row="1" 
+                Grid.Column="3" 
+                BackgroundColor="{StaticResource ColorPrincipal}">
+                <Label 
+                    Text="OBS. LEV."
+                    Style="{StaticResource EstiloFunteHeader}"
+                    ></Label>
+            </StackLayout>
+            
+            <ListView 
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                HasUnevenRows="True"
+                x:Name="obraSupervisarListView"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid 
+                                Padding="5,20,5,20"
+                                BackgroundColor="{StaticResource BoxColor}"
+                                Margin="0,3,0,3"
+                                >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Label 
+                                    Text="{Binding item}" 
+                                    Grid.Column="0"
+                                    FontSize="Large"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    ></Label>
+                                <Label Text="{Binding actividad}" Grid.Column="1"></Label>
+                                <Switch Grid.Column="2"></Switch>
+                                <Switch Grid.Column="3"></Switch>
+                                
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <Button 
+                x:Name="continuar"
+                Text="Continuar"
+                Grid.ColumnSpan="4"
+                Grid.Row="3"
+                Style="{StaticResource BontonPrimario}"
+                ></Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

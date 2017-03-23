@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Plantilla.PaginaPlantilla"
+             Title="PLANTILLAS"
+             >
+    <ContentPage.Content>
+        <StackLayout Padding="8">
+            <Button x:Name="agregarPlantilla" Text="Añadir Nuevo Plantilla" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            <ListView ItemsSource="{Binding plantillaLista}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Image
+                                    Grid.Column="0"
+                                    Source="icon.png"></Image>
+                                <StackLayout
+                                    Grid.Column="1">
+                                    <Label Text="{Binding codigo}"></Label>
+                                    <Label Text="{Binding nuemroItems}"></Label>
+                                </StackLayout>
+                                <Button 
+                                    Text="Items" 
+                                    Grid.Column="2"
+                                    x:Name="agregarActividad"></Button>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

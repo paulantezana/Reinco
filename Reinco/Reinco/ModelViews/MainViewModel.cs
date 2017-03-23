@@ -1,4 +1,4 @@
-﻿using Reinco.Models;
+﻿using Reinco.Gestores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,7 @@ namespace Reinco.ModelViews
     {
 
         #region Properties
-        public ObservableCollection<PlantillaItem> plantillaItem { get; set; }
+        public ObservableCollection<ObraSupervisarItem> plantillaItem { get; set; }
         public ObservableCollection<PersonalItem> personalItem { get; set; }
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
         public ObservableCollection<ObraItem> obraItem { get; set; }
@@ -26,7 +26,7 @@ namespace Reinco.ModelViews
         #region Constructor
         public MainViewModel()
         {
-            plantillaItem = new ObservableCollection<PlantillaItem>();
+            plantillaItem = new ObservableCollection<ObraSupervisarItem>();
             personalItem = new ObservableCollection<PersonalItem>();
             propietarioItem = new ObservableCollection<PropietarioItem>();
             obraItem = new ObservableCollection<ObraItem>();
@@ -39,7 +39,7 @@ namespace Reinco.ModelViews
             CargarPlantillaItem();
             CargarPersonalItem();
             CargarPropietarioItem();
-            CargarObraItem();
+            //CargarObraItem();
             CargarTareaUsuarioItems();
             CargarPlantillaLista();
             CargarActividadItems();
@@ -52,7 +52,7 @@ namespace Reinco.ModelViews
         {
             for (int i = 1; i < 11; i++)
             {
-                plantillaItem.Add(new PlantillaItem
+                plantillaItem.Add(new ObraSupervisarItem
                 {
                     item = Convert.ToString(i),
                     actividad = "Previo: Condicion Bomba",
@@ -89,18 +89,7 @@ namespace Reinco.ModelViews
             }
         }
 
-        private void CargarObraItem()
-        {
-            for (int i = 0; i < 30; i++)
-            {
-                obraItem.Add(new ObraItem
-                {
-                    titulo = "Nombre De La Obra",
-                    responsable = "nombre del responsable",
-                    platilla = "PLANTILLAS"
-                });
-            }
-        }
+        
 
         private void CargarTareaUsuarioItems()
         {

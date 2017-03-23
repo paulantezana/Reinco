@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Reinco.Models;
-using Reinco.Paginas;
-using Reinco.Services;
+using Reinco.Gestores;
+using Reinco.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.LoginPage"
+             Title="Reinco"
+             BackgroundColor="{StaticResource BackgroundColor}">
+    <ContentPage.Content>
+        <ScrollView Padding="35">
+            <StackLayout VerticalOptions="Center">
+                <!-- Header -->
+                <Label 
+                    Text="REINCO"
+                    FontSize="50"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Margin="0,0,0,50"
+                    TextColor="{StaticResource ColorPrincipal}"
+                    >
+                </Label>
+                
+                
+                <!-- Username -->
+                <Label Text="Nombre De Usuario"></Label>
+                <Entry x:Name="usuario"></Entry>
+                
+                
+                <!-- Password -->
+                <Label Text="Contraseña"></Label>
+                <Entry x:Name="password"></Entry>
+                
+                
+                <!-- Button Inicio De Sesión -->
+                <Button
+                    Text="Iniciar sesión"
+                    x:Name="enviar"
+                    Style="{StaticResource BontonPrimario}">
+                </Button>
+                
+                
+                <!-- Indicador de actividad -->
+                <ActivityIndicator x:Name="indicador"
+                    Color="{StaticResource ColorPrincipal}">
+                </ActivityIndicator>
+                
+                
+                <!-- Recuperar Contraseña -->
+                <Label 
+                    Text="¿Has olvidado la contraseña?" 
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource ColorMenu}">
+                </Label>
+                
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

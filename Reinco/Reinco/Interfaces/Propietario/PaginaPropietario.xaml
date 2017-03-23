@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Propietario.PaginaPropietario"
+             Title="PAGINA PROPIETARIO"
+             >
+    <ContentPage.Content>
+        <StackLayout Padding="8">
+            <Button x:Name="agregarPropietario" Text="Agregar Propietario" Style="{StaticResource BontonPrimario}"></Button>
+            <ListView x:Name="propietarioListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding fotoPerfil}"></Image>
+                                <Label Grid.Column="1" Text="{Binding nombre}"></Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

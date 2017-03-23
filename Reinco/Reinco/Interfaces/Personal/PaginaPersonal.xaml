@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Personal.PaginaPersonal"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             Title="PAGINA PERSONAL">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button x:Name="agregarPersonal" Text="Agregar Personal" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            <ListView
+                HasUnevenRows="True"
+                SeparatorColor="{StaticResource BackgroundColor}"
+                x:Name="personalListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image 
+                                    Source="{Binding fotoPerfil}" 
+                                    Grid.Column="0"></Image>
+                                <StackLayout
+                                    HorizontalOptions="FillAndExpand"
+                                    Grid.Column="1">
+                                    <Label  Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label  Text="{Binding cargo1}"></Label>
+                                            <Label  Text="{Binding cargo1Tareas}" FontAttributes="Bold"></Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label  Text="{Binding cargo2}"></Label>
+                                            <Label  Text="{Binding cargo2Tareas}" FontAttributes="Bold"></Label>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Supervision.NotasSupervision"
+             Title="Notas Supervición"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             >
+    <ContentPage.Content>
+        <ScrollView Padding="8">
+            <StackLayout Spacing="7">
+
+                <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                    <Label 
+                        Text="Nota"
+                        VerticalOptions="Center"
+                        ></Label>
+                    <Editor
+                        HeightRequest="400"
+                        ></Editor>
+                </StackLayout>
+
+                <StackLayout BackgroundColor="{StaticResource BoxColor}" Orientation="Horizontal" Padding="8">
+                    <Switch></Switch>
+                    <Label Text="Observación"></Label>
+                </StackLayout>
+                
+                <StackLayout BackgroundColor="{StaticResource BoxColor}" Orientation="Horizontal" Padding="8">
+                    <Switch></Switch>
+                    <Label Text="Disposición"></Label>
+                </StackLayout>
+                
+                <Button Text="Guardar Y Enviar Al Responsable" Style="{StaticResource BontonPrimario}"></Button>
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
