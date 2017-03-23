@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Reinco.Gestores;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,17 +15,35 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+
     public partial class LoginPage : ContentPage
     {
         public DialogService dialogService;
+        public ObservableCollection<ObraItem> obraitem { get; set; }
         public LoginPage()
         {
             InitializeComponent();
             enviar.Clicked += Enviar_Clicked;
             dialogService = new DialogService();
-            
+
+            obraitem = new ObservableCollection<ObraItem>();
+            LoadObras();
+            title.ItemsSource = obraitem;
         }
-        
+
+        private void LoadObras()
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                obraitem.Add(new ObraItem
+                {
+                    titulo = "Nombre De La Obra",
+                    responsable = "nombre del responsable",
+                    platilla = "PLANTILLAS"
+                });
+            }
+        }
+
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(usuario.Text))

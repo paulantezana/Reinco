@@ -3,25 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.LoginPage"
              Title="Reinco"
+             xmlns:control="clr-namespace:Reinco.Recursos"
              BackgroundColor="{StaticResource BackgroundColor}">
     <ContentPage.Content>
         <ScrollView Padding="35">
-            <StackLayout VerticalOptions="Center">
-                <!-- Header -->
-                <Label 
-                    Text="REINCO"
-                    FontSize="50"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Center"
-                    Margin="0,0,0,50"
-                    TextColor="{StaticResource ColorPrincipal}"
-                    >
-                </Label>
-                
-                
+            <StackLayout VerticalOptions="Start">
+
+                <!-- Estes control es temporal solo para hacer pruebas -->
+                <control:BindablePicker
+                  Title="Seleccione un producto"
+                  DisplayMemberPath="responsable"
+                  SelectedValuePath="titulo"
+                  ItemsSource="{Binding titulo}"
+                  SelectedValue ="{Binding Path=titulo, Mode=TwoWay}"
+                  HorizontalOptions="FillAndExpand"
+                  x:Name="title"
+                  VerticalOptions="Center"/>
+
+
+
                 <!-- Username -->
                 <Label Text="Nombre De Usuario"></Label>
-                <Entry x:Name="usuario"></Entry>
+                <Entry x:Name="usuario" Keyboard="Email" ></Entry>
                 
                 
                 <!-- Password -->
@@ -50,6 +53,16 @@
                     TextColor="{StaticResource ColorMenu}">
                 </Label>
                 
+                <!-- Nombre Empresa -->
+                <Label 
+                    Text="REINCO"
+                    FontSize="50"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Margin="0,50,0,50"
+                    TextColor="{StaticResource ColorPrincipal}"
+                    >
+                </Label>
                 
             </StackLayout>
         </ScrollView>

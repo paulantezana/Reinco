@@ -10,20 +10,23 @@ namespace Reinco.Recursos
 {
     public class WebService
     {
-        //public string urlBase { get; set; }
+        //#region Propiedades
+        //public string urlBase { get; set; } 
+        //#endregion
 
-
+        //#region Constructor
         //public WebService()
         //{
         //    this.urlBase = "http://192.168.1.37";
-        //}
+        //} 
+        //#endregion
 
         //public async Task get(string direccion)
         //{
         //    try
         //    {
-        //        var client = new HttpClient();
-        //        var url = string.Format("{0}{1}", this.urlBase, direccion);
+        //        HttpClient client = new HttpClient();
+        //        string url = string.Format("{0}{1}", this.urlBase, direccion);
         //        var response = await client.GetAsync(url);
         //        if (!response.IsSuccessStatusCode)
         //        {

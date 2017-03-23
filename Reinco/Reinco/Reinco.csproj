@@ -97,6 +97,7 @@
       <DependentUpon>PaginaSupervision.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recursos\BindablePicker.cs" />
     <Compile Include="Recursos\Checkbox.cs" />
     <Compile Include="Recursos\DialogService.cs" />
     <Compile Include="Recursos\WebService.cs" />

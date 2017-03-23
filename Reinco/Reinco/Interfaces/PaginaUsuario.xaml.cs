@@ -21,7 +21,7 @@ namespace Reinco.Interfaces
             InitializeComponent();
             tareaUsuarioItems = new ObservableCollection<TareaUsuarioItems>();
             tareaUsuarioListView.ItemsSource = tareaUsuarioItems;
-            tareaUsuarioListView.IsPullToRefreshEnabled = true;
+            // tareaUsuarioListView.IsPullToRefreshEnabled = true;
             supervisar.Clicked += Supervisar_Clicked;
             CargarTareaUsuarioItems();
         }
@@ -32,18 +32,7 @@ namespace Reinco.Interfaces
             var mi = ((MenuItem)sender);
             DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
         }
-
-        public void OnDelete(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
-        }
         
-        public void OnUpdate(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("Delete Context Action", mi.CommandParameter + " update context action", "OK");
-        }
 
 
         private void Supervisar_Clicked(object sender, EventArgs e)
