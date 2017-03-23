@@ -19,6 +19,14 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="OnMore" CommandParameter="{Binding id}"
+                                          Text="Mas" />
+                                <MenuItem Clicked="OnDelete" CommandParameter="{Binding id}"
+                                           Text="Eliminar" IsDestructive="True" />
+                                <MenuItem Clicked="OnUpdate" CommandParameter="{Binding id}"
+                                           Text="Actualizar" IsDestructive="True" />
+                            </ViewCell.ContextActions>
                             <Grid 
                                 BackgroundColor="{StaticResource BoxColor}" 
                                 Padding="8" Margin="0,5,0,5">

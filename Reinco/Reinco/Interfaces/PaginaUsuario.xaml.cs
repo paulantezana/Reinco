@@ -21,9 +21,30 @@ namespace Reinco.Interfaces
             InitializeComponent();
             tareaUsuarioItems = new ObservableCollection<TareaUsuarioItems>();
             tareaUsuarioListView.ItemsSource = tareaUsuarioItems;
+            tareaUsuarioListView.IsPullToRefreshEnabled = true;
             supervisar.Clicked += Supervisar_Clicked;
             CargarTareaUsuarioItems();
         }
+
+
+        public void OnMore(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
+        }
+
+        public void OnDelete(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
+        }
+        
+        public void OnUpdate(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("Delete Context Action", mi.CommandParameter + " update context action", "OK");
+        }
+
 
         private void Supervisar_Clicked(object sender, EventArgs e)
         {
@@ -38,7 +59,8 @@ namespace Reinco.Interfaces
                 {
                     titulo = "Titulo De La Tarea",
                     descripcion = "Descripcion De La Tarea",
-                    numeroTarea = "67"
+                    numeroTarea = Convert.ToString(i),
+                    id = Convert.ToString(i),
                 });
             }
         }
