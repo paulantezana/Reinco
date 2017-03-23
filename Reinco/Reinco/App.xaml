@@ -9,12 +9,13 @@
             <Color x:Key="ColorPrincipal">#3498DB</Color>
             <Color x:Key="ColorSecundario">#FF5555</Color>
             <Color x:Key="ColorPrincipalFuente">#2C3E50</Color>
-            <Color x:Key="ColorMenu">#2980B9</Color>
-            <Color x:Key="ColorMenuFuente">#ECF0F1</Color>
             <Color x:Key="BackgroundColor">#FFFFFF</Color>
             <Color x:Key="BoxColor">#F7F7F7</Color>
             <Color x:Key="ColorAuxiliar">#8AC22D</Color>
             <Color x:Key="ColorAuxiliar_2">#A8A8A8</Color>
+            <!-- Menu Colores -->
+            <Color x:Key="ColorMenu">#2980B9</Color>
+            <Color x:Key="ColorMenuFuente">#ECF0F1</Color>
             <!-- End Color -->
             
             <!-- Styles -->
