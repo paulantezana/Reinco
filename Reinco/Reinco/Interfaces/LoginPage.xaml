@@ -21,7 +21,7 @@
                 
                 <!-- Button Inicio De Sesión -->
                 <Button
-                    Text="Iniciar sesión"
+                    Text="Iniciar Sesión"
                     x:Name="enviar"
                     Style="{StaticResource BontonPrimario}">
                 </Button>
