@@ -2,29 +2,59 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Obra.PaginaObra"
+             BackgroundColor="{StaticResource BackgroundColor}"
              Title="PAGINA OBRA">
     <ContentPage.Content>
-        <StackLayout Padding="8">
-            <Button x:Name="agregarObra" Text="Crear Obra" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+        <StackLayout>
+            <StackLayout>
+                <Button x:Name="agregarObra" Text="Agregar Obra" Style="{StaticResource BontonPrimario}"></Button>
+            </StackLayout>
             <ListView
                 x:Name="obrasListView"
+                SeparatorColor="{StaticResource BackgroundColor}"
                 HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
+                            
+                                
+                            <!-- ============ Codigo para mostrar Obra ================-->
+
+                            <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
+                                
+                                <!-- idObra Para para CRUD -->
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding idObra}" Tapped="modificar"/>
+                                </Grid.GestureRecognizers>
+                                <!-- Fin idObra Para para CRUD -->
+                                
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="1"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <StackLayout Grid.Row="0">
-                                    <Label Text="{Binding titulo}"></Label>
-                                    <Label Text="{Binding responsable}"></Label>
+                                
+                                <!-- Nombre de la obra y su codigo -->
+                                <StackLayout Grid.Row="0" Orientation="Horizontal" >
+                                    <Label
+                                        Text="{Binding nombre}"
+                                        FontAttributes="Bold"
+                                        ></Label>
+                                    <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
-                                <StackLayout Grid.Row="1">
+                                
+                                
+                                <!-- Separador-->
+                                <BoxView Grid.Row="1" BackgroundColor="#E5E5E5" HeightRequest="1"></BoxView>
+                                
+                                
+                                <!-- Responsable y platilla -->
+                                <StackLayout Grid.Row="2" Orientation="Horizontal">
+                                    <Label Text="{Binding responsable}"></Label>
                                     <Label Text="{Binding platilla}"></Label>
                                 </StackLayout>
                             </Grid>
+                            <!-- ============ FIN Codigo para mostrar Obra ================-->
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

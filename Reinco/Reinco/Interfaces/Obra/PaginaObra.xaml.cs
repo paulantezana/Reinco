@@ -3,6 +3,7 @@ using Reinco.Gestores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -21,7 +22,7 @@ namespace Reinco.Interfaces.Obra
         {
             InitializeComponent();
             obraItem = new ObservableCollection<ObraItem>();
-            CargarObraItem();
+            cargarObraItem();
             obrasListView.ItemsSource = obraItem;
             agregarObra.Clicked += AgregarObra_Clicked;
         }
@@ -42,14 +43,26 @@ namespace Reinco.Interfaces.Obra
                     titulo = item.nombre.ToString(),
                     responsable = "nombre del responsable",
                     platilla = "PLANTILLAS"
-                });
-            }
-
+            agregarObra.Clicked += AgregarObra_Clicked;            
         }
 
+        // ===================// Iteracion Para Mostrar Obra //====================//
+        
+
+        // ===================// Navegar A la página AgregarObra.xaml //====================//
         private void AgregarObra_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AgregarObra());
         }
+
+        // ===================// Modificar Obra CRUD //====================//
+        public void modificar(object sender, EventArgs e)
+        {
+            // var mi = ((TapGestureRecognizer)sender);
+            // DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
+            Navigation.PushAsync(new AgregarObra(e));
+        }
+        
+        // END
     }
 }

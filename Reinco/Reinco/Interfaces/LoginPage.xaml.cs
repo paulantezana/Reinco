@@ -37,7 +37,7 @@ namespace Reinco.Interfaces
             {
                 obraitem.Add(new ObraItem
                 {
-                    titulo = "Nombre De La Obra",
+                    nombre = "Nombre De La Obra",
                     responsable = "nombre del responsable",
                     platilla = "PLANTILLAS"
                 });

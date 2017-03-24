@@ -39,6 +39,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gestores\ActividadItems.cs" />
+    <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
+      <DependentUpon>AgregarObra.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\Obra\PaginaObra.xaml.cs">
+      <DependentUpon>PaginaObra.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModelViews\LoginViewModel.cs" />
     <Compile Include="ModelViews\MainViewModel.cs" />
     <Compile Include="Gestores\ObraItem.cs" />
@@ -57,12 +63,6 @@
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gestores\MenuPrincipalItem.cs" />
-    <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
-      <DependentUpon>AgregarObra.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\Obra\PaginaObra.xaml.cs">
-      <DependentUpon>PaginaObra.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interfaces\PaginaUsuario.xaml.cs">
       <DependentUpon>PaginaUsuario.xaml</DependentUpon>
     </Compile>
@@ -212,18 +212,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Obra\AgregarObra.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Obra\PaginaObra.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Interfaces\PaginaUsuario.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -249,6 +237,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Plantilla\AgregarActividad.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Obra\AgregarObra.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Obra\PaginaObra.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

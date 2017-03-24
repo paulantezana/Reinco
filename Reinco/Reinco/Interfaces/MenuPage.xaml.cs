@@ -3,12 +3,7 @@ using Reinco.Interfaces.Obra;
 using Reinco.Interfaces.Personal;
 using Reinco.Interfaces.Plantilla;
 using Reinco.Interfaces.Propietario;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
