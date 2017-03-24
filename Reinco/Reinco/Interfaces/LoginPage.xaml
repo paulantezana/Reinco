@@ -9,7 +9,7 @@
         <ScrollView Padding="35">
             <StackLayout VerticalOptions="Start">
 
-                <!-- Username -->
+                <!-- Nombre Usuario Añadido -->
                 <Label Text="Nombre De Usuario"></Label>
                 <Entry x:Name="usuario" Keyboard="Email" ></Entry>
                 
@@ -21,7 +21,7 @@
                 
                 <!-- Button Inicio De Sesión -->
                 <Button
-                    Text="Iniciar sesión"
+                    Text="Iniciar Sesión"
                     x:Name="enviar"
                     Style="{StaticResource BontonPrimario}">
                 </Button>
