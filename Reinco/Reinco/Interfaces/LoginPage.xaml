@@ -9,7 +9,7 @@
         <ScrollView Padding="35">
             <StackLayout VerticalOptions="Start">
 
-                <!-- Nombre Usuario -->
+                <!-- Nombre Usuario Añadido -->
                 <Label Text="Nombre De Usuario"></Label>
                 <Entry x:Name="usuario" Keyboard="Email" ></Entry>
                 
