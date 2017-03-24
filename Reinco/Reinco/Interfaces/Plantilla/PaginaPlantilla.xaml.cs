@@ -19,7 +19,7 @@ namespace Reinco.Interfaces.Plantilla
     public partial class PaginaPlantilla : ContentPage
     {
 
-        DialogService dialog;
+        // DialogService dialog;
 
         public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
 
@@ -28,7 +28,7 @@ namespace Reinco.Interfaces.Plantilla
             InitializeComponent();
             agregarPlantilla.Clicked += AgregarPlantilla_Clicked;
 
-            //CargarPlantillas();
+            CargarPlantillaLista();
             plantillaLista = new ObservableCollection<PlantillaLista>();
             CargarPlantillaLista();
             plantillaListView.ItemsSource = plantillaLista;
