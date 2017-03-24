@@ -1,4 +1,4 @@
-
+﻿
 using Newtonsoft.Json;
 using Reinco.Recursos;
 using Reinco.Gestores;
@@ -31,7 +31,7 @@ namespace Reinco.Interfaces.Plantilla
             //CargarPlantillas();
             plantillaLista = new ObservableCollection<PlantillaLista>();
             CargarPlantillaLista();
-            plantillaListView.ItemsSource = plantillaLista;
+           // plantillaListView.ItemsSource = plantillaLista;
         }
 
         private void CargarPlantillaLista()
