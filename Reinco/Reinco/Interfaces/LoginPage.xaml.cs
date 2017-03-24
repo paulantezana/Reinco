@@ -18,6 +18,7 @@ namespace Reinco.Interfaces
 
     public partial class LoginPage : ContentPage
     {
+        //login page
         public DialogService dialogService;
         public LoginPage()
         {
