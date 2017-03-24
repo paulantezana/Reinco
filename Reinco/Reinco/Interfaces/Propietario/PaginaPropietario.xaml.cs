@@ -39,8 +39,9 @@ namespace Reinco.Interfaces.Propietario
             {
                 propietarioItem.Add(new PropietarioItem
                 {
-                    nombre = item.propietario.Tostring(),
-                    fotoPerfil = "icon.png"
+                    fotoPerfil = "icon.png",
+                    nombre = item.nombre.Tostring()
+              
                 });
             }
         }

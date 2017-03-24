@@ -20,6 +20,7 @@ namespace Reinco.Interfaces.Plantilla
     {
 
         DialogService dialog;
+        //private object plantillaListView;
 
         public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
 
@@ -27,24 +28,30 @@ namespace Reinco.Interfaces.Plantilla
         {
             InitializeComponent();
             agregarPlantilla.Clicked += AgregarPlantilla_Clicked;
-
-            //CargarPlantillas();
             plantillaLista = new ObservableCollection<PlantillaLista>();
             CargarPlantillaLista();
-           // plantillaListView.ItemsSource = plantillaLista;
+           plantillaListView.ItemsSource = plantillaLista;
         }
 
-        private void CargarPlantillaLista()
+        private async void CargarPlantillaLista()
         {
-            for (int i = 0; i < 15; i++)
+            var client = new HttpClient();
+            var result = await client.GetAsync("http://192.168.1.37:80/ServicioPlantilla.asmx/MostrarPlantillas");
+            //recoge los datos json y los almacena en la variable resultado
+            var resultado = await result.Content.ReadAsStringAsync();
+            //si todo es correcto, muestra la pagina que el usuario debe ver
+            dynamic array = JsonConvert.DeserializeObject(resultado);
+
+            foreach (var item in array)
             {
                 plantillaLista.Add(new PlantillaLista
                 {
-                    codigo = "35",
+                    codigo = item.nombre.Tostring(),
                     nuemroItems = "15",
                     agregarActividad = "Items"
                 });
             }
+           
         }
 
         private void AgregarPlantilla_Clicked(object sender, EventArgs e)
