@@ -9,19 +9,6 @@
         <ScrollView Padding="35">
             <StackLayout VerticalOptions="Start">
 
-                <!-- Estes control es temporal solo para hacer pruebas -->
-                <control:BindablePicker
-                  Title="Seleccione un producto"
-                  DisplayMemberPath="responsable"
-                  SelectedValuePath="titulo"
-                  ItemsSource="{Binding titulo}"
-                  SelectedValue ="{Binding Path=titulo, Mode=TwoWay}"
-                  HorizontalOptions="FillAndExpand"
-                  x:Name="title"
-                  VerticalOptions="Center"/>
-
-
-
                 <!-- Username -->
                 <Label Text="Nombre De Usuario"></Label>
                 <Entry x:Name="usuario" Keyboard="Email" ></Entry>

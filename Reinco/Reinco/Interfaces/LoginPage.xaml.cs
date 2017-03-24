@@ -19,31 +19,13 @@ namespace Reinco.Interfaces
     public partial class LoginPage : ContentPage
     {
         public DialogService dialogService;
-        public ObservableCollection<ObraItem> obraitem { get; set; }
         public LoginPage()
         {
             InitializeComponent();
             enviar.Clicked += Enviar_Clicked;
             dialogService = new DialogService();
-
-            obraitem = new ObservableCollection<ObraItem>();
-            LoadObras();
-            title.ItemsSource = obraitem;
         }
-
-        private void LoadObras()
-        {
-            for (int i = 0; i < 30; i++)
-            {
-                obraitem.Add(new ObraItem
-                {
-                    nombre = "Nombre De La Obra",
-                    responsable = "nombre del responsable",
-                    platilla = "PLANTILLAS"
-                });
-            }
-        }
-
+        
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(usuario.Text)|| string.IsNullOrEmpty(password.Text))
@@ -68,8 +50,8 @@ namespace Reinco.Interfaces
             //DataTable dtUsuario = new DataTable();
             dynamic array = JsonConvert.DeserializeObject(resultado);
             
-
             App.Current.MainPage = new MainPage();
+
         }
     }
 }

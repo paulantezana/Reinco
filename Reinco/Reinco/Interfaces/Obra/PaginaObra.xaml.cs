@@ -22,7 +22,7 @@ namespace Reinco.Interfaces.Obra
         {
             InitializeComponent();
             obraItem = new ObservableCollection<ObraItem>();
-            cargarObraItem();
+            CargarObraItem();
             obrasListView.ItemsSource = obraItem;
             agregarObra.Clicked += AgregarObra_Clicked;
         }
@@ -40,15 +40,13 @@ namespace Reinco.Interfaces.Obra
             {
                 obraItem.Add(new ObraItem
                 {
-                    titulo = item.nombre.ToString(),
+                    nombre = item.nombre.ToString(),
                     responsable = "nombre del responsable",
-                    platilla = "PLANTILLAS"
-            agregarObra.Clicked += AgregarObra_Clicked;            
+                    platilla = "PLANTILLAS",
+                });
+            }
         }
-
-        // ===================// Iteracion Para Mostrar Obra //====================//
         
-
         // ===================// Navegar A la página AgregarObra.xaml //====================//
         private void AgregarObra_Clicked(object sender, EventArgs e)
         {

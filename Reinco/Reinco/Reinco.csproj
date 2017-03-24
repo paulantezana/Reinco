@@ -45,8 +45,6 @@
     <Compile Include="Interfaces\Obra\PaginaObra.xaml.cs">
       <DependentUpon>PaginaObra.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ModelViews\LoginViewModel.cs" />
-    <Compile Include="ModelViews\MainViewModel.cs" />
     <Compile Include="Gestores\ObraItem.cs" />
     <Compile Include="Gestores\PersonalItem.cs" />
     <Compile Include="Gestores\ObraSupervisarItem.cs" />
