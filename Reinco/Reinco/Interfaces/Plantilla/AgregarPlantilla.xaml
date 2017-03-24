@@ -12,7 +12,7 @@
             <!-- Plantilla Nombre -->
             <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                 <Label Text="Nombre Plantilla"></Label>
-                <Entry x:Name="namePlantilla"></Entry>
+                <Entry x:Name="nombrePlantilla"></Entry>
             </StackLayout>
 
             <!-- Buttons Action -->

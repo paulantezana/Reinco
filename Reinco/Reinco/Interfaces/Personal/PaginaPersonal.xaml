@@ -19,12 +19,8 @@
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image 
-                                    Source="{Binding fotoPerfil}" 
-                                    Grid.Column="0"></Image>
-                                <StackLayout
-                                    HorizontalOptions="FillAndExpand"
-                                    Grid.Column="1">
+                                <Image Source="{Binding fotoPerfil}"  Grid.Column="0"></Image>
+                                <StackLayout HorizontalOptions="FillAndExpand" Grid.Column="1">
                                     <Label  Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout Orientation="Horizontal">
