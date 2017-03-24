@@ -21,10 +21,10 @@ namespace Reinco.Interfaces.Propietario
         {
             InitializeComponent();
             propietarioItem = new ObservableCollection<PropietarioItem>();
-           
+            CargarPropietarioItem();
             propietarioListView.ItemsSource = propietarioItem;
             agregarPropietario.Clicked += AgregarPropietario_Clicked;
-            //CargarPropietarioItem();
+            
         }
         private async void CargarPropietarioItem()
         {

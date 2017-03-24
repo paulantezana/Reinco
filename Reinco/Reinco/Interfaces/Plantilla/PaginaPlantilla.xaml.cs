@@ -1,8 +1,12 @@
-﻿using Reinco.Gestores;
+
+using Newtonsoft.Json;
+using Reinco.Recursos;
+using Reinco.Gestores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,11 +18,17 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaPlantilla : ContentPage
     {
+
+        DialogService dialog;
+
         public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
+
         public PaginaPlantilla()
         {
             InitializeComponent();
             agregarPlantilla.Clicked += AgregarPlantilla_Clicked;
+
+            //CargarPlantillas();
             plantillaLista = new ObservableCollection<PlantillaLista>();
             CargarPlantillaLista();
             plantillaListView.ItemsSource = plantillaLista;
@@ -41,5 +51,6 @@ namespace Reinco.Interfaces.Plantilla
         {
             Navigation.PushAsync(new AgregarPlantilla());
         }
+        
     }
 }
