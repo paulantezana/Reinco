@@ -19,22 +19,20 @@ namespace Reinco.Interfaces.Obra
         {
             InitializeComponent();
             obraItem = new ObservableCollection<ObraItem>();
-            CargarObraItem();
+            cargarObraItem();
             obrasListView.ItemsSource = obraItem;
-
             agregarObra.Clicked += AgregarObra_Clicked;
-            
         }
 
-        private void CargarObraItem()
+        private void cargarObraItem()
         {
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 50; i++)
             {
                 obraItem.Add(new ObraItem
                 {
-                    titulo = "Nombre De La Obra",
-                    responsable = "nombre del responsable",
-                    platilla = "PLANTILLAS"
+                    titulo = "Titulo",
+                    responsable = "responsable",
+                    platilla = "plantilla"
                 });
             }
         }
