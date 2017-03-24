@@ -57,10 +57,18 @@ namespace Reinco.Interfaces.Obra
         public void modificar(object sender, EventArgs e)
         {
             // var mi = ((TapGestureRecognizer)sender);
-            // DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
+            try
+            {
+                var mi = ((TapGestureRecognizer)sender);
+                var id = mi.CommandParameter;
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("More Context Action", ex.Message, "OK");
+            }
             Navigation.PushAsync(new AgregarObra(e));
         }
         
-        // END
+        // END ==
     }
 }

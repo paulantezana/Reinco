@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Reinco.Recursos"
-             x:Class="Reinco.Interfaces.Obra.AgregarObra">
+             x:Class="Reinco.Interfaces.Obra.AgregarObra"
+             Title="OBRA">
     <ContentPage.Content>
         <StackLayout>
             <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
@@ -44,7 +45,7 @@
             <!-- Buttons Action -->
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
-                <Button x:Name="actualizar"   Text="Actualizar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+                <Button x:Name="eliminar"   Text="Eliminar" BackgroundColor="#FF5555" TextColor="#ffffff"></Button>
                 <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
             </StackLayout>
             

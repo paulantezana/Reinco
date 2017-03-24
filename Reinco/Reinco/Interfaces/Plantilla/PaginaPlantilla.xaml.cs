@@ -1,4 +1,3 @@
-﻿
 using Newtonsoft.Json;
 using Reinco.Recursos;
 using Reinco.Gestores;
@@ -18,10 +17,6 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaPlantilla : ContentPage
     {
-
-        DialogService dialog;
-        //private object plantillaListView;
-
         public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
 
         public PaginaPlantilla()
@@ -58,6 +53,5 @@ namespace Reinco.Interfaces.Plantilla
         {
             Navigation.PushAsync(new AgregarPlantilla());
         }
-        
     }
 }

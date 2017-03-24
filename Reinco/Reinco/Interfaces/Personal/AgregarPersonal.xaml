@@ -23,7 +23,7 @@
                 <!-- Email -->
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                     <Label Text="Usuario"></Label>
-                    <Entry x:Name="usuario"></Entry>
+                    <Entry x:Name="usuario" Keyboard="Email"></Entry>
                 </StackLayout>
 
                 <!-- Password -->
