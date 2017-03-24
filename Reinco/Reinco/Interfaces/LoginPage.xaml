@@ -16,7 +16,7 @@
                 
                 <!-- Password -->
                 <Label Text="Contraseña"></Label>
-                <Entry x:Name="password"></Entry>
+                <Entry x:Name="password" IsPassword="True"></Entry>
                 
                 
                 <!-- Button Inicio De Sesión -->
