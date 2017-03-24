@@ -25,21 +25,15 @@ namespace Reinco.Interfaces
             supervisar.Clicked += Supervisar_Clicked;
             CargarTareaUsuarioItems();
         }
-
-
         public void OnMore(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
             DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
-        }
-        
-
-
+        }       
         private void Supervisar_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new PaginaSupervision());
         }
-
         private void CargarTareaUsuarioItems()
         {
             for (int i = 0; i < 50; i++)
