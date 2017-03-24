@@ -1,4 +1,4 @@
-
+﻿
 using Newtonsoft.Json;
 using Reinco.Recursos;
 using Reinco.Gestores;
