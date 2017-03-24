@@ -13,9 +13,6 @@ namespace Reinco
         public App()
         {
             //paul comentario nuevo GitHub
-            /*========================================
-             ==================================
-             ========================*/
             //Jorge: Comnentario agregado para ver la sincronización
             InitializeComponent();
             MainPage = new LoginPage();
