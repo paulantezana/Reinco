@@ -16,5 +16,9 @@ namespace Reinco.Interfaces.Obra
         {
             InitializeComponent();
         }
+        public AgregarObra(object e)
+        {
+            InitializeComponent();
+        }
     }
 }
