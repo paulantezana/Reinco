@@ -12,6 +12,7 @@ namespace Reinco
     {
         public App()
         {
+            //Jorge: Comnentario agregado para ver la sincronización
             InitializeComponent();
             MainPage = new LoginPage();
         }
