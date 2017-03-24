@@ -27,7 +27,6 @@
                                     <TapGestureRecognizer CommandParameter="{Binding idObra}" Tapped="modificar"/>
                                 </Grid.GestureRecognizers>
                                 <!-- Fin idObra Para para CRUD -->
-                                
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="1"/>
@@ -55,6 +54,9 @@
                                 </StackLayout>
                             </Grid>
                             <!-- ============ FIN Codigo para mostrar Obra ================-->
+                            
+                            
+                            
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

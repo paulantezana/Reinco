@@ -2,11 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Plantilla.PaginaPlantilla"
-             Title="PLANTILLAS"
-             >
+             Title="PLANTILLAS">
     <ContentPage.Content>
         <StackLayout Padding="8">
-            <Button x:Name="agregarPlantilla" Text="Añadir Nuevo Plantilla" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            
+            <StackLayout>
+                <Button x:Name="agregarPlantilla" Text="Añadir Nuevo Plantilla" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            </StackLayout>
+            
             <ListView x:Name="plantillaListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -22,8 +25,8 @@
                                     Source="icon.png"></Image>
                                 <StackLayout
                                     Grid.Column="1">
-                                    <Label Text="{Binding codigo}"></Label>
-                                    <Label Text="{Binding nuemroItems}"></Label>
+                                    <Label Text="tex"></Label>
+                                    <Label Text="tex"></Label>
                                 </StackLayout>
                                 <Button 
                                     Text="Items" 

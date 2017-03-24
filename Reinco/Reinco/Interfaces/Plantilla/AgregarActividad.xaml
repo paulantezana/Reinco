@@ -1,5 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Reinco.Interfaces.Plantilla.AgregarActividad">
+             x:Class="Reinco.Interfaces.Plantilla.AgregarActividad"
+             Title="ACTIVIDADES"
+             >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+            
+                <Label Text="ITEM1"></Label>
+                <Entry x:Name="item1"></Entry>
+
+                <Label Text="ITEM2"></Label>
+                <Entry x:Name="item2"></Entry>
+
+                <Label Text="ITEM3"></Label>
+                <Entry x:Name="item3"></Entry>
+
+                <Label Text="ITEM4"></Label>
+                <Entry x:Name="item4"></Entry>
+
+                <Label Text="ITEM5"></Label>
+                <Entry x:Name="item5"></Entry>
+
+                <Label Text="ITEM6"></Label>
+                <Entry x:Name="item6"></Entry>
+
+                <Label Text="ITEM7"></Label>
+                <Entry x:Name="item7"></Entry>
+
+                <Label Text="ITEM8"></Label>
+                <Entry x:Name="item2"></Entry>
+
+                <Label Text="ITEM9"></Label>
+                <Entry x:Name="item9"></Entry>
+
+                <Label Text="ITEM10"></Label>
+                <Entry x:Name="item10"></Entry>
+            
+                <Label Text="ITEM11" IsVisible="False"></Label>
+                <Entry x:Name="item11"></Entry>
+
+                <Label Text="ITEM12" IsVisible="False"></Label>
+                <Entry x:Name="item12"></Entry>
+
+                <Label Text="ITEM13" IsVisible="False"></Label>
+                <Entry x:Name="item13"></Entry>
+                
+                <!-- Zona Botones Crud -->
+                <Button Text="Cancelar" x:Name="cancelar"></Button>
+                <Button Text="Eliminar" x:Name="eliminar"></Button>
+                <Button Text="Guardar Cambios" x:Name="guardar"></Button>
+                <!-- End Crud -->
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>
