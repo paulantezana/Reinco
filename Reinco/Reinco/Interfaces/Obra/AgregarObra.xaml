@@ -20,8 +20,8 @@
                 <control:BindablePicker
                   Title="Asigne Un Propietario"
                   DisplayMemberPath="responsable"
-                  SelectedValuePath="titulo"
-                  SelectedValue ="{Binding Path=titulo, Mode=TwoWay}"
+                  SelectedValuePath="nombre"
+                  SelectedValue ="{Binding Path=nombre, Mode=TwoWay}"
                   HorizontalOptions="FillAndExpand"
                   x:Name="asignarPropietario"
                   VerticalOptions="Center"/>

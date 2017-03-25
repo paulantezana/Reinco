@@ -9,10 +9,15 @@ namespace Reinco.Gestores
     public class PersonalItem
     {
         public string fotoPerfil { get; set; }
-        public string nombre { get; set; }
-        public string cargo1 { get; set; }
-        public string cargo1Tareas { get; set; }
-        public string cargo2 { get; set; }
-        public string cargo2Tareas { get; set; }
+        public int idUsuario { get; set; }
+        public string dni { get; set; }
+        public string nombres { get; set; }
+        public string apellidos { get; set; }
+        public string usuario { get; set; }
+        public string contrasena { get; set; }
+        public string correo { get; set; }
+        public string cip { get; set; }
+        public int idCargo_Usuario { get; set; }
+        public int idCargo { get; set; }
     }
 }

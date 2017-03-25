@@ -1,6 +1,8 @@
-﻿using Reinco.Recursos;
+﻿using Reinco.Gestores;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -15,13 +17,54 @@ namespace Reinco.Interfaces.Obra
     public partial class AgregarObra : ContentPage
     {
         int IdObra;
+        public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
+        public ObservableCollection<PersonalItem> personalItem { get; set; }
         // ============================ Constructor para crear obra ============================//
         public AgregarObra()
         {
             InitializeComponent();
+            // =====
+            propietarioItem = new ObservableCollection<PropietarioItem>();
+            personalItem = new ObservableCollection<PersonalItem>();
+
+            // cargando la listas
+            CargarPropietarioItem();
+            CargarTareaUsuarioItems();
+
+            // renderisando las listas
+            asignarPropietario.ItemsSource = propietarioItem;
+            asignarResponsable.ItemsSource = personalItem;
+
+            // Eventos
             cancelar.Clicked += Cancelar_Clicked1;
             guardar.Clicked += Guardar_Clicked;
         }
+
+        #region Metodos Para Listar Personal Y Propietarios
+        private void CargarTareaUsuarioItems()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                personalItem.Add(new PersonalItem
+                {
+                    idUsuario = i,
+                    nombres = "Nombre Usuario",
+                });
+            }
+        }
+
+        private void CargarPropietarioItem()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                propietarioItem.Add(new PropietarioItem
+                {
+                    idPropietario = i,
+                    nombre = "Nombre Propietario",
+                });
+            }
+        } 
+        #endregion
 
         private async void Guardar_Clicked(object sender, EventArgs e)
         {

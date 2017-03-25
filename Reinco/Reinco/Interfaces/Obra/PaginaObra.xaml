@@ -21,7 +21,6 @@
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar"></MenuItem>
                                 <MenuItem Clicked="actualizar" CommandParameter="{Binding idObra}" Text="Modificar"></MenuItem>
                             </ViewCell.ContextActions>
-                            
                             <!-- Fin idObra Para para CRUD -->
                                 
                             <!-- ============ Codigo para mostrar Obra ================-->

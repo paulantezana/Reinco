@@ -18,8 +18,10 @@ namespace Reinco.Interfaces.Personal
         public AgregarPersonal()
         {
             InitializeComponent();
-            guardar.Clicked += Guardar_Clicked;
             dialogService = new DialogService();
+            // Eventos 
+            guardar.Clicked += Guardar_Clicked;
+            cancelar.Clicked += Cancelar_Clicked;
         }
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
@@ -44,6 +46,17 @@ namespace Reinco.Interfaces.Personal
                     }
                 }
             }
+        }
+        public AgregarPersonal(object idUsuario)
+        {
+            InitializeComponent();
+            guardar.Text = "Guardra Cambios";
+            cancelar.Clicked += Cancelar_Clicked;
+        }
+
+        private void Cancelar_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
         }
     }
 

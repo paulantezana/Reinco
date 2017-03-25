@@ -41,11 +41,9 @@ namespace Reinco.Interfaces.Personal
                 personalItem.Add(new PersonalItem
                 {
                     fotoPerfil = "icon.png",
-                    nombre = item.nombres.ToString(),
-                    cargo1 = "gernte",
-                    cargo1Tareas = "(3)",
-                    cargo2 = "Supervisor",
-                    cargo2Tareas = "(1)"
+                    idUsuario = item.idUsuario,
+                    nombres = item.nombres.ToString(),
+                    cip = item.cip
                 });
             }
         }
@@ -54,5 +52,22 @@ namespace Reinco.Interfaces.Personal
         {
             Navigation.PushAsync(new AgregarPersonal());
         }
+
+        #region=======================eliminar obra====================================
+        public async void eliminar(object sender, EventArgs e)
+        {
+            var idUsuario = ((MenuItem)sender).CommandParameter;
+            int IdUsuario = Convert.ToInt16(idUsuario);
+            bool respuesta = await DisplayAlert("Eliminar", "Eliminar IdUsuario = " + IdUsuario, "Aceptar", "Cancelar");
+        }
+        #endregion
+        #region ===================// Modificar Obra CRUD //====================
+        public void actualizar(object sender, EventArgs e)
+        {
+            var idUsuario = ((MenuItem)sender).CommandParameter;
+            Navigation.PushAsync(new AgregarPersonal(idUsuario));
+        }
+        #endregion
+
     }
 }
