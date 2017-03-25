@@ -11,22 +11,23 @@
             </StackLayout>
             <ListView
                 x:Name="obrasListView"
-                SeparatorColor="{StaticResource BackgroundColor}"
                 HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+
+                            <!-- idObra Para para CRUD -->
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar"></MenuItem>
+                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idObra}" Text="Modificar"></MenuItem>
+                            </ViewCell.ContextActions>
                             
+                            <!-- Fin idObra Para para CRUD -->
                                 
                             <!-- ============ Codigo para mostrar Obra ================-->
 
                             <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
-                                
-                                <!-- idObra Para para CRUD -->
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer CommandParameter="{Binding idObra}" Tapped="modificar"/>
-                                </Grid.GestureRecognizers>
-                                <!-- Fin idObra Para para CRUD -->
+
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="1"/>
@@ -50,7 +51,7 @@
                                 <!-- Responsable y platilla -->
                                 <StackLayout Grid.Row="2" Orientation="Horizontal">
                                     <Label Text="{Binding responsable}"></Label>
-                                    <Label Text="{Binding platilla}"></Label>
+                                    <Label Text="{Binding plantilla}"></Label>
                                 </StackLayout>
                             </Grid>
                             <!-- ============ FIN Codigo para mostrar Obra ================-->

@@ -24,26 +24,36 @@ namespace Reinco.Interfaces.Obra
             obraItem = new ObservableCollection<ObraItem>();
             CargarObraItem();
             obrasListView.ItemsSource = obraItem;
+
             agregarObra.Clicked += AgregarObra_Clicked;
         }
 
         public async void CargarObraItem()
         {
-            var client = new HttpClient();
-            var result = await client.GetAsync("http://192.168.1.37:80/ServicioObra.asmx/MostrarObras");
-            //recoge los datos json y los almacena en la variable resultado
-            var resultado = await result.Content.ReadAsStringAsync();
-            //si todo es correcto, muestra la pagina que el usuario debe ver
-            dynamic array = JsonConvert.DeserializeObject(resultado);
-
-            foreach (var item in array)
+            try
             {
-                obraItem.Add(new ObraItem
+                var client = new HttpClient();
+                var result = await client.GetAsync("http://192.168.1.37:80/ServicioObra.asmx/MostrarObras");
+                //recoge los datos json y los almacena en la variable resultado
+                var resultado = await result.Content.ReadAsStringAsync();
+                //si todo es correcto, muestra la pagina que el usuario debe ver
+                dynamic array = JsonConvert.DeserializeObject(resultado);
+
+                foreach (var item in array)
                 {
-                    nombre = item.nombre.ToString(),
-                    responsable = "nombre del responsable",
-                    platilla = "PLANTILLAS",
-                });
+                    obraItem.Add(new ObraItem
+                    {
+                        idObra = item.idObra,
+                        nombre = item.nombre,
+                        codigo = item.codigo,
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
         
@@ -53,22 +63,18 @@ namespace Reinco.Interfaces.Obra
             Navigation.PushAsync(new AgregarObra());
         }
 
-        // ===================// Modificar Obra CRUD //====================//
-        public void modificar(object sender, EventArgs e)
+        // ===================// eliminar Obra CRUD //====================// eliminar
+        public void eliminar(object sender, EventArgs e)
         {
-            // var mi = ((TapGestureRecognizer)sender);
-            try
-            {
-                var mi = ((TapGestureRecognizer)sender);
-                var id = mi.CommandParameter;
-            }
-            catch (Exception ex)
-            {
-                DisplayAlert("More Context Action", ex.Message, "OK");
-            }
+            var idObra = ((MenuItem)sender).CommandParameter;
+            DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar");
+        }
+
+        // ===================// Modificar Obra CRUD //====================// actualizar
+        public void actualizar(object sender, EventArgs e)
+        {
             Navigation.PushAsync(new AgregarObra(e));
         }
-        
         // END ==
     }
 }

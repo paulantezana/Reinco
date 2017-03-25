@@ -12,6 +12,6 @@ namespace Reinco.Gestores
         public string nombre { get; set; }
         public string codigo { get; set; }
         public string responsable { get; set; }
-        public string platilla { get; set; }
+        public string plantilla { get; set; }
     }
 }

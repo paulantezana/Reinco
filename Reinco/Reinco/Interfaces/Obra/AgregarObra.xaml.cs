@@ -17,7 +17,6 @@ namespace Reinco.Interfaces.Obra
         public AgregarObra()
         {
             InitializeComponent();
-            eliminar.IsVisible = false;
             cancelar.Clicked += Cancelar_Clicked1;
         }
 
