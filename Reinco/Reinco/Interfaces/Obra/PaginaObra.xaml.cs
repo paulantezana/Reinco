@@ -27,7 +27,7 @@ namespace Reinco.Interfaces.Obra
 
             agregarObra.Clicked += AgregarObra_Clicked;
         }
-
+        #region==================cargar obras======================================
         public async void CargarObraItem()
         {
             try
@@ -56,25 +56,36 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
-        
+        #endregion
         // ===================// Navegar A la página AgregarObra.xaml //====================//
         private void AgregarObra_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AgregarObra());
         }
 
-        // ===================// eliminar Obra CRUD //====================// eliminar
-        public void eliminar(object sender, EventArgs e)
+        #region=======================eliminar obra====================================
+        public async void eliminar(object sender, EventArgs e)
         {
             var idObra = ((MenuItem)sender).CommandParameter;
-            DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar");
+            int IdObra = Convert.ToInt16(idObra);
+           bool respuesta= await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar","Cancelar");
+            using (var cliente = new HttpClient())
+            {
+                var result = await cliente.GetAsync("http://192.168.1.37/ServicioObra.asmx/EliminarObra?idObra="+ IdObra);
+                if (result.IsSuccessStatusCode)
+                {
+                    await App.Current.MainPage.DisplayAlert("Obra Eliminada", "La Obra ha sido eliminada correctamente.", "OK");
+                    return;
+                }
+            }
         }
-
-        // ===================// Modificar Obra CRUD //====================// actualizar
+        #endregion
+        #region ===================// Modificar Obra CRUD //====================
         public void actualizar(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AgregarObra(e));
+            var idObra = ((MenuItem)sender).CommandParameter;
+            Navigation.PushAsync(new AgregarObra(idObra));
         }
-        // END ==
+        #endregion
     }
 }

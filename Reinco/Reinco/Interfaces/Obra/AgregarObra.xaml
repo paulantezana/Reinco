@@ -7,10 +7,13 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
-                <Label Text="Nonbre De La Obra"></Label>
-                <Entry></Entry>
+                <Label Text="Código de la obra"></Label>
+                <Entry x:Name="codigo"></Entry>
             </StackLayout>
-
+            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                <Label Text="Nonbre De La Obra"></Label>
+                <Entry x:Name="nombre"></Entry>
+            </StackLayout>
 
             <!-- Asignar propietario de la obra-->
             <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource BoxColor}" Padding="8,20,8,20">
