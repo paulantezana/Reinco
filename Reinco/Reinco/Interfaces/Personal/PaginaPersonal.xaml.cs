@@ -26,7 +26,7 @@ namespace Reinco.Interfaces.Personal
             personalListView.ItemsSource = personalItem;
             agregarPersonal.Clicked += AgregarPersonal_Clicked;
         }
-
+        #region==================cargar usuarios==============================
         private async void CargarPersonalItem()
         {
             var client = new HttpClient();
@@ -49,7 +49,7 @@ namespace Reinco.Interfaces.Personal
                 });
             }
         }
-
+        #endregion
         private void AgregarPersonal_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AgregarPersonal());

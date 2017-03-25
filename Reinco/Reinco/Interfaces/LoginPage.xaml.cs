@@ -31,26 +31,30 @@ namespace Reinco.Interfaces
         {
             if (string.IsNullOrEmpty(usuario.Text)|| string.IsNullOrEmpty(password.Text))
             {
-                await dialogService.MostrarMensaje("Iniciar Sessión", "Los campos no deben estar vacios");
+                await dialogService.MostrarMensaje("Iniciar Sessión", "Los campos no deben estar vacios.");
                 return;
             }
             var client = new HttpClient();
             //envia por metodo get los datos introducidos en los textbox
             var result = await client.GetAsync("http://192.168.1.37:80/ServicioUsuario.asmx/Login?usuario=" +
                 usuario.Text + "&contrasenia=" + password.Text);
-            //si no existe el usuario, manda un mensaje de error
-            if (!result.IsSuccessStatusCode)
+            //si surge algun error con el estado del servicio, devuelve un error
+            if (!result.IsSuccessStatusCode )
             {
-                await App.Current.MainPage.DisplayAlert("error al iniciar sesion", "ingrese nuevamente sus datos", "OK");
+                await App.Current.MainPage.DisplayAlert("Error al iniciar sesión",
+                    "Problemas con la conexión, contáctese con el administrador.", "OK");
                 return;
             }
             //recoge los datos json y los almacena en la variable resultado
             var resultado = await result.Content.ReadAsStringAsync();
-            //si todo es correcto, muestra la pagina que el usuario debe ver
-            //List<Usuario> items = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
-            //DataTable dtUsuario = new DataTable();
             dynamic array = JsonConvert.DeserializeObject(resultado);
-            
+            //si no existe el usuario o la contraseña es incorrecta, devuelve mensaje de error
+            if (array.Count == 0)
+            {
+                await App.Current.MainPage.DisplayAlert("Error al iniciar sesión",
+                    "Usuario o clave incorrectos.", "OK");
+                return;
+            }
             App.Current.MainPage = new MainPage();
 
         }
