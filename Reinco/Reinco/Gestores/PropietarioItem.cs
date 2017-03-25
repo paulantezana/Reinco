@@ -8,7 +8,8 @@ namespace Reinco.Gestores
 {
     public class PropietarioItem
     {
-        public string fotoPerfil { get; set; }
+        public int idPropietario { get; set; }
         public string nombre { get; set; }
+        public string fotoPerfil { get; set; }
     }
 }

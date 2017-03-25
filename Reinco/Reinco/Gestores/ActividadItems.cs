@@ -8,7 +8,9 @@ namespace Reinco.Gestores
 {
     public class ActividadItems
     {
-        public string numeroActividad { get; set; }
-        public string titulo { get; set; }
+        public int idActividad { get; set; }
+        public string nombre { get; set; }
+        public string tolerancia { get; set; }
+        public byte enumera { get; set; }
     }
 }

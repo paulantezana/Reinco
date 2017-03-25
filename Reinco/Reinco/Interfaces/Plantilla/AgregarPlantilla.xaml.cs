@@ -15,12 +15,26 @@ namespace Reinco.Interfaces.Plantilla
     public partial class AgregarPlantilla : ContentPage
     {
         DialogService dialogService;
+
+        // ===================== Constructor Para Crear Plantilla =================== //
         public AgregarPlantilla()
         {
             InitializeComponent();
-            guardar.Clicked += Guardar_Clicked;
+            // servicios
             dialogService = new DialogService();
+
+            // Eventos
+            guardar.Clicked += Guardar_Clicked;
+            cancelar.Clicked += Cancelar_Clicked;
         }
+
+        
+        private void Cancelar_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
+
+        // ===================== Listar PLantillas ===================== //
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(codPlantilla.Text) || string.IsNullOrEmpty(nombrePlantilla.Text) )
@@ -40,5 +54,18 @@ namespace Reinco.Interfaces.Plantilla
                 }
             
         }
+        // ===================== Constructor Para Actualizar O Cambiar Plantilla ===================== //
+        public AgregarPlantilla(object idPlantilla)
+        {
+            InitializeComponent();
+            guardar.Text = "Guardar Cambios";
+            cancelar.Clicked += Cancelar_Clicked1;
+        }
+
+        private void Cancelar_Clicked1(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
+        // ===================== END
     }
 }

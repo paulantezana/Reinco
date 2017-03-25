@@ -15,13 +15,18 @@ namespace Reinco.Interfaces.Propietario
     public partial class AgregarPropietario : ContentPage
     {
         DialogService dialogService;
+        private object idPropietario;
+
+        // ===================== Constructor Para Crear Propietario ===================== //
         public AgregarPropietario()
         {
             InitializeComponent();
             guardar.Clicked += Guardar_Clicked;
             dialogService = new DialogService();
-            
+            // eventos
+            cancelar.Clicked += Cancelar_Clicked;
         }
+
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(nombrePropietario.Text) )
@@ -40,6 +45,20 @@ namespace Reinco.Interfaces.Propietario
                 }
             }
 
+        }
+        // ===================== Constructor Para Actualizar O Cambiar Propietario ===================== //
+        public AgregarPropietario(object idPropietario)
+        {
+            InitializeComponent();
+            this.idPropietario = idPropietario;
+            guardar.Text = "Guardar Cambios";
+            cancelar.Clicked += Cancelar_Clicked;
+        }
+
+        // Cacelar ============
+        private void Cancelar_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
         }
     }
 }
