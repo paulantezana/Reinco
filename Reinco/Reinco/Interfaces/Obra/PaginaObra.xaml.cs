@@ -17,6 +17,8 @@ namespace Reinco.Interfaces.Obra
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaObra : ContentPage
     {
+        HttpClient cliente = new HttpClient();
+
         public ObservableCollection<ObraItem> obraItem { get; set; }
         public PaginaObra()
         {
@@ -32,8 +34,7 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                var client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:80/ServicioObra.asmx/MostrarObras");
+                HttpResponseMessage result = await cliente.GetAsync("http://192.168.1.37:80/ServicioObra.asmx/MostrarObras");
                 //recoge los datos json y los almacena en la variable resultado
                 var resultado = await result.Content.ReadAsStringAsync();
                 //si todo es correcto, muestra la pagina que el usuario debe ver
