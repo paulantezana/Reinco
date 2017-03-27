@@ -36,7 +36,7 @@ namespace Reinco.Interfaces
             }
             var client = new HttpClient();
             //envia por metodo get los datos introducidos en los textbox
-            var result = await client.GetAsync("http://192.168.1.37:80/ServicioUsuario.asmx/Login?usuario=" +
+            var result = await client.GetAsync("http://192.168.1.37:8080/ServicioUsuario.asmx/Login?usuario=" +
                 usuario.Text + "&contrasenia=" + password.Text);
             //si surge algun error con el estado del servicio, devuelve un error
             if (!result.IsSuccessStatusCode )

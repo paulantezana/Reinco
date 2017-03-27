@@ -31,7 +31,7 @@ namespace Reinco.Interfaces.Propietario
             try
             {
                 var client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:80/ServicioPropietario.asmx/MostrarPropietarios");
+                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioPropietario.asmx/MostrarPropietarios");
                 //recoge los datos json y los almacena en la variable resultado
                 var resultado = await result.Content.ReadAsStringAsync();
                 //si todo es correcto, muestra la pagina que el usuario debe ver
