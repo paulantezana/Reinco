@@ -6,14 +6,15 @@
              >
     <ContentPage.Content>
         <StackLayout>
+            
+            
             <!-- ==================================================================================
             ========================== Interfas General Para Cada Usuario =========================
             =====================================================================================-->
             <StackLayout BackgroundColor="{StaticResource ColorPrincipal}" Padding="0,30,0,30">
-                <Label Text="bienvenid@" HorizontalOptions="Center" TextColor="#FFFFFF"></Label>
-                <Label x:Name="nombreUsuario" FontSize="40" HorizontalOptions="Center" TextColor="#FFFFFF"></Label>
-                <Label x:Name="apellidoUsuario" TextColor="#FFFFFF" HorizontalOptions="Center"></Label>
-                <Label x:Name="cargoUsuario" HorizontalOptions="Center"></Label>
+                <Label x:Name="nombreUsuario" FontSize="30" HorizontalOptions="Center" TextColor="#FFFFFF"></Label>
+                <Label x:Name="apellidoUsuario" TextColor="#FFFFFF" HorizontalOptions="Center" FontSize="20" Margin="0,-15,0,-5"></Label>
+                <Label x:Name="cargoUsuario" HorizontalOptions="Center" TextColor="#55FF55"></Label>
                 <Label x:Name="cargoUsuario2" IsVisible="False" HorizontalOptions="Center"></Label>
             </StackLayout>
             
@@ -22,9 +23,20 @@
             ====================== INterfas De Usuario Para el Administrador =====================
             =====================================================================================-->
             <StackLayout x:Name="interfazAdministrador">
-                <Label Text="Admnistrador O Gerente"></Label>
+                <!-- Textos de bienvenida -->
+                <Label Text="Bienvenido A REINCO" HorizontalOptions="Center" FontSize="Large" Margin="0,30,0,0" FontAttributes="Bold"></Label>
+                <Label Text="¿Que desa Hacer Hoy?" Margin="0,0,0,30" HorizontalOptions="Center"></Label>
+                
+                <!-- Botones de navegacion -->
+                
+                <Button x:Name="irObra" Text="Obras"  Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
+                <Button x:Name="irPersonal" Text="Personal"  Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
+                <Button x:Name="irPlantilla" Text="Plantillas" Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
+                <Button x:Name="irPropietario" Text="Propietarios" Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
             </StackLayout>
 
+            
+            
             
             <!-- =================================================================================
             ======================== INterfas De Usuario Para el Supervisor ======================
@@ -33,12 +45,12 @@
                 HasUnevenRows="True"
                 SeparatorVisibility="None"
                 Margin="8"
-                x:Name="tareaUsuarioListView">
+                x:Name="supervisarListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="OnMore" CommandParameter="{Binding id}"
+                                <MenuItem Clicked="supervisar" CommandParameter="{Binding id}"
                                           Text="Supervisar" />
                             </ViewCell.ContextActions>
                             <Grid 
@@ -77,12 +89,15 @@
             </ListView>
             
             
+            
             <!-- =================================================================================
             ======================= INterfas De Usuario Para el Responsable ======================
             =====================================================================================-->
             <StackLayout x:Name="interfazResponsable">
                 <Label Text="Nos sentimos muy contentos de tener un trabajador tan eficiente como usted. siga así y alcanzaremos el triunfo"></Label>
             </StackLayout>
+            
+            
             
         </StackLayout>
     </ContentPage.Content>

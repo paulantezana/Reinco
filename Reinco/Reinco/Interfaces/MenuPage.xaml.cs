@@ -13,52 +13,74 @@ namespace Reinco.Interfaces
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : ContentPage, ICloseApplication
     {
-        public ListView menuListView { get { return listView; } }
+        public ListView menuListView { get { return listView; } } // Metodo para cargar los menus
         public MenuPage()
         {
             InitializeComponent();
             var items = new List<MenuPrincipalItem>();
-            items.Add(new MenuPrincipalItem
-            {
-                Titulo = "Perfil",
-                Icono = "ic_profile.png",
-                TargetType = typeof(PaginaUsuario)
-            });
 
-            if (Application.Current.Properties.ContainsKey("cargoUsuario"))
+
+            if (Application.Current.Properties.ContainsKey("cargoUsuario")) // condisional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
             {
-                string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-                if (cargoUsuario == "Administrador")
-                {
+
+
+                string cargo = Application.Current.Properties["cargoUsuario"].ToString(); // Recuperando el cargo string y alamacenando en una variable cargo
+
+
+
+                #region  ========================== Menu Prfil Importante para cada tipo de usuario ==========================
                     items.Add(new MenuPrincipalItem
                     {
-                        Titulo = "Obras",
+                        Titulo = "Perfil",
                         Icono = "ic_profile.png",
-                        TargetType = typeof(PaginaObra)
+                        TargetType = typeof(PaginaUsuario)
                     });
-                    items.Add(new MenuPrincipalItem
+                #endregion
+               
+
+
+                #region ==========================  Menu Visible solo para los supervisores ==========================
+                    if (cargo == "Administrador")
                     {
-                        Titulo = "Personal",
-                        Icono = "ic_profile.png",
-                        TargetType = typeof(PaginaPersonal)
-                    });
-                    items.Add(new MenuPrincipalItem
-                    {
-                        Titulo = "Plantillas",
-                        Icono = "ic_profile.png",
-                        TargetType = typeof(PaginaPlantilla)
-                    });
-                    items.Add(new MenuPrincipalItem
-                    {
-                        Titulo = "Propietario",
-                        Icono = "ic_profile.png",
-                        TargetType = typeof(PaginaPropietario)
-                    });
-                }
-                
+                        items.Add(new MenuPrincipalItem
+                        {
+                            Titulo = "Obras",
+                            Icono = "ic_profile.png",
+                            TargetType = typeof(PaginaObra)
+                        });
+                        items.Add(new MenuPrincipalItem
+                        {
+                            Titulo = "Personal",
+                            Icono = "ic_profile.png",
+                            TargetType = typeof(PaginaPersonal)
+                        });
+                        items.Add(new MenuPrincipalItem
+                        {
+                            Titulo = "Plantillas",
+                            Icono = "ic_profile.png",
+                            TargetType = typeof(PaginaPlantilla)
+                        });
+                        items.Add(new MenuPrincipalItem
+                        {
+                            Titulo = "Propietario",
+                            Icono = "ic_profile.png",
+                            TargetType = typeof(PaginaPropietario)
+                        });
+                    }
+
+                #endregion
+
+
+
+                #region ========================== Menu Visible solo para los Responsables ==========================
+                    
+                #endregion
+
+
+                listView.ItemsSource = items; // listando el menu
+
+
             }
-            
-            listView.ItemsSource = items;
             
         }
         public void cerrarAplicacin()
@@ -69,5 +91,6 @@ namespace Reinco.Interfaces
 
     internal interface ICloseApplication
     {
+        
     }
 }

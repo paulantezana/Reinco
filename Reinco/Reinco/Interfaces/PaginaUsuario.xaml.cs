@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Reinco.Gestores;
+using Reinco.Interfaces.Supervision;
+using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,47 +10,97 @@ namespace Reinco.Interfaces
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaUsuario : ContentPage
     {
-        // public ObservableCollection<SupervisionItem> tareaUsuarioItems { get; set; }
+        public ObservableCollection<SupervisionItem> supervisionItem { get; set; } // Medo de colecion observable para listar Las Obras A Supervisar
         public PaginaUsuario()
         {
-            InitializeComponent();
-            // tareaUsuarioItems = new ObservableCollection<TareaUsuarioItems>();
-            //tareaUsuarioListView.ItemsSource = tareaUsuarioItems;
-            // tareaUsuarioListView.IsPullToRefreshEnabled = true;
-            //CargarTareaUsuarioItems();
+            InitializeComponent(); // inicializa todo los componentes de la UI
 
-            // Cargando datos de usuario logeado
-            if (Application.Current.Properties.ContainsKey("nombreUsuario"))
+            if (Application.Current.Properties.ContainsKey("cargoUsuario")) // condisional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
             {
-                nombreUsuario.Text = Application.Current.Properties["nombreUsuario"].ToString();
+                string cargo = Application.Current.Properties["cargoUsuario"].ToString(); // Recuperando el cargo string y alamacenando en una variable cargo
+
+                #region ++++++++++++++++++++++++++++++++++++++ General ++++++++++++++++++++++++++++++++++++++
+                // --------------- Imprimiendo datos del usuario logeado --------------- //
+                    if (Application.Current.Properties.ContainsKey("nombreUsuario"))
+                    {
+                        nombreUsuario.Text = Application.Current.Properties["nombreUsuario"].ToString();
+                    }
+                    if (Application.Current.Properties.ContainsKey("apellidoUsuario"))
+                    {
+                        apellidoUsuario.Text = Application.Current.Properties["apellidoUsuario"].ToString();
+                    }
+                    cargoUsuario.Text = cargo;
+                #endregion
+
+
+                #region //============================ Zona Administrador ===================================//
+                    if (cargo == "Administrador")
+                    {
+                        supervisarListView.IsEnabled = false;
+                        supervisarListView.IsVisible = false;
+                        interfazResponsable.IsVisible = false;
+                        }
+                #endregion
+
+
+
+                #region ++ =============================== Zona Responsable =============================== ++
+                    if (cargo == "Responsable")
+                    {
+                        interfazAdministrador.IsVisible = false;
+                        supervisarListView.IsEnabled = false;
+                        supervisarListView.IsVisible = false;
+                    }
+
+                #endregion
+
+
+
+                #region ** =============================== Zona Supervision =============================== **
+                    if (cargo == "Supervision")
+                    {
+                        interfazAdministrador.IsVisible = false;
+                        interfazResponsable.IsVisible = false;
+                        supervisionItem = new ObservableCollection<SupervisionItem>();
+                        // +-----+ Cargando Obras A supervisar +-----+
+                        CargarSupervisionItem();
+                        // +-----+ Listando la obras a supervisar  +-----+
+                        supervisarListView.ItemsSource = supervisionItem;
+                    }
+                #endregion
+
+
             }
-            if (Application.Current.Properties.ContainsKey("apellidoUsuario"))
-            {
-                apellidoUsuario.Text = Application.Current.Properties["apellidoUsuario"].ToString();
-            }
-            if (Application.Current.Properties.ContainsKey("cargoUsuario"))
-            {
-                cargoUsuario.Text = Application.Current.Properties["cargoUsuario"].ToString();
-            }
-            // --
         }
-        public void OnMore(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
-        }       
-        //private void CargarTareaUsuarioItems()
-        //{
-        //    for (int i = 0; i < 50; i++)
-        //    {
-        //        tareaUsuarioItems.Add(new TareaUsuarioItems
-        //        {
-        //            titulo = "Titulo De La Tarea",
-        //            descripcion = "Descripcion De La Tarea",
-        //            numeroTarea = Convert.ToString(i),
-        //            id = Convert.ToString(i),
-        //        });
-        //    }
-        //}
+
+
+        #region // =============================== Iniciar Supervision =============================== //
+        public void supervisar(object sender, EventArgs e)
+            {
+                var idupervisar = ((MenuItem)sender).CommandParameter.ToString();
+                DisplayAlert("Supervisar", idupervisar + " more context action", "OK");
+                Navigation.PushAsync(new PaginaSupervision());
+            } 
+        #endregion
+
+
+
+        #region // =============================== Cargando Datos Con Iteracion Para Supervision =============================== //
+        private void CargarSupervisionItem()
+            {
+                for (int i = 0; i < 50; i++)
+                {
+                    supervisionItem.Add(new SupervisionItem
+                    {
+                        titulo = "Titulo De La Tarea",
+                        descripcion = "Descripcion De La Tarea",
+                        numeroTarea = Convert.ToString(i),
+                        id = Convert.ToString(i),
+                    });
+                }
+            }
+        #endregion
+
+
     }
 }
