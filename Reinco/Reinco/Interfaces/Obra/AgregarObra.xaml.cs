@@ -29,39 +29,53 @@ namespace Reinco.Interfaces.Obra
 
             // cargando la listas
             CargarPropietarioItem();
-            CargarTareaUsuarioItems();
+            CargarPersonalItem();
 
             // renderisando las listas
             asignarPropietario.ItemsSource = propietarioItem;
             asignarResponsable.ItemsSource = personalItem;
 
             // Eventos
-            cancelar.Clicked += Cancelar_Clicked1;
+            cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += Guardar_Clicked;
         }
-
         #region Metodos Para Listar Personal Y Propietarios
-        private void CargarTareaUsuarioItems()
+        private async void CargarPersonalItem()
         {
-            for (int i = 0; i < 15; i++)
+            try
             {
-                personalItem.Add(new PersonalItem
+                for (int i = 0; i < 15; i++)
                 {
-                    idUsuario = i,
-                    nombres = "Nombre Usuario",
-                });
+                    personalItem.Add(new PersonalItem
+                    {
+                        idUsuario = i,
+                        nombres = "Nombre Personal " + Convert.ToString(i),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
 
-        private void CargarPropietarioItem()
+        private async void CargarPropietarioItem()
         {
-            for (int i = 0; i < 15; i++)
+            try
             {
-                propietarioItem.Add(new PropietarioItem
+                for (int i = 0; i < 15; i++)
                 {
-                    idPropietario = i,
-                    nombre = "Nombre Propietario",
-                });
+                    propietarioItem.Add(new PropietarioItem
+                    {
+                        idPropietario = i,
+                        nombre = "Propietario " + Convert.ToString(i),
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         } 
         #endregion
@@ -87,13 +101,8 @@ namespace Reinco.Interfaces.Obra
         }
 
         #region Navegacion para el voton cancelar
-        // boton Cancelar de crear obra
-        private void Cancelar_Clicked1(object sender, EventArgs e)
-        {
-            Navigation.PopAsync();
-        }
 
-        // boton cancelar de modificar y eliminar obra
+        // boton cancelar
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();
@@ -107,6 +116,7 @@ namespace Reinco.Interfaces.Obra
             guardar.Clicked += modificarObra;
             IdObra = Convert.ToInt16(idObra);
         }
+        // Modificar Obra
         private async void modificarObra(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
@@ -127,5 +137,6 @@ namespace Reinco.Interfaces.Obra
             }
 
         }
+        // End
     }
 }

@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gestores\ActividadItems.cs" />
+    <Compile Include="Gestores\AsignarPlantillaSupervisorItem.cs" />
     <Compile Include="Gestores\CPlantilla.cs" />
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
       <DependentUpon>AgregarObra.xaml</DependentUpon>

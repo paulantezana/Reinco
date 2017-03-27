@@ -26,11 +26,16 @@
                                     <ColumnDefinition Width="40"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Text="{Binding laspas}"></Label>
+                                
+                                <Label 
+                                    Grid.Column="0" Text="{Binding codigoPlantilla}" 
+                                    VerticalOptions="Center"></Label>
+                                
                                 <StackLayout Grid.Column="1">
-                                    <Label Text="{Binding algo}"></Label>
-                                    <Label Text="{Binding algo}"></Label>
+                                    <Label Text="{Binding nombreObra}"></Label>
+                                    <Label Text="{Binding supervisorObra}"></Label>
                                 </StackLayout>
+                                
                                 <!-- END -->
                             </Grid>
                         </ViewCell>

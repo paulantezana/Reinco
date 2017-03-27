@@ -16,41 +16,43 @@
             </StackLayout>
 
             <!-- Asignar propietario de la obra-->
-            <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource BoxColor}" Padding="8,20,8,20">
+            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                 <control:BindablePicker
-                  Title="Asigne Un Propietario"
-                  DisplayMemberPath="responsable"
-                  SelectedValuePath="nombre"
-                  SelectedValue ="{Binding Path=nombre, Mode=TwoWay}"
-                  HorizontalOptions="FillAndExpand"
-                  x:Name="asignarPropietario"
-                  VerticalOptions="Center"/>
+                    Title="Asigne Un Propietario"
+                    DisplayMemberPath="nombre"
+                    SelectedValuePath="nombre"
+                    SelectedValue ="{Binding Path=nombre, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    x:Name="asignarPropietario"
+                    VerticalOptions="Center"/>
             </StackLayout>
 
 
 
 
-            <!-- Añadir Responsable de la Obra -->
-            <StackLayout  BackgroundColor="{StaticResource BoxColor}" Padding="8,20,8,20">
+            <!-- Añadir Responsable de la Obra  -->
+            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                 <control:BindablePicker
-                  Title="Asigne Un Propietario"
-                  DisplayMemberPath="responsable"
-                  SelectedValuePath="titulo"
-                  SelectedValue ="{Binding Path=titulo, Mode=TwoWay}"
-                  HorizontalOptions="FillAndExpand"
-                  x:Name="asignarResponsable"
-                  VerticalOptions="Center"/>
+                    Title="Asigne Un Responsable"
+                    DisplayMemberPath="nombres"
+                    SelectedValuePath="nombres"
+                    SelectedValue ="{Binding Path=nombres, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    x:Name="asignarResponsable"
+                    VerticalOptions="Center"/>
             </StackLayout>
-
-
-
+                
+            <!-- Selescionados -->
+            <Label x:Name="sePropietario"></Label>
+            <Label x:Name="seResponsable"></Label>
+            <Button x:Name="cargarSe" Text="Cargar Se"></Button>
 
             <!-- Buttons Action -->
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
                 <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
             </StackLayout>
-            
+            <!-- End -->
             
         </StackLayout>
     </ContentPage.Content>
