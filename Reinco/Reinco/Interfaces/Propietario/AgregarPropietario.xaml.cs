@@ -38,9 +38,12 @@ namespace Reinco.Interfaces.Propietario
             using (var cliente = new HttpClient())
             {
                 var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPropietario.asmx/IngresarPropietario?propietario=" + nombrePropietario.Text );
+                var json = await result.Content.ReadAsStringAsync();
+                string mensaje = Convert.ToString(json);
+
                 if (result.IsSuccessStatusCode)
                 {
-                    await App.Current.MainPage.DisplayAlert("Agregar Propietario", "Propietario agregado satisfactoriamente", "OK");
+                    await App.Current.MainPage.DisplayAlert("Agregar Actividad", mensaje, "OK");
                     return;
                 }
             }

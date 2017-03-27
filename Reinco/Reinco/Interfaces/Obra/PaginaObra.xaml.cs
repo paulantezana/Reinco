@@ -71,10 +71,13 @@ namespace Reinco.Interfaces.Obra
            bool respuesta= await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar","Cancelar");
             using (var cliente = new HttpClient())
             {
-                var result = await cliente.GetAsync("http://192.168.1.37/ServicioObra.asmx/EliminarObra?idObra="+ IdObra);
+                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioObra.asmx/EliminarObra?idObra="+ IdObra);
+                var json = await result.Content.ReadAsStringAsync();
+                string mensaje = Convert.ToString(json);
+
                 if (result.IsSuccessStatusCode)
                 {
-                    await App.Current.MainPage.DisplayAlert("Obra Eliminada", "La Obra ha sido eliminada correctamente.", "OK");
+                    await App.Current.MainPage.DisplayAlert("Eliminar obra", mensaje, "OK");
                     return;
                 }
             }

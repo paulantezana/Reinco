@@ -105,13 +105,16 @@ namespace Reinco.Interfaces.Obra
             
                 using (var cliente = new HttpClient())
                 {
-                    var result = await cliente.GetAsync("http://192.168.1.37/ServicioObra.asmx/IngresarObra?codigo=" + codigo.Text + "&nombreObra=" + nombre.Text);
+                    var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioObra.asmx/IngresarObra?codigo=" + codigo.Text + "&nombreObra=" + nombre.Text);
+                    var json = await result.Content.ReadAsStringAsync();
+                    string mensaje = Convert.ToString(json);
+
                     if (result.IsSuccessStatusCode)
                     {
-                        await App.Current.MainPage.DisplayAlert("Obra Agregada", "Obra agregada satisfactoriamente.", "OK");
+                        await App.Current.MainPage.DisplayAlert("Agregar Obra", mensaje, "OK");
                         return;
                     }
-                }
+            }
             
         }
 
@@ -136,19 +139,22 @@ namespace Reinco.Interfaces.Obra
         {
             if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
             {
-                await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
+                await DisplayAlert("Modificar Obra", "Debe rellenar todos los campos.", "OK");
                 return;
             }
 
             using (var cliente = new HttpClient())
             {
-                var result = await cliente.GetAsync("http://192.168.1.37/ServicioObra.asmx/ModificarObra?idObra="
+                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioObra.asmx/ModificarObra?idObra="
                     + IdObra + "&codigo=" + codigo.Text+ "&nombreObra=" + nombre.Text);
-                if (result.IsSuccessStatusCode)
-                {
-                    await App.Current.MainPage.DisplayAlert("Obra Modificada", "Obra modificada satisfactoriamente.", "OK");
-                    return;
-                }
+                    var json = await result.Content.ReadAsStringAsync();
+                    string mensaje = Convert.ToString(json);
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Modificar Obra", mensaje, "OK");
+                        return;
+                    }
             }
 
         }

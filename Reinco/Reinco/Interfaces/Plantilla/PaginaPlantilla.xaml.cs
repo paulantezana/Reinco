@@ -63,10 +63,23 @@ namespace Reinco.Interfaces.Plantilla
         }
 
         // ===================// Eliminar Plantilla CRUD //====================// eliminar
-        public void eliminar(object sender, EventArgs e)
+        public async void eliminar(object sender, EventArgs e)
         {
             var idPlantilla = ((MenuItem)sender).CommandParameter;
-            DisplayAlert("Eliminar", "Eliminar idPlantilla = " + idPlantilla, "Aceptar");
+            int IdPlantilla = Convert.ToInt16(idPlantilla);
+            bool respuesta = await DisplayAlert("Eliminar", "Eliminar Plantilla = " + IdPlantilla, "Aceptar", "Cancelar");
+            using (var cliente = new HttpClient())
+            {
+                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPlantilla.asmx/EliminarPlantilla?idPlantilla=" + IdPlantilla);
+                var json = await result.Content.ReadAsStringAsync();
+                string mensaje = Convert.ToString(json);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    await App.Current.MainPage.DisplayAlert("Eliminar Plantilla", mensaje, "OK");
+                    return;
+                }
+            }
         }
 
         // ===================// Modificar Plantilla CRUD //====================// actualizar
