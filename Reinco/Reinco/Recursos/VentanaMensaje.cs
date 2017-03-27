@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reinco.Recursos
 {
-    public class DialogService
+    public class VentanaMensaje
     {
         public async Task MostrarMensaje(string titulo, string mensaje)
         {

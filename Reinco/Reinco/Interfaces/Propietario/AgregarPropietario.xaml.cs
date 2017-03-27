@@ -14,7 +14,7 @@ namespace Reinco.Interfaces.Propietario
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgregarPropietario : ContentPage
     {
-        DialogService dialogService;
+        VentanaMensaje dialogService;
         private object idPropietario;
 
         // ===================== Constructor Para Crear Propietario ===================== //

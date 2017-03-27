@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgregarPlantilla : ContentPage
     {
+
         int IdPlantilla;
         DialogService dialogService;
 
@@ -29,8 +30,6 @@ namespace Reinco.Interfaces.Plantilla
             guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
         }
-
-        
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();
