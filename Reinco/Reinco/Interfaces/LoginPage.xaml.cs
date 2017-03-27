@@ -29,7 +29,7 @@ namespace Reinco.Interfaces
         
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(usuario.Text)|| string.IsNullOrEmpty(password.Text))
+            if (string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(password.Text))
             {
                 await dialogService.MostrarMensaje("Iniciar Sessión", "Los campos no deben estar vacios.");
                 return;
@@ -39,7 +39,7 @@ namespace Reinco.Interfaces
             var result = await client.GetAsync("http://192.168.1.37:80/ServicioUsuario.asmx/Login?usuario=" +
                 usuario.Text + "&contrasenia=" + password.Text);
             //si surge algun error con el estado del servicio, devuelve un error
-            if (!result.IsSuccessStatusCode )
+            if (!result.IsSuccessStatusCode)
             {
                 await App.Current.MainPage.DisplayAlert("Error al iniciar sesión",
                     "Problemas con la conexión, contáctese con el administrador.", "OK");
