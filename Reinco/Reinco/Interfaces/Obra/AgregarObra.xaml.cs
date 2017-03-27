@@ -1,4 +1,5 @@
-﻿using Reinco.Gestores;
+﻿using Newtonsoft.Json;
+using Reinco.Gestores;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -44,12 +45,19 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                for (int i = 0; i < 15; i++)
+                HttpClient client = new HttpClient();
+                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioUsuario.asmx/MostrarUsuarios");
+                //recoge los datos json y los almacena en la variable resultado
+                var resultado = await result.Content.ReadAsStringAsync();
+                //si todo es correcto, muestra la pagina que el usuario debe ver
+                dynamic array = JsonConvert.DeserializeObject(resultado);
+
+                foreach (var item in array)
                 {
                     personalItem.Add(new PersonalItem
                     {
-                        idUsuario = i,
-                        nombres = "Nombre Personal " + Convert.ToString(i),
+                        idUsuario = item.idUsuario,
+                        nombres = item.nombres,
                     });
                 }
             }
@@ -63,12 +71,19 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                for (int i = 0; i < 15; i++)
+                var client = new HttpClient();
+                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioPropietario.asmx/MostrarPropietarios");
+                //recoge los datos json y los almacena en la variable resultado
+                var resultado = await result.Content.ReadAsStringAsync();
+                //si todo es correcto, muestra la pagina que el usuario debe ver
+                dynamic array = JsonConvert.DeserializeObject(resultado);
+
+                foreach (var item in array)
                 {
                     propietarioItem.Add(new PropietarioItem
                     {
-                        idPropietario = i,
-                        nombre = "Propietario " + Convert.ToString(i),
+                        idPropietario = item.idPropietario,
+                        nombre = item.nombre,
                     });
                 }
 

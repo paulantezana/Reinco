@@ -33,7 +33,7 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 var client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:80/ServicioObra.asmx/MostrarObras");
+                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioObra.asmx/MostrarObras");
                 //recoge los datos json y los almacena en la variable resultado
                 var resultado = await result.Content.ReadAsStringAsync();
                 //si todo es correcto, muestra la pagina que el usuario debe ver

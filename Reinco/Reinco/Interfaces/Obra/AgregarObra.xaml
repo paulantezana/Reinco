@@ -41,11 +41,7 @@
                     x:Name="asignarResponsable"
                     VerticalOptions="Center"/>
             </StackLayout>
-                
-            <!-- Selescionados -->
-            <Label x:Name="sePropietario"></Label>
-            <Label x:Name="seResponsable"></Label>
-            <Button x:Name="cargarSe" Text="Cargar Se"></Button>
+            
 
             <!-- Buttons Action -->
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">

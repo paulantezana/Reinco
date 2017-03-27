@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout>
-                <Button x:Name="agregarObra" Text="Agregar Obra" Style="{StaticResource BontonPrimario}"></Button>
+                <Button x:Name="agregarObra" Text="Crear Obra" Style="{StaticResource BontonPrimario}"></Button>
             </StackLayout>
             <ListView
                 x:Name="obrasListView"
