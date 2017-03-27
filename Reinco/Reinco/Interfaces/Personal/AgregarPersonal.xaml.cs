@@ -14,12 +14,12 @@ namespace Reinco.Interfaces.Personal
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgregarPersonal : ContentPage
     {
-        DialogService dialogService;
+        VentanaMensaje dialogService;
         public AgregarPersonal()
         {
             InitializeComponent();
             guardar.Clicked += Guardar_Clicked;
-            dialogService = new DialogService();
+            dialogService = new VentanaMensaje();
         }
         private async void Guardar_Clicked(object sender, EventArgs e)
         {

@@ -14,12 +14,12 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgregarPlantilla : ContentPage
     {
-        DialogService dialogService;
+        VentanaMensaje dialogService;
         public AgregarPlantilla()
         {
             InitializeComponent();
             guardar.Clicked += Guardar_Clicked;
-            dialogService = new DialogService();
+            dialogService = new VentanaMensaje();
         }
         private async void Guardar_Clicked(object sender, EventArgs e)
         {

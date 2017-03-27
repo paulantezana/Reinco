@@ -7,37 +7,52 @@ using Xamarin.Forms;
 using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
+using Reinco.Recursos;
+using System.Text.RegularExpressions;
 
 namespace Reinco
 {
     public partial class App : Application
     {
         public static string ip;
-        public static string puerto = "8080";
+        public static string puerto = "8021";
+        public VentanaMensaje mensaje;
         public App()
         {
             //recupero por única vez cuando entro a la aplicación el IP de servidor
-            string ip = ObtenerIP("http://www.codeperu.com/ip/ip.txt").ToString();
+            mensaje = new VentanaMensaje();
+            //ObtenerIpAsync();
             //ip = "192.168.1.111";
+            ip = "192.168.1.37";
             InitializeComponent();
             MainPage = new LoginPage();
         }
-        public static async Task<string> ObtenerIP(string url)
+        public async void ObtenerIpAsync()
+        {
+            await LeerUrlAsync("ip/ip.txt");//http://...
+        }
+        public async Task LeerUrlAsync(string url)
         {
             try
             {
-                string contenido = "";
-                var httpClient = new HttpClient();
-                HttpResponseMessage message = (HttpResponseMessage)await httpClient.GetAsync(url);
+                //await Task.Delay(40000);//borrar
+                var cliente = new HttpClient();
+                var message = await cliente.GetAsync(url);
                 if (message.StatusCode == HttpStatusCode.OK)
                 {
-                    contenido = await message.Content.ReadAsStringAsync();
+                    ip = await message.Content.ReadAsStringAsync();
+                    await mensaje.MostrarMensaje("Información", ip);//borrar
+                    if (!Regex.IsMatch(ip, @"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"))//validar con lenguajes regulares 192.123.12.32
+                        await mensaje.MostrarMensaje("Error", "Error: El URL está respondiendo, sin embargo el servidor no está actualizando su información");
                 }
-                return contenido;
+                else
+                {
+                    await mensaje.MostrarMensaje("Error", message.ToString());
+                }
             }
             catch (Exception e)
             {
-                return e.ToString();
+                await mensaje.MostrarMensaje("Error", e.ToString());
             }
         }
         protected override void OnStart()

@@ -14,12 +14,12 @@ namespace Reinco.Interfaces.Propietario
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgregarPropietario : ContentPage
     {
-        DialogService dialogService;
+        VentanaMensaje dialogService;
         public AgregarPropietario()
         {
             InitializeComponent();
             guardar.Clicked += Guardar_Clicked;
-            dialogService = new DialogService();
+            dialogService = new VentanaMensaje();
             
         }
         private async void Guardar_Clicked(object sender, EventArgs e)
