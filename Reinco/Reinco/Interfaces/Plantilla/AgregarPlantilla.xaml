@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Reinco.Interfaces.Plantilla.AgregarPlantilla">
+             x:Class="Reinco.Interfaces.Plantilla.AgregarPlantilla"
+             Title="PLANTILLA">
     <ContentPage.Content>
-        <StackLayout Padding="10" Spacing="15">
+
+        <StackLayout Padding="8" Spacing="15">
             <!-- Plantilla Codigo -->
             <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                 <Label Text="Codigo Plantilla"></Label>
@@ -20,6 +22,8 @@
                 <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
                 <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
             </StackLayout>
+            <!-- End -->
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

@@ -1,27 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Reinco.Interfaces.Plantilla.PaginaActividad">
+             BackgroundColor="{StaticResource BackgroundColor}"
+             x:Class="Reinco.Interfaces.Plantilla.PaginaActividad"
+             Title="ACTIVIDAD">
     <ContentPage.Content>
-        <ListView ItemsSource="{Binding actividadItems}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label
-                                Grid.Column="0"
-                                Text="{Binding numeroActividad}"></Label>
-                            <Label
-                                Text="{Binding titulo}"
-                                Grid.Column="1"></Label>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <StackLayout Padding="8">
+            
+            <StackLayout>
+                <Button x:Name="agregarActividad" Text="Agregar Nueva Actividad" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            </StackLayout>
+
+            <ListView x:Name="actividadListView" HasUnevenRows="True" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!-- Eventos -->
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idActividad}" Text="Modificar"/>
+                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idActividad}" Text="Eliminar" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <!-- Contenido -->
+                            <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    VerticalOptions="Center"
+                                    Text="{Binding enumera}" Grid.Column="0"></Label>
+                                
+                                <StackLayout VerticalOptions="Center" Grid.Column="1">
+                                    <Label
+                                        Text="{Binding nombre}"
+                                        FontAttributes="Bold"></Label>
+                                    <Label
+                                        Text="{Binding tolerancia}"></Label>
+                                </StackLayout>
+                            </Grid>
+                            <!-- END Contenido-->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

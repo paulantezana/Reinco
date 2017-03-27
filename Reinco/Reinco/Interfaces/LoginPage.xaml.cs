@@ -1,4 +1,3 @@
-﻿
 using Newtonsoft.Json;
 using Reinco.Gestores;
 using Reinco.Recursos;
@@ -66,7 +65,11 @@ namespace Reinco.Interfaces
                     }
                     else
                     { 
-                        //código Paul
+                        // ---------- Almacenando Datos Usuario En Local -------------------//
+                        Application.Current.Properties["idUsuario"] = result[0].idUsuario;
+                        Application.Current.Properties["nombreUsuario"] = result[0].nombres;
+                        Application.Current.Properties["apellidoUsuario"] = result[0].apellidos;
+                        Application.Current.Properties["cargoUsuario"] = result[0].cargo;
                         App.Current.MainPage = new MainPage();
                     }
                 }
@@ -84,7 +87,6 @@ namespace Reinco.Interfaces
                 await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: "+ex.ToString());
                 enviar.IsEnabled = true;
             }
-          
         }
     }
 }

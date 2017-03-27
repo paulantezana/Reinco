@@ -25,13 +25,12 @@
                 WidthRequest="30"
                 >
             </Image>
-            <Label 
-                Text="Salir"
-                HeightRequest="20"
-                VerticalOptions="Center"
-                TextColor="{StaticResource ColorMenuFuente}"
-                >
-            </Label>
+            <Button 
+                Text="Cerrar Sesión" 
+                Clicked="cerrarAplicacin" 
+                BackgroundColor="Transparent" 
+                BorderWidth="0"
+                TextColor="#FFFFFF"></Button>
         </StackLayout>
     </StackLayout>
 </ContentPage>

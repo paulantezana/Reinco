@@ -8,8 +8,8 @@ namespace Reinco.Gestores
 {
     public class PlantillaLista
     {
+        public int idPlantilla { get; set; }
         public string codigo { get; set; }
-        public string nuemroItems { get; set; }
-        public string agregarActividad { get; set; }
+        public string nombre { get; set; }
     }
 }

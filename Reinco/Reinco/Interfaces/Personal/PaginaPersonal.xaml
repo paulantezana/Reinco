@@ -14,6 +14,12 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <!-- Eventos -->
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idUsuario}" Text="Eliminar"></MenuItem>
+                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idUsuario}" Text="Modificar"></MenuItem>
+                            </ViewCell.ContextActions>
+                            <!-- END Eventos -->
                             <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -21,7 +27,10 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Source="{Binding fotoPerfil}"  Grid.Column="0"></Image>
                                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Column="1">
-                                    <Label  Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding cip}"></Label>
+                                        <Label  Text="{Binding nombres}" FontAttributes="Bold"></Label>
+                                    </StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout Orientation="Horizontal">
                                             <Label  Text="{Binding cargo1}"></Label>

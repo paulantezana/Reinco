@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Plantilla.PaginaPlantilla"
+             BackgroundColor="{StaticResource BackgroundColor}"
              Title="PLANTILLAS">
     <ContentPage.Content>
         <StackLayout Padding="8">
@@ -9,30 +10,30 @@
             <StackLayout>
                 <Button x:Name="agregarPlantilla" Text="Añadir Nuevo Plantilla" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
             </StackLayout>
-            
-            <ListView x:Name="plantillaListView">
+
+            <ListView x:Name="plantillaListView" HasUnevenRows="True" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
+                            
+                            <!-- Eventos -->
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="actividades" CommandParameter="{Binding idPlantilla}" Text="Actividades"/>
+                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idPlantilla}" Text="Modificar"/>
+                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idPlantilla}" Text="Eliminar" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            
+                            <!-- Grid -->
+                            <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="100"/>
                                 </Grid.ColumnDefinitions>
-                                <Image
-                                    Grid.Column="0"
-                                    Source="icon.png"></Image>
-                                <StackLayout
-                                    Grid.Column="1">
-                                    <Label Text="tex"></Label>
-                                    <Label Text="tex"></Label>
-                                </StackLayout>
-                                <Button 
-                                    Text="Items" 
-                                    Grid.Column="2"
-                                    x:Name="agregarActividad"></Button>
+                                <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
+                                <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
                             </Grid>
+                            <!-- End Grid -->
+                            
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

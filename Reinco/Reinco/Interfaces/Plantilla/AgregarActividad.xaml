@@ -2,58 +2,31 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Plantilla.AgregarActividad"
-             Title="ACTIVIDADES"
-             >
+             Title="ACTIVIDADES">
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-            
-                <Label Text="ITEM1"></Label>
-                <Entry x:Name="item1"></Entry>
+        <ScrollView Padding="8">
 
-                <Label Text="ITEM2"></Label>
-                <Entry x:Name="item2"></Entry>
+            <StackLayout Spacing="15">
 
-                <Label Text="ITEM3"></Label>
-                <Entry x:Name="item3"></Entry>
+                <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                    <Label Text="Nombre del item"></Label>
+                    <Entry x:Name="nombre"></Entry>
+                </StackLayout>
 
-                <Label Text="ITEM4"></Label>
-                <Entry x:Name="item4"></Entry>
+                <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                    <Label Text="Tolerancia"></Label>
+                    <Entry x:Name="tolerancia"></Entry>
+                </StackLayout>
 
-                <Label Text="ITEM5"></Label>
-                <Entry x:Name="item5"></Entry>
-
-                <Label Text="ITEM6"></Label>
-                <Entry x:Name="item6"></Entry>
-
-                <Label Text="ITEM7"></Label>
-                <Entry x:Name="item7"></Entry>
-
-                <Label Text="ITEM8"></Label>
-                <Entry x:Name="item2"></Entry>
-
-                <Label Text="ITEM9"></Label>
-                <Entry x:Name="item9"></Entry>
-
-                <Label Text="ITEM10"></Label>
-                <Entry x:Name="item10"></Entry>
-            
-                <Label Text="ITEM11" IsVisible="False"></Label>
-                <Entry x:Name="item11"></Entry>
-
-                <Label Text="ITEM12" IsVisible="False"></Label>
-                <Entry x:Name="item12"></Entry>
-
-                <Label Text="ITEM13" IsVisible="False"></Label>
-                <Entry x:Name="item13"></Entry>
-                
                 <!-- Zona Botones Crud -->
-                <Button Text="Cancelar" x:Name="cancelar"></Button>
-                <Button Text="Eliminar" x:Name="eliminar"></Button>
-                <Button Text="Guardar Cambios" x:Name="guardar"></Button>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8">
+                    <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
+                    <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+                </StackLayout>
                 <!-- End Crud -->
 
             </StackLayout>
+            
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
