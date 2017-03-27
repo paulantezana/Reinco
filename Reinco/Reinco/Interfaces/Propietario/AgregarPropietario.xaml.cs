@@ -22,7 +22,7 @@ namespace Reinco.Interfaces.Propietario
         {
             InitializeComponent();
             guardar.Clicked += Guardar_Clicked;
-            dialogService = new DialogService();
+            dialogService = new VentanaMensaje();
             // eventos
             cancelar.Clicked += Cancelar_Clicked;
         }

@@ -17,14 +17,14 @@ namespace Reinco.Interfaces.Plantilla
     {
 
         int IdPlantilla;
-        DialogService dialogService;
+        VentanaMensaje dialogService;
 
         // ===================== Constructor Para Crear Plantilla =================== //
         public AgregarPlantilla()
         {
             InitializeComponent();
             // servicios
-            dialogService = new DialogService();
+            dialogService = new VentanaMensaje();
 
             // Eventos
             guardar.Clicked += Guardar_Clicked;

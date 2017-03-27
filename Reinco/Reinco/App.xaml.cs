@@ -15,7 +15,7 @@ namespace Reinco
     public partial class App : Application
     {
         public static string ip;
-        public static string puerto = "8021";
+        public static string puerto = "8080";
         public VentanaMensaje mensaje;
         public App()
         {
