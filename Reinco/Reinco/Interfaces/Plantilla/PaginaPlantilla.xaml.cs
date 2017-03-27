@@ -28,7 +28,7 @@ namespace Reinco.Interfaces.Plantilla
             plantillaListView.ItemsSource = plantillaLista;
             
         }
-
+        #region========================cargar plantilla en lista====================================
         private async void CargarPlantillaLista()
         {
             try
@@ -56,7 +56,7 @@ namespace Reinco.Interfaces.Plantilla
             }
            
         }
-
+        #endregion
         private void AgregarPlantilla_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AgregarPlantilla());
