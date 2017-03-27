@@ -10,7 +10,7 @@
 
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                     <Label Text="Nombre del item"></Label>
-                    <Entry x:Name="item1"></Entry>
+                    <Entry x:Name="nombre"></Entry>
                 </StackLayout>
 
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">

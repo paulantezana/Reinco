@@ -15,6 +15,7 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgregarPlantilla : ContentPage
     {
+        int IdPlantilla;
         DialogService dialogService;
 
         // ===================== Constructor Para Crear Plantilla =================== //
@@ -48,16 +49,14 @@ namespace Reinco.Interfaces.Plantilla
                 {
                     var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPlantilla.asmx/IngresarPlantilla?codigo=" + codPlantilla.Text + "&nombre=" + nombrePlantilla.Text);
                     var json = await result.Content.ReadAsStringAsync();
-                    //dynamic array = JsonConvert.DeserializeObject(json);
-                string mensaje = Convert.ToString(json);
-                    //si no existe el usuario o la contraseña es incorrecta, devuelve mensaje de error
+                    string mensaje = Convert.ToString(json);
                    
-                if (result.IsSuccessStatusCode)
-                    {
-                        await App.Current.MainPage.DisplayAlert("Agregar Plantilla", mensaje, "OK");
-                        return;
+                    if (result.IsSuccessStatusCode)
+                        {
+                            await App.Current.MainPage.DisplayAlert("Agregar Plantilla", mensaje, "OK");
+                            return;
+                        }
                     }
-                }
             
         }
         #endregion
@@ -65,10 +64,36 @@ namespace Reinco.Interfaces.Plantilla
         public AgregarPlantilla(object idPlantilla)
         {
             InitializeComponent();
-            guardar.Text = "Guardar Cambios";
+            IdPlantilla = Convert.ToInt16(idPlantilla);
+            guardar.Clicked += Guardar_Clicked1;
             cancelar.Clicked += Cancelar_Clicked1;
         }
+        #region==================modificar plantilla================================
+        private async  void Guardar_Clicked1(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(codPlantilla.Text) || string.IsNullOrEmpty(nombrePlantilla.Text))
+            {
+                await dialogService.MostrarMensaje("Modificar plantilla", "Debe rellenar todos los campos.");
+                return;
+            }
 
+            using (var cliente = new HttpClient())
+            {
+                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPlantilla.asmx/ModificarPlantilla?idPlantilla=" + IdPlantilla+"&codigo="+codPlantilla.Text + "&nombre=" + nombrePlantilla.Text);
+                var json = await result.Content.ReadAsStringAsync();
+                string mensaje = Convert.ToString(json);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    await App.Current.MainPage.DisplayAlert("Modificar Plantilla", mensaje, "OK");
+                    return;
+                }
+            }
+        }
+        #endregion
+        #region ===================== Agregar PLantillas =====================
+
+        #endregion
         private void Cancelar_Clicked1(object sender, EventArgs e)
         {
             Navigation.PopAsync();
