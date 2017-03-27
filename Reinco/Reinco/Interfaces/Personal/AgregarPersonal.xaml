@@ -9,21 +9,21 @@
                 <!-- Nombres Y Apellidos -->
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                     <Label Text="Dni"></Label>
-                    <Entry x:Name="dni" ></Entry>
+                    <Entry x:Name="dni" Keyboard="Numeric" ></Entry>
                 </StackLayout>
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                     <Label Text="Nombre"></Label>
-                    <Entry x:Name="nombre" ></Entry>
+                    <Entry x:Name="nombre" Keyboard="Text"></Entry>
                 </StackLayout>
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                     <Label Text="Apellidos"></Label>
-                    <Entry x:Name="apellidos" ></Entry>
+                    <Entry x:Name="apellidos" Keyboard="Text"></Entry>
                 </StackLayout>
 
                 <!-- Email -->
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                     <Label Text="Usuario"></Label>
-                    <Entry x:Name="usuario" Keyboard="Email"></Entry>
+                    <Entry x:Name="usuario" Keyboard="Text"></Entry>
                 </StackLayout>
 
                 <!-- Password -->
@@ -40,7 +40,7 @@
                 <!-- Email -->
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
                     <Label Text="Email"></Label>
-                    <Entry x:Name="email"></Entry>
+                    <Entry x:Name="email" Keyboard="Email"></Entry>
                 </StackLayout>
                 <!-- CIP -->
                 <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">

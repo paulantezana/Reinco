@@ -34,7 +34,7 @@ namespace Reinco.Interfaces.Plantilla
             try
             {
                 var client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:80/ServicioPlantilla.asmx/MostrarPlantillas");
+                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioPlantilla.asmx/MostrarPlantillas");
                 //recoge los datos json y los almacena en la variable resultado
                 var resultado = await result.Content.ReadAsStringAsync();
                 //si todo es correcto, muestra la pagina que el usuario debe ver

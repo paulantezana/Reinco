@@ -6,20 +6,37 @@
              >
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout>
-                <Button Text="Supervisar" x:Name="supervisar"></Button>
+            <!-- ==================================================================================
+            ========================== Interfas General Para Cada Usuario =========================
+            =====================================================================================-->
+            <StackLayout BackgroundColor="{StaticResource ColorPrincipal}" Padding="0,30,0,30">
+                <Label Text="bienvenid@" HorizontalOptions="Center" TextColor="#FFFFFF"></Label>
+                <Label x:Name="nombreUsuario" FontSize="40" HorizontalOptions="Center" TextColor="#FFFFFF"></Label>
+                <Label x:Name="apellidoUsuario" TextColor="#FFFFFF" HorizontalOptions="Center"></Label>
+                <Label x:Name="cargoUsuario" HorizontalOptions="Center"></Label>
+                <Label x:Name="cargoUsuario2" IsVisible="False" HorizontalOptions="Center"></Label>
             </StackLayout>
-            <!-- Listando las tareas a realizar de cada susario -->
+            
+            
+            <!-- =================================================================================
+            ====================== INterfas De Usuario Para el Administrador =====================
+            =====================================================================================-->
+            <StackLayout x:Name="interfazAdministrador">
+                <Label Text="Admnistrador O Gerente"></Label>
+            </StackLayout>
+
+            
+            <!-- =================================================================================
+            ======================== INterfas De Usuario Para el Supervisor ======================
+            =====================================================================================-->
             <ListView
                 HasUnevenRows="True"
                 SeparatorVisibility="None"
                 Margin="8"
-                x:Name="tareaUsuarioListView"
-                >
+                x:Name="tareaUsuarioListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="OnMore" CommandParameter="{Binding id}"
                                           Text="Supervisar" />
@@ -51,15 +68,22 @@
                                     Grid.Column="1" 
                                     TextColor="{StaticResource ColorPrincipal}"
                                     FontSize="20"
-                                    VerticalOptions="Center"
-                                    >
+                                    VerticalOptions="Center">
                                 </Label>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <!-- End List -->
+            
+            
+            <!-- =================================================================================
+            ======================= INterfas De Usuario Para el Responsable ======================
+            =====================================================================================-->
+            <StackLayout x:Name="interfazResponsable">
+                <Label Text="Nos sentimos muy contentos de tener un trabajador tan eficiente como usted. siga así y alcanzaremos el triunfo"></Label>
+            </StackLayout>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

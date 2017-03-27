@@ -30,7 +30,7 @@ namespace Reinco.Interfaces.Personal
         private async void CargarPersonalItem()
         {
             var client = new HttpClient();
-            var result = await client.GetAsync("http://192.168.1.37:80/ServicioUsuario.asmx/MostrarUsuarios");
+            var result = await client.GetAsync("http://192.168.1.37:8080/ServicioUsuario.asmx/MostrarUsuarios");
             //recoge los datos json y los almacena en la variable resultado
             var resultado = await result.Content.ReadAsStringAsync();
             //si todo es correcto, muestra la pagina que el usuario debe ver

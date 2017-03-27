@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reinco.Gestores
 {
-    public class TareaUsuarioItems
+    public class SupervisionItem
     {
         public string id { get; set; }
         public string titulo { get; set; }

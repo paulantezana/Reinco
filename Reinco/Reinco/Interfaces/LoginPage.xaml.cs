@@ -55,6 +55,14 @@ namespace Reinco.Interfaces
                     "Usuario o clave incorrectos.", "OK");
                 return;
             }
+
+            // ---------- Almacenando Datos Usuario En Local -------------------//
+            Application.Current.Properties["idUsuario"] = array[0].idUsuario;
+            Application.Current.Properties["nombreUsuario"] = array[0].nombres;
+            Application.Current.Properties["apellidoUsuario"] = array[0].apellidos;
+            Application.Current.Properties["cargoUsuario"] = array[0].cargo;
+
+            
             App.Current.MainPage = new MainPage();
 
         }

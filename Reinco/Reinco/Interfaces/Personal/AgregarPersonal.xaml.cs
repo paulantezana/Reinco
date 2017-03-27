@@ -36,12 +36,12 @@ namespace Reinco.Interfaces.Personal
             {
                 using (var cliente = new HttpClient())
                 {
-                    var result = await cliente.GetAsync("http://192.168.1.37/ServicioUsuario.asmx/AgregarUsuario?dni=" + dni.Text + "&nombre=" + nombre.Text
+                    var result = await cliente.GetAsync("http://192.168.1.37/8080/ServicioUsuario.asmx/AgregarUsuario?dni=" + dni.Text + "&nombre=" + nombre.Text
                         + "&apellidos=" + apellidos.Text + "&usuario=" + usuario.Text + "&contrasenia=" + contra.Text
                         + "&correo=" + email.Text + "&cip=" + cip.Text);
                     if (result.IsSuccessStatusCode)
                     {
-                        await App.Current.MainPage.DisplayAlert("", "Usuario agregado satisfactoriamente", "OK");
+                        await App.Current.MainPage.DisplayAlert("Error", "Usuario agregado satisfactoriamente", "OK");
                         return;
                     }
                 }
