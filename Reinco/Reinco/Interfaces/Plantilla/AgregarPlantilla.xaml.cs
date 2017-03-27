@@ -1,4 +1,5 @@
-﻿using Reinco.Recursos;
+﻿using Newtonsoft.Json;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,26 +35,32 @@ namespace Reinco.Interfaces.Plantilla
             Navigation.PopAsync();
         }
 
-        // ===================== Listar PLantillas ===================== //
+        #region ===================== Agregar PLantillas =====================
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(codPlantilla.Text) || string.IsNullOrEmpty(nombrePlantilla.Text) )
             {
-                await dialogService.MostrarMensaje("Agregar usuario", "debe rellenar todos los campos");
+                await dialogService.MostrarMensaje("Agregar plantilla", "Debe rellenar todos los campos.");
                 return;
             }
             
                 using (var cliente = new HttpClient())
                 {
-                    var result = await cliente.GetAsync("http://192.168.1.37/ServicioPlantilla.asmx/IngresarPlantilla?codigo=" + codPlantilla.Text + "&nombre=" + nombrePlantilla.Text);
-                    if (result.IsSuccessStatusCode)
+                    var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPlantilla.asmx/IngresarPlantilla?codigo=" + codPlantilla.Text + "&nombre=" + nombrePlantilla.Text);
+                    var json = await result.Content.ReadAsStringAsync();
+                    //dynamic array = JsonConvert.DeserializeObject(json);
+                string mensaje = Convert.ToString(json);
+                    //si no existe el usuario o la contraseña es incorrecta, devuelve mensaje de error
+                   
+                if (result.IsSuccessStatusCode)
                     {
-                        await App.Current.MainPage.DisplayAlert("Agregar Plantilla", "Plantilla agregada satisfactoriamente", "OK");
+                        await App.Current.MainPage.DisplayAlert("Agregar Plantilla", mensaje, "OK");
                         return;
                     }
                 }
             
         }
+        #endregion
         // ===================== Constructor Para Actualizar O Cambiar Plantilla ===================== //
         public AgregarPlantilla(object idPlantilla)
         {
