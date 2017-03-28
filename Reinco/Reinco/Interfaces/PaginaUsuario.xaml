@@ -160,12 +160,13 @@
             <StackLayout x:Name="interfazResponsable" BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
                 <Label Text="Nos sentimos muy contentos de tener un trabajador tan eficiente como usted. siga así y alcanzaremos el triunfo"></Label>
             </StackLayout>
-            <ListView x:Name="resPonsableListView">
+            <ListView x:Name="resPonsableListView" BackgroundColor="{StaticResource Color5}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell 
+                        <ImageCell
                             Text="{Binding nombre}"
                             ImageSource="ic_obra.png"
+                            TextColor="{StaticResource Color1}"
                         ></ImageCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

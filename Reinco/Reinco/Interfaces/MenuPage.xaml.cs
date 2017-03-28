@@ -78,8 +78,7 @@ namespace Reinco.Interfaces
 
 
                 listView.ItemsSource = items; // listando el menu
-
-
+                
             }
             
         }

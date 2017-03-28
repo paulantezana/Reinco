@@ -15,11 +15,16 @@ namespace Reinco.Interfaces
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaUsuario : ContentPage
     {
+        public VentanaMensaje mensaje;
         public ObservableCollection<SupervisionItem> supervisionItem { get; set; } // Metodo de colecion observable para listar Las Obras A Supervisar
         public ObservableCollection<ObraResponsableItem> obraResponsableItem { get; set; } // Metodo de observable para listar la obras a cargo del responsable
         public PaginaUsuario()
         {
             InitializeComponent(); // inicializa todo los componentes de la UI
+
+            // Servicios
+            mensaje = new VentanaMensaje(); 
+
 
             if (Application.Current.Properties.ContainsKey("cargoUsuario")) // condisional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
             {
@@ -60,6 +65,8 @@ namespace Reinco.Interfaces
                         supervisarListView.IsVisible = false;
                         obraResponsableItem = new ObservableCollection<ObraResponsableItem>();
                         CargarObraResponsableItem();
+                        resPonsableListView.ItemsSource = obraResponsableItem;
+                        // resPonsableListView.SelectedItem
                     }
 
                 #endregion
@@ -86,12 +93,43 @@ namespace Reinco.Interfaces
         }
 
         #region // =============================== Responsable =============================== //
-        private  void CargarObraResponsableItem()
+        private  async void CargarObraResponsableItem()
         {
             try
             {
-                
 
+                // Recuperando el id Usuario
+                string recuperarIdUsuario = Application.Current.Properties["idUsuario"].ToString();
+                Int16 idUsuario = Convert.ToInt16(recuperarIdUsuario);
+
+                // Iniciando Web Service
+                WebService servicio = new WebService();
+                object[,] variables = new object[,] { { "idResponsable", idUsuario } };
+                dynamic result = await servicio.MetodoPost("ServicioObra.asmx", "MostrarObrasResponsable", variables);
+
+                if (result != null)
+                {
+                    if (result.Count == 0) //si está vacío
+                    {
+                        await mensaje.MostrarMensaje("Mostrar Obra Responsable", "No Hay Obras a su cargo");
+                    }
+                    else
+                    {
+                        // listando las obras
+                        foreach (var item in result)
+                        {
+                            obraResponsableItem.Add(new ObraResponsableItem
+                            {
+                                nombre = item.nombre,
+                            });
+                        }
+                        // fin del listado
+                    }
+                }
+                else
+                {
+                    await mensaje.MostrarMensaje("Mostrar Obra Responsable","A ocurrido un error al listar las obras para este usuario"); 
+                }
             }
             catch (Exception)
             {
