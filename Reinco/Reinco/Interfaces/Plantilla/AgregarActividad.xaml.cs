@@ -64,7 +64,7 @@ namespace Reinco.Interfaces.Plantilla
                     + IdPlantilla + "&nombre=" + nombre.Text + "&tolerancia=" + tolerancia.Text + "&idActividad=" + IdActividad);
                 var json = await result.Content.ReadAsStringAsync();
                 string mensaje = Convert.ToString(json);
-
+                //comentario
                 if (result.IsSuccessStatusCode)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Actividad", mensaje, "OK");
