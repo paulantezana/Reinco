@@ -64,14 +64,14 @@ namespace Reinco.Interfaces.Plantilla
                     + IdPlantilla + "&nombre=" + nombre.Text + "&tolerancia=" + tolerancia.Text + "&idActividad=" + IdActividad);
                 var json = await result.Content.ReadAsStringAsync();
                 string mensaje = Convert.ToString(json);
-
+                //comentario
                 if (result.IsSuccessStatusCode)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Actividad", mensaje, "OK");
                     return;
                 }
             }
-            Navigation.PopAsync();
+            //Navigation.PopAsync();
         }
         #endregion
         #region ================agregar actividad====================================
@@ -102,9 +102,10 @@ namespace Reinco.Interfaces.Plantilla
         #endregion
 
         // ===================// GuardarCambios // ===================//
+#pragma warning disable CS1998 // El método asincrónico carece de operadores "await" y se ejecutará de forma sincrónica
         private async void GuardarCambios_Clicked(object sender, EventArgs e)
+#pragma warning restore CS1998 // El método asincrónico carece de operadores "await" y se ejecutará de forma sincrónica
         {
-            
         }
         // ===================// Cancelar // =================== //
         private void Cancelar_Clicked1(object sender, EventArgs e)
