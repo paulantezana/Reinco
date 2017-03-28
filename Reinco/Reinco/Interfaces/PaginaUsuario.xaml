@@ -22,7 +22,7 @@
             <StackLayout BackgroundColor="{StaticResource Color1}" Padding="0,30,0,30">
                 <StackLayout Orientation="Horizontal">
                     <Image Source="ic_profile.png" WidthRequest="100" HeightRequest="100"></Image>
-                    <StackLayout>
+                    <StackLayout VerticalOptions="Center">
                         <Label x:Name="nombreUsuario" FontSize="20"  TextColor="{StaticResource Color5}"></Label>
                         <Label x:Name="apellidoUsuario" TextColor="{StaticResource Color5}" HorizontalOptions="FillAndExpand" FontSize="20" Margin="0,-15,0,-5"></Label>
                         <Label x:Name="cargoUsuario"  TextColor="{StaticResource Color5}"></Label>
@@ -160,6 +160,16 @@
             <StackLayout x:Name="interfazResponsable" BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
                 <Label Text="Nos sentimos muy contentos de tener un trabajador tan eficiente como usted. siga así y alcanzaremos el triunfo"></Label>
             </StackLayout>
+            <ListView x:Name="resPonsableListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell 
+                            Text="{Binding nombre}"
+                            ImageSource="ic_obra.png"
+                        ></ImageCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             
             
             

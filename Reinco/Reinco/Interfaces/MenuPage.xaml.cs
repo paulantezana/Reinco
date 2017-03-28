@@ -45,25 +45,25 @@ namespace Reinco.Interfaces
                         items.Add(new MenuPrincipalItem
                         {
                             Titulo = "Obras",
-                            Icono = "ic_profile.png",
+                            Icono = "ic_obra.png",
                             TargetType = typeof(PaginaObra)
                         });
                         items.Add(new MenuPrincipalItem
                         {
                             Titulo = "Personal",
-                            Icono = "ic_profile.png",
+                            Icono = "ic_personal.png",
                             TargetType = typeof(PaginaPersonal)
                         });
                         items.Add(new MenuPrincipalItem
                         {
                             Titulo = "Plantillas",
-                            Icono = "ic_profile.png",
+                            Icono = "ic_plantilla.png",
                             TargetType = typeof(PaginaPlantilla)
                         });
                         items.Add(new MenuPrincipalItem
                         {
                             Titulo = "Propietario",
-                            Icono = "ic_profile.png",
+                            Icono = "ic_propietario.png",
                             TargetType = typeof(PaginaPropietario)
                         });
                     }

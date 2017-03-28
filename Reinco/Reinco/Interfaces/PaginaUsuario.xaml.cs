@@ -4,6 +4,7 @@ using Reinco.Interfaces.Personal;
 using Reinco.Interfaces.Plantilla;
 using Reinco.Interfaces.Propietario;
 using Reinco.Interfaces.Supervision;
+using Reinco.Recursos;
 using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
@@ -14,7 +15,8 @@ namespace Reinco.Interfaces
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaUsuario : ContentPage
     {
-        public ObservableCollection<SupervisionItem> supervisionItem { get; set; } // Medo de colecion observable para listar Las Obras A Supervisar
+        public ObservableCollection<SupervisionItem> supervisionItem { get; set; } // Metodo de colecion observable para listar Las Obras A Supervisar
+        public ObservableCollection<ObraResponsableItem> obraResponsableItem { get; set; } // Metodo de observable para listar la obras a cargo del responsable
         public PaginaUsuario()
         {
             InitializeComponent(); // inicializa todo los componentes de la UI
@@ -43,7 +45,9 @@ namespace Reinco.Interfaces
                         supervisarListView.IsEnabled = false;
                         supervisarListView.IsVisible = false;
                         interfazResponsable.IsVisible = false;
-                        }
+                        resPonsableListView.IsEnabled = false;
+                        resPonsableListView.IsVisible = false;
+                    }
                 #endregion
 
 
@@ -54,6 +58,8 @@ namespace Reinco.Interfaces
                         interfazAdministrador.IsVisible = false;
                         supervisarListView.IsEnabled = false;
                         supervisarListView.IsVisible = false;
+                        obraResponsableItem = new ObservableCollection<ObraResponsableItem>();
+                        CargarObraResponsableItem();
                     }
 
                 #endregion
@@ -65,7 +71,9 @@ namespace Reinco.Interfaces
                     {
                         interfazAdministrador.IsVisible = false;
                         interfazResponsable.IsVisible = false;
-                        supervisionItem = new ObservableCollection<SupervisionItem>();
+                        resPonsableListView.IsEnabled = false;
+                        resPonsableListView.IsVisible = false;
+                    supervisionItem = new ObservableCollection<SupervisionItem>();
                         // +-----+ Cargando Obras A supervisar +-----+
                         CargarSupervisionItem();
                         // +-----+ Listando la obras a supervisar  +-----+
@@ -76,6 +84,21 @@ namespace Reinco.Interfaces
 
             }
         }
+
+        #region // =============================== Responsable =============================== //
+        private  void CargarObraResponsableItem()
+        {
+            try
+            {
+                
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        } 
+        #endregion
 
 
         #region // =============================== Iniciar Supervision =============================== //
@@ -105,6 +128,9 @@ namespace Reinco.Interfaces
             }
 
         #endregion
+
+
+        
 
         private void irObra(object sender, EventArgs e)
         {

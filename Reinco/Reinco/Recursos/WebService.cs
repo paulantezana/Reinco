@@ -54,7 +54,7 @@ namespace Reinco.Recursos
             {
                 HttpClient client = new HttpClient();
                 string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
-                for (int i = 0; i < variables.Rank; i++)
+                for (int i = 0; i < variables.Length/2; i++)
                 {
                     if (i == 0)
                         url += "?" + variables[i, 0].ToString() + "=" + variables[i, 1].ToString();
@@ -97,7 +97,7 @@ namespace Reinco.Recursos
                 HttpClient client = new HttpClient();
                 string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
                 var body = new List<KeyValuePair<string, string>>();
-                for (int i = 0; i < variables.Rank; i++)
+                for (int i = 0; i < variables.Length/2; i++)
                     body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
                 var content = new FormUrlEncodedContent(body);
 

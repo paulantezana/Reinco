@@ -55,7 +55,6 @@ namespace Reinco.Interfaces
                     enviar.IsEnabled = true;
                     return;
                 }
-                var client = new HttpClient();
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "usuario", usuario.Text }, { "contrasenia", password.Text } };
                 dynamic result = await servicio.MetodoGet("ServicioUsuario.asmx", "Login", variables);
