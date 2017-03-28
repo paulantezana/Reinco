@@ -106,6 +106,7 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
                 return;
             }
+            //comentario
             object[,] variables = new object[,] { { "idObra", IdObra }, { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
             dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "IngresarObra", variables);
             Mensaje = Convert.ToString(result);
