@@ -141,18 +141,10 @@ namespace Reinco.Recursos
                     body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
                 var content = new FormUrlEncodedContent(body);
 
-                /* Otro Metodo
-                var body = new Dictionary<string, string>();
-                for (int i = 0; i < variables.Length / 2; i++)
-                    body[variables[i, 0].ToString()] = variables[i, 1].ToString();
-                var content = new FormUrlEncodedContent(body)
-                */
-
-
                 string contenido;
                 dynamic datosTabla;
                 var cliente = new HttpClient();
-                var message =  cliente.PostAsync(url, content).Result;
+                var message = cliente.PostAsync(url, content).Result;
 
                 if (message.StatusCode == HttpStatusCode.OK)
                 {

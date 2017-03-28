@@ -7,6 +7,8 @@ using Reinco.Interfaces.Supervision;
 using Reinco.Recursos;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -65,8 +67,10 @@ namespace Reinco.Interfaces
                         supervisarListView.IsVisible = false;
                         obraResponsableItem = new ObservableCollection<ObraResponsableItem>();
                         CargarObraResponsableItem();
+                        
+                        // listando ------------------------------------------ //
                         resPonsableListView.ItemsSource = obraResponsableItem;
-                        // resPonsableListView.SelectedItem
+                        crearSupervision.Clicked += CrearSupervision_Clicked;
                     }
 
                 #endregion
@@ -91,6 +95,8 @@ namespace Reinco.Interfaces
 
             }
         }
+
+       
 
         #region // =============================== Responsable =============================== //
         private  async void CargarObraResponsableItem()
@@ -121,6 +127,7 @@ namespace Reinco.Interfaces
                             obraResponsableItem.Add(new ObraResponsableItem
                             {
                                 nombre = item.nombre,
+                                idResponsable = item.idObra,
                             });
                         }
                         // fin del listado
@@ -135,7 +142,24 @@ namespace Reinco.Interfaces
             {
                 throw;
             }
-        } 
+        }
+
+
+        // Evento Tappet Para las listas
+        private async void responsableTapped(object sender, EventArgs e)
+        {
+            var idResponsable = ((ImageCell)sender).CommandParameter.ToString();
+            await mensaje.MostrarMensaje("ms", idResponsable);
+        }
+
+
+
+        // Crear Supervision
+        private void CrearSupervision_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CrearSupervision());
+        }
+
         #endregion
 
 

@@ -13,6 +13,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
+        <ScrollView>
+            
         <StackLayout>
             
             
@@ -84,7 +86,6 @@
                                 <TapGestureRecognizer Tapped="irPlantilla"/>
                             </Label.GestureRecognizers>
                         </Label>
-                        
                     </StackLayout>
 
                     <StackLayout Grid.Column="0" Grid.Row="1" BackgroundColor="{StaticResource Color5}" Padding="0,15,0,15">
@@ -103,7 +104,7 @@
             
             
             <!-- =================================================================================
-            ======================== INterfas De Usuario Para el Supervisor ======================
+            ======================== Interfaz De Usuario Para el Supervisor ======================
             =====================================================================================-->
             <ListView
                 HasUnevenRows="True"
@@ -157,9 +158,10 @@
             <!-- =================================================================================
             ======================= INterfas De Usuario Para el Responsable ======================
             =====================================================================================-->
-            <StackLayout x:Name="interfazResponsable" BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
-                <Label Text="Nos sentimos muy contentos de tener un trabajador tan eficiente como usted. siga así y alcanzaremos el triunfo"></Label>
+            <StackLayout x:Name="interfazResponsable"  Margin="5,0,5,0">
+                    <Button x:Name="crearSupervision" Style="{StaticResource BontonPrimario}" Text="Crear Supervision"></Button>
             </StackLayout>
+                
             <ListView x:Name="resPonsableListView" BackgroundColor="{StaticResource Color5}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -167,7 +169,9 @@
                             Text="{Binding nombre}"
                             ImageSource="ic_obra.png"
                             TextColor="{StaticResource Color1}"
-                        ></ImageCell>
+                            Tapped="responsableTapped"
+                            CommandParameter="{Binding idResponsable}">
+                        </ImageCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -175,5 +179,6 @@
             
             
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

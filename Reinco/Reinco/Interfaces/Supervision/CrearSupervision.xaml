@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Supervision.CrearSupervision"
+             xmlns:control="clr-namespace:Reinco.Recursos"
+             Title="CREAR SUPERVISÓN">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Padding="10,25,10,25" BackgroundColor="{StaticResource Color5}">
+                <control:BindablePicker
+                        Title="Elija Un Supervisor"
+                        DisplayMemberPath="nombres"
+                        SelectedValuePath="idUsuario"
+                        SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="asignarSupervisor"
+                        VerticalOptions="Center"/>
+                
+            </StackLayout>
+
+            <StackLayout Padding="10,25,10,25" BackgroundColor="{StaticResource Color5}">
+                <control:BindablePicker
+                        Title="Elija Una Obra"
+                        DisplayMemberPath="name"
+                        SelectedValuePath="titulo"
+                        SelectedValue ="{Binding Path=titulo, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="asignarObra"
+                        VerticalOptions="Center"/>
+            </StackLayout>
+
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
+                <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+            </StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
