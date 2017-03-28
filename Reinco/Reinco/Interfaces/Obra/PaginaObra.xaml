@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Obra.PaginaObra"
-             BackgroundColor="{StaticResource BackgroundColor}"
              Title="PAGINA OBRA">
     <ContentPage.Content>
         <StackLayout>
@@ -25,7 +24,7 @@
                                 
                             <!-- ============ Codigo para mostrar Obra ================-->
 
-                            <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>

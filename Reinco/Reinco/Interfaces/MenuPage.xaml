@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.MenuPage"
              Title="Menu Page"
-             BackgroundColor="{StaticResource ColorMenu}"
-             >
+             BackgroundColor="{StaticResource Color3}">
     <StackLayout>
         <ListView x:Name="listView" Margin="8,40,8,8" SeparatorVisibility="None" VerticalOptions="FillAndExpand">
             <ListView.ItemTemplate>
@@ -12,8 +11,7 @@
                     <ImageCell 
                         Text="{Binding Titulo}" 
                         ImageSource="{Binding Icono}"
-                        TextColor="{StaticResource ColorMenuFuente}"
-                        >
+                        TextColor="{StaticResource Color5}">
                     </ImageCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -25,6 +23,11 @@
                 WidthRequest="30"
                 >
             </Image>
+            <Label>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer/>
+                </Label.GestureRecognizers>
+            </Label>
             <Button 
                 Text="Cerrar Sesión" 
                 Clicked="cerrarAplicacin" 

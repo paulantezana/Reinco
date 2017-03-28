@@ -9,7 +9,7 @@
         <ScrollView Padding="8">
             <StackLayout Spacing="7">
 
-                <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label 
                         Text="Nota"
                         VerticalOptions="Center"
@@ -19,12 +19,12 @@
                         ></Editor>
                 </StackLayout>
 
-                <StackLayout BackgroundColor="{StaticResource BoxColor}" Orientation="Horizontal" Padding="8">
+                <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
                     <Switch></Switch>
                     <Label Text="Observación"></Label>
                 </StackLayout>
-                
-                <StackLayout BackgroundColor="{StaticResource BoxColor}" Orientation="Horizontal" Padding="8">
+
+                <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
                     <Switch></Switch>
                     <Label Text="Disposición"></Label>
                 </StackLayout>

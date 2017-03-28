@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Propietario.PaginaPropietario"
-             Title="PAGINA PROPIETARIO"
-             BackgroundColor="{StaticResource BackgroundColor}">
+             Title="PAGINA PROPIETARIO">
     <ContentPage.Content>
         <StackLayout Padding="8">
             <Button x:Name="agregarPropietario" Text="Agregar Propietario" Style="{StaticResource BontonPrimario}"></Button>
@@ -16,8 +15,8 @@
                                 <MenuItem Clicked="actualizar" CommandParameter="{Binding idPropietario}" Text="Modificar"/>
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idPropietario}" Text="Eliminar" IsDestructive="True" />
                             </ViewCell.ContextActions>
-                            
-                            <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
+
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>

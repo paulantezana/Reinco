@@ -8,12 +8,12 @@
 
             <StackLayout Spacing="15">
 
-                <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Nombre del item"></Label>
                     <Entry x:Name="nombre"></Entry>
                 </StackLayout>
 
-                <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Tolerancia"></Label>
                     <Entry x:Name="tolerancia"></Entry>
                 </StackLayout>

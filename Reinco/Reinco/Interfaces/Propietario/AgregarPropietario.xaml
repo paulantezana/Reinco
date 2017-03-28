@@ -5,7 +5,7 @@
              Title="AGREGAR PROPIETARIO">
     <ContentPage.Content>
         <StackLayout Padding="10" Spacing="15">
-            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                 <Label Text="Nombre Del Propietario"></Label>
                 <Entry x:Name="nombrePropietario"></Entry>
             </StackLayout>

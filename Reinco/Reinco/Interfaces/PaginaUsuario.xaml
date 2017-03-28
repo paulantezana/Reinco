@@ -2,8 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.PaginaUsuario"
-             Title="USUARIO"
-             >
+             Title="USUARIO">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="estiloCuadriculaAdmin" TargetType="Label" >
+                <Setter Property="BackgroundColor" Value="{StaticResource Color5}"/>
+                <Setter Property="TextColor" Value="{StaticResource Color1}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             
@@ -11,11 +19,18 @@
             <!-- ==================================================================================
             ========================== Interfas General Para Cada Usuario =========================
             =====================================================================================-->
-            <StackLayout BackgroundColor="{StaticResource ColorPrincipal}" Padding="0,30,0,30">
-                <Label x:Name="nombreUsuario" FontSize="30" HorizontalOptions="Center" TextColor="#FFFFFF"></Label>
-                <Label x:Name="apellidoUsuario" TextColor="#FFFFFF" HorizontalOptions="Center" FontSize="20" Margin="0,-15,0,-5"></Label>
-                <Label x:Name="cargoUsuario" HorizontalOptions="Center" TextColor="#55FF55"></Label>
-                <Label x:Name="cargoUsuario2" IsVisible="False" HorizontalOptions="Center"></Label>
+            <StackLayout BackgroundColor="{StaticResource Color1}" Padding="0,30,0,30">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="ic_profile.png" WidthRequest="100" HeightRequest="100"></Image>
+                    <StackLayout>
+                        <Label x:Name="nombreUsuario" FontSize="20" HorizontalOptions="CenterAndExpand" TextColor="{StaticResource Color1}"></Label>
+                        <Label x:Name="apellidoUsuario" TextColor="{StaticResource Color1}" HorizontalOptions="FillAndExpand" FontSize="20" Margin="0,-15,0,-5"></Label>
+                        <Label x:Name="cargoUsuario"  HorizontalOptions="Fill" TextColor="{StaticResource Color1}"></Label>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="" IsVisible="False"></Label>
+                </StackLayout>
             </StackLayout>
             
             
@@ -24,15 +39,32 @@
             =====================================================================================-->
             <StackLayout x:Name="interfazAdministrador">
                 <!-- Textos de bienvenida -->
-                <Label Text="Bienvenido A REINCO" HorizontalOptions="Center" FontSize="Large" Margin="0,30,0,0" FontAttributes="Bold"></Label>
-                <Label Text="¿Que desa Hacer Hoy?" Margin="0,0,0,30" HorizontalOptions="Center"></Label>
+                <StackLayout BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
+                    <Label Text="Bienvenido A REINCO" HorizontalOptions="Center" FontSize="Large" Margin="0,30,0,0" FontAttributes="Bold" TextColor="{StaticResource Color1}"></Label>
+                    <Label Text="¿Que desa Hacer Hoy?" Margin="0,0,0,30" HorizontalOptions="Center"></Label>
+                </StackLayout>
                 
                 <!-- Botones de navegacion -->
-                
-                <Button x:Name="irObra" Text="Obras"  Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
-                <Button x:Name="irPersonal" Text="Personal"  Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
-                <Button x:Name="irPlantilla" Text="Plantillas" Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
-                <Button x:Name="irPropietario" Text="Propietarios" Style="{StaticResource BontonPrimario}" HorizontalOptions="FillAndExpand" BorderRadius="100"></Button>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource estiloCuadriculaAdmin}"
+                           Text="Obras"></Label>
+                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource estiloCuadriculaAdmin}"
+                           Text="Personal"></Label>
+                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource estiloCuadriculaAdmin}"
+                           Text="Plantillas"></Label>
+                    <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource estiloCuadriculaAdmin}"
+                           Text="Propietarios"></Label>
+                </Grid>
             </StackLayout>
 
             
@@ -54,7 +86,7 @@
                                           Text="Supervisar" />
                             </ViewCell.ContextActions>
                             <Grid 
-                                BackgroundColor="{StaticResource BoxColor}" 
+                                BackgroundColor="{StaticResource Color5}" 
                                 Padding="8" Margin="0,5,0,5">
                                 <Grid.GestureRecognizers>
                                     <PanGestureRecognizer AutomationId=""/>
@@ -78,7 +110,7 @@
                                 <Label 
                                     Text="{Binding numeroTarea}" 
                                     Grid.Column="1" 
-                                    TextColor="{StaticResource ColorPrincipal}"
+                                    TextColor="{StaticResource Color1}"
                                     FontSize="20"
                                     VerticalOptions="Center">
                                 </Label>
@@ -93,7 +125,7 @@
             <!-- =================================================================================
             ======================= INterfas De Usuario Para el Responsable ======================
             =====================================================================================-->
-            <StackLayout x:Name="interfazResponsable">
+            <StackLayout x:Name="interfazResponsable" BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
                 <Label Text="Nos sentimos muy contentos de tener un trabajador tan eficiente como usted. siga así y alcanzaremos el triunfo"></Label>
             </StackLayout>
             

@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             BackgroundColor="{StaticResource BackgroundColor}"
              x:Class="Reinco.Interfaces.Plantilla.PaginaActividad"
              Title="ACTIVIDAD">
     <ContentPage.Content>
         <StackLayout Padding="8">
             
             <StackLayout>
-                <Button x:Name="agregarActividad" Text="Agregar Nueva Actividad" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+                <Button x:Name="agregarActividad" Text="Agregar Nueva Actividad" BackgroundColor="{StaticResource Color3}" TextColor="#ffffff" HorizontalOptions="End"></Button>
             </StackLayout>
 
             <ListView x:Name="actividadListView" HasUnevenRows="True" SeparatorVisibility="None">
@@ -21,7 +20,7 @@
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idActividad}" Text="Eliminar" IsDestructive="True" />
                             </ViewCell.ContextActions>
                             <!-- Contenido -->
-                            <Grid BackgroundColor="{StaticResource BoxColor}" Padding="8" Margin="3">
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40"/>
                                     <ColumnDefinition Width="*"/>

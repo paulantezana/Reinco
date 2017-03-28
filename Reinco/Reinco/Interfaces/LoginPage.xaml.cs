@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace Reinco.Interfaces
 {
@@ -18,10 +19,9 @@ namespace Reinco.Interfaces
 
     public partial class LoginPage : ContentPage
     {
-        //login page
         public VentanaMensaje mensaje;
         public LoginPage()
-        {
+        { 
             InitializeComponent();
             mensaje = new VentanaMensaje();
             enviar.Clicked += Enviar_Clicked;
@@ -41,6 +41,9 @@ namespace Reinco.Interfaces
                 enviar.IsEnabled = true;
             });
         }*/
+
+
+        #region * ================================ Iniciando Sesión ================================ *
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
             try
@@ -64,13 +67,15 @@ namespace Reinco.Interfaces
                         enviar.IsEnabled = true;
                     }
                     else
-                    { 
-                        // ---------- Almacenando Datos Usuario En Local -------------------//
+                    {
+                        // ---------- Almacenando Los Datos Del Usuario  En Local -------------------//
                         Application.Current.Properties["idUsuario"] = result[0].idUsuario;
                         Application.Current.Properties["nombreUsuario"] = result[0].nombres;
                         Application.Current.Properties["apellidoUsuario"] = result[0].apellidos;
                         Application.Current.Properties["cargoUsuario"] = result[0].cargo;
-                        App.Current.MainPage = new MainPage();
+                        // await Application.Current.SavePropertiesAsync(); // Active esta opcion si dese guardar en el movil permanentemente
+
+                        App.Current.MainPage = new MainPage(); // Navegando a la página Main page ( Páina Principal que conecta los de mas páginas)
                     }
                 }
                 else
@@ -82,11 +87,23 @@ namespace Reinco.Interfaces
                 //DataTable dtUsuario = new DataTable();
                 // dynamic array = JsonConvert.DeserializeObject(resultado);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: "+ex.ToString());
+                await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
                 enviar.IsEnabled = true;
             }
-        }
+        } 
+        #endregion
+
+
+        #region // ============================== Recuperar Contraseña ============================== //
+        private async void recuperarContra(object sender, EventArgs e)
+        {
+            var action = await DisplayActionSheet("Recuperar Por:", "Cancel", null, "Email", "Contactarse Con El Administrador");
+            await DisplayAlert("Respuesta Temporal", action + " Lo sentimos esta funcionalidad aun no esta disponible", "Aceptar");
+        } 
+        #endregion
+
+
     }
 }

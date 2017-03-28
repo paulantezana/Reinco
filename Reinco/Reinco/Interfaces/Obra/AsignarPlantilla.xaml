@@ -8,7 +8,7 @@
         <ScrollView>
             <StackLayout>
                 <!-- Asignar plnatilla a la  obra-->
-                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource BoxColor}" Padding="8,20,8,20">
+                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource Color5}" Padding="8,20,8,20">
                     <control:BindablePicker
                         Title="Asigne Un Propietario"
                         DisplayMemberPath="responsable"
@@ -20,7 +20,7 @@
                 </StackLayout>
 
                 <!-- Asignar Supervisor de calidad -->
-                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource BoxColor}" Padding="8,20,8,20">
+                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource Color5}" Padding="8,20,8,20">
                       <control:BindablePicker
                           Title="Asigne Un Propietario"
                           DisplayMemberPath="responsable"

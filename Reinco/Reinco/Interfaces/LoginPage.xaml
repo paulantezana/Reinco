@@ -2,53 +2,50 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.LoginPage"
-             Title="Reinco"
              xmlns:control="clr-namespace:Reinco.Recursos"
-             BackgroundColor="{StaticResource BackgroundColor}">
+             Title="Reinco"
+             BackgroundColor="{StaticResource Color5}">
     <ContentPage.Content>
         <ScrollView Padding="35">
-            <StackLayout VerticalOptions="Start">
-
-                <!-- Nombre Usuario Añadido -->
-                <Label Text="Nombre De Usuario"></Label>
-                <Entry x:Name="usuario" Keyboard="Email" ></Entry>
+            <StackLayout VerticalOptions="Center" Spacing="15">
                 
+                <!-- Indicador de actividad -->
+                <ActivityIndicator x:Name="indicador"
+                    Color="{StaticResource Color1}">
+                </ActivityIndicator>
+                
+                <!-- Nombre Usuario Añadido -->
+                <Entry x:Name="usuario" Keyboard="Email" Placeholder="Nombre De Usuario" TextColor="{StaticResource Color1}"></Entry>
                 
                 <!-- Password -->
-                <Label Text="Contraseña"></Label>
-                <Entry x:Name="password" IsPassword="True"></Entry>
-                
+                <Entry x:Name="password" IsPassword="True" Placeholder="Contraseña" TextColor="{StaticResource Color1}"></Entry>
                 
                 <!-- Button Inicio De Sesión -->
                 <Button
                     Text="Iniciar Sesión"
                     x:Name="enviar"
-                    Style="{StaticResource BontonPrimario}">
+                    BackgroundColor="{StaticResource Color1}"
+                    TextColor="{StaticResource Color5}">
                 </Button>
-                
-                
-                <!-- Indicador de actividad -->
-                <ActivityIndicator x:Name="indicador"
-                    Color="{StaticResource ColorPrincipal}">
-                </ActivityIndicator>
-                
                 
                 <!-- Recuperar Contraseña -->
                 <Label 
                     Text="¿Has olvidado la contraseña?" 
                     HorizontalOptions="Center"
-                    TextColor="{StaticResource ColorMenu}">
+                    TextColor="{StaticResource Color2}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="recuperarContra" NumberOfTapsRequired="1"/>
+                    </Label.GestureRecognizers>
                 </Label>
                 
                 <!-- Nombre Empresa -->
-                <Label 
+                <Label
                     Text="REINCO"
                     FontSize="50"
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
                     Margin="0,50,0,50"
-                    TextColor="{StaticResource ColorPrincipal}"
-                    >
+                    TextColor="{StaticResource Color1}">
                 </Label>
                 
             </StackLayout>

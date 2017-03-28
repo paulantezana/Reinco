@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Reinco.Recursos;
 using System.Text.RegularExpressions;
+using Reinco.Interfaces.Plantilla;
 
 namespace Reinco
 {

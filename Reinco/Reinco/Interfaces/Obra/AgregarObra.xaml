@@ -6,17 +6,17 @@
              Title="OBRA">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                 <Label Text="Código de la obra"></Label>
                 <Entry x:Name="codigo"></Entry>
             </StackLayout>
-            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                 <Label Text="Nonbre De La Obra"></Label>
                 <Entry x:Name="nombre"></Entry>
             </StackLayout>
 
             <!-- Asignar propietario de la obra-->
-            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                 <control:BindablePicker
                     Title="Asigne Un Propietario"
                     DisplayMemberPath="nombre"
@@ -31,7 +31,7 @@
 
 
             <!-- Añadir Responsable de la Obra  -->
-            <StackLayout BackgroundColor="{StaticResource BoxColor}" Padding="8">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                 <control:BindablePicker
                     Title="Asigne Un Responsable"
                     DisplayMemberPath="nombres"
