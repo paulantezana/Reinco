@@ -38,7 +38,7 @@ namespace Reinco.Interfaces.Obra
             // renderisando las listas
             asignarPropietario.ItemsSource = propietarioItem;
             asignarResponsable.ItemsSource = personalItem;
-
+            //asignados
             // Eventos
             cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += Guardar_Clicked;
