@@ -83,7 +83,8 @@ namespace Reinco.Interfaces
             }
             
         }
-        public void cerrarAplicacin()
+
+        private void cerrarSesion(object sender, EventArgs e)
         {
             App.Current.MainPage = new LoginPage();
         }

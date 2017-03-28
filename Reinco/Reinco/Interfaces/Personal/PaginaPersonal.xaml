@@ -5,7 +5,9 @@
              Title="PAGINA PERSONAL">
     <ContentPage.Content>
         <StackLayout>
-            <Button x:Name="agregarPersonal" Text="Agregar Personal" BackgroundColor="{StaticResource ColorAuxiliar}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            
+            <Button x:Name="agregarPersonal" Text="Agregar Personal" BackgroundColor="{StaticResource Color3}" TextColor="#ffffff" HorizontalOptions="End"></Button>
+            
             <ListView
                 HasUnevenRows="True"
                 x:Name="personalListView">
@@ -45,6 +47,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

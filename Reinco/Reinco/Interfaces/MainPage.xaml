@@ -8,8 +8,7 @@
         <Pagina:MenuPage x:Name="paginaMenu"></Pagina:MenuPage>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage
-            BackgroundColor="{StaticResource Color1}">
+        <NavigationPage>
             <x:Arguments>
                 <Pagina:PaginaUsuario></Pagina:PaginaUsuario>
             </x:Arguments>

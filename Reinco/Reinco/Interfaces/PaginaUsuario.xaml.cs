@@ -1,4 +1,8 @@
 ﻿using Reinco.Gestores;
+using Reinco.Interfaces.Obra;
+using Reinco.Interfaces.Personal;
+using Reinco.Interfaces.Plantilla;
+using Reinco.Interfaces.Propietario;
 using Reinco.Interfaces.Supervision;
 using System;
 using System.Collections.ObjectModel;
@@ -99,8 +103,24 @@ namespace Reinco.Interfaces
                     });
                 }
             }
+
         #endregion
 
-
+        private void irObra(object sender, EventArgs e)
+        {
+            // App.Current.MainPage = new NavigationPage(new PaginaObra());
+        }
+        private void irPersonal(object sender, EventArgs e)
+        {
+            // App.Current.MainPage = new NavigationPage(new PaginaPersonal());
+        }
+        private void irPlantilla(object sender, EventArgs e)
+        {
+            // App.Current.MainPage = new NavigationPage(new PaginaPlantilla());
+        }
+        private void irPropietario(object sender, EventArgs e)
+        {
+            // App.Current.MainPage = new NavigationPage(new PaginaPropietario());
+        }
     }
 }
