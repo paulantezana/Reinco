@@ -18,6 +18,9 @@ namespace Reinco.Interfaces.Obra
     public partial class AgregarObra : ContentPage
     {
         int IdObra;
+        WebService Servicio = new WebService();
+        string Mensaje;
+        public VentanaMensaje mensaje;
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
         public ObservableCollection<PersonalItem> personalItem { get; set; }
         // ============================ Constructor para crear obra ============================//
@@ -97,26 +100,22 @@ namespace Reinco.Interfaces.Obra
 
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
-            
-                if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
-                {
-                    await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
-                    return;
-                }
 
-                using (var cliente = new HttpClient())
-                {
-                    var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioObra.asmx/IngresarObra?codigo=" + codigo.Text + "&nombreObra=" + nombre.Text);
-                    var json = await result.Content.ReadAsStringAsync();
-                    string mensaje = Convert.ToString(json);
+            if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+            {
+                await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
+                return;
+            }
+            object[,] variables = new object[,] { { "idObra", IdObra }, { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
+            dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "IngresarObra", variables);
+            Mensaje = Convert.ToString(result);
+            if (result != null)
+            {
+                await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
+                return;
+            }
 
-                    if (result.IsSuccessStatusCode)
-                    {
-                        await App.Current.MainPage.DisplayAlert("Agregar Obra", mensaje, "OK");
-                        return;
-                    }
-                }
-         }
+        }
         #region Navegacion para el boton cancelar
 
         // boton cancelar
@@ -133,30 +132,32 @@ namespace Reinco.Interfaces.Obra
             guardar.Clicked += modificarObra;
             IdObra = Convert.ToInt16(idObra);
         }
-        // Modificar Obra
+        #region==================modificar obra=================================
         private async void modificarObra(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+            try
             {
+                if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+                {
                 await DisplayAlert("Modificar Obra", "Debe rellenar todos los campos.", "OK");
                 return;
+                 }
+                object[,] variables = new object[,] { { "idObra", IdObra } , { "codigo", codigo.Text } , { "nombreObra", nombre.Text } };
+                dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "ModificarObra", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Modificar Obra", Mensaje, "OK");
+                    return;
+                }
             }
-
-            using (var cliente = new HttpClient())
+            catch (Exception ex)
             {
-                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioObra.asmx/ModificarObra?idObra="
-                    + IdObra + "&codigo=" + codigo.Text+ "&nombreObra=" + nombre.Text);
-                    var json = await result.Content.ReadAsStringAsync();
-                    string mensaje = Convert.ToString(json);
-
-                    if (result.IsSuccessStatusCode)
-                    {
-                        await App.Current.MainPage.DisplayAlert("Modificar Obra", mensaje, "OK");
-                        return;
-                    }
+                await mensaje.MostrarMensaje("Modificar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
+            
 
         }
-        // End
+        #endregion
     }
 }

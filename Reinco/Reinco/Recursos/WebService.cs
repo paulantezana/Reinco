@@ -48,13 +48,14 @@ namespace Reinco.Recursos
                 throw;
             }
         }
+        // USADO PARA: Llamar servicios web, que nos devuelva si tabla de datos
         public async Task<dynamic> MetodoGet(string servicio, string metodo, object[,] variables)
         {
             try
             {
                 HttpClient client = new HttpClient();
                 string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
-                for (int i = 0; i < variables.Rank; i++)
+                for (int i = 0; i < variables.Length/2; i++)
                 {
                     if (i == 0)
                         url += "?" + variables[i, 0].ToString() + "=" + variables[i, 1].ToString();
@@ -85,8 +86,44 @@ namespace Reinco.Recursos
                 }
                 return datosTabla;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                string aux = ex.ToString();
+                throw;
+            }
+        }
+        // USADO PARA: Llamar servicios web y que esperamos un mensaje de respuesta
+        public async Task<string> MetodoGetString(string servicio, string metodo, object[,] variables)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
+                for (int i = 0; i < variables.Length / 2; i++)
+                {
+                    if (i == 0)
+                        url += "?" + variables[i, 0].ToString() + "=" + variables[i, 1].ToString();
+                    else
+                        url += "&" + variables[i, 0].ToString() + "=" + variables[i, 1].ToString();
+                }
+                string contenido;
+                var cliente = new HttpClient();
+                var message = await cliente.GetAsync(url);
+                if (message.StatusCode == HttpStatusCode.OK)
+                {
+                   // contenido = await message.Content.ReadAsStringAsync();
+                    var json = await message.Content.ReadAsStringAsync();
+                     contenido = Convert.ToString(json);
+                }
+                else
+                {
+                    contenido = message.ReasonPhrase.ToString();
+                }
+                return contenido;
+            }
+            catch (Exception ex)
+            {
+                string aux = ex.ToString();
                 throw;
             }
         }
@@ -97,7 +134,7 @@ namespace Reinco.Recursos
                 HttpClient client = new HttpClient();
                 string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
                 var body = new List<KeyValuePair<string, string>>();
-                for (int i = 0; i < variables.Rank; i++)
+                for (int i = 0; i < variables.Length/2; i++)
                     body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
                 var content = new FormUrlEncodedContent(body);
 

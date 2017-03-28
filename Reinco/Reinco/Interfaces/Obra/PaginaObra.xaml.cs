@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Reinco.Gestores;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,8 +18,10 @@ namespace Reinco.Interfaces.Obra
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaObra : ContentPage
     {
-        HttpClient cliente = new HttpClient();
-
+        HttpClient Cliente = new HttpClient();
+        WebService Servicio = new WebService();
+        public VentanaMensaje mensaje;
+        string Mensaje;
         public ObservableCollection<ObraItem> obraItem { get; set; }
         public PaginaObra()
         {
@@ -34,14 +37,8 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                var client = new HttpClient();
-                HttpResponseMessage result = await cliente.GetAsync("http://192.168.1.37:80/ServicioObra.asmx/MostrarObras");
-                //recoge los datos json y los almacena en la variable resultado
-                var resultado = await result.Content.ReadAsStringAsync();
-                //si todo es correcto, muestra la pagina que el usuario debe ver
-                dynamic array = JsonConvert.DeserializeObject(resultado);
-
-                foreach (var item in array)
+                dynamic result = await Servicio.MetodoGet("ServicioObra.asmx", "MostrarObras");
+                foreach (var item in result)
                 {
                     obraItem.Add(new ObraItem
                     {
@@ -54,7 +51,6 @@ namespace Reinco.Interfaces.Obra
             }
             catch (Exception ex)
             {
-
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
@@ -68,21 +64,24 @@ namespace Reinco.Interfaces.Obra
         #region=======================eliminar obra====================================
         public async void eliminar(object sender, EventArgs e)
         {
-            var idObra = ((MenuItem)sender).CommandParameter;
-            int IdObra = Convert.ToInt16(idObra);
-           bool respuesta= await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar","Cancelar");
-            using (var cliente = new HttpClient())
-            {
-                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioObra.asmx/EliminarObra?idObra="+ IdObra);
-                var json = await result.Content.ReadAsStringAsync();
-                string mensaje = Convert.ToString(json);
-
-                if (result.IsSuccessStatusCode)
+            try { 
+                var idObra = ((MenuItem)sender).CommandParameter;
+                int IdObra = Convert.ToInt16(idObra);
+                bool respuesta= await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar","Cancelar");
+                object[,] variables = new object[,] { { "idObra", IdObra } };
+                dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "EliminarObra", variables);
+                Mensaje = Convert.ToString(result);
+                if (result!=null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Eliminar obra", mensaje, "OK");
+                    await App.Current.MainPage.DisplayAlert("Eliminar Obra", Mensaje, "OK");
                     return;
                 }
             }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Eliminar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+            
         }
         #endregion
         #region ===================// Modificar Obra CRUD //====================
