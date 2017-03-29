@@ -168,7 +168,7 @@ namespace Reinco.Interfaces
             {
                 var idupervisar = ((MenuItem)sender).CommandParameter.ToString();
                 DisplayAlert("Supervisar", idupervisar + " more context action", "OK");
-                Navigation.PushAsync(new PaginaSupervision());
+                Navigation.PushAsync(new ListarSupervision());
             } 
         #endregion
 

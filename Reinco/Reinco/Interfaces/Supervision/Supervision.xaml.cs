@@ -12,10 +12,10 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Supervision
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaSupervision : ContentPage
+    public partial class ListarSupervision : ContentPage
     {
         public ObservableCollection<ObraSupervisarItem> obraSupervisarItem { get; set; }
-        public PaginaSupervision()
+        public ListarSupervision()
         {
             InitializeComponent();
             obraSupervisarItem = new ObservableCollection<ObraSupervisarItem>();

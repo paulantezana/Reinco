@@ -52,7 +52,7 @@ namespace Reinco.Interfaces
                         {
                             Titulo = "Personal",
                             Icono = "ic_personal.png",
-                            TargetType = typeof(PaginaPersonal)
+                            TargetType = typeof(ListarPersonal)
                         });
                         items.Add(new MenuPrincipalItem
                         {
@@ -64,7 +64,7 @@ namespace Reinco.Interfaces
                         {
                             Titulo = "Propietario",
                             Icono = "ic_propietario.png",
-                            TargetType = typeof(PaginaPropietario)
+                            TargetType = typeof(ListarPropietario)
                         });
                     }
 

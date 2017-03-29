@@ -13,11 +13,11 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Propietario
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaPropietario : ContentPage
+    public partial class ListarPropietario : ContentPage
     {
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
        // datatable usuario;
-        public PaginaPropietario()
+        public ListarPropietario()
         {
             InitializeComponent();
             propietarioItem = new ObservableCollection<PropietarioItem>();

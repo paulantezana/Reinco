@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Reinco.Recursos;
 using System.Text.RegularExpressions;
 using Reinco.Interfaces.Plantilla;
+using Reinco.Interfaces.Supervision;
 
 namespace Reinco
 {
@@ -26,7 +27,7 @@ namespace Reinco
             //ip = "192.168.1.111";
             ip = "192.168.1.37";
             InitializeComponent();
-            MainPage = new MainPage();
+            MainPage = new ListarPlantillaObra();
         }
         public async void ObtenerIpAsync()
         {

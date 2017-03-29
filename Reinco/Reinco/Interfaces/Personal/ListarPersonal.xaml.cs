@@ -14,11 +14,11 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Personal
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaPersonal : ContentPage
+    public partial class ListarPersonal : ContentPage
     {
         public ObservableCollection<PersonalItem> personalItem { get; set; }
         
-        public PaginaPersonal()
+        public ListarPersonal()
         {
             InitializeComponent();
             personalItem = new ObservableCollection<PersonalItem>();
