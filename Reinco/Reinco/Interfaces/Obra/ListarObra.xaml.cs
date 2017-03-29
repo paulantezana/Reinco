@@ -52,6 +52,7 @@ namespace Reinco.Interfaces.Obra
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
+                        colorObra = "#FF7777"
                     });
                 }
 
@@ -89,15 +90,6 @@ namespace Reinco.Interfaces.Obra
                 await mensaje.MostrarMensaje("Eliminar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
             
-        }
-        #endregion
-        #region ===================// Modificar Obra CRUD //====================
-        public void actualizar(object sender, EventArgs e)
-        {
-            
-            var idObra = ((MenuItem)sender).CommandParameter;
-            var elementos = obrasListView.SelectedItem;
-            Navigation.PushAsync(new AgregarObra(idObra));
         }
         #endregion
     }

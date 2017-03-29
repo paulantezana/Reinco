@@ -16,9 +16,11 @@ namespace Reinco.Interfaces.Obra
     {
         //public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
         //public ObservableCollection<PersonalItem> personalItem { get; set; }
-        public AsignarPlantilla()
+        public AsignarPlantilla(int IdObra, string Nombre)
         {
             InitializeComponent();
+            this.Title = Nombre;
+
             //plantillaLista = new ObservableCollection<PlantillaLista>();
             //personalItem = new ObservableCollection<PersonalItem>();
 

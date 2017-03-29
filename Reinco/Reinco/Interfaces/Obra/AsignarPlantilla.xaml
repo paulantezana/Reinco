@@ -7,8 +7,33 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                
 
+                <!-- Asignar Plantilla de la obra-->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <control:BindablePicker
+                    Title="Asigne Un Propietario"
+                    DisplayMemberPath="nombre"
+                    SelectedValuePath="idPlantilla"
+                    SelectedValue ="{Binding Path=idPlantilla, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    x:Name="asignarPlantilla"
+                    VerticalOptions="Center"/>
+                </StackLayout>
+
+
+                <!-- Asignar Supervisor de la Obra  -->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <control:BindablePicker
+                    Title="Asigne Un Responsable"
+                    DisplayMemberPath="nombres"
+                    SelectedValuePath="idUsuario"
+                    SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    x:Name="asignarSupervisor"
+                    VerticalOptions="Center"/>
+                </StackLayout>
+
+                
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
                     <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>

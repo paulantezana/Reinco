@@ -10,7 +10,7 @@
             </StackLayout>
             <ListView
                 x:Name="obrasListView"
-                HasUnevenRows="True">
+                HasUnevenRows="True" BackgroundColor="{StaticResource Color5}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -18,26 +18,28 @@
                             <!-- idObra Para para CRUD -->
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar"></MenuItem>
-                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idObra}}" Text="Modificar"></MenuItem>
                             </ViewCell.ContextActions>
                             <!-- Fin idObra Para para CRUD -->
                                 
                             <!-- ============ Codigo para mostrar Obra ================-->
 
-                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0"
-                                       Source="ic_obra_color.png"></Image>
-                                <StackLayout Grid.Column="1">
+                                <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
+                                
+                                <Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>
+                                
+                                
+                                <StackLayout Grid.Column="2" Margin="0,8,0,8">
                                     <StackLayout Orientation="Horizontal" >
-                                        <Label
-                                            Text="{Binding nombre}"
-                                            FontAttributes="Bold"
-                                            ></Label>
+                                        <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                         <Label Text="{Binding codigo}"></Label>
                                     </StackLayout>
                                     <StackLayout Grid.Row="2" Orientation="Horizontal">
@@ -49,6 +51,22 @@
                                         </Label>
                                     </StackLayout>
                                 </StackLayout>
+                                
+
+                                <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarObra}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+
+                                <Image Grid.Column="4" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding eliminarObra}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                
+                                
                             </Grid>
                             <!-- ============ FIN Codigo para mostrar Obra ================-->
                             

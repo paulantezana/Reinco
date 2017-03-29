@@ -148,12 +148,18 @@ namespace Reinco.Interfaces.Obra
         #endregion
 
         // ============== Constructor para para modificar o eliminar la  obra ===============//
-        public AgregarObra(object idObra)
+        public AgregarObra(int IdObra, string Codigo, string Nombre)
         {
             InitializeComponent();
+            nombre.Text = Nombre;
+            codigo.Text = Codigo;
+            this.Title = "MODIFICAR OBRA";
             guardar.Clicked += modificarObra;
-            IdObra = Convert.ToInt16(idObra);
+            IdObra = Convert.ToInt16(IdObra);
         }
+
+
+
         #region==================modificar obra=================================
         private async void modificarObra(object sender, EventArgs e)
         {
@@ -181,5 +187,8 @@ namespace Reinco.Interfaces.Obra
 
         }
         #endregion
+
+
+
     }
 }
