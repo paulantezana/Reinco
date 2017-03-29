@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Reinco.Interfaces.Obra;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Reinco.Gestores
 {
@@ -13,5 +16,15 @@ namespace Reinco.Gestores
         public string codigo { get; set; }
         public string responsable { get; set; }
         public string plantilla { get; set; }
+
+        public ICommand asignarPlantilla { get; private set; }
+
+        public ObraItem()
+        {
+            asignarPlantilla = new Command(() =>
+            {
+                App.Current.MainPage.Navigation.PushAsync(new PaginaPrueva());
+            });
+        }
     }
 }

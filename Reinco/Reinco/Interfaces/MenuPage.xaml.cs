@@ -46,7 +46,7 @@ namespace Reinco.Interfaces
                         {
                             Titulo = "Obras",
                             Icono = "ic_obra.png",
-                            TargetType = typeof(PaginaObra)
+                            TargetType = typeof(ListarObra)
                         });
                         items.Add(new MenuPrincipalItem
                         {

@@ -15,7 +15,8 @@
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
-                <!-- ==================================================================================
+            
+            <!-- ==================================================================================
             ========================== Interfas General Para Cada Usuario =========================
             =====================================================================================-->
             <StackLayout BackgroundColor="{StaticResource Color1}" Padding="0,30,0,30">
@@ -23,7 +24,6 @@
                     <Image Source="ic_profile.png" WidthRequest="100" HeightRequest="100"></Image>
                     <StackLayout VerticalOptions="Center">
                         <Label x:Name="nombreUsuario" FontSize="20"  TextColor="{StaticResource Color5}"></Label>
-                        <Label x:Name="apellidoUsuario" TextColor="{StaticResource Color5}" HorizontalOptions="FillAndExpand" FontSize="20" Margin="0,-15,0,-5"></Label>
                         <Label x:Name="cargoUsuario"  TextColor="{StaticResource Color5}"></Label>
                     </StackLayout>
                 </StackLayout>
@@ -188,7 +188,7 @@
                     <DataTemplate>
                         <ImageCell
                             Text="{Binding nombre}"
-                            ImageSource="ic_obra.png"
+                            ImageSource="ic_obra_color.png"
                             TextColor="{StaticResource Color1}"
                             Tapped="responsableTapped"
                             CommandParameter="{Binding idResponsable}">

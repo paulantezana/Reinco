@@ -34,13 +34,9 @@ namespace Reinco.Interfaces
 
                 #region ++++++++++++++++++++++++++++++++++++++ General ++++++++++++++++++++++++++++++++++++++
                 // --------------- Imprimiendo datos del usuario logeado --------------- //
-                    if (Application.Current.Properties.ContainsKey("nombreUsuario"))
+                    if (Application.Current.Properties.ContainsKey("nombresApellidos"))
                     {
-                        nombreUsuario.Text = Application.Current.Properties["nombreUsuario"].ToString();
-                    }
-                    if (Application.Current.Properties.ContainsKey("apellidoUsuario"))
-                    {
-                        apellidoUsuario.Text = Application.Current.Properties["apellidoUsuario"].ToString();
+                        nombreUsuario.Text = Application.Current.Properties["nombresApellidos"].ToString();
                     }
                     cargoUsuario.Text = cargo;
                 #endregion
@@ -84,7 +80,7 @@ namespace Reinco.Interfaces
                         interfazResponsable.IsVisible = false;
                         resPonsableListView.IsEnabled = false;
                         resPonsableListView.IsVisible = false;
-                    supervisionItem = new ObservableCollection<SupervisionItem>();
+                        supervisionItem = new ObservableCollection<SupervisionItem>();
                         // +-----+ Cargando Obras A supervisar +-----+
                         CargarSupervisionItem();
                         // +-----+ Listando la obras a supervisar  +-----+
@@ -146,10 +142,10 @@ namespace Reinco.Interfaces
 
 
         // Evento Tappet Para las listas
-        private async void responsableTapped(object sender, EventArgs e)
+        private void responsableTapped(object sender, EventArgs e)
         {
             var idResponsable = ((ImageCell)sender).CommandParameter.ToString();
-            await mensaje.MostrarMensaje("ms", idResponsable);
+            Navigation.PushAsync(new ListarPlantillaObra());
         }
 
 

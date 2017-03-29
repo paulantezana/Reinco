@@ -19,6 +19,7 @@ namespace Reinco
         public static string ip;
         public static string puerto = "8080";
         public VentanaMensaje mensaje;
+
         public App()
         {
             //recupero por única vez cuando entro a la aplicación el IP de servidor

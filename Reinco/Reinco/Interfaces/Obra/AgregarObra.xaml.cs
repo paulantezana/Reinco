@@ -35,9 +35,6 @@ namespace Reinco.Interfaces.Obra
             CargarPropietarioItem();
             CargarPersonalItem();
 
-            // renderisando las listas
-            asignarPropietario.ItemsSource = propietarioItem;
-            asignarResponsable.ItemsSource = personalItem;
             //asignados
             // Eventos
             cancelar.Clicked += Cancelar_Clicked;
@@ -63,6 +60,9 @@ namespace Reinco.Interfaces.Obra
                         nombres = item.nombres,
                     });
                 }
+
+                // Pintando en la interfas de Usuario
+                asignarResponsable.ItemsSource = personalItem;
             }
             catch (Exception ex)
             {
@@ -90,6 +90,8 @@ namespace Reinco.Interfaces.Obra
                     });
                 }
 
+                // Pintando en la interfas
+                asignarPropietario.ItemsSource = propietarioItem;
             }
             catch (Exception ex)
             {

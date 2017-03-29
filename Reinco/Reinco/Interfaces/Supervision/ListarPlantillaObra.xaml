@@ -7,27 +7,37 @@
         <ScrollView>
             
             <StackLayout>
-                <ListView x:Name="plantillaObraListView">
+                <ListView x:Name="plantillaObraListView" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
 
-                                <!-- Grid -->
-                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+                                
+                                <!-- Grid Datos que se ba mostrar -->
+                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8,15,8,15">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
-                                    
-                                    <StackLayout>
-                                        <Label Text="Gestion De Calidad Supervision" FontAttributes="Bold"></Label>
-                                        <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
+                                    <StackLayout Grid.Column="1">
+                                        <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                        <Label Text="{Binding descripcion}" VerticalOptions="Center"></Label>
+                                        <Label Text="Supervisar">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ejecutarTap}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label Text="Otra Ejecucion">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding nuevaEje}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
                                     </StackLayout>
-                                    
                                 </Grid>
                                 <!-- End Grid -->
-
+                                
+                                
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

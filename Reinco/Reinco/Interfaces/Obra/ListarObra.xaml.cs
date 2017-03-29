@@ -16,14 +16,14 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Obra
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaObra : ContentPage
+    public partial class ListarObra : ContentPage
     {
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
         public VentanaMensaje mensaje;
         string Mensaje;
         public ObservableCollection<ObraItem> obraItem { get; set; }
-        public PaginaObra()
+        public ListarObra()
         {
             InitializeComponent();
             obraItem = new ObservableCollection<ObraItem>();

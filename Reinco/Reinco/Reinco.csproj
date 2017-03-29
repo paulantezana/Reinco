@@ -53,8 +53,8 @@
     <Compile Include="Interfaces\Obra\ObraPlantilla.xaml.cs">
       <DependentUpon>ObraPlantilla.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Obra\PaginaObra.xaml.cs">
-      <DependentUpon>PaginaObra.xaml</DependentUpon>
+    <Compile Include="Interfaces\Obra\ListarObra.xaml.cs">
+      <DependentUpon>ListarObra.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gestores\ObraItem.cs" />
     <Compile Include="Gestores\PersonalItem.cs" />
@@ -71,6 +71,9 @@
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gestores\MenuPrincipalItem.cs" />
+    <Compile Include="Interfaces\Obra\PaginaPrueva.xaml.cs">
+      <DependentUpon>PaginaPrueva.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\PaginaUsuario.xaml.cs">
       <DependentUpon>PaginaUsuario.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MvvmLightLibs.5.3.0.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid1+xamarin.ios10\GalaSoft.MvvmLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MvvmLightLibs.5.3.0.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid1+xamarin.ios10\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="LINQtoDataTable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\LinqToDataTable.1.0.3\lib\LINQtoDataTable.dll</HintPath>
       <Private>True</Private>
@@ -254,7 +265,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Obra\PaginaObra.xaml">
+    <EmbeddedResource Include="Interfaces\Obra\ListarObra.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -279,6 +290,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\ListarPlantillaObra.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Obra\PaginaPrueva.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
