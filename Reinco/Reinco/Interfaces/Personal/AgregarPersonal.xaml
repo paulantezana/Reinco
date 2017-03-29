@@ -13,13 +13,9 @@
                 </StackLayout>
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Nombre"></Label>
-                    <Entry x:Name="nombre" Keyboard="Text"></Entry>
+                    <Entry x:Name="nombresApellidos" Keyboard="Text"></Entry>
                 </StackLayout>
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Apellidos"></Label>
-                    <Entry x:Name="apellidos" Keyboard="Text"></Entry>
-                </StackLayout>
-
+                
                 <!-- Email -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Usuario"></Label>
