@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Reinco.Gestores;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,9 @@ namespace Reinco.Interfaces.Propietario
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListarPropietario : ContentPage
     {
+        WebService Servicio = new WebService();
+        public VentanaMensaje mensaje;
+        string Mensaje;
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
        // datatable usuario;
         public ListarPropietario()
@@ -26,18 +30,13 @@ namespace Reinco.Interfaces.Propietario
             agregarPropietario.Clicked += AgregarPropietario_Clicked;
             
         }
+        #region=============cargar propietarios==================
         private async void CargarPropietarioItem()
         {
             try
             {
-                var client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioPropietario.asmx/MostrarPropietarios");
-                //recoge los datos json y los almacena en la variable resultado
-                var resultado = await result.Content.ReadAsStringAsync();
-                //si todo es correcto, muestra la pagina que el usuario debe ver
-                dynamic array = JsonConvert.DeserializeObject(resultado);
-
-                foreach (var item in array)
+                dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                foreach (var item in result)
                 {
                     propietarioItem.Add(new PropietarioItem
                     {
@@ -46,14 +45,16 @@ namespace Reinco.Interfaces.Propietario
                         fotoPerfil = "icon.png",
                     });
                 }
+
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
+            
         }
+        #endregion
 
-      
 
         private void AgregarPropietario_Clicked(object sender, EventArgs e)
         {
@@ -62,10 +63,27 @@ namespace Reinco.Interfaces.Propietario
 
 
         // ===================// Eliminar Plantilla CRUD //====================// eliminar
-        public void eliminar(object sender, EventArgs e)
+        public async void eliminar(object sender, EventArgs e)
         {
-            var idPropietario = ((MenuItem)sender).CommandParameter;
-            DisplayAlert("Eliminar", "Eliminar idPropietario = " + idPropietario, "Aceptar");
+            try
+            {
+                var idPropietario = ((MenuItem)sender).CommandParameter;
+                int IdPropietario = Convert.ToInt16(idPropietario);
+                bool respuesta = await DisplayAlert("Eliminar", "¿Desea eliminar al propietario?", "Aceptar", "Cancelar");
+                object[,] variables = new object[,] { { "idPropietario", IdPropietario} };
+                dynamic result = await Servicio.MetodoGetString("ServicioPropietario.asmx", "EliminarPropietario", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Eliminar Propietario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+           
         }
 
         // ===================// Modificar Plantilla CRUD //====================// actualizar

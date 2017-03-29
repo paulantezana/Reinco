@@ -17,6 +17,9 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaPlantilla : ContentPage
     {
+        WebService Servicio = new WebService();
+        public VentanaMensaje mensaje;
+        string Mensaje;
         public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
 
         public PaginaPlantilla()
@@ -33,13 +36,8 @@ namespace Reinco.Interfaces.Plantilla
         {
             try
             {
-                var client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioPlantilla.asmx/MostrarPlantillas");
-                //recoge los datos json y los almacena en la variable resultado
-                var resultado = await result.Content.ReadAsStringAsync();
-                //si todo es correcto, muestra la pagina que el usuario debe ver
-                dynamic array = JsonConvert.DeserializeObject(resultado);
-                foreach (var item in array)
+                dynamic result = await Servicio.MetodoGet("ServicioPlantilla.asmx", "MostrarPlantillas");
+                foreach (var item in result)
                 {
                     plantillaLista.Add(new PlantillaLista
                     {
@@ -52,9 +50,9 @@ namespace Reinco.Interfaces.Plantilla
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error:", ex.Message, "Aceptar");
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
-           
+
         }
         #endregion
         private void AgregarPlantilla_Clicked(object sender, EventArgs e)
@@ -62,26 +60,29 @@ namespace Reinco.Interfaces.Plantilla
             Navigation.PushAsync(new AgregarPlantilla());
         }
 
-        // ===================// Eliminar Plantilla CRUD //====================// eliminar
+        #region===================// Eliminar Plantilla CRUD //====================
         public async void eliminar(object sender, EventArgs e)
         {
-            var idPlantilla = ((MenuItem)sender).CommandParameter;
-            int IdPlantilla = Convert.ToInt16(idPlantilla);
-            bool respuesta = await DisplayAlert("Eliminar", "Eliminar Plantilla = " + IdPlantilla, "Aceptar", "Cancelar");
-            using (var cliente = new HttpClient())
+            try
             {
-                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPlantilla.asmx/EliminarPlantilla?idPlantilla=" + IdPlantilla);
-                var json = await result.Content.ReadAsStringAsync();
-                string mensaje = Convert.ToString(json);
-
-                if (result.IsSuccessStatusCode)
+                var idPlantilla = ((MenuItem)sender).CommandParameter;
+                int IdPlantilla = Convert.ToInt16(idPlantilla);
+                bool respuesta = await DisplayAlert("Eliminar", "¿Desea eliminar esta plantilla? ", "Aceptar", "Cancelar");
+                object[,] variables = new object[,] { { "idPlantilla", IdPlantilla } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPlantilla.asmx", "EliminarPlantilla", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Eliminar Plantilla", mensaje, "OK");
+                    await App.Current.MainPage.DisplayAlert("Eliminar Plantilla", Mensaje, "OK");
                     return;
                 }
             }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Eliminar Plantilla", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
         }
-
+        #endregion
         // ===================// Modificar Plantilla CRUD //====================// actualizar
         public void actualizar(object sender, EventArgs e)
         {

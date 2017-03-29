@@ -15,8 +15,10 @@ namespace Reinco.Interfaces.Propietario
     public partial class AgregarPropietario : ContentPage
     {
         VentanaMensaje dialogService;
-        private object idPropietario;
-
+        private int IdPropietario;
+        WebService Servicio = new WebService();
+        string Mensaje;
+        public VentanaMensaje mensaje;
         // ===================== Constructor Para Crear Propietario ===================== //
         public AgregarPropietario()
         {
@@ -26,36 +28,64 @@ namespace Reinco.Interfaces.Propietario
             // eventos
             cancelar.Clicked += Cancelar_Clicked;
         }
-
+        #region==================agregar propietario=====================
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(nombrePropietario.Text) )
+            try
             {
-                await dialogService.MostrarMensaje("Agregar propietario", "debe rellenar todos los campos");
-                return;
-            }
-
-            using (var cliente = new HttpClient())
-            {
-                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPropietario.asmx/IngresarPropietario?propietario=" + nombrePropietario.Text );
-                var json = await result.Content.ReadAsStringAsync();
-                string mensaje = Convert.ToString(json);
-
-                if (result.IsSuccessStatusCode)
+                if (string.IsNullOrEmpty(nombrePropietario.Text))
                 {
-                    await App.Current.MainPage.DisplayAlert("Agregar Actividad", mensaje, "OK");
+                    await dialogService.MostrarMensaje("Agregar propietario", "debe rellenar todos los campos");
                     return;
                 }
+                
+                    object[,] variables = new object[,] { { "propietario", nombrePropietario.Text } };
+                    dynamic result = await Servicio.MetodoGetString("ServicioPropietario.asmx", "IngresarPropietario", variables);
+                    Mensaje = Convert.ToString(result);
+                    if (result != null)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Agregar Propietario", Mensaje, "OK");
+                        return;
+                    }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Agregar Propietario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
 
         }
+        #endregion
         // ===================== Constructor Para Actualizar O Cambiar Propietario ===================== //
         public AgregarPropietario(object idPropietario)
         {
             InitializeComponent();
-            this.idPropietario = idPropietario;
+            this.IdPropietario =Convert.ToInt16( idPropietario);
             guardar.Text = "Guardar Cambios";
+            guardar.Clicked += ModificarPropietario_Clicked1;
             cancelar.Clicked += Cancelar_Clicked;
+        }
+
+        private async void ModificarPropietario_Clicked1(object sender, EventArgs e)
+        {
+            try {
+                if (string.IsNullOrEmpty(nombrePropietario.Text))
+                {
+                    await dialogService.MostrarMensaje("Modificar propietario", "Debe rellenar todos los campos.");
+                    return;
+                }
+                object[,] variables = new object[,] {{ "propietario", nombrePropietario.Text } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPropietario.asmx", "ModificarPropietario", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Modificar Propietario", Mensaje, "OK");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Modificar Propietario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
         }
 
         // Cacelar ============

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Reinco.Gestores;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,9 @@ namespace Reinco.Interfaces.Personal
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListarPersonal : ContentPage
     {
+        WebService Servicio = new WebService();
+        public VentanaMensaje mensaje;
+        string Mensaje;
         public ObservableCollection<PersonalItem> personalItem { get; set; }
         
         public ListarPersonal()
@@ -29,22 +33,24 @@ namespace Reinco.Interfaces.Personal
         #region==================cargar usuarios==============================
         private async void CargarPersonalItem()
         {
-            var client = new HttpClient();
-            var result = await client.GetAsync("http://192.168.1.37:8080/ServicioUsuario.asmx/MostrarUsuarios");
-            //recoge los datos json y los almacena en la variable resultado
-            var resultado = await result.Content.ReadAsStringAsync();
-            //si todo es correcto, muestra la pagina que el usuario debe ver
-            dynamic array = JsonConvert.DeserializeObject(resultado);
-
-            foreach (var item in array)
+            try
             {
-                personalItem.Add(new PersonalItem
+                dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                foreach (var item in result)
                 {
-                    fotoPerfil = "icon.png",
-                    idUsuario = item.idUsuario,
-                    nombres = item.nombres.ToString(),
-                    cip = item.cip
-                });
+                    personalItem.Add(new PersonalItem
+                    {
+                        fotoPerfil = "icon.png",
+                        idUsuario = item.idUsuario,
+                        nombres = item.nombres.ToString(),
+                        cip = item.cip
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
         #endregion
@@ -56,9 +62,24 @@ namespace Reinco.Interfaces.Personal
         #region=======================eliminar obra====================================
         public async void eliminar(object sender, EventArgs e)
         {
-            var idUsuario = ((MenuItem)sender).CommandParameter;
-            int IdUsuario = Convert.ToInt16(idUsuario);
-            bool respuesta = await DisplayAlert("Eliminar", "Eliminar IdUsuario = " + IdUsuario, "Aceptar", "Cancelar");
+            try
+            {
+                var idUsuario = ((MenuItem)sender).CommandParameter;
+                int IdUsuario = Convert.ToInt16(idUsuario);
+                bool respuesta = await DisplayAlert("Eliminar", "Eliminar IdUsuario = " + IdUsuario, "Aceptar", "Cancelar");
+                object[,] variables = new object[,] { { "idUsuario", IdUsuario } };
+                dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "EliminarUsuario", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Eliminar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
         }
         #endregion
         #region ===================// Modificar Obra CRUD //====================
