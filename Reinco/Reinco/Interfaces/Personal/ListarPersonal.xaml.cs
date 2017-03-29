@@ -30,7 +30,7 @@ namespace Reinco.Interfaces.Personal
             personalListView.ItemsSource = personalItem;
             agregarPersonal.Clicked += AgregarPersonal_Clicked;
         }
-        #region==================cargar usuarios==============================
+        #region===============cargar usuarios==============================
         private async void CargarPersonalItem()
         {
             try
