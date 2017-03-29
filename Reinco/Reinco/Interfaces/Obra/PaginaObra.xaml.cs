@@ -89,9 +89,11 @@ namespace Reinco.Interfaces.Obra
         {
             
             var idObra = ((MenuItem)sender).CommandParameter;
-            var elementos = obrasListView.SelectedItem;
+            //  var elementos = obrasListView.
             Navigation.PushAsync(new AgregarObra(idObra));
         }
+
         #endregion
+
     }
 }
