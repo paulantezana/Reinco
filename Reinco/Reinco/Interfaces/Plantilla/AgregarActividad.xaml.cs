@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reinco.Recursos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,6 +16,9 @@ namespace Reinco.Interfaces.Plantilla
     {
         int IdPlantilla;
         int IdActividad;
+        WebService Servicio = new WebService();
+        string Mensaje;
+        public VentanaMensaje mensaje;
         public AgregarActividad()
         {
             InitializeComponent();
@@ -53,51 +57,57 @@ namespace Reinco.Interfaces.Plantilla
 
         private async void Modificar_Clicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(tolerancia.Text))
+            try
             {
-                await DisplayAlert("Modificar Actividad", "Debe rellenar todos los campos.", "OK");
-                return;
-            }
-            using (var cliente = new HttpClient())
-            {
-                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPlantillaActividad.asmx/ModificarPlantillaActividad?idPlantillaActividad="
-                    + IdPlantilla + "&nombre=" + nombre.Text + "&tolerancia=" + tolerancia.Text + "&idActividad=" + IdActividad);
-                var json = await result.Content.ReadAsStringAsync();
-                string mensaje = Convert.ToString(json);
-                //comentario
-                if (result.IsSuccessStatusCode)
+                if (string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(tolerancia.Text))
                 {
-                    await App.Current.MainPage.DisplayAlert("Modificar Actividad", mensaje, "OK");
+                    await DisplayAlert("Modificar Actividad", "Debe rellenar todos los campos.", "OK");
+                    return;
+                }
+                object[,] variables = new object[,] {
+                        { "idPlantillaActividad", IdPlantilla} ,{ "nombre", nombre.Text}, { "tolerancia", tolerancia.Text }, { "idActividad", IdActividad } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "ModificarPlantillaActividad", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Modificar Plantilla", Mensaje, "OK");
                     return;
                 }
             }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Modificar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+            
             //Navigation.PopAsync();
         }
         #endregion
         #region ================agregar actividad====================================
         private async void Agregar_Clicked(object sender, EventArgs e)
         {
-            
-            if (string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(tolerancia.Text))
-            {
-                await DisplayAlert("Agregar Actividad", "Debe rellenar todos los campos.", "OK");
-                return;
-            }
 
-            using (var cliente = new HttpClient())
+            try
             {
-                var result = await cliente.GetAsync("http://192.168.1.37:8080/ServicioPlantillaActividad.asmx/IngresarPlantillaActividad?nombre="
-                    + nombre.Text + "&tolerancia=" + tolerancia.Text + "&idActividad=" + IdPlantilla);
-                var json = await result.Content.ReadAsStringAsync();
-                string mensaje = Convert.ToString(json);
 
-                if (result.IsSuccessStatusCode)
+                if (string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(tolerancia.Text))
                 {
-                    await App.Current.MainPage.DisplayAlert("Agregar Actividad", mensaje, "OK");
+                    await DisplayAlert("Agregar Actividad", "Debe rellenar todos los campos.", "OK");
+                    return;
+                }
+                object[,] variables = new object[,] { { "nombre", nombre.Text }, { "tolerancia", tolerancia.Text }, { "idActividad", IdPlantilla } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "IngresarPlantillaActividad", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Agregar Actividad", Mensaje, "OK");
                     return;
                 }
             }
-        
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Agregar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+
         }
         #endregion
 
