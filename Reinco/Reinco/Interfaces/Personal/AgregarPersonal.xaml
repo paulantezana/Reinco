@@ -42,12 +42,35 @@
                     <Label Text="Email"></Label>
                     <Entry x:Name="email" Keyboard="Email"></Entry>
                 </StackLayout>
+
+                <!-- Celular -->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Celular"></Label>
+                    <Entry x:Name="celular" Keyboard="Numeric"></Entry>
+                </StackLayout>
+
                 <!-- CIP -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="CIP"></Label>
                     <Entry x:Name="cip"></Entry>
                 </StackLayout>
 
+                <!-- Cargo Que Ocupa -->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Cargo Que Ocupa"></Label>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Gerente" VerticalOptions="Center"></Label>
+                        <Switch x:Name="gerente" HorizontalOptions="EndAndExpand"></Switch>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Responsable" VerticalOptions="Center"></Label>
+                        <Switch x:Name="responsable" HorizontalOptions="EndAndExpand"></Switch>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Supervisor" VerticalOptions="Center"></Label>
+                        <Switch x:Name="supervisor" HorizontalOptions="EndAndExpand"></Switch>
+                    </StackLayout>
+                </StackLayout>
                 <!-- Buttons Action -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>

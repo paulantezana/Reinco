@@ -11,13 +11,23 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout>
-                                    <Label Text="Texto O cosas">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding OnClickableLabel}" CommandParameter="{Binding nombrePlantillaObra}" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </StackLayout>
+
+                                <!-- Grid -->
+                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
+                                    
+                                    <StackLayout>
+                                        <Label Text="Gestion De Calidad Supervision" FontAttributes="Bold"></Label>
+                                        <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
+                                    </StackLayout>
+                                    
+                                </Grid>
+                                <!-- End Grid -->
+
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
