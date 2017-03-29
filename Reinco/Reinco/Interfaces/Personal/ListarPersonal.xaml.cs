@@ -82,7 +82,7 @@ namespace Reinco.Interfaces.Personal
             }
         }
         #endregion
-        #region ===================// Modificar Obra CRUD //====================
+        #region =================== Modificar Obra====================
         public void actualizar(object sender, EventArgs e)
         {
             var idUsuario = ((MenuItem)sender).CommandParameter;
