@@ -3,4 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Obra.PaginaPrueva"
              Title="Pagina De Prueva">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Contenido De La Página = Página de prueva"></Label>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

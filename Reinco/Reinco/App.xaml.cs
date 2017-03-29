@@ -11,6 +11,7 @@ using Reinco.Recursos;
 using System.Text.RegularExpressions;
 using Reinco.Interfaces.Plantilla;
 using Reinco.Interfaces.Supervision;
+using Reinco.Interfaces.Obra;
 
 namespace Reinco
 {
@@ -19,6 +20,9 @@ namespace Reinco
         public static string ip;
         public static string puerto = "8080";
         public VentanaMensaje mensaje;
+
+        public static NavigationPage Navigator { get; internal set; }
+        public static ListarObra ListarObra { get; internal set; }
 
         public App()
         {

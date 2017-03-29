@@ -18,7 +18,7 @@
                             <!-- idObra Para para CRUD -->
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar"></MenuItem>
-                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idObra}" Text="Modificar"></MenuItem>
+                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idObra}}" Text="Modificar"></MenuItem>
                             </ViewCell.ContextActions>
                             <!-- Fin idObra Para para CRUD -->
                                 

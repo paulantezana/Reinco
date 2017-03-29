@@ -59,13 +59,13 @@ namespace Reinco.Interfaces.Plantilla
         {
             try
             {
-                if (string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(tolerancia.Text))
+                if (string.IsNullOrEmpty(nombre.Text) )
                 {
-                    await DisplayAlert("Modificar Actividad", "Debe rellenar todos los campos.", "OK");
+                    await DisplayAlert("Modificar Actividad", "Debe rellenar el campo nombre", "OK");
                     return;
                 }
                 object[,] variables = new object[,] {
-                        { "idPlantillaActividad", IdPlantilla} ,{ "nombre", nombre.Text}, { "tolerancia", tolerancia.Text }, { "idActividad", IdActividad } };
+                        { "idPlantillaActividad", IdActividad} ,{ "nombre", nombre.Text}, { "tolerancia", tolerancia.Text }, { "idActividad", IdPlantilla } };
                 dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "ModificarPlantillaActividad", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
@@ -89,11 +89,14 @@ namespace Reinco.Interfaces.Plantilla
             try
             {
 
-                if (string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(tolerancia.Text))
+                if (string.IsNullOrEmpty(nombre.Text) )
                 {
-                    await DisplayAlert("Agregar Actividad", "Debe rellenar todos los campos.", "OK");
+                    await DisplayAlert("Agregar Actividad", "Debe rellenar el nombre de la actividad.", "OK");
                     return;
                 }
+                if (string.IsNullOrEmpty(tolerancia.Text))
+                   tolerancia.Text = "";
+                tolerancia.Text = "";
                 object[,] variables = new object[,] { { "nombre", nombre.Text }, { "tolerancia", tolerancia.Text }, { "idActividad", IdPlantilla } };
                 dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "IngresarPlantillaActividad", variables);
                 Mensaje = Convert.ToString(result);

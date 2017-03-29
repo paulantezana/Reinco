@@ -13,10 +13,17 @@ namespace Reinco.Interfaces
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : MasterDetailPage
     {
+        
         public MainPage()
         {
             InitializeComponent();
             paginaMenu.menuListView.ItemSelected += MenuListView_ItemSelected;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.Navigator = Navigator;
         }
 
         private void MenuListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

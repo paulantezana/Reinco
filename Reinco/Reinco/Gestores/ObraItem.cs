@@ -1,4 +1,5 @@
-﻿using Reinco.Interfaces.Obra;
+﻿using GalaSoft.MvvmLight.Command;
+using Reinco.Interfaces.Obra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,12 @@ namespace Reinco.Gestores
         public string plantilla { get; set; }
 
         public ICommand asignarPlantilla { get; private set; }
-
+        
         public ObraItem()
         {
             asignarPlantilla = new Command(() =>
             {
-                App.Current.MainPage.Navigation.PushAsync(new PaginaPrueva());
+                App.ListarObra.Navigation.PushAsync(new AsignarPlantilla());
             });
         }
     }

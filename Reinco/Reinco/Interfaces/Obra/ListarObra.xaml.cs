@@ -87,7 +87,9 @@ namespace Reinco.Interfaces.Obra
         #region ===================// Modificar Obra CRUD //====================
         public void actualizar(object sender, EventArgs e)
         {
+            
             var idObra = ((MenuItem)sender).CommandParameter;
+            var elementos = obrasListView.SelectedItem;
             Navigation.PushAsync(new AgregarObra(idObra));
         }
         #endregion

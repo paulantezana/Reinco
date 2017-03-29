@@ -35,6 +35,9 @@ namespace Reinco.Interfaces.Obra
             CargarPropietarioItem();
             CargarPersonalItem();
 
+            // renderisando las listas
+            asignarPropietario.ItemsSource = propietarioItem;
+            asignarResponsable.ItemsSource = personalItem;
             //asignados
             // Eventos
             cancelar.Clicked += Cancelar_Clicked;
@@ -45,24 +48,18 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                HttpClient client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioUsuario.asmx/MostrarUsuarios");
-                //recoge los datos json y los almacena en la variable resultado
-                var resultado = await result.Content.ReadAsStringAsync();
-                //si todo es correcto, muestra la pagina que el usuario debe ver
-                dynamic array = JsonConvert.DeserializeObject(resultado);
-
-                foreach (var item in array)
+                dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                foreach (var item in result)
                 {
                     personalItem.Add(new PersonalItem
                     {
+                        fotoPerfil = "icon.png",
                         idUsuario = item.idUsuario,
-                        nombres = item.nombres,
+                        nombres = item.nombres.ToString(),
+                        cip = item.cip
                     });
                 }
 
-                // Pintando en la interfas de Usuario
-                asignarResponsable.ItemsSource = personalItem;
             }
             catch (Exception ex)
             {
@@ -74,24 +71,17 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                var client = new HttpClient();
-                var result = await client.GetAsync("http://192.168.1.37:8080/ServicioPropietario.asmx/MostrarPropietarios");
-                //recoge los datos json y los almacena en la variable resultado
-                var resultado = await result.Content.ReadAsStringAsync();
-                //si todo es correcto, muestra la pagina que el usuario debe ver
-                dynamic array = JsonConvert.DeserializeObject(resultado);
-
-                foreach (var item in array)
+                dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                foreach (var item in result)
                 {
                     propietarioItem.Add(new PropietarioItem
                     {
                         idPropietario = item.idPropietario,
                         nombre = item.nombre,
+                        fotoPerfil = "icon.png",
                     });
                 }
 
-                // Pintando en la interfas
-                asignarPropietario.ItemsSource = propietarioItem;
             }
             catch (Exception ex)
             {
@@ -102,22 +92,51 @@ namespace Reinco.Interfaces.Obra
 
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
-
-            if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+            try
             {
-                await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
-                return;
-            }
-            //comentario
-            object[,] variables = new object[,] { { "idObra", IdObra }, { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
-            dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "IngresarObra", variables);
-            Mensaje = Convert.ToString(result);
-            if (result != null)
-            {
-                await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
-                return;
-            }
+                if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue == null)
+                {
+                    #region================ingresar solo obra=============================
+                    if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+                    {
+                        await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
+                        return;
+                    }
+                    object[,] variables = new object[,] { { "idObra", IdObra }, { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
+                    dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "IngresarObra", variables);
+                    Mensaje = Convert.ToString(result);
+                    if (result != null)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
+                        ListarObra paginaObra = new ListarObra();
+                        paginaObra.CargarObraItem();
+                        await Navigation.PopAsync();
+                        return;
+                    }
 
+                    #endregion
+                }
+                #region===========ingresar con responsable y propietario=========
+                else
+                {
+                    int idPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                    int idUsuario = Convert.ToInt16(asignarResponsable.SelectedValue);
+                    object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
+                   { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} };
+                    dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "IngresarPropietarioResponsabledEnObra", variables);
+                    Mensaje = Convert.ToString(result);
+                    if (result != null)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable y Propietario", Mensaje, "OK");
+                        return;
+                    }
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Agregar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
         }
         #region Navegacion para el boton cancelar
 
