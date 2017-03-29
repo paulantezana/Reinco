@@ -28,20 +28,29 @@ namespace Reinco.Interfaces.Personal
         }
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
+            int enviarCargo=0;
             try
             {
-                if (string.IsNullOrEmpty(dni.Text) || string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(apellidos.Text) ||
+                if (string.IsNullOrEmpty(dni.Text) || string.IsNullOrEmpty(nombresApellidos.Text) || 
                     string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(contra.Text) || string.IsNullOrEmpty(confirmarContra.Text)
                     || string.IsNullOrEmpty(email.Text))
                 {
                     await dialogService.MostrarMensaje("Agregar Usuario", "debe rellenar todos los campos");
                     return;
                 }
+                #region=====cargo=====
+                if (supervisor.IsToggled == true)
+                    enviarCargo = 3;//supervisor
+                if (responsable.IsToggled == true)
+                    enviarCargo = 2;//responsable
+                if (gerente.IsToggled == true)
+                    enviarCargo = 1;//admin
+                #endregion
                 if (contra.Text == confirmarContra.Text)
                 {
                     object[,] variables = new object[,] {
-                        { "dni", dni.Text }, { "nombre", nombre.Text }, { "apellidos", apellidos.Text },
-                        { "usuario", usuario.Text }, { "contrasenia", contra.Text }, { "correo", email.Text },{ "cip", cip.Text }};
+                        { "dni", dni.Text }, { "nombresApellidos", nombresApellidos.Text },
+                        { "usuario", usuario.Text }, { "contrasenia", contra.Text }, { "correo", email.Text },{ "cip", cip.Text },{ "idCargo", enviarCargo }, { "celular",celular.Text} };
                     dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "AgregarUsuario", variables);
                     Mensaje = Convert.ToString(result);
                     if (result != null)
@@ -75,7 +84,7 @@ namespace Reinco.Interfaces.Personal
         {
             try
             {
-                if (string.IsNullOrEmpty(dni.Text) || string.IsNullOrEmpty(nombre.Text) || string.IsNullOrEmpty(apellidos.Text) ||
+                if (string.IsNullOrEmpty(dni.Text) || string.IsNullOrEmpty(nombresApellidos.Text)  ||
                     string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(contra.Text) || string.IsNullOrEmpty(confirmarContra.Text)
                     || string.IsNullOrEmpty(email.Text))
                 {
@@ -85,7 +94,7 @@ namespace Reinco.Interfaces.Personal
                 if (contra.Text == confirmarContra.Text)
                 {
                     object[,] variables = new object[,] {
-                        { "idUsuario", IdUsuario } ,{ "dni", dni.Text }, { "nombre", nombre.Text }, { "apellidos", apellidos.Text },
+                        { "idUsuario", IdUsuario } ,{ "dni", dni.Text }, { "nombresApellidos", nombresApellidos.Text },
                         { "usuario", usuario.Text }, { "contrasenia", contra.Text }, { "correo", email.Text },{ "cip", cip.Text }};
                     dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "ModificarUsuario", variables);
                     Mensaje = Convert.ToString(result);
