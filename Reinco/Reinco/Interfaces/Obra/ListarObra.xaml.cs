@@ -32,6 +32,13 @@ namespace Reinco.Interfaces.Obra
 
             agregarObra.Clicked += AgregarObra_Clicked;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarObra = this;
+        }
+
         #region==================cargar obras======================================
         public async void CargarObraItem()
         {

@@ -55,7 +55,7 @@ namespace Reinco.Interfaces.Obra
                     {
                         fotoPerfil = "icon.png",
                         idUsuario = item.idUsuario,
-                        nombres = item.nombres.ToString(),
+                        nombresApellidos = item.nombresApellidos.ToString(),
                         cip = item.cip
                     });
                 }

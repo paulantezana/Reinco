@@ -50,7 +50,7 @@ namespace Reinco.Interfaces.Supervision
                         personalItem.Add(new PersonalItem
                         {
                             idUsuario = item.idUsuario,
-                            nombres = item.nombres,
+                            nombresApellidos = item.nombresApellidos,
                         });
                     }
                     asignarSupervisor.ItemsSource = personalItem;

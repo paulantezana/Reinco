@@ -18,14 +18,22 @@ namespace Reinco.Gestores
         public string responsable { get; set; }
         public string plantilla { get; set; }
 
+
+
+
         public ICommand asignarPlantilla { get; private set; }
         
         public ObraItem()
         {
             asignarPlantilla = new Command(() =>
             {
-                App.ListarObra.Navigation.PushAsync(new AsignarPlantilla());
+                //App.ListarObra.Navigation.PushAsync(new AsignarPlantilla());
+                App.ListarObra.Navigation.PushAsync(new PaginaPrueva(this.idObra,this.nombre,this.codigo));
             });
         }
+
+
+
+
     }
 }

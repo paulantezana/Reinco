@@ -16,5 +16,9 @@ namespace Reinco.Interfaces.Obra
         {
             InitializeComponent();
         }
+        public PaginaPrueva(string idObra, string nombre, string codigo)
+        {
+            DisplayAlert("Confirmacion", idObra + nombre + codigo, "Aceptar");
+        }
     }
 }

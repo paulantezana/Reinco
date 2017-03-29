@@ -29,7 +29,7 @@
                                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Column="1">
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="{Binding cip}"></Label>
-                                        <Label  Text="{Binding nombres}" FontAttributes="Bold"></Label>
+                                        <Label  Text="{Binding nombresApellidos}" FontAttributes="Bold"></Label>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout Orientation="Horizontal">
