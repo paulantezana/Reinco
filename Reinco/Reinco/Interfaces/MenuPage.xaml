@@ -5,7 +5,11 @@
              Title="Menu Page"
              BackgroundColor="{StaticResource Color3}">
     <StackLayout>
-        <ListView x:Name="listView" Margin="0,40,0,0" SeparatorVisibility="None" VerticalOptions="FillAndExpand">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Padding="10">
+            <Image Source="icon.png"></Image>
+            <Label Text="REINCO" FontSize="20" VerticalOptions="Center" TextColor="{StaticResource Color5}"></Label>
+        </StackLayout>
+        <ListView x:Name="listView" SeparatorVisibility="None" VerticalOptions="FillAndExpand">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ImageCell 
@@ -16,7 +20,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout Orientation="Horizontal" Margin="8,40,8,8" Padding="10">
+        <StackLayout Orientation="Horizontal" Padding="10">
             <StackLayout.GestureRecognizers>
                 <TapGestureRecognizer Tapped="cerrarSesion"/>
             </StackLayout.GestureRecognizers>

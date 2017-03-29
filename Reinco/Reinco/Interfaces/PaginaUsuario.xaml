@@ -14,11 +14,8 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            
         <StackLayout>
-            
-            
-            <!-- ==================================================================================
+                <!-- ==================================================================================
             ========================== Interfas General Para Cada Usuario =========================
             =====================================================================================-->
             <StackLayout BackgroundColor="{StaticResource Color1}" Padding="0,30,0,30">
@@ -42,25 +39,28 @@
             <StackLayout x:Name="interfazAdministrador">
                 <!-- Textos de bienvenida -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
-                    <Label Text="Bienvenido A REINCO" HorizontalOptions="Center" FontSize="Large" Margin="0,30,0,0" FontAttributes="Bold" TextColor="{StaticResource Color1}"></Label>
-                    <Label Text="¿Que desa Hacer Hoy?" Margin="0,0,0,30" HorizontalOptions="Center"></Label>
+                    <Label Text="Bienvenido a REINCO" HorizontalOptions="Center" FontSize="Large" Margin="0,20,0,0" FontAttributes="Bold" TextColor="{StaticResource Color1}"></Label>
+                    <Label Text="¿Que desa Hacer Hoy?" Margin="0,0,0,20" HorizontalOptions="Center"></Label>
                 </StackLayout>
                 
                 <!-- Botones de navegacion -->
-                <Grid Margin="5,0,5,0">
+                <Grid Margin="5,0,5,0" WidthRequest="800">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
-                        <Label  Style="{StaticResource estiloCuadriculaAdmin}"
+                            <Image Source="ic_obra_color.png"></Image>
+                        
+                            <Label  Style="{StaticResource estiloCuadriculaAdmin}"
                                Text="Obras">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="irObra"></TapGestureRecognizer>
@@ -70,33 +70,54 @@
                     </StackLayout>
 
                     <StackLayout Grid.Column="1" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+                        
+                        <Image Source="ic_personal_color.png"></Image>
                         <Label  Style="{StaticResource estiloCuadriculaAdmin}"
-                               Text="Personal">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="irPersonal"/>
-                            </Label.GestureRecognizers>
+                            Text="Personal">
                         </Label>
-
+                        
+                        <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="irPersonal"/>
+                        </StackLayout.GestureRecognizers>
+                        
                     </StackLayout>
 
                     <StackLayout Grid.Column="2" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+
+                        <Image Source="ic_plantilla_color.png"></Image>
+
                         <Label  Style="{StaticResource estiloCuadriculaAdmin}" 
-                               Text="Plantillas">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="irPlantilla"/>
-                            </Label.GestureRecognizers>
+                            Text="Plantillas">
                         </Label>
+                        
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="irPlantilla"/>
+                        </StackLayout.GestureRecognizers>
+                        
                     </StackLayout>
 
                     <StackLayout Grid.Column="0" Grid.Row="1" BackgroundColor="{StaticResource Color5}" Padding="0,15,0,15">
+
+                        <Image Source="ic_propietario_color.png"></Image>
+
                         <Label  Style="{StaticResource estiloCuadriculaAdmin}"
-                               Text="Propietarios">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="irPropietario"/>
-                            </Label.GestureRecognizers>
+                            Text="Propietarios">
                         </Label>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="irPropietario"/>
+                        </StackLayout.GestureRecognizers>
+                        
                     </StackLayout>
                     
+                    <TableView Intent="Settings" BackgroundColor="{StaticResource Color5}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3">
+                        <TableRoot>
+                            <TableSection Title="Configuracion">
+                                <SwitchCell Text="Supervision"></SwitchCell>
+                                <EntryCell Placeholder="Param"></EntryCell>
+                                <TextCell Text="Color"></TextCell>
+                            </TableSection>
+                        </TableRoot>
+                    </TableView>
                 </Grid>
             </StackLayout>
 
