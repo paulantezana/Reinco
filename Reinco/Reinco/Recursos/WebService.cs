@@ -111,7 +111,6 @@ namespace Reinco.Recursos
                 var message = await cliente.GetAsync(url);
                 if (message.StatusCode == HttpStatusCode.OK)
                 {
-                   // contenido = await message.Content.ReadAsStringAsync();
                     var json = await message.Content.ReadAsStringAsync();
                      contenido = Convert.ToString(json);
                 }

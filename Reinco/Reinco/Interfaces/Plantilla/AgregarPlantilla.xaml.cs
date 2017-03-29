@@ -47,8 +47,8 @@ namespace Reinco.Interfaces.Plantilla
                     await dialogService.MostrarMensaje("Agregar plantilla", "Debe rellenar todos los campos.");
                     return;
                 }
-                object[,] variables = new object[,] { { "idPlantilla", IdPlantilla }, { "codigo", codPlantilla.Text }, { "nombre", nombrePlantilla.Text } };
-                dynamic result = await Servicio.MetodoGetString("ServicioPlantilla.asmx", "AgregarPlantilla", variables);
+                object[,] variables = new object[,] { { "codigo", codPlantilla.Text }, { "nombre", nombrePlantilla.Text } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPlantilla.asmx", "IngresarPlantilla", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {

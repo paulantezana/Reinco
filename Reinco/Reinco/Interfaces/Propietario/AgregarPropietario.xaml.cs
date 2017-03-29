@@ -73,7 +73,7 @@ namespace Reinco.Interfaces.Propietario
                     await dialogService.MostrarMensaje("Modificar propietario", "Debe rellenar todos los campos.");
                     return;
                 }
-                object[,] variables = new object[,] {{ "propietario", nombrePropietario.Text } };
+                object[,] variables = new object[,] { { "idPropietario", IdPropietario }, { "nombre", nombrePropietario.Text } };
                 dynamic result = await Servicio.MetodoGetString("ServicioPropietario.asmx", "ModificarPropietario", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)

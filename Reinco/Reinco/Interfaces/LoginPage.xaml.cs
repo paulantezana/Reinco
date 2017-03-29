@@ -69,8 +69,7 @@ namespace Reinco.Interfaces
                     {
                         // ---------- Almacenando Los Datos Del Usuario  En Local -------------------//
                         Application.Current.Properties["idUsuario"] = result[0].idUsuario;
-                        Application.Current.Properties["nombreUsuario"] = result[0].nombres;
-                        Application.Current.Properties["apellidoUsuario"] = result[0].apellidos;
+                        Application.Current.Properties["nombresApellidos"] = result[0].nombresApellidos;
                         Application.Current.Properties["cargoUsuario"] = result[0].cargo;
                         // await Application.Current.SavePropertiesAsync(); // Active esta opcion si dese guardar en el movil permanentemente
 
