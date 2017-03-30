@@ -63,7 +63,7 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-        // ===================// Navegar A la página AgregarObra.xaml //====================//
+        // ===================== Navegar A la página AgregarObra.xaml====================//
         private void AgregarObra_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AgregarObra());
