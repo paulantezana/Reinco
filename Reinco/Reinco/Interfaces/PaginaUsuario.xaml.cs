@@ -196,7 +196,7 @@ namespace Reinco.Interfaces
         }
         private void irPersonal(object sender, EventArgs e)
         {
-            // App.Current.MainPage = new NavigationPage(new PaginaPersonal());
+            App.Current.MainPage = new NavigationPage(new ListarPersonal());
         }
         private void irPlantilla(object sender, EventArgs e)
         {

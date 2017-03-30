@@ -20,12 +20,11 @@ namespace Reinco.Interfaces
             var items = new List<MenuPrincipalItem>();
 
 
-            if (Application.Current.Properties.ContainsKey("cargoUsuario")) // condisional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
+            if (Application.Current.Properties.ContainsKey("cargoUsuario")) // condicional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
             {
 
 
                 string cargo = Application.Current.Properties["cargoUsuario"].ToString(); // Recuperando el cargo string y alamacenando en una variable cargo
-
 
 
                 #region  ========================== Menu Prfil Importante para cada tipo de usuario ==========================

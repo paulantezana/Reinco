@@ -22,11 +22,17 @@
                             <!-- END Eventos -->
                             <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="{Binding fotoPerfil}"  Grid.Column="0"></Image>
-                                <StackLayout HorizontalOptions="FillAndExpand" Grid.Column="1">
+
+                                <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorCargo}"></BoxView>
+                                <Image Source="{Binding fotoPerfil}"  Grid.Column="1"></Image>
+                                <StackLayout HorizontalOptions="FillAndExpand" Grid.Column="2">
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="{Binding cip}"></Label>
                                         <Label  Text="{Binding nombresApellidos}" FontAttributes="Bold"></Label>
@@ -42,6 +48,23 @@
                                         </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
+                                <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarPersonal}" NumberOfTapsRequired="3"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <!--se mostrará si es supervisor-->
+                                <Image Grid.Column="4" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding visible_asignarPlantilla}">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding asignarPlantilla}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <!--se mostrará si es responsable-->
+                                <Image Grid.Column="5" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding visible_asignarObra}">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding asignarObra}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

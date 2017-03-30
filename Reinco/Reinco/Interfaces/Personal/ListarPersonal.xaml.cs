@@ -38,15 +38,45 @@ namespace Reinco.Interfaces.Personal
                 dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
                 foreach (var item in result)
                 {
-                    personalItem.Add(new PersonalItem
+                    //Determino el color según el cargo
+                    string color = "";
+                    bool visible_asignarPlantilla = false;
+                    bool visible_asignarObra = false;
+
+                    if (Convert.ToInt32(item.idCargo) == 1)//administrador
+                        color = "#FF7777";
+                    else if (Convert.ToInt32(item.idCargo) == 2)//responable
                     {
+                        color = "#FF2222";
+                        visible_asignarObra = true;
+                    }
+                    else if (Convert.ToInt32(item.idCargo) == 2)//supervisor
+                    {
+                        color = "#FF4444";
+                        visible_asignarPlantilla = true;
+                    }
+                    else
+                        color = "#FF6666";
+
+                    this.personalItem.Add(new PersonalItem
+                    {
+                        //Inicializo todo aunque no lo vaya a usar porque luego puedo necesitar todo para editar
                         fotoPerfil = "icon.png",
                         idUsuario = item.idUsuario,
-                        nombresApellidos = item.nombresApellidos.ToString(),
-                        cip = item.cip
+                        dni = item.dni,
+                        nombresApellidos = item.nombresApellidos,
+                        usuario = item.usuario,
+                        contrasena = item.contrasena,
+                        correo = item.correo,
+                        celular = item.celular,
+                        cip = item.cip,
+                        idCargo_Usuario = Convert.ToInt32(item.idCargo_Usuario),
+                        idCargo = Convert.ToInt32(item.idCargo),
+                        colorCargo = color,
+                        visible_asignarPlantilla = visible_asignarPlantilla,
+                        visible_asignarObra = visible_asignarObra
                     });
                 }
-
             }
             catch (Exception ex)
             {

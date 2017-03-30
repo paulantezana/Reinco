@@ -48,7 +48,6 @@
                                         <Label Text="{Binding codigo}"></Label>
                                     </StackLayout>
                                 </StackLayout>
-                                
 
                                 <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
@@ -56,10 +55,9 @@
                                     </Image.GestureRecognizers>
                                 </Image>
 
-
                                 <Image Grid.Column="4" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding asignarPlantilla}"/>
+                                        <TapGestureRecognizer Command="{Binding asignarSupervision}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
                             </Grid>
