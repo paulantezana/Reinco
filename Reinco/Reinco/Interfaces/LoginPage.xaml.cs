@@ -12,22 +12,61 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace Reinco.Interfaces
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 
-    public partial class LoginPage : ContentPage
+    public partial class LoginPage : ContentPage, INotifyPropertyChanged
     {
+        #region Atributos
         public VentanaMensaje mensaje;
+        private bool isRunning;
+
+        #endregion
+
+
+        #region Eventos
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+
         public LoginPage()
         { 
             InitializeComponent();
             mensaje = new VentanaMensaje();
             enviar.Clicked += Enviar_Clicked;
+
+            // TEST
+            this.BindingContext = this;
+            // TEST
             /*enviar.IsEnabled = false;
             VerificarIP();*/    
         }
+
+
+        #region ============= Propiedades =============
+        public bool IsRunning {
+            set
+            {
+                if(isRunning != value)
+                {
+                    isRunning = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunning"));
+                }
+            }
+            get
+            {
+                return isRunning;
+            }
+        }
+
+        #endregion
+
+
+
         /*public Task VerificarIP()
         {
             return Task.Run(() =>
@@ -46,8 +85,10 @@ namespace Reinco.Interfaces
         #region * ================================ Iniciando Sesión ================================ *
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
+            IsRunning = true;
             try
             {
+                
                 enviar.IsEnabled = false;
                 if (string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(password.Text))
                 {
@@ -89,6 +130,10 @@ namespace Reinco.Interfaces
             {
                 await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
                 enviar.IsEnabled = true;
+            }
+            finally
+            {
+                IsRunning = false;
             }
         } 
         #endregion

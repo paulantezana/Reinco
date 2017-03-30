@@ -8,6 +8,14 @@
             <StackLayout>
                 <Button x:Name="agregarObra" Text="Crear Obra" Style="{StaticResource BontonPrimario}"></Button>
             </StackLayout>
+            
+            <SearchBar 
+                Text="{Binding filter, Mode=TwoWay}"
+                SearchCommand="{Binding buscarObra}"
+                BindingContext=" "
+                Placeholder="Buscar Obra ... ">
+            </SearchBar>
+            
             <ListView
                 x:Name="obrasListView"
                 HasUnevenRows="True" BackgroundColor="{StaticResource Color5}">
@@ -55,7 +63,7 @@
 
                                 <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding editarObra}"/>
+                                        <TapGestureRecognizer Command="{Binding editarObra}" NumberOfTapsRequired="3"/>
                                     </Image.GestureRecognizers>
                                 </Image>
 

@@ -10,8 +10,7 @@
             <StackLayout VerticalOptions="Center" Spacing="15">
                 
                 <!-- Indicador de actividad -->
-                <ActivityIndicator x:Name="indicador"
-                    Color="{StaticResource Color1}">
+                <ActivityIndicator Color="{StaticResource Color1}" IsRunning="{Binding IsRunning}">
                 </ActivityIndicator>
                 
                 <!-- Nombre Usuario Añadido -->
