@@ -19,6 +19,16 @@
                 <Setter Property="TextColor" Value="{StaticResource Color5}"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
             </Style>
+            <Style x:Key="BtnGuardar" TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="{StaticResource Color4}"/>
+                <Setter Property="TextColor" Value="{StaticResource Color5}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="BtnCancelar" TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="#BBBBBB"/>
+                <Setter Property="TextColor" Value="#555555"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
             <!-- End Styles -->
             
         </ResourceDictionary>

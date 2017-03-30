@@ -2,34 +2,31 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Obra.ListarObra"
-             Title="PAGINA OBRA">
+             Title="Listado De Obras">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding CrearObra}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout>
-                <Button x:Name="agregarObra" Text="Crear Obra" Style="{StaticResource BontonPrimario}"></Button>
-            </StackLayout>
-            
-            <SearchBar 
-                Text="{Binding filter, Mode=TwoWay}"
-                SearchCommand="{Binding buscarObra}"
-                BindingContext=" "
-                Placeholder="Buscar Obra ... ">
-            </SearchBar>
-            
+            <SearchBar Placeholder="Buscar Obra ..." BackgroundColor="{StaticResource Color5}"></SearchBar>
             <ListView
                 x:Name="obrasListView"
-                HasUnevenRows="True" BackgroundColor="{StaticResource Color5}">
+                ItemsSource="{Binding ObraItems}"
+                BackgroundColor="{StaticResource Color5}"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding RefreshObraCommand}"
+                IsRefreshing="{Binding IsRefreshingObra,Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
 
-                            <!-- idObra Para para CRUD -->
+                            <!-- Menu Eliminar Obra CRUD -->
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar"></MenuItem>
                             </ViewCell.ContextActions>
-                            <!-- Fin idObra Para para CRUD -->
+                            <!-- End Menu Eliminar Obra CRUD -->
                                 
-                            <!-- ============ Codigo para mostrar Obra ================-->
+                            <!-- ============ Codigo Para Listar Obra ================-->
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -50,14 +47,6 @@
                                         <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                         <Label Text="{Binding codigo}"></Label>
                                     </StackLayout>
-                                    <StackLayout Grid.Row="2" Orientation="Horizontal">
-                                        <Label Text="{Binding responsable}"></Label>
-                                        <Label Text="PLANTILLAS">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding asignarPlantilla}"></TapGestureRecognizer>
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                    </StackLayout>
                                 </StackLayout>
                                 
 
@@ -68,18 +57,13 @@
                                 </Image>
 
 
-                                <Image Grid.Column="4" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30">
+                                <Image Grid.Column="4" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding eliminarObra}"/>
+                                        <TapGestureRecognizer Command="{Binding asignarPlantilla}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
-                                
-                                
                             </Grid>
-                            <!-- ============ FIN Codigo para mostrar Obra ================-->
-                            
-                            
-                            
+                            <!-- ============ FIN Codigo Para Listar Obra ================-->
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

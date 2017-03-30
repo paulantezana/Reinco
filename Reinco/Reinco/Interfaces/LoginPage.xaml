@@ -8,17 +8,16 @@
     <ContentPage.Content>
         <ScrollView Padding="35">
             <StackLayout VerticalOptions="Center" Spacing="15">
-                
+
                 <!-- Indicador de actividad -->
-                <ActivityIndicator Color="{StaticResource Color1}" IsRunning="{Binding IsRunning}">
-                </ActivityIndicator>
-                
+                <ActivityIndicator Color="{StaticResource Color1}" IsRunning="{Binding IsRunning}"> </ActivityIndicator>
+
                 <!-- Nombre Usuario Añadido -->
                 <Entry x:Name="usuario" Keyboard="Email" Placeholder="Nombre De Usuario" TextColor="{StaticResource Color1}"></Entry>
-                
+
                 <!-- Password -->
                 <Entry x:Name="password" IsPassword="True" Placeholder="Contraseña" TextColor="{StaticResource Color1}"></Entry>
-                
+
                 <!-- Button Inicio De Sesión -->
                 <Button
                     Text="Iniciar Sesión"
@@ -26,7 +25,7 @@
                     BackgroundColor="{StaticResource Color1}"
                     TextColor="{StaticResource Color5}">
                 </Button>
-                
+
                 <!-- Recuperar Contraseña -->
                 <Label 
                     Text="¿Has olvidado la contraseña?" 
@@ -36,17 +35,17 @@
                         <TapGestureRecognizer Tapped="recuperarContra" NumberOfTapsRequired="1"/>
                     </Label.GestureRecognizers>
                 </Label>
-                
-                <!-- Nombre Empresa -->
+
+                <!-- Nombre De LA Empresa Empresa -->
                 <Label
                     Text="REINCO"
                     FontSize="50"
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
-                    Margin="0,50,0,50"
+                    Margin="0,40,0,40"
                     TextColor="{StaticResource Color1}">
                 </Label>
-                
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

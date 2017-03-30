@@ -12,18 +12,24 @@ using System.Text.RegularExpressions;
 using Reinco.Interfaces.Plantilla;
 using Reinco.Interfaces.Supervision;
 using Reinco.Interfaces.Obra;
+using Reinco.Interfaces.Personal;
 
 namespace Reinco
 {
     public partial class App : Application
     {
+        #region +---- Atributos ----+
         public static string ip;
         public static string puerto = "8080";
-        public VentanaMensaje mensaje;
+        public VentanaMensaje mensaje; 
+        #endregion
 
-        public static NavigationPage Navigator { get; internal set; }
-        public static ListarObra ListarObra { get; internal set; }
+        #region +---- Propiedades ----+
+        public static NavigationPage Navigator { get; internal set; } // Pagina Principal De Navegacion
+        public static ListarObra ListarObra { get; internal set; } // Página listar Obra
+        #endregion
 
+        #region +---- Constrcutor -----+
         public App()
         {
             //recupero por única vez cuando entro a la aplicación el IP de servidor
@@ -32,8 +38,12 @@ namespace Reinco
             //ip = "192.168.1.111";
             ip = "192.168.1.37";
             InitializeComponent();
-            MainPage = new LoginPage();
+            MainPage = new ListarObra();
         }
+
+        #endregion
+
+        #region +---- Comunicacion ----+
         public async void ObtenerIpAsync()
         {
             await LeerUrlAsync("ip/ip.txt");//http://...
@@ -61,7 +71,10 @@ namespace Reinco
             {
                 await mensaje.MostrarMensaje("Error", e.ToString());
             }
-        }
+        } 
+        #endregion
+
+
         protected override void OnStart()
         {
             // Handle when your app starts

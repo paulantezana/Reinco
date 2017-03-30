@@ -1,17 +1,7 @@
-using Newtonsoft.Json;
-using Reinco.Gestores;
 using Reinco.Recursos;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
 using System.ComponentModel;
 
 namespace Reinco.Interfaces
@@ -20,34 +10,35 @@ namespace Reinco.Interfaces
 
     public partial class LoginPage : ContentPage, INotifyPropertyChanged
     {
-        #region Atributos
+        #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         private bool isRunning;
-
         #endregion
 
 
-        #region Eventos
+        #region +---- Eventos ----+
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
 
+        #region +---- Constructor ----+
         public LoginPage()
-        { 
+        {
             InitializeComponent();
             mensaje = new VentanaMensaje();
             enviar.Clicked += Enviar_Clicked;
 
             // TEST
-            this.BindingContext = this;
+            this.BindingContext = this; // linea que define el contexto del XAML
             // TEST
             /*enviar.IsEnabled = false;
-            VerificarIP();*/    
-        }
+            VerificarIP();*/
+        } 
+        #endregion
 
 
-        #region ============= Propiedades =============
+        #region +---- Propiedades ----+
         public bool IsRunning {
             set
             {
@@ -64,8 +55,7 @@ namespace Reinco.Interfaces
         }
 
         #endregion
-
-
+        
 
         /*public Task VerificarIP()
         {
@@ -86,14 +76,13 @@ namespace Reinco.Interfaces
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
             IsRunning = true;
+            enviar.IsEnabled = false;
             try
             {
                 
-                enviar.IsEnabled = false;
                 if (string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(password.Text))
                 {
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Ninguno de los campos debe estar vacio");
-                    enviar.IsEnabled = true;
                     return;
                 }
                 WebService servicio = new WebService();
@@ -104,7 +93,6 @@ namespace Reinco.Interfaces
                     if (result.Count == 0) //si está vacío
                     {
                         await mensaje.MostrarMensaje("Iniciar Sesión", "Usuario o contraseña incorrecta!");
-                        enviar.IsEnabled = true;
                     }
                     else
                     {
@@ -120,7 +108,6 @@ namespace Reinco.Interfaces
                 else
                 {
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador");
-                    enviar.IsEnabled = true;
                 }
                 //List<Usuario> items = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
                 //DataTable dtUsuario = new DataTable();
@@ -129,11 +116,11 @@ namespace Reinco.Interfaces
             catch (Exception ex)
             {
                 await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
-                enviar.IsEnabled = true;
             }
             finally
             {
                 IsRunning = false;
+                enviar.IsEnabled = true;
             }
         } 
         #endregion
