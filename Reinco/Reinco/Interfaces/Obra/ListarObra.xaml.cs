@@ -67,7 +67,6 @@ namespace Reinco.Interfaces.Obra
         public ListarObra()
         {
             InitializeComponent();
-            this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
 
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItems();
@@ -76,6 +75,7 @@ namespace Reinco.Interfaces.Obra
             // Evento Crear Obra
             CrearObra = new Command(() =>
              {
+                 DisplayAlert("Alerta", "Me ejecute", "Aceptar");
                  Navigation.PushAsync(new AgregarObra());
              });
 
@@ -86,6 +86,8 @@ namespace Reinco.Interfaces.Obra
                 IsRefreshingObra = false;
             }); 
             #endregion
+
+            this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         } 
         #endregion
 
