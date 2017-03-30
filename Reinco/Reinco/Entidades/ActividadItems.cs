@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reinco.Gestores
+namespace Reinco.Entidades
 {
     public class ActividadItems
     {

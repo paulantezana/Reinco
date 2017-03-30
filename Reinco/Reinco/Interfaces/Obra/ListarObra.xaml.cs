@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Reinco.Gestores;
+using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -75,13 +75,13 @@ namespace Reinco.Interfaces.Obra
             // Evento Crear Obra
             CrearObra = new Command(() =>
              {
-                 DisplayAlert("Alerta", "Me ejecute", "Aceptar");
                  Navigation.PushAsync(new AgregarObra());
              });
 
             // Evento Refrescar La Lista
             RefreshObraCommand = new Command( () =>
             {
+                ObraItems.Clear();
                 CargarObraItems();
                 IsRefreshingObra = false;
             }); 
@@ -138,12 +138,22 @@ namespace Reinco.Interfaces.Obra
                 if (result!=null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Obra", Mensaje, "OK");
+
+                    // Recargando La lista
+                    ObraItems.Clear();
+                    CargarObraItems();
+                    // 
                     return;
                 }
+                //
+                // Evento Refrescar La Lista
             }
             catch (Exception ex)
             {
                 await mensaje.MostrarMensaje("Eliminar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+            finally
+            {
             }
         }
         #endregion

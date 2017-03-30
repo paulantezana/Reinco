@@ -38,12 +38,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Gestores\ActividadItems.cs" />
-    <Compile Include="Gestores\AsignarPlantillaSupervisorItem.cs" />
-    <Compile Include="Gestores\CPlantilla.cs" />
-    <Compile Include="Gestores\ObraResponsableItem.cs" />
-    <Compile Include="Gestores\PlantillaObra.cs" />
-    <Compile Include="Gestores\SupervisionItem.cs" />
+    <Compile Include="Entidades\ActividadItems.cs" />
+    <Compile Include="Entidades\AsignarPlantillaSupervisorItem.cs" />
+    <Compile Include="Entidades\CPlantilla.cs" />
+    <Compile Include="Entidades\ObraResponsableItem.cs" />
+    <Compile Include="Entidades\PlantillaObra.cs" />
+    <Compile Include="Entidades\SupervisionItem.cs" />
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
       <DependentUpon>AgregarObra.xaml</DependentUpon>
     </Compile>
@@ -56,11 +56,11 @@
     <Compile Include="Interfaces\Obra\ListarObra.xaml.cs">
       <DependentUpon>ListarObra.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Gestores\ObraItem.cs" />
-    <Compile Include="Gestores\PersonalItem.cs" />
-    <Compile Include="Gestores\ObraSupervisarItem.cs" />
-    <Compile Include="Gestores\PlantillaLista.cs" />
-    <Compile Include="Gestores\PropietarioItem.cs" />
+    <Compile Include="Entidades\ObraItem.cs" />
+    <Compile Include="Entidades\PersonalItem.cs" />
+    <Compile Include="Entidades\ObraSupervisarItem.cs" />
+    <Compile Include="Entidades\PlantillaLista.cs" />
+    <Compile Include="Entidades\PropietarioItem.cs" />
     <Compile Include="Interfaces\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -70,7 +70,7 @@
     <Compile Include="Interfaces\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Gestores\MenuPrincipalItem.cs" />
+    <Compile Include="Entidades\MenuPrincipalItem.cs" />
     <Compile Include="Interfaces\Obra\PaginaPrueva.xaml.cs">
       <DependentUpon>PaginaPrueva.xaml</DependentUpon>
     </Compile>

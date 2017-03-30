@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reinco.Gestores
+namespace Reinco.Entidades
 {
-    public class PlantillaLista
+    public class ObraResponsableItem
     {
-        public int idPlantilla { get; set; }
-        public string codigo { get; set; }
+        public int idResponsable { get; set; }
         public string nombre { get; set; }
     }
 }
