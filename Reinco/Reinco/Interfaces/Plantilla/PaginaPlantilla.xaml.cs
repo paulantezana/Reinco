@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 using Reinco.Recursos;
-using Reinco.Gestores;
+using Reinco.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

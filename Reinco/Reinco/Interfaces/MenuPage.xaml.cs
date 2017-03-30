@@ -1,4 +1,4 @@
-﻿using Reinco.Gestores;
+﻿using Reinco.Entidades;
 using Reinco.Interfaces.Obra;
 using Reinco.Interfaces.Personal;
 using Reinco.Interfaces.Plantilla;

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Reinco.Gestores;
+using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -127,8 +127,12 @@ namespace Reinco.Interfaces.Obra
                     if (result != null)
                     {
                         await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
-                        ListarObra paginaObra = new ListarObra();
-                        paginaObra.CargarObraItems();
+                        ListarObra listarObra = new ListarObra();
+
+                        // Refrescando la lista
+                        listarObra.ObraItems.Clear();
+                        listarObra.CargarObraItems();
+                        // navegando a la página anterior
                         await Navigation.PopAsync();
                         return;
                     }
