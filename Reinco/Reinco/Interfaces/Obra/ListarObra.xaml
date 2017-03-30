@@ -10,7 +10,7 @@
         <StackLayout>
             <SearchBar Placeholder="Buscar Obra ..." BackgroundColor="{StaticResource Color5}"></SearchBar>
             <ListView
-                x:Name="obrasListView"
+               
                 ItemsSource="{Binding ObraItems}"
                 BackgroundColor="{StaticResource Color5}"
                 IsPullToRefreshEnabled="True"
