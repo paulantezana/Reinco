@@ -26,7 +26,7 @@ namespace Reinco.Gestores
         #endregion
 
 
-        #region +---- Constructor -
+        #region +---- Constructor ----+
         public ObraItem()
         {
             asignarPlantilla = new Command(() =>

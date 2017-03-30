@@ -122,7 +122,6 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-        
 
         #region +---- Evento Eliminar Obra ----+
         public async void eliminar(object sender, EventArgs e)
