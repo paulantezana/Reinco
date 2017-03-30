@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Reinco.Interfaces.Obra;
+﻿using Reinco.Interfaces.Obra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +20,13 @@ namespace Reinco.Gestores
 
 
 
-
+        #region +---- Comandos ---+
         public ICommand asignarPlantilla { get; private set; }
-        public ICommand editarObra { get; private set; }
-        public ICommand eliminarObra { get; private set; }
-        
+        public ICommand editarObra { get; private set; } 
+        #endregion
 
+
+        #region +---- Constructor ----+
         public ObraItem()
         {
             asignarPlantilla = new Command(() =>
@@ -38,13 +38,9 @@ namespace Reinco.Gestores
             {
                 App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre));
             });
+        } 
+        #endregion
 
-            eliminarObra = new Command(() =>
-            {
-
-            });
-        }
-        
 
     }
 }

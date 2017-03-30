@@ -4,50 +4,110 @@ using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Reinco.Interfaces.Obra
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListarObra : ContentPage
+    public partial class ListarObra : ContentPage, INotifyPropertyChanged
     {
+        #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
-        WebService Servicio = new WebService();
+        WebService Servicio = new WebService(); 
+        #endregion
+
+
+        #region +---- Eventos ----+
+        public event PropertyChangedEventHandler PropertyChanged; 
+        #endregion
+
+
+        #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         string Mensaje;
-        public ObservableCollection<ObraItem> obraItem { get; set; }
+        private bool isRefreshingObra { get; set; }
+        #endregion
+
+
+        #region +---- Propiedades ----+
+        public ObservableCollection<ObraItem> ObraItems { get; set; }
+        public bool IsRefreshingObra
+        {
+            set
+            {
+                if (isRefreshingObra != value)
+                {
+                    isRefreshingObra = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
+                }
+            }
+            get
+            {
+                return isRefreshingObra;
+            }
+        }
+        #endregion
+
+
+        #region +---- Comandos ----+
+        public ICommand CrearObra { get; private set; }
+        public ICommand RefreshObraCommand { get; private set; } 
+        #endregion
+
+
+        #region +---- Constructor ----+
         public ListarObra()
         {
             InitializeComponent();
-            obraItem = new ObservableCollection<ObraItem>();
-            CargarObraItem();
-            obrasListView.ItemsSource = obraItem;
+            this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
 
-            agregarObra.Clicked += AgregarObra_Clicked;
-        }
+            ObraItems = new ObservableCollection<ObraItem>();
+            CargarObraItems();
 
+            #region +---- Preparando Los Comandos ----+
+            // Evento Crear Obra
+            CrearObra = new Command(() =>
+             {
+                 Navigation.PushAsync(new AgregarObra());
+             });
+
+            // Evento Refrescar La Lista
+            RefreshObraCommand = new Command( () =>
+            {
+                CargarObraItems();
+                IsRefreshingObra = false;
+            }); 
+            #endregion
+        } 
+        #endregion
+
+
+        #region +---- Definiendo Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
         {
             base.OnAppearing();
             App.ListarObra = this;
         }
+        #endregion
 
-        #region==================cargar obras======================================
-        public async void CargarObraItem()
+
+        #region +---- Cargando las obras ----+
+        public async void CargarObraItems()
         {
             try
             {
                 dynamic result = await Servicio.MetodoGet("ServicioObra.asmx", "MostrarObras");
                 foreach (var item in result)
                 {
-                    obraItem.Add(new ObraItem
+                    ObraItems.Add(new ObraItem
                     {
                         idObra = item.idObra,
                         nombre = item.nombre,
@@ -55,7 +115,6 @@ namespace Reinco.Interfaces.Obra
                         colorObra = "#FF7777"
                     });
                 }
-
             }
             catch (Exception ex)
             {
@@ -63,13 +122,9 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-        // ===================== Navegar A la página AgregarObra.xaml====================//
-        private void AgregarObra_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new AgregarObra());
-        }
+        
 
-        #region=======================eliminar obra====================================
+        #region +---- Evento Eliminar Obra ----+
         public async void eliminar(object sender, EventArgs e)
         {
             try { 
@@ -89,8 +144,8 @@ namespace Reinco.Interfaces.Obra
             {
                 await mensaje.MostrarMensaje("Eliminar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
-            
         }
         #endregion
+
     }
 }

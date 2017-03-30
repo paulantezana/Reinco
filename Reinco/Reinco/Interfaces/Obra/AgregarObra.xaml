@@ -2,54 +2,54 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Reinco.Recursos"
-             x:Class="Reinco.Interfaces.Obra.AgregarObra"
-             Title="CREAR OBRA">
+             x:Class="Reinco.Interfaces.Obra.AgregarObra">
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                <Label Text="Código de la obra"></Label>
-                <Entry x:Name="codigo"></Entry>
-            </StackLayout>
-            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                <Label Text="Nonbre De La Obra"></Label>
-                <Entry x:Name="nombre"></Entry>
-            </StackLayout>
+        <ScrollView>
+            <StackLayout>
+            
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Código de la obra"></Label>
+                    <Entry x:Name="codigo"></Entry>
+                </StackLayout>
+            
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Nonbre De La Obra"></Label>
+                    <Entry x:Name="nombre"></Entry>
+                </StackLayout>
 
-            <!-- Asignar propietario de la obra-->
-            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                <control:BindablePicker
-                    Title="Asigne Un Propietario"
-                    DisplayMemberPath="nombre"
-                    SelectedValuePath="idPropietario"
-                    SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
-                    HorizontalOptions="FillAndExpand"
-                    x:Name="asignarPropietario"
-                    VerticalOptions="Center"/>
-            </StackLayout>
+                <!-- Asignar propietario de la obra-->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <control:BindablePicker
+                        Title="Asigne Un Propietario"
+                        DisplayMemberPath="nombre"
+                        SelectedValuePath="idPropietario"
+                        SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="asignarPropietario"
+                        VerticalOptions="Center"/>
+                </StackLayout>
 
-
-
-
-            <!-- Añadir Responsable de la Obra  -->
-            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                <control:BindablePicker
-                    Title="Asigne Un Responsable"
-                    DisplayMemberPath="nombres"
-                    SelectedValuePath="idUsuario"
-                    SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
-                    HorizontalOptions="FillAndExpand"
-                    x:Name="asignarResponsable"
-                    VerticalOptions="Center"/>
-            </StackLayout>
+                <!-- Añadir Responsable de la Obra  -->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <control:BindablePicker
+                        Title="Asigne Un Responsable"
+                        DisplayMemberPath="nombres"
+                        SelectedValuePath="idUsuario"
+                        SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="asignarResponsable"
+                        VerticalOptions="Center"/>
+                </StackLayout>
             
 
-            <!-- Buttons Action -->
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
-                <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
-            </StackLayout>
-            <!-- End -->
+                <!-- Buttons Action -->
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
+                    <Button x:Name="guardar"   Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
+                </StackLayout>
+                <!-- End -->
             
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

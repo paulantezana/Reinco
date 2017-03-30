@@ -23,11 +23,13 @@ namespace Reinco.Interfaces.Obra
         public VentanaMensaje mensaje;
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
         public ObservableCollection<PersonalItem> personalItem { get; set; }
-        // ============================ Constructor para crear obra ============================//
+
+        #region +---- Constructores ----+
         public AgregarObra()
         {
             InitializeComponent();
-            // =====
+            this.Title = "Crear Obra"; // nombre de la pagina
+
             propietarioItem = new ObservableCollection<PropietarioItem>();
             personalItem = new ObservableCollection<PersonalItem>();
 
@@ -35,14 +37,31 @@ namespace Reinco.Interfaces.Obra
             CargarPropietarioItem();
             CargarPersonalItem();
 
-            // renderisando las listas
-            asignarPropietario.ItemsSource = propietarioItem;
-            asignarResponsable.ItemsSource = personalItem;
-            //asignados
-            // Eventos
+            // Eventos Guardar Y Cancelar
             cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += Guardar_Clicked;
         }
+
+        public AgregarObra(int idObra, string Codigo, string Nombre)
+        {
+            InitializeComponent();
+            this.Title = Nombre; // nombre de la pagina
+
+            // llenando los campos
+            nombre.Text = Nombre;
+            codigo.Text = Codigo;
+            IdObra = Convert.ToInt16(idObra);
+
+            // Cambiando el texto del boton guardar
+            guardar.Text = "Guardar Cambios";
+
+            // Eventos Guardar Y Cancelar
+            guardar.Clicked += modificarObra;
+            cancelar.Clicked += Cancelar_Clicked;
+        } 
+        #endregion
+
+
         #region Metodos Para Listar Personal Y Propietarios
         private async void CargarPersonalItem()
         {
@@ -53,13 +72,13 @@ namespace Reinco.Interfaces.Obra
                 {
                     personalItem.Add(new PersonalItem
                     {
-                        fotoPerfil = "icon.png",
+                        fotoPerfil = "ic_profile.png",
                         idUsuario = item.idUsuario,
                         nombresApellidos = item.nombresApellidos.ToString(),
                         cip = item.cip
                     });
                 }
-
+                asignarResponsable.ItemsSource = personalItem; // pintando en la interfas de usuario
             }
             catch (Exception ex)
             {
@@ -78,10 +97,10 @@ namespace Reinco.Interfaces.Obra
                     {
                         idPropietario = item.idPropietario,
                         nombre = item.nombre,
-                        fotoPerfil = "icon.png",
+                        fotoPerfil = "ic_profile.png",
                     });
                 }
-
+                asignarPropietario.ItemsSource = propietarioItem; // Pintando en la interfas de usuario
             }
             catch (Exception ex)
             {
@@ -109,7 +128,7 @@ namespace Reinco.Interfaces.Obra
                     {
                         await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
                         ListarObra paginaObra = new ListarObra();
-                        paginaObra.CargarObraItem();
+                        paginaObra.CargarObraItems();
                         await Navigation.PopAsync();
                         return;
                     }
@@ -148,15 +167,7 @@ namespace Reinco.Interfaces.Obra
         #endregion
 
         // ============== Constructor para para modificar o eliminar la  obra ===============//
-        public AgregarObra(int IdObra, string Codigo, string Nombre)
-        {
-            InitializeComponent();
-            nombre.Text = Nombre;
-            codigo.Text = Codigo;
-            this.Title = "MODIFICAR OBRA";
-            guardar.Clicked += modificarObra;
-            IdObra = Convert.ToInt16(IdObra);
-        }
+        
 
 
 
@@ -187,8 +198,6 @@ namespace Reinco.Interfaces.Obra
 
         }
         #endregion
-
-
 
     }
 }
