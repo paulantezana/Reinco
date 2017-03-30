@@ -19,6 +19,7 @@ namespace Reinco.Interfaces.Obra
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListarObra : ContentPage, INotifyPropertyChanged
     {
+        string Color;
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService(); 
@@ -26,7 +27,7 @@ namespace Reinco.Interfaces.Obra
 
 
         #region +---- Eventos ----+
-        public event PropertyChangedEventHandler PropertyChanged; 
+      //  public event PropertyChangedEventHandler PropertyChanged; 
         #endregion
 
 
@@ -46,7 +47,7 @@ namespace Reinco.Interfaces.Obra
                 if (isRefreshingObra != value)
                 {
                     isRefreshingObra = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
+                  //  PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
                 }
             }
             get
@@ -106,15 +107,20 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                dynamic result = await Servicio.MetodoGet("ServicioObra.asmx", "MostrarObras");
+                //servicioObra, mostrarObras--modificado
+                dynamic result = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
                 foreach (var item in result)
                 {
+                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                        Color = "#FF7777";
+                    else
+                        Color = "Green";
                     ObraItems.Add(new ObraItem
                     {
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
-                        colorObra = "#FF7777"
+                        colorObra = Color
                     });
                 }
             }

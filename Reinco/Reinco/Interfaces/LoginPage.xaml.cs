@@ -17,7 +17,7 @@ namespace Reinco.Interfaces
 
 
         #region +---- Eventos ----+
-        public event PropertyChangedEventHandler PropertyChanged;
+       // public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace Reinco.Interfaces
                 if(isRunning != value)
                 {
                     isRunning = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunning"));
+                   // PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunning"));
                 }
             }
             get
