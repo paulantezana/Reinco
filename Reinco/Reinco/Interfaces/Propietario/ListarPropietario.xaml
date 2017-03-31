@@ -6,7 +6,11 @@
     <ContentPage.Content>
         <StackLayout Padding="8">
             <Button x:Name="agregarPropietario" Text="Agregar Propietario" Style="{StaticResource BontonPrimario}"></Button>
-            <ListView x:Name="propietarioListView" HasUnevenRows="True" SeparatorVisibility="None">
+            <ListView x:Name="propietarioListView" SeparatorVisibility="None"
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                     RefreshCommand="{Binding RefrescarPropietarioCommand}"
+                       IsRefreshing="{Binding RefrescandoPropietario,Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

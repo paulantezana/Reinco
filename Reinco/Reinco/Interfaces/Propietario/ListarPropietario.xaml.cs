@@ -4,22 +4,43 @@ using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Reinco.Interfaces.Propietario
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListarPropietario : ContentPage
+    public partial class ListarPropietario : ContentPage, INotifyPropertyChanged
     {
         WebService Servicio = new WebService();
         public VentanaMensaje mensaje;
         string Mensaje;
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
+        #region==============Refrescar Propietarios==========================
+        new public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand RefrescarPropietarioCommand { get; private set; }
+        public bool RefrescandoPropietario
+        {
+            set
+            {
+                if (RefrescandoPropietario != value)
+                {
+                    RefrescandoPropietario = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RefrescandoObra"));
+                }
+            }
+            get
+            {
+                return RefrescandoPropietario;
+            }
+        }
+        #endregion
         // datatable usuario;
         #region=============constructor vacio======================
         public ListarPropietario()
@@ -29,7 +50,12 @@ namespace Reinco.Interfaces.Propietario
             CargarPropietarioItem();
             propietarioListView.ItemsSource = propietarioItem;
             agregarPropietario.Clicked += AgregarPropietario_Clicked;
-            
+            RefrescarPropietarioCommand = new Command(() =>
+            {
+                propietarioItem.Clear();
+                CargarPropietarioItem();
+                RefrescandoPropietario = false;
+            });
         }
         #endregion
 
