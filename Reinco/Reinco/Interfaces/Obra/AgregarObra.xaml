@@ -5,7 +5,7 @@
              x:Class="Reinco.Interfaces.Obra.AgregarObra">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
+            <StackLayout Padding="10" Spacing="15">
             
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Código de la obra"></Label>
@@ -13,35 +13,76 @@
                 </StackLayout>
             
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Nonbre De La Obra"></Label>
+                    <Label Text="Nombre De La Obra"></Label>
                     <Entry x:Name="nombre"></Entry>
                 </StackLayout>
 
+
                 <!-- Asignar propietario de la obra-->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Asigne Un Propietario"></Label>
+                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                            <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarPropietario" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandCambiarPropietario}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarPropietario" TextColor="#FF5555" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandBorrarPropietario}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
+                    
+                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorPropietario" IsVisible="False"></Label>
+                    
                     <control:BindablePicker
-                        Title="Asigne Un Propietario"
                         DisplayMemberPath="nombre"
                         SelectedValuePath="idPropietario"
+                        ItemsSource="{Binding propietarioItem}" 
                         SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
-                        x:Name="asignarPropietario"
-                        VerticalOptions="Center"/>
+                        VerticalOptions="Center"
+                        x:Name="asignarPropietario"/>
                 </StackLayout>
 
                 <!-- Añadir Responsable de la Obra  -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Asigne Un Propietario"></Label>
+                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                            <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarResponsable" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandCambiarResponsable}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarResponsable" TextColor="#FF5555" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandBorrarResponsable}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
+                    
+                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorResponsable" IsVisible="False"></Label>
+                    
                     <control:BindablePicker
-                        Title="Asigne Un Responsable"
-                        DisplayMemberPath="nombres"
+                        DisplayMemberPath="nombresApellidos"
                         SelectedValuePath="idUsuario"
+                        ItemsSource="{Binding personalItem}"
                         SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
-                        x:Name="asignarResponsable"
-                        VerticalOptions="Center"/>
+                        VerticalOptions="Center"
+                        x:Name="asignarResponsable"/>
                 </StackLayout>
-            
-
+                
+                <!-- Indicador de Actividad -->
+                <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
+                
                 <!-- Buttons Action -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>

@@ -24,10 +24,12 @@ namespace Reinco
         public VentanaMensaje mensaje; 
         #endregion
 
+
         #region +---- Propiedades ----+
         public static NavigationPage Navigator { get; internal set; } // Pagina Principal De Navegacion
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
         #endregion
+
 
         #region +---- Constrcutor -----+
         public App()

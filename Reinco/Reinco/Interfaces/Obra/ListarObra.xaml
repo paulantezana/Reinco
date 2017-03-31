@@ -32,8 +32,8 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5"/>
                                     <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="40"/>
                                     <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
@@ -41,27 +41,20 @@
                                 
                                 <Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>
                                 
-                                
-                                <StackLayout Grid.Column="2" Margin="0,8,0,8">
-                                    <StackLayout Orientation="Horizontal" >
-                                        <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
-                                        <Label Text="{Binding codigo}"></Label>
-                                    </StackLayout>
+                                <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
+                                    <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
                                 
+                                <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
+                                    <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                </StackLayout>
 
-                                <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding editarObra}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
 
-
-                                <Image Grid.Column="4" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding asignarPlantilla}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
                             </Grid>
                             <!-- ============ FIN Codigo Para Listar Obra ================-->
                         </ViewCell>
