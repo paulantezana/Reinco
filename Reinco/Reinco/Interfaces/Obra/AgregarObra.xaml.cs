@@ -4,6 +4,7 @@ using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -15,154 +16,175 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Obra
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AgregarObra : ContentPage
+    public partial class AgregarObra : ContentPage, INotifyPropertyChanged
     {
+
+        #region +---- Eventos ----+
+        new public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+
+
+        #region +---- Atributos ----+
+        private bool isRunning;
         int IdObra;
         WebService Servicio = new WebService();
         string Mensaje;
         public VentanaMensaje mensaje;
-        public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
-        public ObservableCollection<PersonalItem> personalItem { get; set; }
-
-
-        public ICommand expandirBindablePicker { get; private set; }
+        #endregion
 
 
 
         #region +---- Constructores ----+
         public AgregarObra()
         {
+            // Preparando la UI(Interfas de usuario)
             InitializeComponent();
             this.Title = "Crear Obra"; // nombre de la pagina
 
+            // Servicios
+            mensaje = new VentanaMensaje();
+
+            // ObservableCollection
             propietarioItem = new ObservableCollection<PropietarioItem>();
             personalItem = new ObservableCollection<PersonalItem>();
 
+            // Cargando las listas en los POP UPS
+            CargarPropietarioItem();
+            CargarPersonalItem();
 
             // Eventos Guardar Y Cancelar
             cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += Guardar_Clicked;
 
-
-            expandirBindablePicker = new Command(() =>
-            {
-                asignarPropietario.IsVisible = true;
-                asignarPropietario.IsEnabled = true;
-            });
-
-
-
+            // Esstablecinedo el Contexto para poder usar lus bindings
             this.BindingContext = this;
-            // cargando la listas
-            CargarPropietarioItem();
-            CargarPersonalItem();
+
         }
 
         public AgregarObra(int idObra, string Codigo, string Nombre)
         {
+            // Preparando la UI(Interfas de usuario) MODIFICAR OBRA
             InitializeComponent();
             this.Title = Nombre; // nombre de la pagina
-
-            // llenando los campos
-            nombre.Text = Nombre;
-            codigo.Text = Codigo;
+            nombre.Text = Nombre; // Lenando el campo Nombre Obra
+            codigo.Text = Codigo; // llenando el campo Codigo Obra
             IdObra = Convert.ToInt16(idObra);
-            
-            asignarPropietario.Title = "Asigne un nuevo propietario";
-            asignarResponsable.Title = "Asigne un nuevo responsable";
 
+            asignarPropietario.Title = "Asigne un nuevo propietario"; // Titulo POP UPS Propietario
+            asignarResponsable.Title = "Asigne un nuevo responsable"; // Titulo POP UPS Responsable
+            guardar.Text = "Guardar Cambios"; // Cambiando el texto del Button Guargar a Guardar Cambios
 
+            // Servicios
+            mensaje = new VentanaMensaje();
 
+            // ObservableCollection
+            propietarioItem = new ObservableCollection<PropietarioItem>();
+            personalItem = new ObservableCollection<PersonalItem>();
 
-            // Cambiando el texto del boton guardar
-            guardar.Text = "Guardar Cambios";
+            // Cargando las listas en los POP UPS
+            CargarPropietarioItem();
+            CargarPersonalItem();
+
 
             // Eventos Guardar Y Cancelar
             //guardar.Clicked += modificarObra;
             //cancelar.Clicked += Cancelar_Clicked;
 
-            propietarioItem = new ObservableCollection<PropietarioItem>();
-            personalItem = new ObservableCollection<PersonalItem>();
-
-            // cargando la listas
-            CargarPropietarioItem();
-            CargarPersonalItem();
         } 
         #endregion
 
 
-        #region Metodos Para Listar Personal Y Propietarios
+
+        #region +---- Propiedades ----+
+        public bool IsRunning
+        {
+            set
+            {
+                if (isRunning != value)
+                {
+                    isRunning = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunning"));
+                }
+            }
+            get
+            {
+                return isRunning;
+            }
+        }
+        #endregion
+
+
+
+        #region +---- ObservableCollection ----+
+        public ObservableCollection<PropietarioItem> propietarioItem { get; set; } // Llamado desde un Binding BindablePicker ItemsSource="{Binding propietarioItem}" 
+        public ObservableCollection<PersonalItem> personalItem { get; set; }  // Llamado desde un Binding BindablePicker ItemsSource="{Binding personalItem}" 
+        #endregion
+
+
+
+        #region +--------------- Cargando Usuarios Desde Web Service ---------------------------+
         private async void CargarPersonalItem()
         {
             try
             {
-                dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
                 personalItem.Clear();
-                foreach (var item in result)
+                foreach (var item in usuarios)
                 {
                     personalItem.Add(new PersonalItem
                     {
-                        fotoPerfil = "ic_profile.png",
                         idUsuario = item.idUsuario,
                         nombresApellidos = item.nombresApellidos.ToString(),
-                        cip = item.cip
                     });
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "Aceptar");
+                await mensaje.MostrarMensaje("Error", ex.Message);
             }
         }
-
-        private async void CargarPropietarioItem()
-        {
-            try
-            {
-                dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
-                propietarioItem.Clear();
-
-                foreach (var item in result)
-                {
-                    propietarioItem.Add(new PropietarioItem
-                    {
-                        idPropietario = item.idPropietario,
-                        nombre = item.nombre,
-                        fotoPerfil = "ic_profile.png",
-                    });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", ex.Message, "Aceptar");
-            }
-        } 
         #endregion
 
 
 
+        #region +------------- Cargando Propietarios Desde Web Service -----------------+
+        private async void CargarPropietarioItem()
+        {
+            try
+            {
+                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                propietarioItem.Clear();
+                foreach (var item in propietario)
+                {
+                    propietarioItem.Add(new PropietarioItem
+                    {
+                        idPropietario = item.idPropietario,
+                        nombre = item.nombre
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Error", ex.Message);
+            }
+        }
+        #endregion
 
 
 
-
-
-
-
-
-
-
-
+        #region +-------------------- Guardar Nueva Obra -----------------------+
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
             try
             {
+                IsRunning = true;
                 if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue == null)
                 {
                     #region================ingresar solo obra=============================
                     if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
                     {
-                        await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
+                        await mensaje.MostrarMensaje("Agregar Obra", "Debe rellenar todos los campos.");
                         return;
                     }
                     object[,] variables = new object[,] { { "idObra", IdObra }, { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
@@ -170,14 +192,11 @@ namespace Reinco.Interfaces.Obra
                     Mensaje = Convert.ToString(result);
                     if (result != null)
                     {
-                        await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
-                        ListarObra listarObra = new ListarObra();
+                        await mensaje.MostrarMensaje("Agregar Obra", Mensaje);
 
                         // Refrescando la lista
-                        listarObra.ObraItems.Clear();
-                        listarObra.CargarObraItems();
-                        // navegando a la página anterior
-                        await Navigation.PopAsync();
+                        App.ListarObra.ObraItems.Clear();
+                        App.ListarObra.CargarObraItems();
                         return;
                     }
 
@@ -194,7 +213,7 @@ namespace Reinco.Interfaces.Obra
                     Mensaje = Convert.ToString(result);
                     if (result != null)
                     {
-                        await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable y Propietario", Mensaje, "OK");
+                        await mensaje.MostrarMensaje("Agregar Obra con Responsable y Propietario", Mensaje);
                         return;
                     }
                 }
@@ -204,26 +223,33 @@ namespace Reinco.Interfaces.Obra
             {
                 await mensaje.MostrarMensaje("Agregar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
-        }
+            finally
+            {
+                await Navigation.PopAsync();
+                IsRunning = false;
+            }
+        } 
+        #endregion
+
+
+
         #region Navegacion para el boton cancelar
 
         // boton cancelar
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
-            Navigation.PopAsync();
+            Navigation.PopModalAsync();
         } 
         #endregion
 
-        // ============== Constructor para para modificar o eliminar la  obra ===============//
-        
 
 
-
-        #region==================modificar obra=================================
+        #region================== modificar obra =================================
         private async void modificarObra(object sender, EventArgs e)
         {
             try
             {
+                IsRunning = true;
                 if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
                 {
                 await DisplayAlert("Modificar Obra", "Debe rellenar todos los campos.", "OK");
@@ -234,7 +260,7 @@ namespace Reinco.Interfaces.Obra
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Modificar Obra", Mensaje, "OK");
+                    await mensaje.MostrarMensaje("Modificar Obra", Mensaje);
                     return;
                 }
             }
@@ -242,8 +268,10 @@ namespace Reinco.Interfaces.Obra
             {
                 await mensaje.MostrarMensaje("Modificar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
-            
-
+            finally
+            {
+                isRunning = false;
+            }
         }
         #endregion
 

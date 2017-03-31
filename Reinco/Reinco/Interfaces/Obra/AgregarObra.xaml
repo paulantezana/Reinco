@@ -33,7 +33,8 @@
                         ItemsSource="{Binding propietarioItem}" 
                         SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="Center" x:Name="asignarPropietario"/>
+                        VerticalOptions="Center"
+                        x:Name="asignarPropietario"/>
                 </StackLayout>
 
                 <!-- Añadir Responsable de la Obra  -->
@@ -56,7 +57,10 @@
                         VerticalOptions="Center"
                         x:Name="asignarResponsable"/>
                 </StackLayout>
-            
+                
+                <!-- Indicador de Actividad -->
+                <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
+                
                 <!-- Buttons Action -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>

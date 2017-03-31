@@ -1,15 +1,9 @@
-﻿using Newtonsoft.Json;
-using Reinco.Entidades;
+﻿using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -111,20 +105,19 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 //servicioObra, mostrarObras--modificado
-                dynamic result = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
-                foreach (var item in result)
+                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
+                foreach (var item in obras)
                 {
                     if (item.idPropietario == null || item.idUsuario_responsable == null)
                         Color = "#FF7777";
                     else
-                        Color = "#55FF55";
+                        Color = "#77FF77";
                     ObraItems.Add(new ObraItem
                     {
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
                         colorObra = Color,
-                        
                     });
                 }
             }
