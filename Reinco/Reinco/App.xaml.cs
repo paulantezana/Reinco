@@ -26,8 +26,8 @@ namespace Reinco
 
 
         #region +---- Propiedades ----+
-        public static NavigationPage Navigator { get; internal set; } // Pagina Principal De Navegacion
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
+        public static MainPage Navigator { get; internal set; } // Navegacion Principal
         #endregion
 
 
