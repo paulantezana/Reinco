@@ -28,6 +28,9 @@ namespace Reinco
         #region +---- Propiedades ----+
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
         public static MainPage Navigator { get; internal set; } // Navegacion Principal
+        public static ListarObraResponsable ListarObraResponsable { get; internal set; } // Pagina Listar Obra Responsable
+        public static ListarObraPlantilla ListarObraPlantilla { get; internal set; }
+        public static ListarPlantillaSupervision ListarPlantillaSupervision { get; internal set; }
         #endregion
 
 

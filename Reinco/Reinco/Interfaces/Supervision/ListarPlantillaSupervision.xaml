@@ -1,31 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Reinco.Interfaces.Supervision.ListarObraResponsable"
-             Title="OBRA RESPONSABLE">
-    
-    
+             x:Class="Reinco.Interfaces.Supervision.ListarPlantillaSupervision"
+             Title="SUPERVISIONES">
+
     <ContentPage.Content>
         <StackLayout>
             <SearchBar Placeholder="Buscar Obra ..." BackgroundColor="{StaticResource Color5}"></SearchBar>
             <ListView
-                ItemsSource="{Binding ObraResponsableItems}"
+                ItemsSource="{Binding PlantillaSupervisionItems}"
                 BackgroundColor="{StaticResource Color5}"
                 HasUnevenRows="True"
                 IsPullToRefreshEnabled="True"
-                RefreshCommand="{Binding RefreshObraResponsableCommand}"
-                IsRefreshing="{Binding IsRefreshingObraResponsable,Mode=TwoWay}">
+                RefreshCommand="{Binding RefreshPlantillaSupervisionCommand}"
+                IsRefreshing="{Binding IsRefreshingPlantillaSupervision,Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
 
-                            
+
                             <!-- ============ Codigo Para Listar Obra ================-->
                             <Grid>
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding PlantillaObra}"/>
+                                    <TapGestureRecognizer Command="{Binding Supervisar}"/>
                                 </Grid.GestureRecognizers>
-                                
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5"/>
                                     <ColumnDefinition Width="auto"/>
@@ -34,18 +33,18 @@
                                     <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
-                                
+
                                 <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
 
-                                
+
                                 <Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>
 
-                                
+
                                 <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
 
-                                
+
                                 <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                 </StackLayout>
@@ -54,18 +53,17 @@
 
                                 <Image Grid.Column="4" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7"></Image>
 
-                                
+
 
                             </Grid>
                             <!-- ============ FIN Codigo Para Listar Obra ================-->
-                            
-                            
+
+
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
     </ContentPage.Content>
-    
-    
+
 </ContentPage>

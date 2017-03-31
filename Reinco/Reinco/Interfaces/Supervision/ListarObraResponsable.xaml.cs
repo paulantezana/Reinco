@@ -42,7 +42,7 @@ namespace Reinco.Interfaces.Supervision
                 if (isRefreshingObraResponsable != value)
                 {
                     isRefreshingObraResponsable = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObraResponsable"));
                 }
             }
             get
@@ -54,7 +54,6 @@ namespace Reinco.Interfaces.Supervision
 
 
         #region +---- Comandos ----+
-        public ICommand CrearObra { get; private set; }
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
 
@@ -74,8 +73,14 @@ namespace Reinco.Interfaces.Supervision
                 IsRefreshingObraResponsable = false;
             });
 
-
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
+        }
+
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarObraResponsable = this;
         }
 
         private async void CargarObraResponsableItems()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reinco.Entidades
 {
-    public class SupervisionItem
+    public class SupervisarItem
     {
         public string id { get; set; }
         public string titulo { get; set; }
