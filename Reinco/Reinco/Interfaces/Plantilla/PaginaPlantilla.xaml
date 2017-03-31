@@ -10,7 +10,12 @@
                 <Button x:Name="agregarPlantilla" Text="Añadir Nuevo Plantilla" BackgroundColor="{StaticResource Color3}" TextColor="#ffffff" HorizontalOptions="End"></Button>
             </StackLayout>
 
-            <ListView x:Name="plantillaListView" HasUnevenRows="True" SeparatorVisibility="None">
+            <ListView
+                x:Name="plantillaListView" HasUnevenRows="True" SeparatorVisibility="None"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding RefreshPlantillasCommand}"
+                IsRefreshing="{Binding RefrescarPlantillas,Mode=TwoWay}"
+                >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -18,12 +23,17 @@
                             <!-- Eventos -->
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="actividades" CommandParameter="{Binding idPlantilla}" Text="Actividades"/>
-                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idPlantilla}" Text="Modificar"/>
+                                <!--<MenuItem Clicked="actualizar" CommandParameter="{Binding idPlantilla}" Text="Modificar"/>-->
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idPlantilla}" Text="Eliminar" IsDestructive="True" />
                             </ViewCell.ContextActions>
                             
                             <!-- Grid -->
                             <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+                                <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarPlantilla}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>

@@ -22,6 +22,7 @@ namespace Reinco.Interfaces.Plantilla
         string Mensaje;
         int IdPlantilla;
         public ObservableCollection<ActividadItems> actividadItems { get; set; }
+        #region===========constructor con parametros de plantilla==============
         public PaginaActividad(object idPlantilla)
         {
             InitializeComponent();
@@ -32,13 +33,13 @@ namespace Reinco.Interfaces.Plantilla
             // eventos
             agregarActividad.Clicked += AgregarActividad_Clicked;
         }
-
+        #endregion
         private void AgregarActividad_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AgregarActividad(IdPlantilla));
         }
-
-        private async void CargarActividadItems()
+        #region================= cargar actividades=====================
+        public async void CargarActividadItems()
         {
             byte x = 01; // utilizada para la enumeracion de las actividades
             try
@@ -52,6 +53,7 @@ namespace Reinco.Interfaces.Plantilla
                         idActividad = item.idPlantilla_Actividad,
                         nombre = item.nombre,
                         tolerancia = item.tolerancia,
+                        idPlantilla=item.idPlantilla,
                         enumera = x++,
                     });
                 }
@@ -62,7 +64,15 @@ namespace Reinco.Interfaces.Plantilla
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
-        // ===================// Eliminar Plantilla CRUD //====================// eliminar
+        #endregion
+        #region +============= Definiendo Propiedad Global De esta Pagina ===========
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarActividades = this;
+        }
+        #endregion
+        #region=============eliminar actividad=====================
         public async void eliminar(object sender, EventArgs e)
         {
             try
@@ -76,6 +86,9 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Actividad", Mensaje, "OK");
+                    App.ListarActividades.actividadItems.Clear();
+                    App.ListarActividades.CargarActividadItems();
+                    await Navigation.PopAsync();
                     return;
                 }
             }
@@ -85,12 +98,7 @@ namespace Reinco.Interfaces.Plantilla
             }
 
         }
-
-        // ===================// Modificar Plantilla CRUD //====================// actualizar
-        public void actualizar(object sender, EventArgs e)
-        {
-            var idActividad = ((MenuItem)sender).CommandParameter;
-            Navigation.PushAsync(new AgregarActividad(idActividad,IdPlantilla));
-        }
+        #endregion
+       
     }
 }

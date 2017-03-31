@@ -13,6 +13,7 @@ using Reinco.Interfaces.Plantilla;
 using Reinco.Interfaces.Supervision;
 using Reinco.Interfaces.Obra;
 using Reinco.Interfaces.Personal;
+using Reinco.Interfaces.Propietario;
 
 namespace Reinco
 {
@@ -27,10 +28,9 @@ namespace Reinco
 
         #region +---- Propiedades ----+
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
-        public static MainPage Navigator { get; internal set; } // Navegacion Principal
-        public static ListarObraResponsable ListarObraResponsable { get; internal set; } // Pagina Listar Obra Responsable
-        public static ListarObraPlantilla ListarObraPlantilla { get; internal set; }
-        public static ListarPlantillaSupervision ListarPlantillaSupervision { get; internal set; }
+        public static PaginaPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
+        public static PaginaActividad ListarActividades { get; internal set; } // Página listar actividades
+        public static ListarPropietario ListarPropietarios { get; internal set; } // Página listar propietarios
         #endregion
 
 

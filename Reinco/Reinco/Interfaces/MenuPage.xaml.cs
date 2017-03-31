@@ -28,7 +28,7 @@ namespace Reinco.Interfaces
 
 
 
-                #region  ========================== Menu Prfil Importante para cada tipo de usuario ==========================
+                #region  ========================== Menu Perfil Importante para cada tipo de usuario ==========================
                     items.Add(new MenuPrincipalItem
                     {
                         Titulo = "Perfil",
@@ -36,8 +36,6 @@ namespace Reinco.Interfaces
                         TargetType = typeof(PaginaUsuario)
                     });
                 #endregion
-               
-
 
                 #region ==========================  Menu Visible solo para los supervisores ==========================
                     if (cargo == "Administrador")
@@ -66,11 +64,10 @@ namespace Reinco.Interfaces
                             Icono = "ic_propietario.png",
                             TargetType = typeof(ListarPropietario)
                         });
+                    
                     }
 
                 #endregion
-
-
 
                 #region ========================== Menu Visible solo para los Responsables ==========================
                     

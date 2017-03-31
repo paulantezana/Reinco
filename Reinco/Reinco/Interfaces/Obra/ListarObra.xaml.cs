@@ -21,18 +21,15 @@ namespace Reinco.Interfaces.Obra
         WebService Servicio = new WebService(); 
         #endregion
 
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged; 
         #endregion
-
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         string Mensaje;
         private bool isRefreshingObra { get; set; }
         #endregion
-
 
         #region +---- Propiedades ----+
         public ObservableCollection<ObraItem> ObraItems { get; set; }
@@ -53,14 +50,20 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-
         #region +---- Comandos ----+
         public ICommand CrearObra { get; private set; }
-        public ICommand RefreshObraCommand { get; private set; } 
+        public ICommand RefreshObraCommand { get; private set; }
         #endregion
 
+        #region ==============Definiendo Propiedad Global De esta Pagina================
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarObra = this;
+        }
+        #endregion
 
-        #region +---- Constructor ----+
+        #region========== Constructor sin parametros=============
         public ListarObra()
         {
             InitializeComponent();
@@ -86,20 +89,15 @@ namespace Reinco.Interfaces.Obra
             #endregion
 
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
-        } 
-        #endregion
-
-
-        #region +---- Definiendo Propiedad Global De esta Pagina ----+
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            App.ListarObra = this;
         }
-        #endregion
+        #endregion 
+        public ListarObra(int idPropietarioObra, int idObra)
+        {
+            eliminar(idPropietarioObra, idObra);
+        }
+        
 
-
-        #region +---- Cargando las obras ----+
+        #region ============== Cargando las obras =============
         public async void CargarObraItems()
         {
             try
@@ -117,10 +115,10 @@ namespace Reinco.Interfaces.Obra
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
-                        idPropietario = item.idPropietario,
-                        idUsuario = item.idUsuarioResponsable,
+                        idPropietario =item.idPropietario==null?0: item.idPropietario,
+                        idUsuario = item.idUsuario_responsable==null?0: item.idUsuario_responsable,
                         colorObra = Color,
-                        idPropietarioObra=item.idPropietarioObra
+                        idPropietarioObra=item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra
                     });
                 }
             }
@@ -131,16 +129,13 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-
-        #region +---- Evento Eliminar Obra ----+
-        public async void eliminar(object sender, EventArgs e)
+        #region ================= Evento Eliminar Obra=====================
+        public async void eliminar(int idPropietarioObra, int idObra)
         {
             try { 
-                var idObra = ((MenuItem)sender).CommandParameter;
-                int IdObra = Convert.ToInt16(idObra);
                 bool respuesta= await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar","Cancelar");
-                object[,] variables = new object[,] { { "idObra", IdObra } };
-                dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "EliminarObra", variables);
+                object[,] variables = new object[,] { { "idPropietarioObra", idPropietarioObra }, { "idObra", idObra } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "EliminarPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result!=null)
                 {

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Reinco.Interfaces.Plantilla
 {
@@ -21,7 +23,7 @@ namespace Reinco.Interfaces.Plantilla
         public VentanaMensaje mensaje;
         string Mensaje;
         public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
-
+        #region=============Constructor sin parametros==================
         public PaginaPlantilla()
         {
             InitializeComponent();
@@ -29,10 +31,51 @@ namespace Reinco.Interfaces.Plantilla
             plantillaLista = new ObservableCollection<PlantillaLista>();
             CargarPlantillaLista();
             plantillaListView.ItemsSource = plantillaLista;
-            
+            RefrescarPlantillaCommand = new Command(() =>
+            {
+                plantillaLista.Clear();
+                CargarPlantillaLista();
+                RefrescarPlantillas = false;
+            });
+            this.BindingContext = this;
+
         }
+        #endregion
+
+        #region=============Refrescar pagina=======================
+        private bool refrescarPlantillas { get; set; }
+        new public event PropertyChangedEventHandler PropertyChanged;
+        public bool RefrescarPlantillas
+        {
+            set
+            {
+                if (refrescarPlantillas != value)
+                {
+                    refrescarPlantillas = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
+                }
+            }
+            get
+            {
+                return refrescarPlantillas;
+            }
+        }
+        #endregion
+
+        #region===========comandos=========================
+        public ICommand RefrescarPlantillaCommand { get; private set; }
+        #endregion
+
+        #region +============= Definiendo Propiedad Global De esta Pagina ===========
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarPlantilla = this;
+        }
+        #endregion
+
         #region========================cargar plantilla en lista====================================
-        private async void CargarPlantillaLista()
+        public async void CargarPlantillaLista()
         {
             try
             {
@@ -83,19 +126,13 @@ namespace Reinco.Interfaces.Plantilla
             }
         }
         #endregion
-        // ===================// Modificar Plantilla CRUD //====================// actualizar
-        public void actualizar(object sender, EventArgs e)
-        {
-            var idPlantilla = ((MenuItem)sender).CommandParameter;
-            Navigation.PushAsync(new AgregarPlantilla(idPlantilla));
-        }
 
-        // ===================// Modificar Plantilla CRUD //====================// actividades
+        #region ===================// Agregar Actividades=================
         public void actividades(object sender, EventArgs e)
         {
             var idPlantilla = ((MenuItem)sender).CommandParameter;
             Navigation.PushAsync(new PaginaActividad(idPlantilla));
         }
-        // END ==
+        #endregion
     }
 }
