@@ -31,6 +31,11 @@ namespace Reinco
         public static PaginaPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
         public static PaginaActividad ListarActividades { get; internal set; } // Página listar actividades
         public static ListarPropietario ListarPropietarios { get; internal set; } // Página listar propietarios
+        public static ListarObraResponsable ListarObraResponsable { get; internal set; } // Pagina Listar Obra Responsable
+        public static ListarObraPlantilla ListarObraPlantilla { get; internal set; }
+        public static ListarPlantillaSupervision ListarPlantillaSupervision { get; internal set; }
+        public static MainPage Navigator { get; internal set; }
+
         #endregion
 
 
