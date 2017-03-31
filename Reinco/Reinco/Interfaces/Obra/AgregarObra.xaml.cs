@@ -197,6 +197,7 @@ namespace Reinco.Interfaces.Obra
                         // Refrescando la lista
                         App.ListarObra.ObraItems.Clear();
                         App.ListarObra.CargarObraItems();
+                        await Navigation.PopAsync();
                         return;
                     }
 
@@ -225,7 +226,6 @@ namespace Reinco.Interfaces.Obra
             }
             finally
             {
-                await Navigation.PopAsync();
                 IsRunning = false;
             }
         } 
