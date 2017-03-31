@@ -228,7 +228,7 @@ namespace Reinco.Interfaces.Obra
 
 
 
-        #region +-------------------- Guardar Nueva Obra -----------------------+
+        #region +================== Guardar Nueva Obra ===========================+
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
             try
