@@ -1,15 +1,9 @@
-﻿using Newtonsoft.Json;
-using Reinco.Entidades;
+﻿using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,6 +14,8 @@ namespace Reinco.Interfaces.Obra
     public partial class ListarObra : ContentPage, INotifyPropertyChanged
     {
         string Color;
+
+
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService(); 
@@ -27,7 +23,7 @@ namespace Reinco.Interfaces.Obra
 
 
         #region +---- Eventos ----+
-      //  public event PropertyChangedEventHandler PropertyChanged; 
+        new public event PropertyChangedEventHandler PropertyChanged; 
         #endregion
 
 
@@ -47,7 +43,7 @@ namespace Reinco.Interfaces.Obra
                 if (isRefreshingObra != value)
                 {
                     isRefreshingObra = value;
-                  //  PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
                 }
             }
             get
@@ -71,6 +67,7 @@ namespace Reinco.Interfaces.Obra
 
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItems();
+
 
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
@@ -108,19 +105,19 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 //servicioObra, mostrarObras--modificado
-                dynamic result = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
-                foreach (var item in result)
+                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
+                foreach (var item in obras)
                 {
                     if (item.idPropietario == null || item.idUsuario_responsable == null)
                         Color = "#FF7777";
                     else
-                        Color = "Green";
+                        Color = "#77FF77";
                     ObraItems.Add(new ObraItem
                     {
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
-                        colorObra = Color
+                        colorObra = Color,
                     });
                 }
             }
@@ -130,6 +127,7 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
+
 
         #region +---- Evento Eliminar Obra ----+
         public async void eliminar(object sender, EventArgs e)
