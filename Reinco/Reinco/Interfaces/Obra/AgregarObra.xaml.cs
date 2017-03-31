@@ -150,13 +150,11 @@ namespace Reinco.Interfaces.Obra
             });
 
             // Eventos Guardar Y Cancelar
-            //guardar.Clicked += modificarObra;
-            //cancelar.Clicked += Cancelar_Clicked;
+            guardar.Clicked += modificarObra;
+            cancelar.Clicked += Cancelar_Clicked;
 
         } 
         #endregion
-
-
 
         #region +---- Propiedades ----+
         public bool IsRunning
@@ -175,8 +173,6 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-
-
 
         #region +--------------- Cargando Usuarios Desde Web Service ---------------------------+
         private async void CargarPersonalItem()
@@ -200,9 +196,6 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-
-
-
         #region +------------- Cargando Propietarios Desde Web Service -----------------+
         private async void CargarPropietarioItem()
         {
@@ -225,8 +218,6 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-
-
 
         #region +================== Guardar Nueva Obra ===========================+
         private async void Guardar_Clicked(object sender, EventArgs e)
@@ -310,7 +301,6 @@ namespace Reinco.Interfaces.Obra
             }
         }
 
-
         #region Navegacion para el boton cancelar
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
@@ -318,28 +308,64 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-
-        
-
         #region================== modificar obra =================================
         private async void modificarObra(object sender, EventArgs e)
         {
             try
             {
                 IsRunning = true;
-                if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+                if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue == null)
                 {
-                await DisplayAlert("Modificar Obra", "Debe rellenar todos los campos.", "OK");
-                return;
-                 }
-                object[,] variables = new object[,] { { "idObra", IdObra } , { "codigo", codigo.Text } , { "nombreObra", nombre.Text } };
-                dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "ModificarObra", variables);
-                Mensaje = Convert.ToString(result);
-                if (result != null)
-                {
-                    await mensaje.MostrarMensaje("Modificar Obra", Mensaje);
-                    return;
+                    #region================modificar solo obra=============================
+                    if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+                    {
+                        await mensaje.MostrarMensaje("Agregar Obra", "Debe rellenar todos los campos.");
+                        return;
+                    }
+                    object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text } ,
+                    { "idObra", IdObra },{ "idPropietario", 0 },{ "idResponsable", 0 },{ "IdPropietarioObra", IdPropietarioObra } };
+                    dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "ModificarPropietarioObra", variables);
+                    Mensaje = Convert.ToString(result);
+                    if (result != null)
+                    {
+                        await mensaje.MostrarMensaje("Agregar Obra", Mensaje);
+
+                        // Refrescando la lista
+                        App.ListarObra.ObraItems.Clear();
+                        App.ListarObra.CargarObraItems();
+                        await Navigation.PopAsync();
+                        return;
+                    }
+
+                    #endregion
                 }
+                #region===========modificar con responsable y propietario=============
+                else
+                {
+                    if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue != null)
+                    {
+
+                        IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                        IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
+                        ModificarPropietarioResponsableObra(IdPropietario, IdResponsabe);
+                    }
+                    else
+                    {
+                        if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue != null)
+                        {
+                            IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
+                            ModificarPropietarioResponsableObra(0, IdResponsabe);
+                        }
+                        if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue == null)
+                        {
+                            IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                            ModificarPropietarioResponsableObra(IdPropietario, 0);
+                        }
+                        await mensaje.MostrarMensaje("Modificar Obra con Responsable y Propietario", Mensaje);
+                        return;
+                    }
+                }
+                #endregion
             }
             catch (Exception ex)
             {

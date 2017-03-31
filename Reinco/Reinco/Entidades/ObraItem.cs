@@ -6,13 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Reinco.Recursos;
 
 namespace Reinco.Entidades
 {
     public class ObraItem
     {
-
-       
+        WebService Servicio = new WebService();
+        public VentanaMensaje mensaje;
+        string Mensaje;
         public int idObra { get; set; }
         public string nombre { get; set; }
         public string codigo { get; set; }
@@ -45,10 +47,37 @@ namespace Reinco.Entidades
                 App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre, 
                     this.idPropietario,this.idUsuario,this.idPropietarioObra));
             });
-            eliminar = new Command(() =>
+            eliminar = new Command(async() =>
             {
                 // Eliminar logica de programacion aqui
-                App.Current.MainPage.DisplayAlert("Titulo", this.nombre + this.idObra, "Acpetar");
+                try
+                {
+                    bool respuesta = await App.Current.MainPage.DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar", "Cancelar");
+                    object[,] variables = new object[,] { { "idPropietarioObra", idPropietarioObra }, { "idObra", idObra } };
+                    dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "EliminarPropietarioObra", variables);
+                    Mensaje = Convert.ToString(result);
+                    if (result != null)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Eliminar Obra", Mensaje, "OK");
+
+                        // Recargando La lista
+                        //ObraItems.Clear();
+                        //CargarObraItems();
+                        // 
+                        return;
+                    }
+                    //
+                    // Evento Refrescar La Lista
+                }
+                catch (Exception ex)
+                {
+                    await mensaje.MostrarMensaje("Eliminar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                }
+                finally
+                {
+                }
+                //App.Current.MainPage.DisplayAlert("Titulo", this.nombre + this.idObra, "Acpetar");
+
             });
         } 
         #endregion

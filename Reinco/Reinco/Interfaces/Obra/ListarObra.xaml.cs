@@ -86,7 +86,11 @@ namespace Reinco.Interfaces.Obra
             #endregion
 
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
-        } 
+        }
+        public ListarObra(int idPropietarioObra, int idObra)
+        {
+            eliminar(idPropietarioObra, idObra);
+        }
         #endregion
 
 
@@ -117,10 +121,10 @@ namespace Reinco.Interfaces.Obra
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
-                        idPropietario = item.idPropietario,
-                        idUsuario = item.idUsuarioResponsable,
+                        idPropietario =item.idPropietario==null?0: item.idPropietario,
+                        idUsuario = item.idUsuario_responsable==null?0: item.idUsuario_responsable,
                         colorObra = Color,
-                        idPropietarioObra=item.idPropietarioObra
+                        idPropietarioObra=item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra
                     });
                 }
             }
@@ -133,14 +137,12 @@ namespace Reinco.Interfaces.Obra
 
 
         #region +---- Evento Eliminar Obra ----+
-        public async void eliminar(object sender, EventArgs e)
+        public async void eliminar(int idPropietarioObra, int idObra)
         {
             try { 
-                var idObra = ((MenuItem)sender).CommandParameter;
-                int IdObra = Convert.ToInt16(idObra);
                 bool respuesta= await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar","Cancelar");
-                object[,] variables = new object[,] { { "idObra", IdObra } };
-                dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "EliminarObra", variables);
+                object[,] variables = new object[,] { { "idPropietarioObra", idPropietarioObra }, { "idObra", idObra } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "EliminarPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result!=null)
                 {
