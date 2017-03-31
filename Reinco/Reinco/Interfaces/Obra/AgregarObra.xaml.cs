@@ -348,6 +348,7 @@ namespace Reinco.Interfaces.Obra
                         IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
                         IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
                         ModificarPropietarioResponsableObra(IdPropietario, IdResponsabe);
+
                     }
                     else
                     {
@@ -388,6 +389,9 @@ namespace Reinco.Interfaces.Obra
             if (result != null)
             {
                 await App.Current.MainPage.DisplayAlert("Modificar Obra Propietario y Responsable", Mensaje, "OK");
+                App.ListarObra.ObraItems.Clear();
+                App.ListarObra.CargarObraItems();
+                await Navigation.PopAsync();
                 return;
             }
         }

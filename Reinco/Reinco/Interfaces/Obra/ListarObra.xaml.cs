@@ -21,18 +21,15 @@ namespace Reinco.Interfaces.Obra
         WebService Servicio = new WebService(); 
         #endregion
 
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged; 
         #endregion
-
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         string Mensaje;
         private bool isRefreshingObra { get; set; }
         #endregion
-
 
         #region +---- Propiedades ----+
         public ObservableCollection<ObraItem> ObraItems { get; set; }
@@ -53,14 +50,20 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-
         #region +---- Comandos ----+
         public ICommand CrearObra { get; private set; }
-        public ICommand RefreshObraCommand { get; private set; } 
+        public ICommand RefreshObraCommand { get; private set; }
         #endregion
 
+        #region ==============Definiendo Propiedad Global De esta Pagina================
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarObra = this;
+        }
+        #endregion
 
-        #region +---- Constructor ----+
+        #region========== Constructor sin parametros=============
         public ListarObra()
         {
             InitializeComponent();
@@ -87,23 +90,14 @@ namespace Reinco.Interfaces.Obra
 
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
+        #endregion 
         public ListarObra(int idPropietarioObra, int idObra)
         {
             eliminar(idPropietarioObra, idObra);
         }
-        #endregion
+        
 
-
-        #region +---- Definiendo Propiedad Global De esta Pagina ----+
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            App.ListarObra = this;
-        }
-        #endregion
-
-
-        #region +---- Cargando las obras ----+
+        #region ============== Cargando las obras =============
         public async void CargarObraItems()
         {
             try
@@ -135,8 +129,7 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-
-        #region +---- Evento Eliminar Obra ----+
+        #region ================= Evento Eliminar Obra=====================
         public async void eliminar(int idPropietarioObra, int idObra)
         {
             try { 

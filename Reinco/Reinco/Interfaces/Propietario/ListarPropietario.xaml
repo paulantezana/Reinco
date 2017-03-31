@@ -12,11 +12,16 @@
                         <ViewCell>
                             
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idPropietario}" Text="Modificar"/>
+                                <!--<MenuItem Clicked="actualizar" CommandParameter="{Binding idPropietario}" Text="Modificar"/>-->
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idPropietario}" Text="Eliminar" IsDestructive="True" />
                             </ViewCell.ContextActions>
 
                             <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+                                <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarPropietario}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>

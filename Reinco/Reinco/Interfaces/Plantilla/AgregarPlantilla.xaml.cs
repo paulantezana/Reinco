@@ -21,7 +21,7 @@ namespace Reinco.Interfaces.Plantilla
         string Mensaje;
         int IdPlantilla;
         public VentanaMensaje mensaje;
-        // ===================== Constructor Para Crear Plantilla =================== //
+        #region ===================== Constructor Sin parametros =================== //
         public AgregarPlantilla()
         {
             InitializeComponent();
@@ -32,6 +32,7 @@ namespace Reinco.Interfaces.Plantilla
             guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
         }
+        #endregion
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();
@@ -53,6 +54,9 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Agregar Plantilla", Mensaje, "OK");
+                    App.ListarPlantilla.plantillaLista.Clear();
+                    App.ListarPlantilla.CargarPlantillaLista();
+                    await Navigation.PopAsync();
                     return;
                 }
             }
@@ -63,14 +67,19 @@ namespace Reinco.Interfaces.Plantilla
 
         }
         #endregion
-        // ===================== Constructor Para Actualizar O Cambiar Plantilla ===================== //
-        public AgregarPlantilla(object idPlantilla)
+
+        #region ===================== Constructor con parametros (Actualizar plantilla) ===================== //
+        public AgregarPlantilla(object idPlantilla, object codigo, object nombre)
         {
             InitializeComponent();
             IdPlantilla = Convert.ToInt16(idPlantilla);
+            codPlantilla.Text = codigo.ToString();
+            nombrePlantilla.Text = nombre.ToString();
             guardar.Clicked += Guardar_Clicked1;
             cancelar.Clicked += Cancelar_Clicked1;
         }
+        #endregion
+
         #region==================modificar plantilla================================
         private async  void Guardar_Clicked1(object sender, EventArgs e)
         {
@@ -87,8 +96,13 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Plantilla", Mensaje, "OK");
+                    App.ListarPlantilla.plantillaLista.Clear();
+                    App.ListarPlantilla.CargarPlantillaLista();
+                    await Navigation.PopAsync();
                     return;
                 }
+              await  Navigation.PopAsync();
+                return;
             }
             catch (Exception ex)
             {
@@ -101,6 +115,5 @@ namespace Reinco.Interfaces.Plantilla
         {
             Navigation.PopAsync();
         }
-        // ===================== END
     }
 }

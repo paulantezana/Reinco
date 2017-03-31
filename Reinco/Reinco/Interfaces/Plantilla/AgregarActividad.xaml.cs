@@ -43,18 +43,23 @@ namespace Reinco.Interfaces.Plantilla
             cancelar.Clicked += Cancelar_Clicked1;
         }
         #endregion
+
         #region ===================// Constructor Modificar actividad // ===================//
-        public AgregarActividad(object idActividad,object idPlantilla)
+        public AgregarActividad(object idActividad, object nombreActividad, object toleranciaActividad,object idPlantilla)
         {
             InitializeComponent();
             IdPlantilla = Convert.ToInt16(idPlantilla);
             IdActividad = Convert.ToInt16(idActividad);
+            nombre.Text = nombreActividad.ToString();
+            tolerancia.Text = toleranciaActividad.ToString();
             // eventos
             guardar.Clicked += Modificar_Clicked;
             guardar.Text = "Guardar Cambios";
             cancelar.Clicked += Cancelar_Clicked1;
         }
+        #endregion
 
+        #region=================modificar actividad==============================
         private async void Modificar_Clicked(object sender, EventArgs e)
         {
             try
@@ -71,6 +76,9 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Plantilla", Mensaje, "OK");
+                    App.ListarActividades.actividadItems.Clear();
+                    App.ListarActividades.CargarActividadItems();
+                    await Navigation.PopAsync();
                     return;
                 }
             }
@@ -82,6 +90,7 @@ namespace Reinco.Interfaces.Plantilla
             //Navigation.PopAsync();
         }
         #endregion
+
         #region ================agregar actividad====================================
         private async void Agregar_Clicked(object sender, EventArgs e)
         {
@@ -96,13 +105,15 @@ namespace Reinco.Interfaces.Plantilla
                 }
                 if (string.IsNullOrEmpty(tolerancia.Text))
                    tolerancia.Text = "";
-                tolerancia.Text = "";
                 object[,] variables = new object[,] { { "nombre", nombre.Text }, { "tolerancia", tolerancia.Text }, { "idActividad", IdPlantilla } };
                 dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "IngresarPlantillaActividad", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Agregar Actividad", Mensaje, "OK");
+                    App.ListarActividades.actividadItems.Clear();
+                    App.ListarActividades.CargarActividadItems();
+                    await Navigation.PopAsync();
                     return;
                 }
             }

@@ -20,7 +20,8 @@ namespace Reinco.Interfaces.Propietario
         public VentanaMensaje mensaje;
         string Mensaje;
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
-       // datatable usuario;
+        // datatable usuario;
+        #region=============constructor vacio======================
         public ListarPropietario()
         {
             InitializeComponent();
@@ -30,8 +31,18 @@ namespace Reinco.Interfaces.Propietario
             agregarPropietario.Clicked += AgregarPropietario_Clicked;
             
         }
+        #endregion
+
+        #region +============= Definiendo Propiedad Global De esta Pagina ===========
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarPropietarios = this;
+        }
+        #endregion
+
         #region=============cargar propietarios==================
-        private async void CargarPropietarioItem()
+        public async void CargarPropietarioItem()
         {
             try
             {
@@ -60,9 +71,7 @@ namespace Reinco.Interfaces.Propietario
         {
             Navigation.PushAsync(new AgregarPropietario());
         }
-
-
-        // ===================// Eliminar Plantilla CRUD //====================// eliminar
+        #region ===================// Eliminar Propietario====================
         public async void eliminar(object sender, EventArgs e)
         {
             try
@@ -76,6 +85,9 @@ namespace Reinco.Interfaces.Propietario
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
+                    App.ListarPropietarios.propietarioItem.Clear();
+                    App.ListarPropietarios.CargarPropietarioItem();
+                    await Navigation.PopAsync();
                     return;
                 }
             }
@@ -85,13 +97,8 @@ namespace Reinco.Interfaces.Propietario
             }
            
         }
+        #endregion
 
-        // ===================// Modificar Plantilla CRUD //====================// actualizar
-        public void actualizar(object sender, EventArgs e)
-        {
-            var idPropietario = ((MenuItem)sender).CommandParameter;
-            Navigation.PushAsync(new AgregarPropietario(idPropietario));
-        }
 
     }
 }
