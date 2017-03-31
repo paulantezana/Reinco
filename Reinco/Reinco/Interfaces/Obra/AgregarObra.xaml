@@ -20,13 +20,25 @@
 
                 <!-- Asignar propietario de la obra-->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Asigne Un Propietario"></Label>
-                        <Label Text="Cambiar" HorizontalOptions="EndAndExpand" FontAttributes="Bold" x:Name="expandirPropietario" IsVisible="False">
-                            <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding commandPropietario}"/></Label.GestureRecognizers>
-                        </Label>
+                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                            <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarPropietario" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandCambiarPropietario}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarPropietario" TextColor="#FF5555" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandBorrarPropietario}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
                     </StackLayout>
+                    
                     <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorPropietario" IsVisible="False"></Label>
+                    
                     <control:BindablePicker
                         DisplayMemberPath="nombre"
                         SelectedValuePath="idPropietario"
@@ -39,15 +51,25 @@
 
                 <!-- Añadir Responsable de la Obra  -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Asigne Un Responsable"></Label>
-                        <Label Text="Cambiar" HorizontalOptions="EndAndExpand" FontAttributes="Bold" x:Name="expandirResponsable" IsVisible="False">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding commandResponsable}"/>
-                            </Label.GestureRecognizers>
-                        </Label>
+                        <Label Text="Asigne Un Propietario"></Label>
+                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                            <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarResponsable" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandCambiarResponsable}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarResponsable" TextColor="#FF5555" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandBorrarResponsable}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
                     </StackLayout>
+                    
                     <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorResponsable" IsVisible="False"></Label>
+                    
                     <control:BindablePicker
                         DisplayMemberPath="nombresApellidos"
                         SelectedValuePath="idUsuario"

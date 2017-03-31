@@ -25,6 +25,24 @@ namespace Reinco.Interfaces.Obra
 
 
 
+        #region +---- ObservableCollection ----+
+        // Llamado desde un Binding BindablePicker ItemsSource="{Binding propietarioItem}" 
+        public ObservableCollection<PropietarioItem> propietarioItem {get; set; }
+
+        // Llamado desde un Binding BindablePicker ItemsSource="{Binding personalItem}" 
+        public ObservableCollection<PersonalItem> personalItem { get; set; }
+        #endregion
+
+
+
+        #region Comandos
+        public ICommand commandCambiarPropietario { get; private set; }
+        public ICommand commandBorrarPropietario { get; private set; }
+        public ICommand commandCambiarResponsable { get; private set; }
+        public ICommand commandBorrarResponsable { get; private set; }
+        #endregion
+
+
         #region +---- Atributos ----+
         private bool isRunning;
         int IdObra;
@@ -56,6 +74,31 @@ namespace Reinco.Interfaces.Obra
             // Eventos Guardar Y Cancelar
             cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += Guardar_Clicked;
+
+            // Comandos
+            commandCambiarPropietario = new Command(() =>
+            {
+                CargarPropietarioItem();
+                asignarPropietario.ItemsSource = propietarioItem;
+                asignarPropietario.Focus();
+            });
+
+            commandBorrarPropietario = new Command(() =>
+            {
+                propietarioItem.Clear();
+                asignarPropietario.SelectedValue = 0;
+            });
+
+            commandCambiarResponsable = new Command(() =>
+            {
+                CargarPersonalItem();
+                asignarResponsable.ItemsSource = personalItem;
+                asignarResponsable.Focus();
+            });
+            commandBorrarResponsable = new Command(() =>
+            {
+                asignarResponsable.SelectedValue = 0;
+            });
 
             // Esstablecinedo el Contexto para poder usar lus bindings
             this.BindingContext = this;
@@ -116,10 +159,6 @@ namespace Reinco.Interfaces.Obra
 
 
 
-        #region +---- ObservableCollection ----+
-        public ObservableCollection<PropietarioItem> propietarioItem { get; set; } // Llamado desde un Binding BindablePicker ItemsSource="{Binding propietarioItem}" 
-        public ObservableCollection<PersonalItem> personalItem { get; set; }  // Llamado desde un Binding BindablePicker ItemsSource="{Binding personalItem}" 
-        #endregion
 
 
 
