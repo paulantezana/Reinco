@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Reinco.Gestores;
+using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -24,14 +24,20 @@ namespace Reinco.Interfaces.Obra
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService(); 
         #endregion
+
+
         #region +---- Eventos ----+
       //  public event PropertyChangedEventHandler PropertyChanged; 
         #endregion
+
+
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         string Mensaje;
         private bool isRefreshingObra { get; set; }
         #endregion
+
+
         #region +---- Propiedades ----+
         public ObservableCollection<ObraItem> ObraItems { get; set; }
         public bool IsRefreshingObra
@@ -50,31 +56,43 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
+
+
         #region +---- Comandos ----+
         public ICommand CrearObra { get; private set; }
         public ICommand RefreshObraCommand { get; private set; } 
         #endregion
-        #region========== Constructor Vacio===================
+
+
+        #region +---- Constructor ----+
         public ListarObra()
         {
             InitializeComponent();
+
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItems();
+
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
-            CrearObra = new Command(() => {
-                 //DisplayAlert("Alerta", "Me ejecute", "Aceptar");
+            CrearObra = new Command(() =>
+             {
                  Navigation.PushAsync(new AgregarObra());
              });
+
             // Evento Refrescar La Lista
-            RefreshObraCommand = new Command( () => {
+            RefreshObraCommand = new Command( () =>
+            {
+                ObraItems.Clear();
                 CargarObraItems();
                 IsRefreshingObra = false;
             }); 
             #endregion
+
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         } 
         #endregion
+
+
         #region +---- Definiendo Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
         {
@@ -82,7 +100,9 @@ namespace Reinco.Interfaces.Obra
             App.ListarObra = this;
         }
         #endregion
-        #region ============== Cargando las obras=========================
+
+
+        #region +---- Cargando las obras ----+
         public async void CargarObraItems()
         {
             try
@@ -110,7 +130,8 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-        #region=========== Evento Eliminar Obra======================================
+
+        #region +---- Evento Eliminar Obra ----+
         public async void eliminar(object sender, EventArgs e)
         {
             try { 
@@ -123,12 +144,22 @@ namespace Reinco.Interfaces.Obra
                 if (result!=null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Obra", Mensaje, "OK");
+
+                    // Recargando La lista
+                    ObraItems.Clear();
+                    CargarObraItems();
+                    // 
                     return;
                 }
+                //
+                // Evento Refrescar La Lista
             }
             catch (Exception ex)
             {
                 await mensaje.MostrarMensaje("Eliminar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+            finally
+            {
             }
         }
         #endregion

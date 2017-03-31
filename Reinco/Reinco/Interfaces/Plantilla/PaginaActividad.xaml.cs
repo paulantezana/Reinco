@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Reinco.Gestores;
+using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;

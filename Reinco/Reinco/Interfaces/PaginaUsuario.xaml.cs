@@ -1,4 +1,4 @@
-﻿using Reinco.Gestores;
+﻿using Reinco.Entidades;
 using Reinco.Interfaces.Obra;
 using Reinco.Interfaces.Personal;
 using Reinco.Interfaces.Plantilla;
@@ -20,6 +20,7 @@ namespace Reinco.Interfaces
         public VentanaMensaje mensaje;
         public ObservableCollection<SupervisionItem> supervisionItem { get; set; } // Metodo de colecion observable para listar Las Obras A Supervisar
         public ObservableCollection<ObraResponsableItem> obraResponsableItem { get; set; } // Metodo de observable para listar la obras a cargo del responsable
+
         public PaginaUsuario()
         {
             InitializeComponent(); // inicializa todo los componentes de la UI
@@ -196,6 +197,7 @@ namespace Reinco.Interfaces
         }
         private void irPersonal(object sender, EventArgs e)
         {
+            
             // App.Current.MainPage = new NavigationPage(new PaginaPersonal());
         }
         private void irPlantilla(object sender, EventArgs e)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Reinco.Gestores
+namespace Reinco.Entidades
 {
     public class ObraItem
     {

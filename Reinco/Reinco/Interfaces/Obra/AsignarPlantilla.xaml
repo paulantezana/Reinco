@@ -11,7 +11,7 @@
                 <!-- Asignar Plantilla de la obra-->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <control:BindablePicker
-                    Title="Asigne Un Propietario"
+                    Title="Asigne Una Plantilla"
                     DisplayMemberPath="nombre"
                     SelectedValuePath="idPlantilla"
                     SelectedValue ="{Binding Path=idPlantilla, Mode=TwoWay}"
@@ -24,7 +24,7 @@
                 <!-- Asignar Supervisor de la Obra  -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <control:BindablePicker
-                    Title="Asigne Un Responsable"
+                    Title="Asigne Un Supervisor"
                     DisplayMemberPath="nombres"
                     SelectedValuePath="idUsuario"
                     SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"

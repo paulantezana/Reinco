@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Obra.ListarObra"
@@ -10,9 +10,9 @@
         <StackLayout>
             <SearchBar Placeholder="Buscar Obra ..." BackgroundColor="{StaticResource Color5}"></SearchBar>
             <ListView
-               
                 ItemsSource="{Binding ObraItems}"
                 BackgroundColor="{StaticResource Color5}"
+                HasUnevenRows="True"
                 IsPullToRefreshEnabled="True"
                 RefreshCommand="{Binding RefreshObraCommand}"
                 IsRefreshing="{Binding IsRefreshingObra,Mode=TwoWay}">
@@ -22,7 +22,7 @@
 
                             <!-- Menu Eliminar Obra CRUD -->
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar"></MenuItem>
+                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar" IsDestructive="True"></MenuItem>
                             </ViewCell.ContextActions>
                             <!-- End Menu Eliminar Obra CRUD -->
                                 
@@ -52,7 +52,7 @@
 
                                 <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding editarObra}" NumberOfTapsRequired="3"/>
+                                        <TapGestureRecognizer Command="{Binding editarObra}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
 
