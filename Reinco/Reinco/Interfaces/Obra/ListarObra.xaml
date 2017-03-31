@@ -22,7 +22,8 @@
 
                             <!-- Menu Eliminar Obra CRUD -->
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idObra}" Text="Eliminar" IsDestructive="True"></MenuItem>
+                                <MenuItem Command="{Binding eliminar}" CommandParameter="{Binding idObra}" Text="Eliminar" IsDestructive="True">
+                                </MenuItem>
                             </ViewCell.ContextActions>
                             <!-- End Menu Eliminar Obra CRUD -->
                                 

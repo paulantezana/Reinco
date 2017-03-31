@@ -100,6 +100,7 @@ namespace Reinco.Interfaces.Obra
             commandBorrarResponsable = new Command(() =>
             {
                 asignarResponsable.SelectedValue = 0;
+                DisplayAlert("Mesaje", asignarResponsable.SelectedValue + " " + asignarResponsable.SelectedValuePath, "Aceptar");
             });
 
             // Esstablecinedo el Contexto para poder usar lus bindings
@@ -182,9 +183,6 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-
-
-
 
 
 

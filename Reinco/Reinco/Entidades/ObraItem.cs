@@ -23,7 +23,9 @@ namespace Reinco.Entidades
 
         #region +---- Comandos ---+
         public ICommand asignarPlantilla { get; private set; }
-        public ICommand editarObra { get; private set; } 
+        public ICommand editarObra { get; private set; }
+        public ICommand eliminar { get; private set; }
+        
         #endregion
 
 
@@ -38,6 +40,11 @@ namespace Reinco.Entidades
             editarObra = new Command(() =>
             {
                 App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre));
+            });
+            eliminar = new Command(() =>
+            {
+                // Eliminar logica de programacion aqui
+                App.Current.MainPage.DisplayAlert("Titulo", this.nombre + this.idObra, "Acpetar");
             });
         } 
         #endregion
