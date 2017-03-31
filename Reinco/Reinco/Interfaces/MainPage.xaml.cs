@@ -23,7 +23,7 @@ namespace Reinco.Interfaces
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            App.Navigator = Navigator;
+            App.Navigator = this;
         }
 
         private void MenuListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -18,8 +18,6 @@ namespace Reinco.Interfaces
     public partial class PaginaUsuario : ContentPage
     {
         public VentanaMensaje mensaje;
-        public ObservableCollection<SupervisionItem> supervisionItem { get; set; } // Metodo de colecion observable para listar Las Obras A Supervisar
-        public ObservableCollection<ObraResponsableItem> obraResponsableItem { get; set; } // Metodo de observable para listar la obras a cargo del responsable
 
         public PaginaUsuario()
         {
@@ -33,13 +31,18 @@ namespace Reinco.Interfaces
             {
                 string cargo = Application.Current.Properties["cargoUsuario"].ToString(); // Recuperando el cargo string y alamacenando en una variable cargo
 
+
                 #region ++++++++++++++++++++++++++++++++++++++ General ++++++++++++++++++++++++++++++++++++++
                 // --------------- Imprimiendo datos del usuario logeado --------------- //
+
+
                     if (Application.Current.Properties.ContainsKey("nombresApellidos"))
                     {
                         nombreUsuario.Text = Application.Current.Properties["nombresApellidos"].ToString();
                     }
                     cargoUsuario.Text = cargo;
+
+
                 #endregion
 
 
@@ -49,8 +52,6 @@ namespace Reinco.Interfaces
                         supervisarListView.IsEnabled = false;
                         supervisarListView.IsVisible = false;
                         interfazResponsable.IsVisible = false;
-                        resPonsableListView.IsEnabled = false;
-                        resPonsableListView.IsVisible = false;
                     }
                 #endregion
 
@@ -62,12 +63,6 @@ namespace Reinco.Interfaces
                         interfazAdministrador.IsVisible = false;
                         supervisarListView.IsEnabled = false;
                         supervisarListView.IsVisible = false;
-                        obraResponsableItem = new ObservableCollection<ObraResponsableItem>();
-                        CargarObraResponsableItem();
-                        
-                        // listando ------------------------------------------ //
-                        resPonsableListView.ItemsSource = obraResponsableItem;
-                        crearSupervision.Clicked += CrearSupervision_Clicked;
                     }
 
                 #endregion
@@ -79,13 +74,6 @@ namespace Reinco.Interfaces
                     {
                         interfazAdministrador.IsVisible = false;
                         interfazResponsable.IsVisible = false;
-                        resPonsableListView.IsEnabled = false;
-                        resPonsableListView.IsVisible = false;
-                        supervisionItem = new ObservableCollection<SupervisionItem>();
-                        // +-----+ Cargando Obras A supervisar +-----+
-                        CargarSupervisionItem();
-                        // +-----+ Listando la obras a supervisar  +-----+
-                        supervisarListView.ItemsSource = supervisionItem;
                     }
                 #endregion
 
@@ -93,120 +81,28 @@ namespace Reinco.Interfaces
             }
         }
 
-       
-
-        #region // =============================== Responsable =============================== //
-        private  async void CargarObraResponsableItem()
-        {
-            try
-            {
-
-                // Recuperando el id Usuario
-                string recuperarIdUsuario = Application.Current.Properties["idUsuario"].ToString();
-                Int16 idUsuario = Convert.ToInt16(recuperarIdUsuario);
-
-                // Iniciando Web Service
-                WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idResponsable", idUsuario } };
-                dynamic result = await servicio.MetodoPost("ServicioObra.asmx", "MostrarObrasResponsable", variables);
-
-                if (result != null)
-                {
-                    if (result.Count == 0) //si está vacío
-                    {
-                        await mensaje.MostrarMensaje("Mostrar Obra Responsable", "No Hay Obras a su cargo");
-                    }
-                    else
-                    {
-                        // listando las obras
-                        foreach (var item in result)
-                        {
-                            obraResponsableItem.Add(new ObraResponsableItem
-                            {
-                                nombre = item.nombre,
-                                idResponsable = item.idObra,
-                            });
-                        }
-                        // fin del listado
-                    }
-                }
-                else
-                {
-                    await mensaje.MostrarMensaje("Mostrar Obra Responsable","A ocurrido un error al listar las obras para este usuario"); 
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-
-        // Evento Tappet Para las listas
-        private void responsableTapped(object sender, EventArgs e)
-        {
-            var idResponsable = ((ImageCell)sender).CommandParameter.ToString();
-            Navigation.PushAsync(new ListarPlantillaObra());
-        }
-
-
-
-        // Crear Supervision
-        private void CrearSupervision_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new CrearSupervision());
-        }
-
-        #endregion
-
-
-        #region // =============================== Iniciar Supervision =============================== //
-        public void supervisar(object sender, EventArgs e)
-            {
-                var idupervisar = ((MenuItem)sender).CommandParameter.ToString();
-                DisplayAlert("Supervisar", idupervisar + " more context action", "OK");
-                Navigation.PushAsync(new ListarSupervision());
-            } 
-        #endregion
-
-
-
-        #region // =============================== Cargando Datos Con Iteracion Para Supervision =============================== //
-        private void CargarSupervisionItem()
-            {
-                for (int i = 0; i < 50; i++)
-                {
-                    supervisionItem.Add(new SupervisionItem
-                    {
-                        titulo = "Titulo De La Tarea",
-                        descripcion = "Descripcion De La Tarea",
-                        numeroTarea = Convert.ToString(i),
-                        id = Convert.ToString(i),
-                    });
-                }
-            }
-
-        #endregion
-
-
-        
-
+        #region //=============================  Navegacion Para el Administrador  =============================//
         private void irObra(object sender, EventArgs e)
         {
-            // App.Current.MainPage = new NavigationPage(new PaginaObra());
+            App.Navigator.Detail = new NavigationPage(new ListarObra());
         }
         private void irPersonal(object sender, EventArgs e)
         {
-            
-            // App.Current.MainPage = new NavigationPage(new PaginaPersonal());
+            App.Navigator.Detail = new NavigationPage(new ListarPersonal());
         }
         private void irPlantilla(object sender, EventArgs e)
         {
-            // App.Current.MainPage = new NavigationPage(new PaginaPlantilla());
+            App.Navigator.Detail = new NavigationPage(new PaginaPlantilla());
         }
         private void irPropietario(object sender, EventArgs e)
         {
-            // App.Current.MainPage = new NavigationPage(new PaginaPropietario());
+            App.Navigator.Detail = new NavigationPage(new ListarPropietario());
+        }
+        #endregion
+
+        private void irObraResponsable(object sender, EventArgs e)
+        {
+            App.Navigator.Detail = new NavigationPage(new ListarObraResponsable());
         }
     }
 }

@@ -8,7 +8,7 @@
         <Pagina:MenuPage x:Name="paginaMenu"></Pagina:MenuPage>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage x:Name="Navigator">
+        <NavigationPage>
             <x:Arguments>
                 <Pagina:PaginaUsuario></Pagina:PaginaUsuario>
             </x:Arguments>
