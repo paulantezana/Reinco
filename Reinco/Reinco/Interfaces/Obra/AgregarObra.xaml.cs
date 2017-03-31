@@ -88,7 +88,6 @@ namespace Reinco.Interfaces.Obra
 
             commandBorrarPropietario = new Command(() =>
             {
-                propietarioItem.Clear();
                 asignarPropietario.SelectedValue = 0;
             });
 
@@ -132,6 +131,30 @@ namespace Reinco.Interfaces.Obra
             CargarPropietarioItem();
             CargarPersonalItem();
 
+
+            // Comandos
+            commandCambiarPropietario = new Command(() =>
+            {
+                CargarPropietarioItem();
+                asignarPropietario.ItemsSource = propietarioItem;
+                asignarPropietario.Focus();
+            });
+
+            commandBorrarPropietario = new Command(() =>
+            {
+                asignarPropietario.SelectedValue = 0;
+            });
+
+            commandCambiarResponsable = new Command(() =>
+            {
+                CargarPersonalItem();
+                asignarResponsable.ItemsSource = personalItem;
+                asignarResponsable.Focus();
+            });
+            commandBorrarResponsable = new Command(() =>
+            {
+                asignarResponsable.SelectedValue = 0;
+            });
 
             // Eventos Guardar Y Cancelar
             //guardar.Clicked += modificarObra;
@@ -286,16 +309,14 @@ namespace Reinco.Interfaces.Obra
 
 
         #region Navegacion para el boton cancelar
-
-        // boton cancelar
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();
         }
+        #endregion
+
 
         // ============== Ingresar Propietario y Responsable  ===============//
-
-
         public async void IngresarPropResponsable(object idPropietario,object idUsuario)
         {
             object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
