@@ -16,8 +16,11 @@ namespace Reinco.Entidades
         public int idObra { get; set; }
         public string nombre { get; set; }
         public string codigo { get; set; }
+        public int idPropietario { get; set; }
+        public int idUsuario { get; set; }
         public string plantilla { get; set; }
         public string colorObra { get; set; }
+        public int idPropietarioObra { get; set; }
 
 
 
@@ -39,7 +42,8 @@ namespace Reinco.Entidades
 
             editarObra = new Command(() =>
             {
-                App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre));
+                App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre, 
+                    this.idPropietario,this.idUsuario,this.idPropietarioObra));
             });
             eliminar = new Command(() =>
             {
