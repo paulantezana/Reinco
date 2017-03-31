@@ -117,7 +117,10 @@ namespace Reinco.Interfaces.Obra
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
+                        idPropietario = item.idPropietario,
+                        idUsuario = item.idUsuarioResponsable,
                         colorObra = Color,
+                        idPropietarioObra=item.idPropietarioObra
                     });
                 }
             }

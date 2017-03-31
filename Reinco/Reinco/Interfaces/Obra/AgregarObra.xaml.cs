@@ -22,9 +22,7 @@ namespace Reinco.Interfaces.Obra
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
-
-
+        
         #region +---- ObservableCollection ----+
         // Llamado desde un Binding BindablePicker ItemsSource="{Binding propietarioItem}" 
         public ObservableCollection<PropietarioItem> propietarioItem {get; set; }
@@ -32,31 +30,23 @@ namespace Reinco.Interfaces.Obra
         // Llamado desde un Binding BindablePicker ItemsSource="{Binding personalItem}" 
         public ObservableCollection<PersonalItem> personalItem { get; set; }
         #endregion
-
-
-
-        #region Comandos
+         #region Comandos
         public ICommand commandCambiarPropietario { get; private set; }
         public ICommand commandBorrarPropietario { get; private set; }
         public ICommand commandCambiarResponsable { get; private set; }
         public ICommand commandBorrarResponsable { get; private set; }
         #endregion
-
-
-        #region +---- Atributos ----+
+         #region +================ Atributos================+
         private bool isRunning;
         int IdObra;
-        int idPropietario;
-        int idUsuario;
+        int IdPropietario;
+        int IdResponsabe;
         int IdPropietarioObra;
         WebService Servicio = new WebService();
         string Mensaje;
         public VentanaMensaje mensaje;
         #endregion
-
-
-
-        #region +---- Constructores ----+
+         #region +==================Constructores=====================+
         public AgregarObra()
         {
             // Preparando la UI(Interfas de usuario)
@@ -107,7 +97,7 @@ namespace Reinco.Interfaces.Obra
 
         }
 
-        public AgregarObra(int idObra, string Codigo, string Nombre)
+        public AgregarObra(int idObra, string Codigo, string Nombre, int idPropietario, int idResponsable, int idPropietarioObra)
         {
             // Preparando la UI(Interfas de usuario) MODIFICAR OBRA
             InitializeComponent();
@@ -115,7 +105,9 @@ namespace Reinco.Interfaces.Obra
             nombre.Text = Nombre; // Lenando el campo Nombre Obra
             codigo.Text = Codigo; // llenando el campo Codigo Obra
             IdObra = Convert.ToInt16(idObra);
-
+            IdPropietario = idPropietario;
+            IdResponsabe = idResponsable;
+            IdPropietarioObra = idPropietarioObra;
             asignarPropietario.Title = "Asigne un nuevo propietario"; // Titulo POP UPS Propietario
             asignarResponsable.Title = "Asigne un nuevo responsable"; // Titulo POP UPS Responsable
             guardar.Text = "Guardar Cambios"; // Cambiando el texto del Button Guargar a Guardar Cambios
@@ -294,6 +286,7 @@ namespace Reinco.Interfaces.Obra
                     }
                 }
                 #endregion
+
             }
             catch (Exception ex)
             {
@@ -303,21 +296,10 @@ namespace Reinco.Interfaces.Obra
             {
                 IsRunning = false;
             }
-        } 
-        #endregion
-
-
-
-        #region Navegacion para el boton cancelar
-        private void Cancelar_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PopAsync();
         }
         #endregion
-
-
         // ============== Ingresar Propietario y Responsable  ===============//
-        public async void IngresarPropResponsable(object idPropietario,object idUsuario)
+        public async void IngresarPropResponsable(object idPropietario, object idUsuario)
         {
             object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                            { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} };
@@ -329,6 +311,17 @@ namespace Reinco.Interfaces.Obra
                 return;
             }
         }
+
+
+        #region Navegacion para el boton cancelar
+        private void Cancelar_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
+        #endregion
+
+
+        
 
         #region================== modificar obra =================================
         private async void modificarObra(object sender, EventArgs e)
