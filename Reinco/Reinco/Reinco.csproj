@@ -47,7 +47,7 @@
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
       <DependentUpon>AgregarObra.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Obra\AsignarPlantilla.xaml.cs">
+    <Compile Include="Interfaces\Supervision\AsignarPlantilla.xaml.cs">
       <DependentUpon>AsignarPlantilla.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Obra\ObraPlantilla.xaml.cs">
@@ -269,7 +269,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Obra\AsignarPlantilla.xaml">
+    <EmbeddedResource Include="Interfaces\Supervision\AsignarPlantilla.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

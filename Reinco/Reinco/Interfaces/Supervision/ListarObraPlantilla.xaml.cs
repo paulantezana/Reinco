@@ -66,7 +66,7 @@ namespace Reinco.Interfaces.Supervision
 
 
         public ICommand RefreshObraPlantillaCommand { get; private set; }
-
+        public ICommand asignarPlantilla { get; private set; }
 
 
         public ListarObraPlantilla()
@@ -81,6 +81,12 @@ namespace Reinco.Interfaces.Supervision
             {
                 ObraPlantillaItems.Clear();
                 CargarPlantillaObra();
+            });
+
+            // comandos
+            asignarPlantilla = new Command(() =>
+            {
+                Navigation.PushAsync(new AsignarPlantilla());
             });
 
 
