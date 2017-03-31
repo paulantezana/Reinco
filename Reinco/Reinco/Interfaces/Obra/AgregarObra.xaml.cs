@@ -18,6 +18,9 @@ namespace Reinco.Interfaces.Obra
     public partial class AgregarObra : ContentPage
     {
         int IdObra;
+        int idPropietario;
+        int idUsuario;
+        int IdPropietarioObra;
         WebService Servicio = new WebService();
         string Mensaje;
         public VentanaMensaje mensaje;
@@ -121,7 +124,7 @@ namespace Reinco.Interfaces.Obra
                         await DisplayAlert("Agregar Obra", "Debe rellenar todos los campos.", "OK");
                         return;
                     }
-                    object[,] variables = new object[,] { { "idObra", IdObra }, { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
+                    object[,] variables = new object[,] { { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
                     dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "IngresarObra", variables);
                     Mensaje = Convert.ToString(result);
                     if (result != null)
@@ -135,19 +138,26 @@ namespace Reinco.Interfaces.Obra
 
                     #endregion
                 }
-                #region===========ingresar con responsable y propietario=========
+                #region===========ingresar con responsable y propietario=============
                 else
                 {
-                    int idPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
-                    int idUsuario = Convert.ToInt16(asignarResponsable.SelectedValue);
-                    object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
-                   { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} };
-                    dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "IngresarPropietarioResponsabledEnObra", variables);
-                    Mensaje = Convert.ToString(result);
-                    if (result != null)
+                    if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue!=null)
                     {
-                        await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable y Propietario", Mensaje, "OK");
-                        return;
+                         idPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                         idUsuario = Convert.ToInt16(asignarResponsable.SelectedValue);
+                         IngresarPropResponsable(idPropietario, idUsuario);
+                    }
+                    else {
+                        if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue != null)
+                        {
+                            idUsuario= Convert.ToInt16(asignarResponsable.SelectedValue);
+                            IngresarPropResponsable(0, idUsuario);
+                        }
+                        if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue == null)
+                        {
+                            idPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                            IngresarPropResponsable(idPropietario, 0);
+                        }
                     }
                 }
                 #endregion
@@ -163,12 +173,23 @@ namespace Reinco.Interfaces.Obra
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();
-        } 
+        }
         #endregion
 
-        // ============== Constructor para para modificar o eliminar la  obra ===============//
-        
+        // ============== Ingresar Propietario y Responsable  ===============//
 
+        public async void IngresarPropResponsable(object idPropietario,object idUsuario)
+        {
+            object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
+                           { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} };
+            dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "IngresarPropietarioResponsableEnObra", variables);
+            Mensaje = Convert.ToString(result);
+            if (result != null)
+            {
+                await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable y Propietario", Mensaje, "OK");
+                return;
+            }
+        }
 
 
         #region==================modificar obra=================================
@@ -198,6 +219,20 @@ namespace Reinco.Interfaces.Obra
 
         }
         #endregion
-
+        #region===============Modificar Obra Propietario y Responsable==========================
+        public async void ModificarPropietarioResponsableObra(object IdPropietario, object IdResponsable)
+        {
+            object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
+                { "IdObra", IdObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
+                { "IdPropietarioObra", IdPropietarioObra}};
+            dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "ModificarObra", variables);
+            Mensaje = Convert.ToString(result);
+            if (result != null)
+            {
+                await App.Current.MainPage.DisplayAlert("Modificar Obra", Mensaje, "OK");
+                return;
+            }
+        }
+        #endregion
     }
 }
