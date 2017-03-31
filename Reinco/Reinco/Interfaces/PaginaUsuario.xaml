@@ -103,6 +103,20 @@
                             </StackLayout.GestureRecognizers>
 
                    </StackLayout>
+
+                    <!-- Supervisar -->
+
+                    <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+
+                        <Image Source="ic_obra_color.png"></Image>
+                        <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras A Tu Responsabilidad" HorizontalTextAlignment="Center"></Label>
+
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="irObraResponsable"/>
+                        </StackLayout.GestureRecognizers>
+
+                    </StackLayout>
+
                     <!-- END -->
                     
                 </Grid>

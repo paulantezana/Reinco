@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Padding="10,25,10,25" BackgroundColor="{StaticResource Color5}">
-                <control:BindablePicker
+             <control:BindablePicker
                         Title="Elija Un Supervisor"
                         DisplayMemberPath="nombres"
                         SelectedValuePath="idUsuario"

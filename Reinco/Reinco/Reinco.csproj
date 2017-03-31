@@ -40,10 +40,10 @@
     </Compile>
     <Compile Include="Entidades\ActividadItems.cs" />
     <Compile Include="Entidades\AsignarPlantillaSupervisorItem.cs" />
-    <Compile Include="Entidades\CPlantilla.cs" />
     <Compile Include="Entidades\ObraResponsableItem.cs" />
-    <Compile Include="Entidades\PlantillaObra.cs" />
-    <Compile Include="Entidades\SupervisionItem.cs" />
+    <Compile Include="Entidades\ObraPlantillaItem.cs" />
+    <Compile Include="Entidades\PlantillaSupervisionItem.cs" />
+    <Compile Include="Entidades\SupervisarItem.cs" />
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
       <DependentUpon>AgregarObra.xaml</DependentUpon>
     </Compile>
@@ -58,7 +58,7 @@
     </Compile>
     <Compile Include="Entidades\ObraItem.cs" />
     <Compile Include="Entidades\PersonalItem.cs" />
-    <Compile Include="Entidades\ObraSupervisarItem.cs" />
+    <Compile Include="Entidades\SupervisarActividadItem.cs" />
     <Compile Include="Entidades\PlantillaLista.cs" />
     <Compile Include="Entidades\PropietarioItem.cs" />
     <Compile Include="Interfaces\LoginPage.xaml.cs">
@@ -104,17 +104,20 @@
     <Compile Include="Interfaces\Supervision\CrearSupervision.xaml.cs">
       <DependentUpon>CrearSupervision.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Supervision\ListarObraPlantilla.xaml.cs">
+      <DependentUpon>ListarObraPlantilla.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\Supervision\ListarObraResponsable.xaml.cs">
       <DependentUpon>ListarObraResponsable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Supervision\ListarPlantillaObra.xaml.cs">
-      <DependentUpon>ListarPlantillaObra.xaml</DependentUpon>
+    <Compile Include="Interfaces\Supervision\ListarPlantillaSupervision.xaml.cs">
+      <DependentUpon>ListarPlantillaSupervision.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Supervision\NotasSupervision.xaml.cs">
       <DependentUpon>NotasSupervision.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Supervision\Supervision.xaml.cs">
-      <DependentUpon>Supervision.xaml</DependentUpon>
+    <Compile Include="Interfaces\Supervision\Supervisar.xaml.cs">
+      <DependentUpon>Supervisar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recursos\BindablePicker.cs" />
@@ -230,12 +233,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Supervision\Supervision.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\NotasSupervision.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -284,12 +281,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Supervision\ListarPlantillaObra.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Interfaces\Obra\PaginaPrueva.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -297,6 +288,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\ListarObraResponsable.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Supervision\ListarObraPlantilla.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Supervision\ListarPlantillaSupervision.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Supervision\Supervisar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
