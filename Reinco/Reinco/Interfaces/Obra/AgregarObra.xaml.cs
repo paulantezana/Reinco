@@ -264,20 +264,20 @@ namespace Reinco.Interfaces.Obra
                     if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue!=null)
                     {
 
-                         idPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
-                         idUsuario = Convert.ToInt16(asignarResponsable.SelectedValue);
-                         IngresarPropResponsable(idPropietario, idUsuario);
+                         IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                        IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
+                         IngresarPropResponsable(IdPropietario, IdResponsabe);
                     }
                     else {
                         if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue != null)
                         {
-                            idUsuario= Convert.ToInt16(asignarResponsable.SelectedValue);
-                            IngresarPropResponsable(0, idUsuario);
+                            IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
+                            IngresarPropResponsable(0, IdResponsabe);
                         }
                         if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue == null)
                         {
-                            idPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
-                            IngresarPropResponsable(idPropietario, 0);
+                            IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                            IngresarPropResponsable(IdPropietario, 0);
                         }
                         await mensaje.MostrarMensaje("Agregar Obra con Responsable y Propietario", Mensaje);
                         return;
