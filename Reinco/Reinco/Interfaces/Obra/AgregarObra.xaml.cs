@@ -229,11 +229,11 @@ namespace Reinco.Interfaces.Obra
             object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                 { "IdObra", IdObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
                 { "IdPropietarioObra", IdPropietarioObra}};
-            dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "ModificarObra", variables);
+            dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "ModificarPropietarioObra", variables);
             Mensaje = Convert.ToString(result);
             if (result != null)
             {
-                await App.Current.MainPage.DisplayAlert("Modificar Obra", Mensaje, "OK");
+                await App.Current.MainPage.DisplayAlert("Modificar Obra Propietario y Responsable", Mensaje, "OK");
                 return;
             }
         }
