@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Reinco.Interfaces.Plantilla;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Reinco.Entidades
 {
@@ -12,5 +15,20 @@ namespace Reinco.Entidades
         public string nombre { get; set; }
         public string tolerancia { get; set; }
         public byte enumera { get; set; }
+        public int idPlantilla { get; set; }
+        #region=============comandos===============
+        public ICommand editarActividad { get; private set; }
+        #endregion
+
+        #region===============constructor(editar plantilla)====================
+        public ActividadItems()
+        {
+            editarActividad = new Command(() =>
+            {
+                App.ListarActividades.Navigation.PushAsync(new AgregarActividad(this.idActividad, this.nombre, this.tolerancia, this.idPlantilla));
+            });
+        }
+
+        #endregion
     }
 }

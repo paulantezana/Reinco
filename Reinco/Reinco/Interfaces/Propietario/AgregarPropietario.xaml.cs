@@ -45,7 +45,10 @@ namespace Reinco.Interfaces.Propietario
                     if (result != null)
                     {
                         await App.Current.MainPage.DisplayAlert("Agregar Propietario", Mensaje, "OK");
-                        return;
+                        App.ListarPropietarios.propietarioItem.Clear();
+                        App.ListarPropietarios.CargarPropietarioItem();
+                        await Navigation.PopAsync();
+                    return;
                     }
             }
             catch (Exception ex)
@@ -56,15 +59,16 @@ namespace Reinco.Interfaces.Propietario
         }
         #endregion
         // ===================== Constructor Para Actualizar O Cambiar Propietario ===================== //
-        public AgregarPropietario(object idPropietario)
+        public AgregarPropietario(object idPropietario, object nombrePropietario)
         {
             InitializeComponent();
             this.IdPropietario =Convert.ToInt16( idPropietario);
+            this.nombrePropietario.Text = nombrePropietario.ToString();
             guardar.Text = "Guardar Cambios";
             guardar.Clicked += ModificarPropietario_Clicked1;
             cancelar.Clicked += Cancelar_Clicked;
         }
-
+        #region=====================modificar propietario=============================
         private async void ModificarPropietario_Clicked1(object sender, EventArgs e)
         {
             try {
@@ -79,6 +83,9 @@ namespace Reinco.Interfaces.Propietario
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Propietario", Mensaje, "OK");
+                    App.ListarPropietarios.propietarioItem.Clear();
+                    App.ListarPropietarios.CargarPropietarioItem();
+                    await Navigation.PopAsync();
                     return;
                 }
             }
@@ -87,6 +94,7 @@ namespace Reinco.Interfaces.Propietario
                 await mensaje.MostrarMensaje("Modificar Propietario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
         }
+        #endregion
 
         // Cacelar ============
         private void Cancelar_Clicked(object sender, EventArgs e)
