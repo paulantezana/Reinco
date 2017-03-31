@@ -8,7 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,6 +24,11 @@ namespace Reinco.Interfaces.Obra
         public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
         public ObservableCollection<PersonalItem> personalItem { get; set; }
 
+
+        public ICommand expandirBindablePicker { get; private set; }
+
+
+
         #region +---- Constructores ----+
         public AgregarObra()
         {
@@ -33,13 +38,24 @@ namespace Reinco.Interfaces.Obra
             propietarioItem = new ObservableCollection<PropietarioItem>();
             personalItem = new ObservableCollection<PersonalItem>();
 
-            // cargando la listas
-            CargarPropietarioItem();
-            CargarPersonalItem();
 
             // Eventos Guardar Y Cancelar
             cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += Guardar_Clicked;
+
+
+            expandirBindablePicker = new Command(() =>
+            {
+                asignarPropietario.IsVisible = true;
+                asignarPropietario.IsEnabled = true;
+            });
+
+
+
+            this.BindingContext = this;
+            // cargando la listas
+            CargarPropietarioItem();
+            CargarPersonalItem();
         }
 
         public AgregarObra(int idObra, string Codigo, string Nombre)
@@ -51,13 +67,26 @@ namespace Reinco.Interfaces.Obra
             nombre.Text = Nombre;
             codigo.Text = Codigo;
             IdObra = Convert.ToInt16(idObra);
+            
+            asignarPropietario.Title = "Asigne un nuevo propietario";
+            asignarResponsable.Title = "Asigne un nuevo responsable";
+
+
+
 
             // Cambiando el texto del boton guardar
             guardar.Text = "Guardar Cambios";
 
             // Eventos Guardar Y Cancelar
-            guardar.Clicked += modificarObra;
-            cancelar.Clicked += Cancelar_Clicked;
+            //guardar.Clicked += modificarObra;
+            //cancelar.Clicked += Cancelar_Clicked;
+
+            propietarioItem = new ObservableCollection<PropietarioItem>();
+            personalItem = new ObservableCollection<PersonalItem>();
+
+            // cargando la listas
+            CargarPropietarioItem();
+            CargarPersonalItem();
         } 
         #endregion
 
@@ -68,6 +97,7 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                personalItem.Clear();
                 foreach (var item in result)
                 {
                     personalItem.Add(new PersonalItem
@@ -78,7 +108,6 @@ namespace Reinco.Interfaces.Obra
                         cip = item.cip
                     });
                 }
-                asignarResponsable.ItemsSource = personalItem; // pintando en la interfas de usuario
             }
             catch (Exception ex)
             {
@@ -91,6 +120,8 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                propietarioItem.Clear();
+
                 foreach (var item in result)
                 {
                     propietarioItem.Add(new PropietarioItem
@@ -100,7 +131,7 @@ namespace Reinco.Interfaces.Obra
                         fotoPerfil = "ic_profile.png",
                     });
                 }
-                asignarPropietario.ItemsSource = propietarioItem; // Pintando en la interfas de usuario
+
             }
             catch (Exception ex)
             {
@@ -108,6 +139,19 @@ namespace Reinco.Interfaces.Obra
             }
         } 
         #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private async void Guardar_Clicked(object sender, EventArgs e)
         {

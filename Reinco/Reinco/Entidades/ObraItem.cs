@@ -11,10 +11,11 @@ namespace Reinco.Entidades
 {
     public class ObraItem
     {
+
+       
         public int idObra { get; set; }
         public string nombre { get; set; }
         public string codigo { get; set; }
-        public string responsable { get; set; }
         public string plantilla { get; set; }
         public string colorObra { get; set; }
 
