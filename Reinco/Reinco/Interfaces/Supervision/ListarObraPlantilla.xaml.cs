@@ -123,7 +123,7 @@ namespace Reinco.Interfaces.Supervision
                             {
                                 nombre = "Gestion De Calidad",
                                 codigo = "F",
-                                descripcion = "Brebe Descripcion"
+                                descripcion = "Breve Descripción"
                             });
                         }
                         // fin del listado
@@ -131,7 +131,7 @@ namespace Reinco.Interfaces.Supervision
                 }
                 else
                 {
-                    await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador");
+                    await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador.");
                 }
             }
             catch (Exception ex)

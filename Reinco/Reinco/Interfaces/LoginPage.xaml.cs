@@ -13,6 +13,7 @@ namespace Reinco.Interfaces
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         private bool isRunning;
+        //string CargoUsuario;
         #endregion
 
 
@@ -97,11 +98,12 @@ namespace Reinco.Interfaces
                     else
                     {
                         // ---------- Almacenando Los Datos Del Usuario  En Local -------------------//
+                        //CargoUsuario = result[0].cargo;
                         Application.Current.Properties["idUsuario"] = result[0].idUsuario;
                         Application.Current.Properties["nombresApellidos"] = result[0].nombresApellidos;
                         Application.Current.Properties["cargoUsuario"] = result[0].cargo;
                         // await Application.Current.SavePropertiesAsync(); // Active esta opcion si dese guardar en el movil permanentemente
-
+                        
                         App.Current.MainPage = new MainPage(); // Navegando a la página Main page ( Páina Principal que conecta los de mas páginas)
                     }
                 }
