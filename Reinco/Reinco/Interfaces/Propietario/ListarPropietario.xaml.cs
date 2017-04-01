@@ -56,6 +56,7 @@ namespace Reinco.Interfaces.Propietario
                 CargarPropietarioItem();
                 RefrescandoPropietario = false;
             });
+            this.BindingContext = this;
         }
         #endregion
 

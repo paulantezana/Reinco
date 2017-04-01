@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Supervision.ListarObrasAdmin"
+             Title="OBRAS">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <ListView
+                    ItemsSource="{Binding ObrasItem}"
+                    BackgroundColor="{StaticResource Color5}"
+                    HasUnevenRows="True"
+                    IsPullToRefreshEnabled="True"
+                    RefreshCommand="{Binding RefrescarObrasCommand}"
+                    IsRefreshing="{Binding RefrescandoObras,Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+
+                                <!-- Inicio Del Contenido Grid -->
+                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8,15,8,15">
+
+
+
+                                    <!-- Gesto de Tipo Toque Para Toda La Fila -->
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PlantillaObra}"/>
+                                    </Grid.GestureRecognizers>
+
+
+
+                                    <!-- Definiendo las Columnas de la Fila -->
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+
+
+
+                                    <!-- Elemento en la primera columna -->
+                                    <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
+
+
+
+                                    <!-- Elemento en la segunda columna-->
+                                    <StackLayout Grid.Column="1">
+                                        <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                        <Label Text="{Binding descripcion}" VerticalOptions="Center"></Label>
+                                    </StackLayout>
+
+
+                                    <!-- Elemento En Tercetar columna -->
+                                    <Image Grid.Column="2" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7"></Image>
+
+                                </Grid>
+                                <!--  Fin Del Contenido Grid -->
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

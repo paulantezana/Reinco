@@ -88,7 +88,7 @@ namespace Reinco.Interfaces.Obra
             }); 
             #endregion
 
-            this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
+            //this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
         #endregion 
         public ListarObra(int idPropietarioObra, int idObra)

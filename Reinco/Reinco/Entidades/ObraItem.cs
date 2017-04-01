@@ -23,6 +23,7 @@ namespace Reinco.Entidades
         public string plantilla { get; set; }
         public string colorObra { get; set; }
         public int idPropietarioObra { get; set; }
+        public int idPlantillaObra { get; set; }
 
 
 
