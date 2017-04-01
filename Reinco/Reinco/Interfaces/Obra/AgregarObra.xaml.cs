@@ -179,8 +179,8 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
                 personalItem.Clear();
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
                 foreach (var item in usuarios)
                 {
                     personalItem.Add(new PersonalItem
@@ -201,8 +201,8 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
                 propietarioItem.Clear();
+                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
                 foreach (var item in propietario)
                 {
                     propietarioItem.Add(new PropietarioItem

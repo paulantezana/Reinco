@@ -8,7 +8,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            
+            <SearchBar Placeholder="Buscar Obra ..." BackgroundColor="{StaticResource Color5}"></SearchBar>
             <ListView
                 ItemsSource="{Binding ObraItems}"
                 BackgroundColor="{StaticResource Color5}"
@@ -22,11 +22,11 @@
 
                             <!-- Menu Eliminar Obra CRUD -->
                             <ViewCell.ContextActions>
-                                <MenuItem Command="{Binding eliminar}" Text="Eliminar" IsDestructive="True">
+                                <MenuItem Command="{Binding eliminar}" CommandParameter="{Binding idObra}" Text="Eliminar" IsDestructive="True">
                                 </MenuItem>
                             </ViewCell.ContextActions>
                             <!-- End Menu Eliminar Obra CRUD -->
-                                
+
                             <!-- ============ Codigo Para Listar Obra ================-->
 
                             <Grid>
@@ -39,13 +39,13 @@
                                 </Grid.ColumnDefinitions>
 
                                 <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
-                                
+
                                 <Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>
-                                
+
                                 <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
-                                
+
                                 <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                 </StackLayout>

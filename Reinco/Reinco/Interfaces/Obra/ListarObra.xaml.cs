@@ -18,18 +18,21 @@ namespace Reinco.Interfaces.Obra
 
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
-        WebService Servicio = new WebService(); 
+        WebService Servicio = new WebService();
         #endregion
 
+
         #region +---- Eventos ----+
-        new public event PropertyChangedEventHandler PropertyChanged; 
+        new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
+
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         string Mensaje;
         private bool isRefreshingObra { get; set; }
         #endregion
+
 
         #region +---- Propiedades ----+
         public ObservableCollection<ObraItem> ObraItems { get; set; }
@@ -50,20 +53,14 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
+
         #region +---- Comandos ----+
         public ICommand CrearObra { get; private set; }
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
 
-        #region ==============Definiendo Propiedad Global De esta Pagina================
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            App.ListarObra = this;
-        }
-        #endregion
 
-        #region========== Constructor sin parametros=============
+        #region +---- Constructor ----+
         public ListarObra()
         {
             InitializeComponent();
@@ -75,29 +72,34 @@ namespace Reinco.Interfaces.Obra
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
             CrearObra = new Command(() =>
-             {
-                 Navigation.PushAsync(new AgregarObra());
-             });
+            {
+                Navigation.PushAsync(new AgregarObra());
+            });
 
             // Evento Refrescar La Lista
-            RefreshObraCommand = new Command( () =>
+            RefreshObraCommand = new Command(() =>
             {
                 ObraItems.Clear();
                 CargarObraItems();
                 IsRefreshingObra = false;
-            }); 
+            });
             #endregion
 
-            //this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
+            this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
-        #endregion 
-        public ListarObra(int idPropietarioObra, int idObra)
-        {
-            eliminar(idPropietarioObra, idObra);
-        }
-        
+        #endregion
 
-        #region ============== Cargando las obras =============
+
+        #region +---- Definiendo Propiedad Global De esta Pagina ----+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarObra = this;
+        }
+        #endregion
+
+
+        #region +---- Cargando las obras ----+
         public async void CargarObraItems()
         {
             try
@@ -107,7 +109,9 @@ namespace Reinco.Interfaces.Obra
                 foreach (var item in obras)
                 {
                     if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    {
                         Color = "#FF7777";
+                    }
                     else
                         Color = "#77FF77";
                     ObraItems.Add(new ObraItem
@@ -115,10 +119,10 @@ namespace Reinco.Interfaces.Obra
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
-                        idPropietario =item.idPropietario==null?0: item.idPropietario,
-                        idUsuario = item.idUsuario_responsable==null?0: item.idUsuario_responsable,
+                        idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                        idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
                         colorObra = Color,
-                        idPropietarioObra=item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra
+                        idPropietarioObra = item.idPropietario_Obra
                     });
                 }
             }
@@ -129,15 +133,20 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-        #region ================= Evento Eliminar Obra=====================
-        public async void eliminar(int idPropietarioObra, int idObra)
+
+        #region +---- Evento Eliminar Obra ----+
+        public async void eliminar(object sender, EventArgs e)
         {
-            try { 
-                bool respuesta= await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar","Cancelar");
-                object[,] variables = new object[,] { { "idPropietarioObra", idPropietarioObra }, { "idObra", idObra } };
-                dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "EliminarPropietarioObra", variables);
+            try
+            {
+
+                var idObra = ((MenuItem)sender).CommandParameter;
+                int IdObra = Convert.ToInt16(idObra);
+                bool respuesta = await DisplayAlert("Eliminar", "Eliminar idObra = " + idObra, "Aceptar", "Cancelar");
+                object[,] variables = new object[,] { { "idObra", IdObra } };
+                dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "EliminarObra", variables);
                 Mensaje = Convert.ToString(result);
-                if (result!=null)
+                if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Obra", Mensaje, "OK");
 
