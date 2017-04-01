@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Reinco.Recursos"
+             x:Class="Reinco.Interfaces.Supervision.AsignarSupervisor"
+             Title="Asignar Supervisor">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <!-- Asignar propietario de la obra-->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Asigne Un Supervisor"></Label>
+                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                            <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarSupervisor" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandCambiarSupervisor}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarSupervisor" TextColor="#FF5555" Margin="10,0,10,0">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding commandBorrarSupervisor}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorPropietario" IsVisible="False"></Label>
+
+                    <control:BindablePicker
+                        DisplayMemberPath="nombre"
+                        SelectedValuePath="idPropietario"
+                        ItemsSource="{Binding propietarioItem}" 
+                        SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"
+                        x:Name="asignarPropietario"/>
+                </StackLayout>
+
+                <!-- Buttons Action -->
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
+                    <Button x:Name="guardar"   Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
+                </StackLayout>
+                <!-- End -->
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
