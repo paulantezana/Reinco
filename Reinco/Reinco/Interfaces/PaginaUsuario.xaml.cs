@@ -63,6 +63,7 @@ namespace Reinco.Interfaces
                         interfazAdministrador.IsVisible = false;
                         supervisarListView.IsEnabled = false;
                         supervisarListView.IsVisible = false;
+                    //App.ListarObras
                     }
 
                 #endregion
@@ -102,7 +103,7 @@ namespace Reinco.Interfaces
 
         private void irObraResponsable(object sender, EventArgs e)
         {
-            App.Navigator.Detail = new NavigationPage(new ListarObraResponsable());
+            App.Navigator.Detail = new NavigationPage(new ListarObras());
         }
     }
 }

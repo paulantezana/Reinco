@@ -23,7 +23,7 @@ namespace Reinco.Interfaces.Personal
 
 
         #region +---- Eventos ----+
-        new public event PropertyChangedEventHandler PropertyChanged;
+        //new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
 
