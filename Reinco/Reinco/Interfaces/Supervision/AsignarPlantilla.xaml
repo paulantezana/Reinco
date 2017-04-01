@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Supervision.AsignarPlantilla"
+             xmlns:control="clr-namespace:Reinco.Recursos"
+             Title="ASIGNAR PLANTILLA">
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+
+                <!-- Asignar Plantilla de la obra-->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <control:BindablePicker
+                    Title="Asigne Una Plantilla"
+                    DisplayMemberPath="nombre"
+                    SelectedValuePath="idPlantilla"
+                    SelectedValue ="{Binding Path=idPlantilla, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    x:Name="asignarPlantilla"
+                    VerticalOptions="Center"/>
+                </StackLayout>
+
+                
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
+                    <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+                </StackLayout>
+
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

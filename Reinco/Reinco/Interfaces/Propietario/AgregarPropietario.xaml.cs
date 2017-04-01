@@ -28,6 +28,8 @@ namespace Reinco.Interfaces.Propietario
             // eventos
             cancelar.Clicked += Cancelar_Clicked;
         }
+
+
         #region==================agregar propietario=====================
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
@@ -45,8 +47,10 @@ namespace Reinco.Interfaces.Propietario
                     if (result != null)
                     {
                         await App.Current.MainPage.DisplayAlert("Agregar Propietario", Mensaje, "OK");
-                        App.ListarPropietarios.propietarioItem.Clear();
+                        App.ListarPropietarios.IsRefreshingPropietario = false;
+                        App.ListarPropietarios.PropietarioItems.Clear();
                         App.ListarPropietarios.CargarPropietarioItem();
+                        App.ListarPropietarios.IsRefreshingPropietario = false;
                         await Navigation.PopAsync();
                     return;
                     }
@@ -58,6 +62,8 @@ namespace Reinco.Interfaces.Propietario
 
         }
         #endregion
+
+
         // ===================== Constructor Para Actualizar O Cambiar Propietario ===================== //
         public AgregarPropietario(object idPropietario, object nombrePropietario)
         {
@@ -83,7 +89,7 @@ namespace Reinco.Interfaces.Propietario
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Propietario", Mensaje, "OK");
-                    App.ListarPropietarios.propietarioItem.Clear();
+                    App.ListarPropietarios.PropietarioItems.Clear();
                     App.ListarPropietarios.CargarPropietarioItem();
                     await Navigation.PopAsync();
                     return;

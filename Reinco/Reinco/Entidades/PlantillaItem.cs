@@ -9,22 +9,27 @@ using Xamarin.Forms;
 
 namespace Reinco.Entidades
 {
-    public class PlantillaLista
+    public class PlantillaItem
     {
         public int idPlantilla { get; set; }
         public string codigo { get; set; }
         public string nombre { get; set; }
 
         #region=============comandos===============
-        public ICommand editarPlantilla { get; private set; }
+        public ICommand EditarPlantilla { get; private set; }
+        public ICommand Actividad { get; private set; }
         #endregion
 
         #region===============constructor(editar plantilla)====================
-        public PlantillaLista()
+        public PlantillaItem()
         {
-            editarPlantilla = new Command(() =>
+            EditarPlantilla = new Command(() =>
             {
                 App.ListarPlantilla.Navigation.PushAsync(new AgregarPlantilla(this.idPlantilla, this.codigo, this.nombre));
+            });
+            Actividad = new Command(() =>
+            {
+                App.ListarPlantilla.Navigation.PushAsync(new ListarActividad(this.idPlantilla,this.nombre));
             });
         }
         

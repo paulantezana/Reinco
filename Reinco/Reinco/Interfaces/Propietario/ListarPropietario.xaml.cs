@@ -19,42 +19,67 @@ namespace Reinco.Interfaces.Propietario
     public partial class ListarPropietario : ContentPage, INotifyPropertyChanged
     {
         WebService Servicio = new WebService();
-        public VentanaMensaje mensaje;
         string Mensaje;
-        public ObservableCollection<PropietarioItem> propietarioItem { get; set; }
-        #region==============Refrescar Propietarios==========================
+        public VentanaMensaje mensaje;
+
+
+        private bool isRefreshingPropietario { get; set; }
+
+
+        #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
-        public ICommand RefrescarPropietarioCommand { get; private set; }
-        public bool RefrescandoPropietario
+        #endregion
+
+
+
+        #region MyRegion
+        public ObservableCollection<PropietarioItem> PropietarioItems { get; set; }
+        public bool IsRefreshingPropietario
         {
             set
             {
-                if (RefrescandoPropietario != value)
+                if (isRefreshingPropietario != value)
                 {
-                    RefrescandoPropietario = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RefrescandoObra"));
+                    isRefreshingPropietario = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingPropietario"));
                 }
             }
             get
             {
-                return RefrescandoPropietario;
+                return isRefreshingPropietario;
             }
         }
         #endregion
+
+
+
+        #region Comands
+        public ICommand RefreshPropietarioCommand { get; private set; }
+        public ICommand AgregarPropietario { get; private set; }
+        #endregion
+
+
+
+
         // datatable usuario;
         #region=============constructor vacio======================
         public ListarPropietario()
         {
             InitializeComponent();
-            propietarioItem = new ObservableCollection<PropietarioItem>();
+            PropietarioItems = new ObservableCollection<PropietarioItem>();
             CargarPropietarioItem();
-            propietarioListView.ItemsSource = propietarioItem;
-            agregarPropietario.Clicked += AgregarPropietario_Clicked;
-            RefrescarPropietarioCommand = new Command(() =>
+
+            RefreshPropietarioCommand = new Command(() =>
             {
-                propietarioItem.Clear();
+                PropietarioItems.Clear();
                 CargarPropietarioItem();
-                RefrescandoPropietario = false;
+                IsRefreshingPropietario = false;
+
+            });
+
+            AgregarPropietario = new Command(() =>
+            {
+                Navigation.PushAsync(new AgregarPropietario());
             });
             this.BindingContext = this;
         }
@@ -76,7 +101,7 @@ namespace Reinco.Interfaces.Propietario
                 dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
                 foreach (var item in result)
                 {
-                    propietarioItem.Add(new PropietarioItem
+                    PropietarioItems.Add(new PropietarioItem
                     {
                         idPropietario = item.idPropietario,
                         nombre = item.nombre,
@@ -94,10 +119,6 @@ namespace Reinco.Interfaces.Propietario
         #endregion
 
 
-        private void AgregarPropietario_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new AgregarPropietario());
-        }
         #region ===================// Eliminar Propietario====================
         public async void eliminar(object sender, EventArgs e)
         {
@@ -112,9 +133,13 @@ namespace Reinco.Interfaces.Propietario
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
-                    App.ListarPropietarios.propietarioItem.Clear();
-                    App.ListarPropietarios.CargarPropietarioItem();
                     await Navigation.PopAsync();
+
+                    IsRefreshingPropietario = true;
+                    PropietarioItems.Clear();
+                    CargarPropietarioItem();
+                    IsRefreshingPropietario = false;
+
                     return;
                 }
             }
@@ -124,8 +149,8 @@ namespace Reinco.Interfaces.Propietario
             }
            
         }
-        #endregion
 
+        #endregion
 
     }
 }

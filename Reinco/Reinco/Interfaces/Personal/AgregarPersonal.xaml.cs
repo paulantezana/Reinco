@@ -1,6 +1,7 @@
 ﻿using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -12,13 +13,20 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Personal
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AgregarPersonal : ContentPage
+    public partial class AgregarPersonal : ContentPage, INotifyPropertyChanged
     {
         WebService Servicio = new WebService();
         string Mensaje;
         public VentanaMensaje mensaje;
         int IdUsuario;
         VentanaMensaje dialogService;
+
+
+        #region +---- Eventos ----+
+        new public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+
         public AgregarPersonal()
         {
             InitializeComponent();
@@ -56,6 +64,11 @@ namespace Reinco.Interfaces.Personal
                     if (result != null)
                     {
                         await App.Current.MainPage.DisplayAlert("Agregar Usuario", Mensaje, "OK");
+                        App.ListarPersonal.IsRefreshingPersonal = true;
+                        App.ListarPersonal.Personaltems.Clear();
+                        App.ListarPersonal.CargarPersonalItem();
+                        App.ListarPersonal.IsRefreshingPersonal = false;
+                        await Navigation.PopAsync();
                         return;
                     }
 

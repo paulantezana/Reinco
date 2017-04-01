@@ -92,7 +92,7 @@ namespace Reinco.Interfaces
         }
         private void irPlantilla(object sender, EventArgs e)
         {
-            App.Navigator.Detail = new NavigationPage(new PaginaPlantilla());
+            App.Navigator.Detail = new NavigationPage(new ListarPlantilla());
         }
         private void irPropietario(object sender, EventArgs e)
         {

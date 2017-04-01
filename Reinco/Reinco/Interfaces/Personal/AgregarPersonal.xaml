@@ -42,7 +42,7 @@
                 <!-- Celular -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Celular"></Label>
-                    <Entry x:Name="celular" Keyboard="Numeric"></Entry>
+                    <Entry x:Name="celular" Keyboard="Telephone"></Entry>
                 </StackLayout>
 
                 <!-- CIP -->

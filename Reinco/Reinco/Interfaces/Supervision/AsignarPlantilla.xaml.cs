@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Reinco.Interfaces.Obra
+namespace Reinco.Interfaces.Supervision
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AsignarPlantilla : ContentPage
     {
         //public ObservableCollection<PlantillaLista> plantillaLista { get; set; }
         //public ObservableCollection<PersonalItem> personalItem { get; set; }
-        public AsignarPlantilla(int IdObra, string Nombre)
+        public AsignarPlantilla()
         {
             InitializeComponent();
-            this.Title = Nombre;
+            //this.Title = Nombre;
 
             //plantillaLista = new ObservableCollection<PlantillaLista>();
             //personalItem = new ObservableCollection<PersonalItem>();

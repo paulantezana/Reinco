@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Reinco.Interfaces.Obra
+namespace Reinco.Interfaces.Supervision
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaPrueva : ContentPage
+    public partial class AsignarSupervisor : ContentPage
     {
-        public PaginaPrueva()
+        public AsignarSupervisor()
         {
             InitializeComponent();
-        }
-        public PaginaPrueva(string idObra, string nombre, string codigo)
-        {
-            DisplayAlert("Confirmacion", idObra + nombre + codigo, "Aceptar");
         }
     }
 }

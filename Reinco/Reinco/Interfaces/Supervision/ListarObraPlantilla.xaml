@@ -3,6 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Supervision.ListarObraPlantilla"
              Title="PLANTILLA OBRA">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding asignarPlantilla}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
@@ -63,4 +68,5 @@
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
+    
 </ContentPage>

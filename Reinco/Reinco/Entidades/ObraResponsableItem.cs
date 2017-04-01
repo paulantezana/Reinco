@@ -14,6 +14,7 @@ namespace Reinco.Entidades
 
 
         public int idResponsable { get; set; }
+        public string idObra { get; set; }
         public string nombre { get; set; }
 
 
@@ -29,7 +30,7 @@ namespace Reinco.Entidades
         {
             PlantillaObra = new Command(() =>
             {
-                App.ListarObraResponsable.Navigation.PushAsync(new ListarObraPlantilla());
+                App.ListarObraResponsable.Navigation.PushAsync(new ListarObraPlantilla(idObra));
             });
         } 
         #endregion

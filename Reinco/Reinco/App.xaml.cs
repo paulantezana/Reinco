@@ -21,21 +21,22 @@ namespace Reinco
     {
         #region +---- Atributos ----+
         public static string ip;
-        public static string puerto = "8080";
+        public static string puerto = "80";
         public VentanaMensaje mensaje; 
         #endregion
 
 
         #region +---- Propiedades ----+
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
-        public static PaginaPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
-        public static PaginaActividad ListarActividades { get; internal set; } // Página listar actividades
+        public static ListarPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
+        public static ListarActividad ListarActividad { get; internal set; } // Página listar actividades
         public static ListarPropietario ListarPropietarios { get; internal set; } // Página listar propietarios
         public static ListarObraResponsable ListarObraResponsable { get; internal set; } // Pagina Listar Obra Responsable
         public static ListarObraPlantilla ListarObraPlantilla { get; internal set; }
         public static ListarPlantillaSupervision ListarPlantillaSupervision { get; internal set; }
         public static ListarObrasAdmin ListarObrasAdmin { get; internal set; }
         public static MainPage Navigator { get; internal set; }
+        public static ListarPersonal ListarPersonal { get; internal set; }
 
         #endregion
 
@@ -47,12 +48,13 @@ namespace Reinco
             mensaje = new VentanaMensaje();
             //ObtenerIpAsync();
             //ip = "192.168.1.111";
-            ip = "192.168.1.37";
+            ip = "192.168.1.39";
             InitializeComponent();
             MainPage = new LoginPage();
         }
 
         #endregion
+
 
         #region +---- Comunicacion ----+
         public async void ObtenerIpAsync()

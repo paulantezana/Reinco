@@ -38,10 +38,7 @@ namespace Reinco.Entidades
         #region +---- Constructor ----+
         public ObraItem()
         {
-            asignarPlantilla = new Command(() =>
-            {
-                App.ListarObra.Navigation.PushAsync(new AsignarPlantilla(this.idObra, this.nombre));
-            });
+
 
             editarObra = new Command(() =>
             {
