@@ -24,23 +24,14 @@ namespace Reinco.Interfaces.Supervision
         private bool isRefreshingObraPlantilla { get; set; }
         #endregion
 
-
-
-
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
         #endregion
 
-
-
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
-
-
 
         public bool IsRefreshingObraPlantilla
         {
@@ -58,13 +49,7 @@ namespace Reinco.Interfaces.Supervision
             }
         }
 
-
-
-
         public ObservableCollection<ObraPlantillaItem> ObraPlantillaItems { get; set; }
-
-
-
 
         public ICommand RefreshObraPlantillaCommand { get; private set; }
         public ICommand asignarPlantilla { get; private set; }

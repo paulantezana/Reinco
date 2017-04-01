@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
+using Reinco.Interfaces.Supervision;
 
 namespace Reinco.Interfaces
 {
@@ -64,8 +65,14 @@ namespace Reinco.Interfaces
                             Icono = "ic_propietario.png",
                             TargetType = typeof(ListarPropietario)
                         });
-                    
-                    }
+                    items.Add(new MenuPrincipalItem
+                    {
+                        Titulo = "Agregar Plantilla a Obra",
+                        Icono = "ic_plantilla.png",
+                        TargetType = typeof(ListarObraPlantilla)
+                    });
+
+                }
 
                 #endregion
 

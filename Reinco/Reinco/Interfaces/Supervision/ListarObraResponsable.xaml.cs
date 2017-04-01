@@ -27,11 +27,9 @@ namespace Reinco.Interfaces.Supervision
         WebService Servicio = new WebService();
         #endregion
 
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
 
         #region +---- Propiedades ----+
         public ObservableCollection<ObraResponsableItem> ObraResponsableItems { get; set; }
@@ -52,12 +50,9 @@ namespace Reinco.Interfaces.Supervision
         }
         #endregion
 
-
         #region +---- Comandos ----+
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
-
-
 
         public ListarObraResponsable()
         {

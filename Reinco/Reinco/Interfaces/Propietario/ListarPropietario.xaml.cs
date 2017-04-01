@@ -81,8 +81,6 @@ namespace Reinco.Interfaces.Propietario
             {
                 Navigation.PushAsync(new AgregarPropietario());
             });
-
-
             this.BindingContext = this;
         }
         #endregion

@@ -19,6 +19,7 @@
                 IsPullToRefreshEnabled="True"
                 RefreshCommand="{Binding RefreshPropietarioCommand}"
                 IsRefreshing="{Binding IsRefreshingPropietario,Mode=TwoWay}">
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
