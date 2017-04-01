@@ -118,7 +118,8 @@ namespace Reinco.Interfaces.Obra
                         idPropietario =item.idPropietario==null?0: item.idPropietario,
                         idUsuario = item.idUsuario_responsable==null?0: item.idUsuario_responsable,
                         colorObra = Color,
-                        idPropietarioObra=item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra
+                        idPropietarioObra=item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
+                        idPlantillaObra=0
                     });
                 }
             }

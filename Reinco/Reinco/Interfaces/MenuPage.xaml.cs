@@ -39,7 +39,7 @@ namespace Reinco.Interfaces
                 #endregion
 
                 #region ==========================  Menu Visible solo para los supervisores ==========================
-                    if (cargo == "Administrador")
+                    if (cargo == "Gerente")
                     {
                         items.Add(new MenuPrincipalItem
                         {

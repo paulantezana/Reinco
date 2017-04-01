@@ -47,7 +47,7 @@ namespace Reinco.Interfaces
 
 
                 #region //============================ Zona Administrador ===================================//
-                    if (cargo == "Administrador")
+                    if (cargo == "Gerente")
                     {
                         //interfazResponsable.IsVisible = false;
                         //interfazSupervisor.IsVisible = false;
@@ -67,7 +67,7 @@ namespace Reinco.Interfaces
 
 
                 #region ** =============================== Zona Supervision =============================== **
-                    if (cargo == "Supervision")
+                    if (cargo == "Asistente")
                     {
                         interfazAdministrador.IsVisible = false;
                         interfazResponsable.IsVisible = false;
