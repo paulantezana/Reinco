@@ -8,7 +8,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <SearchBar Placeholder="Buscar Obra ..." BackgroundColor="{StaticResource Color5}"></SearchBar>
+            
             <ListView
                 ItemsSource="{Binding ObraItems}"
                 BackgroundColor="{StaticResource Color5}"
@@ -22,7 +22,7 @@
 
                             <!-- Menu Eliminar Obra CRUD -->
                             <ViewCell.ContextActions>
-                                <MenuItem Command="{Binding eliminar}" CommandParameter="{Binding idObra}" Text="Eliminar" IsDestructive="True">
+                                <MenuItem Command="{Binding eliminar}" Text="Eliminar" IsDestructive="True">
                                 </MenuItem>
                             </ViewCell.ContextActions>
                             <!-- End Menu Eliminar Obra CRUD -->

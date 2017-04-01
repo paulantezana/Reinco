@@ -63,7 +63,7 @@
                         <Switch x:Name="responsable" HorizontalOptions="EndAndExpand"></Switch>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Supervisor" VerticalOptions="Center"></Label>
+                        <Label Text="Asistente" VerticalOptions="Center"></Label>
                         <Switch x:Name="supervisor" HorizontalOptions="EndAndExpand"></Switch>
                     </StackLayout>
                 </StackLayout>
