@@ -34,7 +34,7 @@ namespace Reinco
         public static ListarObraResponsable ListarObraResponsable { get; internal set; } // Pagina Listar Obra Responsable
         public static ListarObraPlantilla ListarObraPlantilla { get; internal set; }
         public static ListarPlantillaSupervision ListarPlantillaSupervision { get; internal set; }
-        public static ListarObrasAdmin ListarObrasAdmin { get; internal set; }
+        //public static ListarObrasAdmin ListarObrasAdmin { get; internal set; }
         public static MainPage Navigator { get; internal set; }
         public static ListarPersonal ListarPersonal { get; internal set; }
 
