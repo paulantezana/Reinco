@@ -49,9 +49,8 @@ namespace Reinco.Interfaces
                 #region //============================ Zona Administrador ===================================//
                     if (cargo == "Administrador")
                     {
-                        supervisarListView.IsEnabled = false;
-                        supervisarListView.IsVisible = false;
-                        interfazResponsable.IsVisible = false;
+                        //interfazResponsable.IsVisible = false;
+                        //interfazSupervisor.IsVisible = false;
                     }
                 #endregion
 
@@ -61,9 +60,6 @@ namespace Reinco.Interfaces
                     if (cargo == "Responsable")
                     {
                         interfazAdministrador.IsVisible = false;
-                        supervisarListView.IsEnabled = false;
-                        supervisarListView.IsVisible = false;
-                    //App.ListarObras
                     }
 
                 #endregion
@@ -82,6 +78,9 @@ namespace Reinco.Interfaces
             }
         }
 
+
+
+
         #region //=============================  Navegacion Para el Administrador  =============================//
         private void irObra(object sender, EventArgs e)
         {
@@ -99,11 +98,49 @@ namespace Reinco.Interfaces
         {
             App.Navigator.Detail = new NavigationPage(new ListarPropietario());
         }
+
+
+
+
+        // Listar obras que ya tienen un responsable y propietario
+        private void irObraAdmin(object sender, EventArgs e)
+        {
+            // Recuperando el id Usuario   cargoUsuario
+            string idUsuario = Application.Current.Properties["idUsuario"].ToString();
+            string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
+            App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, cargoUsuario));
+        }
         #endregion
 
+
+
+
+        #region Navegacion Responsable
+        // Listar obras que ya tienen un responsable y propietario Solor Del Responsable
         private void irObraResponsable(object sender, EventArgs e)
         {
-            App.Navigator.Detail = new NavigationPage(new ListarObras());
+            // Recuperando el id Usuario   cargoUsuario
+            string idUsuario = Application.Current.Properties["idUsuario"].ToString();
+            string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
+            App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, "Responsable"));
         }
+        #endregion
+
+
+
+
+        #region Navegacion ObraSupervisor
+        // Listar obras que ya tienen un responsable y propietario  Solo Del Supervisor
+        private void irObraSupervisor(object sender, EventArgs e)
+        {
+            // Recuperando el id Usuario   cargoUsuario
+            string idUsuario = Application.Current.Properties["idUsuario"].ToString();
+            string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
+            App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, "Supervisor"));
+        }
+        #endregion
+
+
+
     }
 }

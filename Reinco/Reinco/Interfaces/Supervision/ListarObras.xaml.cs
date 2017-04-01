@@ -19,6 +19,7 @@ namespace Reinco.Interfaces.Supervision
     {
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
+        string IdUsuario;
         private bool isRefreshingObraResponsable { get; set; }
         #endregion
         
@@ -54,64 +55,107 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
 
-        public ListarObras()
+        #region Constructores
+        public ListarObras(string idUsuario, string cargo = "")
         {
             InitializeComponent();
             mensaje = new VentanaMensaje();
             ObraResponsableItems = new ObservableCollection<ObraResponsableItem>();
-            CargarObrasAdmin();
+            IdUsuario = idUsuario;
+
+
+
+
+            #region Cargar Obras Segun El Cargo
+            if (cargo == "Administrador")
+            {
+                CargarObraAdminItems();
+                this.Title = "Administrador";
+            }
+            if (cargo == "Responsable")
+            {
+                CargarObraResponsableItems();
+                this.Title = "Responsable";
+            }
+            if (cargo == "Supervisor")
+            {
+                this.Title = "Supervisor";
+                CargarObraSupervisorItems();
+            } 
+            #endregion
+
+
+
 
             RefreshObraCommand = new Command(() =>
             {
                 ObraResponsableItems.Clear();
-                CargarObrasAdmin();
+                // CargarObraResponsableItems();
                 IsRefreshingObraResponsable = false;
             });
 
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
 
-        //public ListarObras(object )
-        //{
-        //    InitializeComponent();
-        //    mensaje = new VentanaMensaje();
-        //    ObraResponsableItems = new ObservableCollection<ObraResponsableItem>();
-        //    CargarObrasAdmin();
+        #endregion
 
-        //    RefreshObraCommand = new Command(() =>
-        //    {
-        //        ObraResponsableItems.Clear();
-        //        CargarObrasAdmin();
-        //        IsRefreshingObraResponsable = false;
-        //    });
 
-        //    this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
-        //}
+        #region Global
         protected override void OnAppearing()
         {
             base.OnAppearing();
             App.ListarObras = this;
-        }
-        #region===========Cargar todas las obras===================
-        private async void CargarObrasAdmin()
+        } 
+        #endregion
+
+
+
+
+        #region Cargar Obras Como Administrador
+        private async void CargarObraAdminItems()
         {
             try
             {
+                ObraResponsableItems.Clear();
+                // Desde Aqui Logica de Programacion
+                for (int i = 0; i < 15; i++)
+                {
+                    ObraResponsableItems.Add(new ObraResponsableItem
+                    {
+                        nombre = "Toda las Obras",
+                        idResponsable = i,
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("", ex.Message);
+            }
+        }
 
-                // Recuperando el id Usuario
-               // string recuperarIdUsuario = Application.Current.Properties["idUsuario"].ToString();
-                //Int16 idUsuario = Convert.ToInt16(recuperarIdUsuario);
+        #endregion
 
-                // Iniciando Web Service
+
+
+
+        #region Cargar Obras Como Responsable
+
+        private async void CargarObraResponsableItems()
+        {
+            try
+            {
+                ObraResponsableItems.Clear();
+                // Desde Aqui Logica de Programacion
+
                 WebService servicio = new WebService();
-               // object[,] variables = new object[,] { { "idResponsable", idUsuario } };
-                dynamic result = await servicio.MetodoGet("ServicioObra.asmx", "MostrarObrasResponsable");
+                object[,] variables = new object[,] { { "idResponsable", IdUsuario } };
+                dynamic result = await servicio.MetodoPost("ServicioObra.asmx", "MostrarObrasResponsable", variables);
 
                 if (result != null)
                 {
                     if (result.Count == 0) //si está vacío
                     {
-                        await mensaje.MostrarMensaje("Mostrar Obras", "No hay obras disponibles");
+                        await mensaje.MostrarMensaje("Mostrar Obra Responsable", "No Hay Obras a su cargo");
                     }
                     else
                     {
@@ -129,7 +173,7 @@ namespace Reinco.Interfaces.Supervision
                 }
                 else
                 {
-                    await mensaje.MostrarMensaje("Mostrar Obras", "A ocurrido un error al listar las obras.");
+                    await mensaje.MostrarMensaje("Mostrar Obra Responsable", "A ocurrido un error al listar las obras para este usuario");
                 }
             }
             catch (Exception)
@@ -138,5 +182,33 @@ namespace Reinco.Interfaces.Supervision
             }
         }
         #endregion
+
+
+
+
+        #region Cargar Obras Como Supervisor
+
+        private async void CargarObraSupervisorItems()
+        {
+            try
+            {
+                ObraResponsableItems.Clear();
+                for (int i = 0; i < 15; i++)
+                {
+                    ObraResponsableItems.Add(new ObraResponsableItem
+                    {
+                        nombre = "Toda las Obras",
+                        idResponsable = i,
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("", ex.Message);
+            }
+        }
+        #endregion
+
+
     }
 }
