@@ -54,8 +54,8 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Agregar Plantilla", Mensaje, "OK");
-                    App.ListarPlantilla.plantillaLista.Clear();
-                    App.ListarPlantilla.CargarPlantillaLista();
+                    App.ListarPlantilla.PlantillaItems.Clear();
+                    App.ListarPlantilla.CargarPlantilla();
                     await Navigation.PopAsync();
                     return;
                 }
@@ -96,8 +96,8 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Plantilla", Mensaje, "OK");
-                    App.ListarPlantilla.plantillaLista.Clear();
-                    App.ListarPlantilla.CargarPlantillaLista();
+                    App.ListarPlantilla.PlantillaItems.Clear();
+                    App.ListarPlantilla.CargarPlantilla();
                     await Navigation.PopAsync();
                     return;
                 }

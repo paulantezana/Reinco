@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace Reinco.Entidades
 {
-    public class ActividadItems
+    public class ActividadItem
     {
         public int idActividad { get; set; }
         public string nombre { get; set; }
@@ -21,11 +21,11 @@ namespace Reinco.Entidades
         #endregion
 
         #region===============constructor(editar plantilla)====================
-        public ActividadItems()
+        public ActividadItem()
         {
             editarActividad = new Command(() =>
             {
-                App.ListarActividades.Navigation.PushAsync(new AgregarActividad(this.idActividad, this.nombre, this.tolerancia, this.idPlantilla));
+                App.ListarActividad.Navigation.PushAsync(new AgregarActividad(this.idActividad, this.nombre, this.tolerancia, this.idPlantilla));
             });
         }
 

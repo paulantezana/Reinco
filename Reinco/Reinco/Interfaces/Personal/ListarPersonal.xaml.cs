@@ -4,43 +4,106 @@ using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Reinco.Interfaces.Personal
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListarPersonal : ContentPage
+    public partial class ListarPersonal : ContentPage, INotifyPropertyChanged
     {
         WebService Servicio = new WebService();
         public VentanaMensaje mensaje;
         string Mensaje;
-        public ObservableCollection<PersonalItem> personalItem { get; set; }
+
+
+        #region +---- Eventos ----+
+        new public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+
+
+
+        #region Refrescar Lista
+        private bool isRefreshingPersonal { get; set; }
+        public bool IsRefreshingPersonal
+        {
+            set
+            {
+                if (isRefreshingPersonal != value)
+                {
+                    isRefreshingPersonal = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingPersonal"));
+                }
+            }
+            get
+            {
+                return isRefreshingPersonal;
+            }
+        } 
+        #endregion
+
+
+
+
+        public ObservableCollection<PersonalItem> Personaltems { get; set; }
         
         public ListarPersonal()
         {
             InitializeComponent();
-            personalItem = new ObservableCollection<PersonalItem>();
+            Personaltems = new ObservableCollection<PersonalItem>();
             CargarPersonalItem();
-            personalListView.ItemsSource = personalItem;
-            agregarPersonal.Clicked += AgregarPersonal_Clicked;
+
+            RefreshPersonalCommand = new Command(() =>
+            {
+                Personaltems.Clear();
+                CargarPersonalItem();
+                IsRefreshingPersonal = false;
+            });
+            AgregarPersonal = new Command(() =>
+            {
+                Navigation.PushAsync(new AgregarPersonal());
+            });
+
+            this.BindingContext = this;
         }
+
+
+
+        #region Propiedad Global De Esta Pagina
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.ListarPersonal = this;
+        } 
+        #endregion
+
+
+
+        #region +--- comandos ----+
+        public ICommand RefreshPersonalCommand { get; private set; }
+        public ICommand AgregarPersonal { get; private set; }
+        #endregion
+
+
+
         #region==================cargar usuarios==============================
-        private async void CargarPersonalItem()
+        public async void CargarPersonalItem()
         {
             try
             {
                 dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
                 foreach (var item in result)
                 {
-                    personalItem.Add(new PersonalItem
+                    Personaltems.Add(new PersonalItem
                     {
-                        fotoPerfil = "icon.png",
+                        fotoPerfil = "ic_profile_color.png",
                         idUsuario = item.idUsuario,
                         nombresApellidos = item.nombresApellidos.ToString(),
                         cip = item.cip
@@ -54,10 +117,7 @@ namespace Reinco.Interfaces.Personal
             }
         }
         #endregion
-        private void AgregarPersonal_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new AgregarPersonal());
-        }
+
 
         #region=======================eliminar obra====================================
         public async void eliminar(object sender, EventArgs e)

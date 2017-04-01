@@ -38,7 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\ActividadItems.cs" />
+    <Compile Include="Entidades\ActividadItem.cs" />
     <Compile Include="Entidades\AsignarPlantillaSupervisorItem.cs" />
     <Compile Include="Entidades\ObraResponsableItem.cs" />
     <Compile Include="Entidades\ObraPlantillaItem.cs" />
@@ -47,11 +47,14 @@
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
       <DependentUpon>AgregarObra.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Plantilla\ListarActividad.xaml.cs">
+      <DependentUpon>ListarActividad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\Plantilla\ListarPlantilla.xaml.cs">
+      <DependentUpon>ListarPlantilla.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\Supervision\AsignarPlantilla.xaml.cs">
       <DependentUpon>AsignarPlantilla.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\Obra\ObraPlantilla.xaml.cs">
-      <DependentUpon>ObraPlantilla.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Obra\ListarObra.xaml.cs">
       <DependentUpon>ListarObra.xaml</DependentUpon>
@@ -59,7 +62,7 @@
     <Compile Include="Entidades\ObraItem.cs" />
     <Compile Include="Entidades\PersonalItem.cs" />
     <Compile Include="Entidades\SupervisarActividadItem.cs" />
-    <Compile Include="Entidades\PlantillaLista.cs" />
+    <Compile Include="Entidades\PlantillaItem.cs" />
     <Compile Include="Entidades\PropietarioItem.cs" />
     <Compile Include="Interfaces\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -71,9 +74,6 @@
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entidades\MenuPrincipalItem.cs" />
-    <Compile Include="Interfaces\Obra\PaginaPrueva.xaml.cs">
-      <DependentUpon>PaginaPrueva.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interfaces\PaginaUsuario.xaml.cs">
       <DependentUpon>PaginaUsuario.xaml</DependentUpon>
     </Compile>
@@ -88,12 +88,6 @@
     </Compile>
     <Compile Include="Interfaces\Plantilla\AgregarPlantilla.xaml.cs">
       <DependentUpon>AgregarPlantilla.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\Plantilla\PaginaActividad.xaml.cs">
-      <DependentUpon>PaginaActividad.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\Plantilla\PaginaPlantilla.xaml.cs">
-      <DependentUpon>PaginaPlantilla.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Propietario\AgregarPropietario.xaml.cs">
       <DependentUpon>AgregarPropietario.xaml</DependentUpon>
@@ -197,12 +191,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Plantilla\PaginaPlantilla.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Interfaces\Propietario\AgregarPropietario.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -239,12 +227,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Plantilla\PaginaActividad.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Interfaces\Plantilla\AgregarActividad.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -263,12 +245,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Obra\ObraPlantilla.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\AsignarPlantilla.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -276,12 +252,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\CrearSupervision.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Obra\PaginaPrueva.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -306,6 +276,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\Supervisar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Plantilla\ListarPlantilla.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Plantilla\ListarActividad.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

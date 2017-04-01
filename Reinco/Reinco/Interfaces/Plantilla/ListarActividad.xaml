@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Plantilla.ListarActividad"
+             Title="ACTIVIDADES">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding AgregarActividad}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView 
+                ItemsSource="{Binding ActividadItems}"
+                BackgroundColor="{StaticResource Color5}"
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding RefreshActividadCommand}"
+                IsRefreshing="{Binding IsRefreshingActividad,Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            
+                            <!-- Eventos -->
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idActividad}" Text="Eliminar" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <!-- Contenido -->
+                            
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Label FontAttributes="Bold" FontSize="20" VerticalOptions="Center" Text="{Binding enumera}" Grid.Column="0"></Label>
+
+                                <StackLayout VerticalOptions="Center" Grid.Column="1">
+                                    <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding tolerancia}"></Label>
+                                </StackLayout>
+
+                                <Image Grid.Column="4" Source="ic_editar.png"  WidthRequest="30" HeightRequest="30" Margin="7">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarActividad}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                            </Grid>
+                            <!-- END Contenido-->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+    </ContentPage.Content>
+
+
+</ContentPage>

@@ -76,8 +76,8 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Plantilla", Mensaje, "OK");
-                    App.ListarActividades.actividadItems.Clear();
-                    App.ListarActividades.CargarActividadItems();
+                    App.ListarActividad.ActividadItems.Clear();
+                    App.ListarActividad.CargarActividadItems();
                     await Navigation.PopAsync();
                     return;
                 }
@@ -111,8 +111,8 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Agregar Actividad", Mensaje, "OK");
-                    App.ListarActividades.actividadItems.Clear();
-                    App.ListarActividades.CargarActividadItems();
+                    App.ListarActividad.ActividadItems.Clear();
+                    App.ListarActividad.CargarActividadItems();
                     await Navigation.PopAsync();
                     return;
                 }

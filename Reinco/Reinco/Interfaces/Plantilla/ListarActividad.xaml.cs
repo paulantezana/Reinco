@@ -1,43 +1,106 @@
-﻿using Newtonsoft.Json;
-using Reinco.Entidades;
+﻿using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Reinco.Interfaces.Plantilla
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaActividad : ContentPage
+    public partial class ListarActividad : ContentPage, INotifyPropertyChanged
     {
+
         WebService Servicio = new WebService();
         public VentanaMensaje mensaje;
         string Mensaje;
-        int IdPlantilla;
-        public ObservableCollection<ActividadItems> actividadItems { get; set; }
-        #region===========constructor con parametros de plantilla==============
-        public PaginaActividad(object idPlantilla)
+        protected int IdPlantilla;
+
+
+        #region +---- Eventos ----+
+        new public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+
+
+        #region ObservableCollections
+        public ObservableCollection<ActividadItem> ActividadItems { get; set; } 
+        #endregion
+
+
+
+        public ListarActividad(int idPlantilla, string nombre)
         {
             InitializeComponent();
-            IdPlantilla = Convert.ToInt16(idPlantilla);
-            actividadItems = new ObservableCollection<ActividadItems>();
-            actividadListView.ItemsSource = actividadItems;
+            this.Title = nombre;
+            this.IdPlantilla = idPlantilla;
+
+            ActividadItems = new ObservableCollection<ActividadItem>();
+           
             CargarActividadItems();
             // eventos
-            agregarActividad.Clicked += AgregarActividad_Clicked;
+            RefreshActividadCommand = new Command(() =>
+            {
+                ActividadItems.Clear();
+                CargarActividadItems();
+                IsRefreshingActividad = false;
+            });
+
+            AgregarActividad = new Command(() =>
+            {
+                Navigation.PushAsync(new AgregarActividad(IdPlantilla));
+            });
+
+
+            this.BindingContext = this;
+        }
+
+
+
+
+        #region=============Refrescar pagina=======================
+        private bool isRefreshingActividad { get; set; }
+        public bool IsRefreshingActividad
+        {
+            set
+            {
+                if (isRefreshingActividad != value)
+                {
+                    isRefreshingActividad = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingActividad"));
+                }
+            }
+            get
+            {
+                return isRefreshingActividad;
+            }
         }
         #endregion
-        private void AgregarActividad_Clicked(object sender, EventArgs e)
+
+
+
+        #region +--- comandos ----+
+        public ICommand RefreshActividadCommand { get; private set; }
+        public ICommand AgregarActividad { get; private set; }
+        #endregion
+
+
+
+        #region +---- Definiendo Propiedad Global De esta Pagina ----+
+        protected override void OnAppearing()
         {
-            Navigation.PushAsync(new AgregarActividad(IdPlantilla));
+            base.OnAppearing();
+            App.ListarActividad = this;
         }
+        #endregion
+
+
         #region================= cargar actividades=====================
         public async void CargarActividadItems()
         {
@@ -48,12 +111,12 @@ namespace Reinco.Interfaces.Plantilla
                 dynamic result = await Servicio.MetodoGet("ServicioPlantillaActividad.asmx", "MostrarActividadxIdPlantilla", OidPlantilla);
                 foreach (var item in result)
                 {
-                    actividadItems.Add(new ActividadItems
+                    ActividadItems.Add(new ActividadItem
                     {
                         idActividad = item.idPlantilla_Actividad,
                         nombre = item.nombre,
                         tolerancia = item.tolerancia,
-                        idPlantilla=item.idPlantilla,
+                        idPlantilla = item.idPlantilla,
                         enumera = x++,
                     });
                 }
@@ -65,13 +128,7 @@ namespace Reinco.Interfaces.Plantilla
             }
         }
         #endregion
-        #region +============= Definiendo Propiedad Global De esta Pagina ===========
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            App.ListarActividades = this;
-        }
-        #endregion
+
         #region=============eliminar actividad=====================
         public async void eliminar(object sender, EventArgs e)
         {
@@ -86,8 +143,8 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Actividad", Mensaje, "OK");
-                    App.ListarActividades.actividadItems.Clear();
-                    App.ListarActividades.CargarActividadItems();
+                    App.ListarActividad.ActividadItems.Clear();
+                    App.ListarActividad.CargarActividadItems();
                     await Navigation.PopAsync();
                     return;
                 }
@@ -99,6 +156,8 @@ namespace Reinco.Interfaces.Plantilla
 
         }
         #endregion
-       
+
+
+
     }
 }

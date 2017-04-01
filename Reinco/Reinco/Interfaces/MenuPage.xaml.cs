@@ -56,7 +56,7 @@ namespace Reinco.Interfaces
                         {
                             Titulo = "Plantillas",
                             Icono = "ic_plantilla.png",
-                            TargetType = typeof(PaginaPlantilla)
+                            TargetType = typeof(ListarPlantilla)
                         });
                         items.Add(new MenuPrincipalItem
                         {

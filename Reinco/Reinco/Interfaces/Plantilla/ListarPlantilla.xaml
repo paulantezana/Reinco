@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Plantilla.ListarPlantilla"
+             Title="PLANTILLAS">
+    
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding CrearPlantilla}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView
+                ItemsSource="{Binding PlantillaItems}"
+                BackgroundColor="{StaticResource Color5}"
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding RefreshPlantillaCommand}"
+                IsRefreshing="{Binding IsRefreshingPlantilla,Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <!-- Eventos -->
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idPlantilla}" Text="Eliminar" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+
+                            <!-- Grid -->
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
+                                
+                                
+                                <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
+
+                                
+                                <Image Grid.Column="2" Source="ic_plantilla.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Actividad}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                                
+                                <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding EditarPlantilla}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                            </Grid>
+                            <!-- End Grid -->
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

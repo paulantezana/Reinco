@@ -54,7 +54,7 @@ namespace Reinco.Interfaces.Propietario
 
 
         #region Comands
-        public ICommand RefreshObraCommand { get; private set; }
+        public ICommand RefreshPropietarioCommand { get; private set; }
         public ICommand AgregarPropietario { get; private set; }
         #endregion
 
@@ -69,7 +69,7 @@ namespace Reinco.Interfaces.Propietario
             PropietarioItems = new ObservableCollection<PropietarioItem>();
             CargarPropietarioItem();
 
-            RefreshObraCommand = new Command(() =>
+            RefreshPropietarioCommand = new Command(() =>
             {
                 PropietarioItems.Clear();
                 CargarPropietarioItem();
@@ -137,8 +137,9 @@ namespace Reinco.Interfaces.Propietario
                     await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
                     await Navigation.PopAsync();
 
-                    App.ListarPropietarios.PropietarioItems.Clear();
-                    App.ListarPropietarios.CargarPropietarioItem();
+                    IsRefreshingPropietario = true;
+                    PropietarioItems.Clear();
+                    CargarPropietarioItem();
                     IsRefreshingPropietario = false;
 
                     return;
