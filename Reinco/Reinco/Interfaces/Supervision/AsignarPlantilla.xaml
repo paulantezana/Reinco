@@ -21,15 +21,13 @@
                     VerticalOptions="Center"/>
                 </StackLayout>
 
-
-
-
                 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
                     <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
                 </StackLayout>
 
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

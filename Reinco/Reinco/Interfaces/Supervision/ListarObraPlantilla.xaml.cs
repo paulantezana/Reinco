@@ -19,6 +19,7 @@ namespace Reinco.Interfaces.Supervision
     {
 
         #region +---- Atributos ----+
+        protected string idObra;
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
         #endregion
@@ -69,10 +70,12 @@ namespace Reinco.Interfaces.Supervision
         public ICommand asignarPlantilla { get; private set; }
 
 
-        public ListarObraPlantilla()
+        public ListarObraPlantilla(string IdObra)
         {
             InitializeComponent();
+            idObra = IdObra;
 
+            // ---------------------
             ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
 
 
@@ -106,17 +109,48 @@ namespace Reinco.Interfaces.Supervision
 
 
 
-        private void CargarPlantillaObra()
+        private async void CargarPlantillaObra()
         {
-            for (int i = 0; i < 200; i++)
+
+            try
             {
-                ObraPlantillaItems.Add(new ObraPlantillaItem
+
+                // Iniciando Web Service
+                WebService servicio = new WebService();
+                object[,] variables = new object[,] { { "idObra", idObra } };
+                dynamic result = await servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillaxidObra", variables);
+
+                if (result != null)
                 {
-                    nombre = "Gestion De Calidad" + Convert.ToString(i),
-                    codigo = "F" + Convert.ToString(i),
-                    descripcion = "Brebe Descripcion" + Convert.ToString(i)
-                });
+                    if (result.Count == 0) //si está vacío
+                    {
+                        await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
+                    }
+                    else
+                    {
+                        // listando las obras
+                        foreach (var item in result)
+                        {
+                            ObraPlantillaItems.Add(new ObraPlantillaItem
+                            {
+                                nombre = "Gestion De Calidad",
+                                codigo = "F",
+                                descripcion = "Brebe Descripcion"
+                            });
+                        }
+                        // fin del listado
+                    }
+                }
+                else
+                {
+                    await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador");
+                }
             }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
 

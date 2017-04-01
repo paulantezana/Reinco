@@ -3,14 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Propietario.ListarPropietario"
              Title="PAGINA PROPIETARIO">
+
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding AgregarPropietario}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    
     <ContentPage.Content>
-        <StackLayout Padding="8">
-            <Button x:Name="agregarPropietario" Text="Agregar Propietario" Style="{StaticResource BontonPrimario}"></Button>
-            <ListView x:Name="propietarioListView" HasUnevenRows="True" SeparatorVisibility="None">
+        <StackLayout>
+            <ListView
+                ItemsSource="{Binding PropietarioItems}"
+                BackgroundColor="{StaticResource Color5}"
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding RefreshPropietarioCommand}"
+                IsRefreshing="{Binding IsRefreshingPropietario,Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            
                             <ViewCell.ContextActions>
                                 <!--<MenuItem Clicked="actualizar" CommandParameter="{Binding idPropietario}" Text="Modificar"/>-->
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idPropietario}" Text="Eliminar" IsDestructive="True" />
@@ -35,4 +46,6 @@
             </ListView>
         </StackLayout>
     </ContentPage.Content>
+    
+    
 </ContentPage>

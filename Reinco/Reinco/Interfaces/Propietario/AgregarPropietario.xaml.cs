@@ -45,7 +45,7 @@ namespace Reinco.Interfaces.Propietario
                     if (result != null)
                     {
                         await App.Current.MainPage.DisplayAlert("Agregar Propietario", Mensaje, "OK");
-                        App.ListarPropietarios.propietarioItem.Clear();
+                        App.ListarPropietarios.PropietarioItems.Clear();
                         App.ListarPropietarios.CargarPropietarioItem();
                         await Navigation.PopAsync();
                     return;
@@ -83,7 +83,7 @@ namespace Reinco.Interfaces.Propietario
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Propietario", Mensaje, "OK");
-                    App.ListarPropietarios.propietarioItem.Clear();
+                    App.ListarPropietarios.PropietarioItems.Clear();
                     App.ListarPropietarios.CargarPropietarioItem();
                     await Navigation.PopAsync();
                     return;
