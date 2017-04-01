@@ -30,7 +30,7 @@ namespace Reinco.Entidades
         {
             PlantillaObra = new Command(() =>
             {
-                App.ListarObraResponsable.Navigation.PushAsync(new ListarObraPlantilla(idObra));
+                App.ListarObras.Navigation.PushAsync(new ListarObraPlantilla(idObra));
             });
         } 
         #endregion

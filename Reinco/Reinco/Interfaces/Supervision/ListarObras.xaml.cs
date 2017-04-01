@@ -15,10 +15,11 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Supervision
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListarObraResponsable : ContentPage, INotifyPropertyChanged
+    public partial class ListarObras : ContentPage, INotifyPropertyChanged
     {
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
+        string IdUsuario;
         private bool isRefreshingObraResponsable { get; set; }
         #endregion
         
@@ -54,42 +55,100 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
 
-        public ListarObraResponsable()
+        #region Constructores
+        public ListarObras(string idUsuario, string cargo = "")
         {
             InitializeComponent();
             mensaje = new VentanaMensaje();
             ObraResponsableItems = new ObservableCollection<ObraResponsableItem>();
-            CargarObraResponsableItems();
+            IdUsuario = idUsuario;
+
+
+
+
+            #region Cargar Obras Segun El Cargo
+            if (cargo == "Administrador")
+            {
+                CargarObraAdminItems();
+                this.Title = "Administrador";
+            }
+            if (cargo == "Responsable")
+            {
+                CargarObraResponsableItems();
+                this.Title = "Responsable";
+            }
+            if (cargo == "Supervisor")
+            {
+                this.Title = "Supervisor";
+                CargarObraSupervisorItems();
+            } 
+            #endregion
+
+
+
 
             RefreshObraCommand = new Command(() =>
             {
                 ObraResponsableItems.Clear();
-                CargarObraResponsableItems();
+                // CargarObraResponsableItems();
                 IsRefreshingObraResponsable = false;
             });
 
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
 
+        #endregion
 
+
+        #region Global
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            App.ListarObraResponsable = this;
+            App.ListarObras = this;
+        } 
+        #endregion
+
+
+
+
+        #region Cargar Obras Como Administrador
+        private async void CargarObraAdminItems()
+        {
+            try
+            {
+                ObraResponsableItems.Clear();
+                // Desde Aqui Logica de Programacion
+                for (int i = 0; i < 15; i++)
+                {
+                    ObraResponsableItems.Add(new ObraResponsableItem
+                    {
+                        nombre = "Toda las Obras",
+                        idResponsable = i,
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("", ex.Message);
+            }
         }
+
+        #endregion
+
+
+
+
+        #region Cargar Obras Como Responsable
 
         private async void CargarObraResponsableItems()
         {
             try
             {
+                ObraResponsableItems.Clear();
+                // Desde Aqui Logica de Programacion
 
-                // Recuperando el id Usuario
-                string recuperarIdUsuario = Application.Current.Properties["idUsuario"].ToString();
-                Int16 idUsuario = Convert.ToInt16(recuperarIdUsuario);
-
-                // Iniciando Web Service
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idResponsable", idUsuario } };
+                object[,] variables = new object[,] { { "idResponsable", IdUsuario } };
                 dynamic result = await servicio.MetodoPost("ServicioObra.asmx", "MostrarObrasResponsable", variables);
 
                 if (result != null)
@@ -122,5 +181,34 @@ namespace Reinco.Interfaces.Supervision
                 throw;
             }
         }
+        #endregion
+
+
+
+
+        #region Cargar Obras Como Supervisor
+
+        private async void CargarObraSupervisorItems()
+        {
+            try
+            {
+                ObraResponsableItems.Clear();
+                for (int i = 0; i < 15; i++)
+                {
+                    ObraResponsableItems.Add(new ObraResponsableItem
+                    {
+                        nombre = "Toda las Obras",
+                        idResponsable = i,
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("", ex.Message);
+            }
+        }
+        #endregion
+
+
     }
 }

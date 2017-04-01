@@ -106,13 +106,13 @@
 
                     <!-- Supervisar -->
 
-                    <StackLayout Grid.Column="2" Grid.Row="1" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+                    <StackLayout Grid.Column="1" Grid.Row="1" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
 
                         <Image Source="ic_obra_color.png"></Image>
-                        <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras A Tu Responsabilidad" HorizontalTextAlignment="Center"></Label>
+                        <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras Admin" HorizontalTextAlignment="Center"></Label>
 
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="irObraResponsable"/>
+                            <TapGestureRecognizer Tapped="irObraAdmin"/>
                         </StackLayout.GestureRecognizers>
 
                     </StackLayout>
@@ -164,56 +164,43 @@
             <!-- =================================================================================
             ======================== Interfaz De Usuario Para el Supervisor ======================
             =====================================================================================-->
-            <ListView
-                HasUnevenRows="True"
-                SeparatorVisibility="None"
-                Margin="8"
-                x:Name="supervisarListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                            <ViewCell>
-                                <Grid 
-                                BackgroundColor="{StaticResource Color5}" 
-                                Padding="8" Margin="0,5,0,5">
-                                <Grid.GestureRecognizers>
-                                    <PanGestureRecognizer AutomationId=""/>
-                                </Grid.GestureRecognizers>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackLayout 
-                                    Grid.Column="0">
-                                    <Label 
-                                        Text="{Binding titulo}"
-                                        FontAttributes="Bold"
-                                        >
-                                    </Label>
-                                    <Label 
-                                        Text="{Binding descripcion}"
-                                        >
-                                    </Label>
-                                </StackLayout>
-                                <Label 
-                                    Text="{Binding numeroTarea}" 
-                                    Grid.Column="1" 
-                                    TextColor="{StaticResource Color1}"
-                                    FontSize="20"
-                                    VerticalOptions="Center">
-                                </Label>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                <StackLayout x:Name="interfazSupervisor">
+                    <Grid Margin="5,0,5,0" WidthRequest="800">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Ir A la Página Listar Plantillas -->
+                        <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+
+                            <Image Source="ic_obra_color.png"></Image>
+                            <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras Supervisar" HorizontalTextAlignment="Center"></Label>
+
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="irObraSupervisor"/>
+                            </StackLayout.GestureRecognizers>
+
+                        </StackLayout>
+
+                    </Grid>
+                </StackLayout>
             
-            
-            
-            
-            
-            
-            
-        </StackLayout>
+
+
+
+
+
+
+
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
