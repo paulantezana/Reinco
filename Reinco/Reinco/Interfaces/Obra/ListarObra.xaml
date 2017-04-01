@@ -26,7 +26,7 @@
                                 </MenuItem>
                             </ViewCell.ContextActions>
                             <!-- End Menu Eliminar Obra CRUD -->
-                                
+
                             <!-- ============ Codigo Para Listar Obra ================-->
 
                             <Grid>
@@ -39,13 +39,13 @@
                                 </Grid.ColumnDefinitions>
 
                                 <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
-                                
+
                                 <Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>
-                                
+
                                 <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
-                                
+
                                 <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                 </StackLayout>

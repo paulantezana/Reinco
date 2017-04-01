@@ -19,7 +19,9 @@ namespace Reinco.Interfaces.Supervision
     {
 
         #region +---- Atributos ----+
-        protected string idObra;
+        string IdObra;
+        string NombreObra;
+
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
         #endregion
@@ -55,10 +57,12 @@ namespace Reinco.Interfaces.Supervision
         public ICommand asignarPlantilla { get; private set; }
 
 
-        public ListarObraPlantilla(string IdObra)
+        public ListarObraPlantilla(string idObra, string nombreObra = "PLANTILLAS")
         {
             InitializeComponent();
-            idObra = IdObra;
+            IdObra = idObra;
+            NombreObra = nombreObra;
+            this.Title = nombreObra;
 
             // ---------------------
             ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
@@ -69,6 +73,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 ObraPlantillaItems.Clear();
                 CargarPlantillaObra();
+                IsRefreshingObraPlantilla = false;
             });
 
             // comandos
@@ -99,10 +104,8 @@ namespace Reinco.Interfaces.Supervision
 
             try
             {
-
-                // Iniciando Web Service
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idObra", idObra } };
+                object[,] variables = new object[,] { { "idObra", IdObra } };
                 dynamic result = await servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillaxidObra", variables);
 
                 if (result != null)
@@ -131,9 +134,9 @@ namespace Reinco.Interfaces.Supervision
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                await mensaje.MostrarMensaje("Error:", ex.Message);
             }
 
         }
