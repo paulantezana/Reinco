@@ -26,12 +26,32 @@ namespace Reinco.Entidades
 
         public SupervisarActividadItem()
         {
+
+
             guardarItem = new Command(() =>
             {
                 App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
             });
 
 
+            AprobacionCommand = new Command(() =>
+            {
+                App.Current.MainPage.DisplayAlert("Me Ejecute", "OK", "Aceptar");
+                if (aprobacion == true)
+                {
+                    App.Current.MainPage.DisplayAlert("Me Ejecute", ObsLevActivar + " En Falso", "Aceptar");
+                    ObsLevActivar = false;
+                }
+                else
+                {
+                    App.Current.MainPage.DisplayAlert("Me Ejecute", ObsLevActivar + " En Verdadesro", "Aceptar");
+                    ObsLevActivar = true;
+                } 
+            });
+
+
+
+            #region ================= Expandir =================
             MostrarAnotacion = false;
             ExpandirAnotacion = new Command(() =>
             {
@@ -45,43 +65,70 @@ namespace Reinco.Entidades
                     MostrarAnotacion = false;
                     toggle = 0;
                 }
-            });
-            // Camara
-            EncenderCamara = new Command(async() =>
-            {
-                await CrossMedia.Current.Initialize(); // Inicializando la libreri
+            }); 
+            #endregion
+
+
+
+            #region ================ Uso De La Camara ================
+            EncenderCamara = new Command(async () =>
+                {
+                    await CrossMedia.Current.Initialize(); // Inicializando la libreri
 
                 // Verificando si el dispotivo tiene Camara
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-                {
-                    await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
-                }
+                    {
+                        await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
+                    }
 
                 // Directorio para almacenar la imagen
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                {
-                    Directory = "fotos",
-                    Name = "fotoreinco.jpg"
-                });
+                    {
+                        Directory = "fotos",
+                        Name = "fotoreinco.jpg"
+                    });
 
                 // mostrando la imagen en la interfas del telefono
                 if (file != null)
-                {
-                    RutaImagen = ImageSource.FromStream(() =>
                     {
-                        var stream = file.GetStream();
-                        file.Dispose();
-                        return stream;
-                    });
-                }
+                        RutaImagen = ImageSource.FromStream(() =>
+                        {
+                            var stream = file.GetStream();
+                            file.Dispose();
+                            return stream;
+                        });
+                    }
                 // End Camera
-            });
+            }); 
+            #endregion
 
+
+        }
+
+
+        public ICommand AprobacionCommand { get; private set; }
+        public bool obsLevActivar { get; set; }
+        public bool ObsLevActivar
+        {
+            set
+            {
+                if (obsLevActivar != value)
+                {
+                    obsLevActivar = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ObsLevActivar"));
+                }
+            }
+            get
+            {
+                return obsLevActivar;
+            }
         }
 
 
 
 
+
+        #region ================ Expadir Actividad Por Cada Items Correspondiente ================
         int toggle = 0;
         public ICommand ExpandirAnotacion { get; private set; }
         public bool mostrarAnotacion { get; set; }
@@ -100,12 +147,11 @@ namespace Reinco.Entidades
                 return mostrarAnotacion;
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged; 
+        #endregion
 
 
-
-
-        // CAMARA 
+        #region ================= Preparando la Interaccion De la Camara =================
         private ImageSource rutaImagen;
         public ImageSource RutaImagen
         {
@@ -122,6 +168,9 @@ namespace Reinco.Entidades
                 return rutaImagen;
             }
         }
-        public ICommand EncenderCamara { get; private set; }
+        public ICommand EncenderCamara { get; private set; } 
+        #endregion
+
+
     }
 }

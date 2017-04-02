@@ -6,208 +6,215 @@
 
 
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
+        <StackLayout>
 
+            <!-- Supervisando -->
 
-
-
-
-                <!-- Supervisando -->
-
-                <ListView
+            <ListView
                     ItemsSource="{Binding SupervisarActividadItems}"
                     BackgroundColor="{StaticResource Color5}"
                     HasUnevenRows="True"
                     IsPullToRefreshEnabled="True"
                     RefreshCommand="{Binding RefreshSupervisarCommand}"
                     IsRefreshing="{Binding IsRefreshingSupervisar,Mode=TwoWay}">
-                    <ListView.Header>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                            </Grid.RowDefinitions>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="60"/>
-                                <ColumnDefinition Width="70"/>
-                            </Grid.ColumnDefinitions>
+                <!-- Enzabezado -->
+                <ListView.Header>
 
-                            <StackLayout Grid.Row="0"  Grid.ColumnSpan="4" Grid.Column="0" BackgroundColor="{StaticResource Color1}">
-                                <Label  Text="CONCRETO" Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"></Label>
-                            </StackLayout>
+                    <Grid RowSpacing="0" ColumnSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
 
-                            <StackLayout Grid.Column="0" Grid.Row="1" BackgroundColor="{StaticResource Color2}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
 
-                            </StackLayout>
-
-                            <StackLayout  Grid.Column="1" Grid.Row="1" BackgroundColor="{StaticResource Color2}">
-                                <Label Text="Actividad" Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"></Label>
-                            </StackLayout>
-
-                            <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="{StaticResource Color2}">
-                                <Label Style="{StaticResource Color5}" Text="No / Si " HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" ></Label>
-                            </StackLayout>
-
-                            <StackLayout Grid.Row="1" Grid.Column="3" BackgroundColor="{StaticResource Color2}">
-                                <Label  Text="OBS. LEV." Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"></Label>
-                            </StackLayout>
-                        </Grid>
-                    </ListView.Header>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-
-
-                                <Grid Padding="5,20,5,20" BackgroundColor="{StaticResource Color5}">
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="60"/>
-                                        <ColumnDefinition Width="70"/>
-                                        <ColumnDefinition Width="40"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <!-- Fila  = 0 = Columna  = 0 = -->
-                                    <Label Text="{Binding item}" Grid.Column="0"  FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"></Label>
-
-                                    <!-- Fila  = 0 = Columna  = 1 = -->
-                                    <Label Text="{Binding actividad}" Grid.Column="1" VerticalOptions="CenterAndExpand">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding ExpandirAnotacion}"></TapGestureRecognizer>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-
-                                    <!-- Fila  = 0 = Columna  = 2 = -->
-                                    <Switch Grid.Column="2" IsToggled="{Binding aprobacion}"></Switch>
-
-                                    <!-- Fila  = 0 = Columna  = 3 = -->
-                                    <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}"></Switch>
-
-                                    <!-- Fila  = 1 Combinando 5 Columnas = -->
-                                    <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="120"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            
-                                            <Label Grid.Column="0" Grid.Row="0" Text="Anotacion Adicional" FontAttributes="Bold"></Label>
-
-                                            <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="120" Text="{Binding anotacionAdicinal}"></Editor>
-
-
-                                            <!-- Tomar Foto -->
-                                            <Image Grid.Column="1" Grid.Row="0" Source="ic_camara.png" WidthRequest="30" HeightRequest="30">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding EncenderCamara}"/>
-                                                </Image.GestureRecognizers>
-                                            </Image>
-
-
-                                            <!-- Zona Galeria De Fotos -->
-                                            <StackLayout Grid.Column="1" Grid.Row="1">
-                                                <Image Source="{Binding RutaImagen}"></Image>
-                                            </StackLayout>
-                                            <!-- Galeria -->
-
-
-                                        </Grid>
-                                    </StackLayout>
-
-
-                                    <!-- Fila  = 0 = Columna  = 4 = -->
-                                    <Image Grid.Column="4" Grid.Row="0"   Source="ic_guardar.png"    WidthRequest="30" HeightRequest="30">
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding guardarItem}"></TapGestureRecognizer>
-                                        </Image.GestureRecognizers>
-                                    </Image>
-
-
-                                </Grid>
-
-
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.Footer>
-                        <StackLayout>
-                            <!-- Notas Del Supervisor -->
-                            <StackLayout>
-                                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,30,8,15">
-                                    <Label Text="Nota Supervisión" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
-                                    <Editor HeightRequest="400" BackgroundColor="#F5F5F5"></Editor>
-                                </StackLayout>
-
-
-                                <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
-                                    <Label Text="Observación"></Label>
-                                    <Switch HorizontalOptions="EndAndExpand"></Switch>
-                                </StackLayout>
-
-
-                                <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
-                                    <Label Text="Disposición"></Label>
-                                    <Switch HorizontalOptions="EndAndExpand"></Switch>
-                                </StackLayout>
-                            </StackLayout>
-
-                            <StackLayout>
-                                <Grid Padding="0,15,0,15" BackgroundColor="#EEFFEE" Margin="0,15,0,15">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="3*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Label Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma recepcion notificacion"></Label>
-                                    <Label Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma entrega notificacion"></Label>
-                                    <Label Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" Text="Vº Bº Conformidad"></Label>
-
-                                    <Switch Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand"></Switch>
-                                    <Switch Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand"></Switch>
-                                    <Switch Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand"></Switch>
-                                    
-                                </Grid>
-                            </StackLayout>
-
-                            <!-- Buttons Action -->
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
-                                <Button x:Name="guardar"   Text="Guardar Y Enviar Al Responsable" Style="{StaticResource BtnGuardar}"></Button>
-                            </StackLayout>
-                            <!-- End -->
+                        <StackLayout Grid.Row="0"  Grid.ColumnSpan="5" Grid.Column="0" BackgroundColor="{StaticResource Color1}">
+                            <Label  Text="CONCRETO" Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{StaticResource Color5}" FontSize="18" FontAttributes="Bold"></Label>
                         </StackLayout>
-                    </ListView.Footer>
-                </ListView>
+
+                        <StackLayout  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Color2}">
+                            <Label Text="Actividad" Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{StaticResource Color5}"></Label>
+                        </StackLayout>
+
+                        <StackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="{StaticResource Color2}">
+                            <Label Style="{StaticResource Color5}" Text="No / Si " HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{StaticResource Color5}"></Label>
+                        </StackLayout>
+
+                        <StackLayout Grid.Row="1" Grid.Column="3" BackgroundColor="{StaticResource Color2}">
+                            <Label  Text="OBS. LEV." Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{StaticResource Color5}"></Label>
+                        </StackLayout>
+
+                        <StackLayout Grid.Row="1" Grid.Column="4" BackgroundColor="{StaticResource Color2}"></StackLayout>
+
+                    </Grid>
+
+                </ListView.Header>
+
+                <!-- Cuerpo Listado Actividad -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
 
 
+                            <Grid Padding="5,20,5,20" BackgroundColor="{StaticResource Color5}">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Fila  = 0 = Columna  = 0 = -->
+                                <Label Text="{Binding item}" Grid.Column="0"  FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+
+                                <!-- Fila  = 0 = Columna  = 1 = -->
+                                <Label Text="{Binding actividad}" Grid.Column="1" VerticalOptions="CenterAndExpand">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ExpandirAnotacion}"></TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                                <!-- Fila  = 0 = Columna  = 2 = -->
+                                <Switch Grid.Column="2" IsToggled="{Binding aprobacion}">
+                                    <Switch.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AprobacionCommand}"/>
+                                    </Switch.GestureRecognizers>
+                                </Switch>
+
+                                <!-- Fila  = 0 = Columna  = 3 = -->
+                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}" IsEnabled="{Binding ObsLevActivar}"></Switch>
+
+                                <!-- Fila  = 1 Combinando 5 Columnas = -->
+                                <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Column="0" Grid.Row="0" Text="Anotacion Adicional" FontAttributes="Bold"></Label>
+
+                                        <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="120" Text="{Binding anotacionAdicinal}"></Editor>
 
 
+                                        <!-- Tomar Foto -->
+                                        <Image Grid.Column="1" Grid.Row="0" Source="ic_camara.png" WidthRequest="30" HeightRequest="30">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding EncenderCamara}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
 
 
-            </StackLayout>
-        </ScrollView>
+                                        <!-- Zona Galeria De Fotos -->
+                                        <StackLayout Grid.Column="1" Grid.Row="1">
+                                            <Image Source="{Binding RutaImagen}"></Image>
+                                        </StackLayout>
+                                        <!-- Galeria -->
+
+
+                                    </Grid>
+                                </StackLayout>
+
+
+                                <!-- Fila  = 0 = Columna  = 4 = -->
+                                <Image Grid.Column="4" Grid.Row="0"   Source="ic_guardar.png"    WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding guardarItem}"></TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+
+                            </Grid>
+
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <!-- Footer -->
+                <ListView.Footer>
+                    <StackLayout>
+                        <!-- Notas Del Supervisor -->
+                        <StackLayout>
+                            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,30,8,15">
+                                <Label Text="Nota Supervisión" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
+                                <Editor HeightRequest="400" BackgroundColor="#F5F5F5" Text="{Binding notaSupervision}"></Editor>
+                            </StackLayout>
+
+
+                            <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
+                                <Label Text="Observación"></Label>
+                                <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding observacion}"></Switch>
+                            </StackLayout>
+
+
+                            <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
+                                <Label Text="Disposición"></Label>
+                                <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding disposicion}"></Switch>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout>
+                            <Grid Padding="0,15,0,15" BackgroundColor="#EEFFEE" Margin="0,15,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma recepción notificación"></Label>
+                                <Label Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma entrega notificación"></Label>
+                                <Label Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" Text="Vº Bº Conformidad"></Label>
+
+                                <Switch Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding recepcion}"></Switch>
+                                <Switch Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding entrega}"></Switch>
+                                <Switch Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding conformitad}"></Switch>
+
+                            </Grid>
+                        </StackLayout>
+                        
+                        <!-- Indicador de actividad -->
+                        <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}">
+                            
+                        </ActivityIndicator>
+                        
+                        <!-- Buttons Action -->
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,30">
+                            <Button Command="{Binding CancelarSupervision}" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
+                            <Button Command="{Binding guargarSupervision}" Text="Guardar Y Enviar Al Responsable" Style="{StaticResource BtnGuardar}"></Button>
+                        </StackLayout>
+                        <!-- End -->
+
+                    </StackLayout>
+                </ListView.Footer>
+
+
+            </ListView>
+
+
+        </StackLayout>
     </ContentPage.Content>
-
-
-
 </ContentPage>

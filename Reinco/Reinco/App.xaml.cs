@@ -51,7 +51,7 @@ namespace Reinco
             ip = "192.168.1.37";
            // ip = "181.67.192.254";
             InitializeComponent();
-            MainPage = new LoginPage();
+            MainPage = new Supervisar();
         }
 
         #endregion

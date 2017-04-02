@@ -7,7 +7,7 @@
         <ResourceDictionary>
             <!-- Color -->
             <Color x:Key="Color1">#2196F3</Color>
-            <Color x:Key="Color2">#2e8ae4</Color>
+            <Color x:Key="Color2">#43a7f7</Color>
             <Color x:Key="Color3">#283240</Color>
             <Color x:Key="Color4">#8AC22D</Color>
             <Color x:Key="Color5">#FFFFFF</Color>
