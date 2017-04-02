@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Reinco.Recursos;
+using Reinco.Interfaces.Plantilla;
+using Reinco.Interfaces.Supervision;
 
 namespace Reinco.Entidades
 {
@@ -31,7 +33,7 @@ namespace Reinco.Entidades
         public ICommand asignarPlantilla { get; private set; }
         public ICommand editarObra { get; private set; }
         public ICommand eliminar { get; private set; }
-        
+        public ICommand mostrarPlantillas { get; private set; }
         #endregion
 
 
@@ -44,6 +46,10 @@ namespace Reinco.Entidades
             {
                 App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre, 
                     this.idPropietario,this.idUsuario,this.idPropietarioObra));
+            });
+            mostrarPlantillas = new Command(() =>
+            {
+                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra ));
             });
             eliminar = new Command(async() =>
             {

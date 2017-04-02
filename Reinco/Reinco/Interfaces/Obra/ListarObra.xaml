@@ -36,6 +36,7 @@
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
                                 <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
@@ -49,8 +50,13 @@
                                 <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                 </StackLayout>
-
-                                <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                <Image Grid.Column="4" Source="ic_plantilla_color.png" Margin="2">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding mostrarPlantillas}"/>
+                                    </Image.GestureRecognizers>
+                                  
+                                </Image>
+                                <Image Grid.Column="5" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding editarObra}"/>
                                     </Image.GestureRecognizers>

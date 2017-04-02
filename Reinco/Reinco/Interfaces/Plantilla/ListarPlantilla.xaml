@@ -43,8 +43,8 @@
                                 
                                 <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
 
-                                
-                                <Image Grid.Column="2" Source="ic_plantilla.png" WidthRequest="30" HeightRequest="30">
+
+                                <Image Grid.Column="2" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Actividad}"/>
                                     </Image.GestureRecognizers>

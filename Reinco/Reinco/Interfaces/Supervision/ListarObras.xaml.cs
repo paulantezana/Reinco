@@ -20,8 +20,9 @@ namespace Reinco.Interfaces.Supervision
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         string IdUsuario;
+        //int IdObra;
         private bool isRefreshingObraResponsable { get; set; }
-        public ObservableCollection<ObraItem> ObraItems { get; set; }
+        //public ObservableCollection<ObraItem> ObraItems { get; set; }
         string Color;
         #endregion
         
@@ -63,13 +64,11 @@ namespace Reinco.Interfaces.Supervision
             InitializeComponent();
             mensaje = new VentanaMensaje();
             ObraResponsableItems = new ObservableCollection<ObraResponsableItem>();
+            //ObraItems = new ObservableCollection<ObraItem>();
             IdUsuario = idUsuario;
-
-
-
-
+            
             #region Cargar Obras Segun El Cargo
-            if (cargo == "Administrador")
+            if (cargo == "Gerente")
             {
                 CargarObraAdminItems();
                 this.Title = "Administrador";
@@ -85,9 +84,6 @@ namespace Reinco.Interfaces.Supervision
                 CargarObraSupervisorItems();
             } 
             #endregion
-
-
-
 
             RefreshObraCommand = new Command(() =>
             {
@@ -111,9 +107,8 @@ namespace Reinco.Interfaces.Supervision
         #endregion
 
         #region Cargar Obras Como Administrador
-        private async void CargarObraAdminItems()
-        {
-               
+        public async void CargarObraAdminItems()
+        {        
             try
             {
                // ObraResponsableItems.Clear();
@@ -125,13 +120,14 @@ namespace Reinco.Interfaces.Supervision
                         Color = "#FF7777";
                     else
                         Color = "#77FF77";
-                    ObraItems.Add(new ObraItem
-                    {
-                        //idPlantillaObra = item.idPlantilla == null ? 0 : item.idPlantilla,
-                        idPlantillaObra = 1,
-                        idObra = item.idObra,
+                    //IdObra = Convert.ToInt16( item.idObra);
+                    ObraResponsableItems.Add(new ObraResponsableItem
+                    {   
+                        idPlantillaObra = item.idPlantilla == null ? 0 : item.idPlantilla,
+                        idObra =item.idObra,
                         codigo = item.codigo,
                         nombre = item.nombre,
+                        idPropietarioObra=item.idPropietario_obra,
                         colorObra = Color
                     });
                 }

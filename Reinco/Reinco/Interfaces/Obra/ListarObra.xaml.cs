@@ -21,11 +21,9 @@ namespace Reinco.Interfaces.Obra
         WebService Servicio = new WebService();
         #endregion
 
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
