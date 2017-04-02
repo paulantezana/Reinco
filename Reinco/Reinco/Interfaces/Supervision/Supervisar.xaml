@@ -80,7 +80,7 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Fila  = 0 = Columna  = 0 = -->
-                                <Label Text="{Binding item}" Grid.Column="0"  FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+                                <Label Text="{Binding item}" Grid.Column="0"  FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"></Label>
 
                                 <!-- Fila  = 0 = Columna  = 1 = -->
                                 <Label Text="{Binding actividad}" Grid.Column="1" VerticalOptions="CenterAndExpand">
@@ -90,14 +90,14 @@
                                 </Label>
 
                                 <!-- Fila  = 0 = Columna  = 2 = -->
-                                <Switch Grid.Column="2" IsToggled="{Binding aprobacion}">
+                                <Switch Grid.Column="2" IsToggled="{Binding aprobacion}" HorizontalOptions="CenterAndExpand">
                                     <Switch.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding AprobacionCommand}"/>
                                     </Switch.GestureRecognizers>
                                 </Switch>
 
                                 <!-- Fila  = 0 = Columna  = 3 = -->
-                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}" IsEnabled="{Binding ObsLevActivar}"></Switch>
+                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}" IsEnabled="{Binding ObsLevActivar}" HorizontalOptions="CenterAndExpand"></Switch>
 
                                 <!-- Fila  = 1 Combinando 5 Columnas = -->
                                 <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
@@ -107,11 +107,11 @@
                                             <ColumnDefinition Width="120"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="50"/>
                                             <RowDefinition Height="auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <Label Grid.Column="0" Grid.Row="0" Text="Anotacion Adicional" FontAttributes="Bold"></Label>
+                                        <Label Grid.Column="0" Grid.Row="0" Text="Anotacion Adicional" FontAttributes="Bold" VerticalOptions="CenterAndExpand"></Label>
 
                                         <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="120" Text="{Binding anotacionAdicinal}"></Editor>
 
@@ -134,7 +134,9 @@
                                     </Grid>
                                 </StackLayout>
 
-
+                                <!-- Indicador de actividad para guardar -->
+                                <ActivityIndicator Grid.Column="4" Grid.Row="0" IsRunning="True" HeightRequest="20" WidthRequest="20"></ActivityIndicator>
+                                
                                 <!-- Fila  = 0 = Columna  = 4 = -->
                                 <Image Grid.Column="4" Grid.Row="0"   Source="ic_guardar.png"    WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
