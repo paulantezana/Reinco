@@ -96,9 +96,39 @@
 
                                     <!-- Fila  = 1 Combinando 5 Columnas = -->
                                     <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
-                                        <Label Text="Anotacion Adicional" FontAttributes="Bold"></Label>
-                                        <Editor Keyboard="Chat" HeightRequest="120" Text="{Binding anotacionAdicinal}"></Editor>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="120"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            
+                                            <Label Grid.Column="0" Grid.Row="0" Text="Anotacion Adicional" FontAttributes="Bold"></Label>
+
+                                            <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="120" Text="{Binding anotacionAdicinal}"></Editor>
+
+
+                                            <!-- Tomar Foto -->
+                                            <Image Grid.Column="1" Grid.Row="0" Source="ic_camara.png" WidthRequest="30" HeightRequest="30">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding EncenderCamara}"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+
+
+                                            <!-- Zona Galeria De Fotos -->
+                                            <StackLayout Grid.Column="1" Grid.Row="1">
+                                                <Image Source="{Binding RutaImagen}"></Image>
+                                            </StackLayout>
+                                            <!-- Galeria -->
+
+
+                                        </Grid>
                                     </StackLayout>
+
 
                                     <!-- Fila  = 0 = Columna  = 4 = -->
                                     <Image Grid.Column="4" Grid.Row="0"   Source="ic_guardar.png"    WidthRequest="30" HeightRequest="30">

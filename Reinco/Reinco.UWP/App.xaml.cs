@@ -76,6 +76,10 @@ namespace Reinco.UWP
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+            // Permisos Camara Añadido Por Paul
+            //Plugin.Media.MediaImplementation.OnFilesPicked(e);
+            //base.OnActivated(e);
+
             // Ensure the current window is active
             Window.Current.Activate();
         }

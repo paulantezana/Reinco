@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Media;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -45,29 +46,38 @@ namespace Reinco.Entidades
                     toggle = 0;
                 }
             });
-        }
-
-
-
-
-        public bool MostrarAnotacion
-        {
-            set
+            // Camara
+            EncenderCamara = new Command(async() =>
             {
-                if (mostrarAnotacion != value)
+                await CrossMedia.Current.Initialize(); // Inicializando la libreri
+
+                // Verificando si el dispotivo tiene Camara
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-                    mostrarAnotacion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MostrarAnotacion"));
+                    await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
                 }
-            }
-            get
-            {
-                return mostrarAnotacion;
-            }
+
+                // Directorio para almacenar la imagen
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                {
+                    Directory = "fotos",
+                    Name = "fotoreinco.jpg"
+                });
+
+                // mostrando la imagen en la interfas del telefono
+                if (file != null)
+                {
+                    RutaImagen = ImageSource.FromStream(() =>
+                    {
+                        var stream = file.GetStream();
+                        file.Dispose();
+                        return stream;
+                    });
+                }
+                // End Camera
+            });
+
         }
-
-
-
 
 
 
@@ -91,5 +101,27 @@ namespace Reinco.Entidades
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+
+
+
+
+        // CAMARA 
+        private ImageSource rutaImagen;
+        public ImageSource RutaImagen
+        {
+            set
+            {
+                if (rutaImagen != value)
+                {
+                    rutaImagen = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RutaImagen"));
+                }
+            }
+            get
+            {
+                return rutaImagen;
+            }
+        }
+        public ICommand EncenderCamara { get; private set; }
     }
 }
