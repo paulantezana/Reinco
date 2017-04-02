@@ -97,7 +97,7 @@
                                     <!-- Fila  = 1 Combinando 5 Columnas = -->
                                     <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
                                         <Label Text="Anotacion Adicional" FontAttributes="Bold"></Label>
-                                        <Editor Keyboard="Chat" HeightRequest="60" Text="{Binding anotacionAdicinal}"></Editor>
+                                        <Editor Keyboard="Chat" HeightRequest="120" Text="{Binding anotacionAdicinal}"></Editor>
                                     </StackLayout>
 
                                     <!-- Fila  = 0 = Columna  = 4 = -->
@@ -118,9 +118,9 @@
                         <StackLayout>
                             <!-- Notas Del Supervisor -->
                             <StackLayout>
-                                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                                    <Label Text="Nota" VerticalOptions="Center"></Label>
-                                    <Editor HeightRequest="400"></Editor>
+                                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,30,8,15">
+                                    <Label Text="Nota Supervisión" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
+                                    <Editor HeightRequest="400" BackgroundColor="#F5F5F5"></Editor>
                                 </StackLayout>
 
 
@@ -136,7 +136,28 @@
                                 </StackLayout>
                             </StackLayout>
 
+                            <StackLayout>
+                                <Grid Padding="0,15,0,15" BackgroundColor="#EEFFEE" Margin="0,15,0,15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
 
+                                    <Label Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma recepcion notificacion"></Label>
+                                    <Label Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma entrega notificacion"></Label>
+                                    <Label Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" Text="Vº Bº Conformidad"></Label>
+
+                                    <Switch Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand"></Switch>
+                                    <Switch Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand"></Switch>
+                                    <Switch Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand"></Switch>
+                                    
+                                </Grid>
+                            </StackLayout>
 
                             <!-- Buttons Action -->
                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">

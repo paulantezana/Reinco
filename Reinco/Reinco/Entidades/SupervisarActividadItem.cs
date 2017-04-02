@@ -47,6 +47,31 @@ namespace Reinco.Entidades
             });
         }
 
+
+
+
+        public bool MostrarAnotacion
+        {
+            set
+            {
+                if (mostrarAnotacion != value)
+                {
+                    mostrarAnotacion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MostrarAnotacion"));
+                }
+            }
+            get
+            {
+                return mostrarAnotacion;
+            }
+        }
+
+
+
+
+
+
+
         int toggle = 0;
         public ICommand ExpandirAnotacion { get; private set; }
         public bool mostrarAnotacion { get; set; }
