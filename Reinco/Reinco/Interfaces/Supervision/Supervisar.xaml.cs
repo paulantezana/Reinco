@@ -78,21 +78,36 @@ namespace Reinco.Interfaces.Supervision
             byte x = 01;
             try
             {
-                object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
-                dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
-                foreach (var item in obras)
-                {
+                //object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
+                //dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
+                //foreach (var item in obras)
+                //{
 
+                //    SupervisarActividadItems.Add(new SupervisarActividadItem
+                //    {
+                //        item =x++.ToString(),
+                //        actividad =item.nombre,
+                //        tolerancia=item.tolerancia_maxima,
+                //        observacionLevantada = true,
+                //        aprobacion = true,
+                //        anotacionAdicinal = "",
+                //    });
+                //}
+
+                // Iteracion Solo Para Hacer Pruebas sin Web Service
+                for (int i = 0; i < 15; i++)
+                {
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
-                        item =x++.ToString(),
-                        actividad =item.nombre,
-                        tolerancia=item.tolerancia_maxima,
+                        item = x++.ToString(),
+                        actividad = "Nombre de la supervision",
+                        tolerancia = "Tolerancia",
                         observacionLevantada = true,
                         aprobacion = true,
-                        anotacionAdicinal = "",
+                        anotacionAdicinal = "Anotacion adicional",
                     });
                 }
+                // Fin Iteracion De solo Pruebas
             }
             catch (Exception ex)
             {
