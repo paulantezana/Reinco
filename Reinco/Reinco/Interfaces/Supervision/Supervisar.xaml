@@ -20,7 +20,7 @@
 
                 <!-- Enzabezado -->
                 <ListView.Header>
-
+                    
                     <Grid RowSpacing="0" ColumnSpacing="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
@@ -135,7 +135,7 @@
                                 </StackLayout>
 
                                 <!-- Indicador de actividad para guardar -->
-                                <ActivityIndicator Grid.Column="4" Grid.Row="0" IsRunning="True" HeightRequest="20" WidthRequest="20"></ActivityIndicator>
+                                <!-- <ActivityIndicator Grid.Column="4" Grid.Row="0" IsRunning="True" HeightRequest="20" WidthRequest="20"></ActivityIndicator> -->
                                 
                                 <!-- Fila  = 0 = Columna  = 4 = -->
                                 <Image Grid.Column="4" Grid.Row="0"   Source="ic_guardar.png"    WidthRequest="30" HeightRequest="30">
@@ -191,9 +191,9 @@
                                 <Label Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma entrega notificación"></Label>
                                 <Label Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" Text="Vº Bº Conformidad"></Label>
 
-                                <Switch Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding recepcion}"></Switch>
-                                <Switch Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding entrega}"></Switch>
-                                <Switch Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding conformitad}"></Switch>
+                                <Switch Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding recepcion}" IsEnabled="{Binding activarRecepcion}"></Switch>
+                                <Switch Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding entrega}" IsEnabled="{Binding activarEntrega}"></Switch>
+                                <Switch Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding conformitad}" IsEnabled="{Binding activarConformidad}"></Switch>
 
                             </Grid>
                         </StackLayout>

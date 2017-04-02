@@ -110,9 +110,6 @@
     <Compile Include="Interfaces\Supervision\ListarPlantillaSupervision.xaml.cs">
       <DependentUpon>ListarPlantillaSupervision.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Supervision\NotasSupervision.xaml.cs">
-      <DependentUpon>NotasSupervision.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interfaces\Supervision\Supervisar.xaml.cs">
       <DependentUpon>Supervisar.xaml</DependentUpon>
     </Compile>
@@ -225,12 +222,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\PaginaUsuario.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Supervision\NotasSupervision.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

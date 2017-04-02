@@ -6,7 +6,33 @@
              Title="CREAR SUPERVISÓN">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
+            <StackLayout Padding="10" Spacing="15">
+
+
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Fecha"></Label>
+                    <DatePicker Format="dddd-MMMM-yyyy" x:Name="fecha"></DatePicker>
+                </StackLayout>
+
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Número Supervision"></Label>
+                    <Entry x:Name="numeroSupervision" Keyboard="Numeric"></Entry>
+                </StackLayout>
+
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Partida Evaluada"></Label>
+                    <Entry x:Name="partidaEvaluada" Keyboard="Text"></Entry>
+                </StackLayout>
+
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,15,8,15" Orientation="Horizontal">
+                    <Label Text="Bloque"></Label>
+                    <Switch x:Name="bloque" HorizontalOptions="EndAndExpand"></Switch>
+                </StackLayout>
+
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                    <Label Text="Nivel"></Label>
+                    <Entry x:Name="nivel" Keyboard="Text"></Entry>
+                </StackLayout>
 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
 
@@ -31,6 +57,7 @@
                     <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
                     <Button x:Name="guardar"   Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                 </StackLayout>
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

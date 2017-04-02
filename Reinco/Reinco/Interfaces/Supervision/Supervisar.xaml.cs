@@ -36,10 +36,14 @@ namespace Reinco.Interfaces.Supervision
         public bool observacion { get; set; }
         public bool disposicion { get; set; }
         public bool recepcion { get; set; }
+        public bool activarRecepcion { get; set; }
         public bool entrega { get; set; }
+        public bool activarEntrega { get; set; }
         public bool conformitad { get; set; }
+        public bool activarConformidad { get; set; }
         public bool isRefreshingSupervisar { get; set; }
         public bool guardarSupervisionIsrunning { get; set; }
+
 
 
 
@@ -98,6 +102,13 @@ namespace Reinco.Interfaces.Supervision
             InitializeComponent();
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
+        }
+        public Supervisar(int idSupervision)
+        {
+            InitializeComponent();
+            IdSupervision = idSupervision;
+            SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
+            CargarSupervisarActividadItem();
 
             // Guardar Supervision
             guargarSupervision = new Command(() =>
@@ -112,14 +123,6 @@ namespace Reinco.Interfaces.Supervision
             });
 
             // Contexto Actual Para los bindings
-            this.BindingContext = this;
-        }
-        public Supervisar(int idSupervision)
-        {
-            InitializeComponent();
-            IdSupervision = idSupervision;
-            SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-            CargarSupervisarActividadItem();
             this.BindingContext = this;
         }
 

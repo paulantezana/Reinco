@@ -105,7 +105,7 @@ namespace Reinco.Interfaces.Propietario
                     {
                         idPropietario = item.idPropietario,
                         nombre = item.nombre,
-                        fotoPerfil = "icon.png",
+                        fotoPerfil = "ic_profile.png",
                     });
                 }
 
