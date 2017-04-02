@@ -13,9 +13,7 @@ namespace Reinco.Entidades
     {
 
         public string nombre { get; set; }
-
-
-
+        public int numero { get; set; }
         public ICommand Supervisar { get; private set; }
 
 

@@ -145,7 +145,7 @@ namespace Reinco.Interfaces.Plantilla
                     await App.Current.MainPage.DisplayAlert("Eliminar Actividad", Mensaje, "OK");
                     App.ListarActividad.ActividadItems.Clear();
                     App.ListarActividad.CargarActividadItems();
-                    await Navigation.PopAsync();
+                   // await Navigation.PopAsync();
                     return;
                 }
             }

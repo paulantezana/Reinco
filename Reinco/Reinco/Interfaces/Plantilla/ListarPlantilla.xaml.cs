@@ -21,21 +21,13 @@ namespace Reinco.Interfaces.Plantilla
         public VentanaMensaje mensaje;
         string Mensaje;
 
-
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-
-
         #region ObservableCollections
         public ObservableCollection<PlantillaItem> PlantillaItems { get; set; } 
         #endregion
-
-
-
-
 
         public ListarPlantilla()
         {
@@ -88,8 +80,6 @@ namespace Reinco.Interfaces.Plantilla
         public ICommand CrearPlantilla { get; private set; }
         #endregion
 
-
-
         #region +---- Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
         {
@@ -97,8 +87,6 @@ namespace Reinco.Interfaces.Plantilla
             App.ListarPlantilla = this;
         }
         #endregion
-
-        
 
         #region======================== cargar plantilla en lista====================================
         public async void CargarPlantilla()
@@ -140,10 +128,11 @@ namespace Reinco.Interfaces.Plantilla
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await mensaje.MostrarMensaje("Eliminar Plantilla", Mensaje);
+                    // await mensaje.MostrarMensaje("Eliminar Plantilla", Mensaje);
+                    await App.Current.MainPage.DisplayAlert("Eliminar Plantilla", Mensaje, "OK");
                     PlantillaItems.Clear();
                     CargarPlantilla();
-                    IsRefreshingPlantilla = false;
+                    //IsRefreshingPlantilla = false;
                     return;
                 }
             }

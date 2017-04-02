@@ -23,18 +23,13 @@ namespace Reinco.Interfaces.Supervision
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
+        int IdPlantillaObra;
         #endregion
-
-
-
 
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
         #endregion
-
-
-
 
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
@@ -59,9 +54,6 @@ namespace Reinco.Interfaces.Supervision
             }
         }
 
-
-
-
         public ObservableCollection<PlantillaSupervisionItem> PlantillaSupervisionItems { get; set; }
 
 
@@ -77,25 +69,63 @@ namespace Reinco.Interfaces.Supervision
             InitializeComponent();
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
-
+            nuevaSupervision.Clicked += NuevaSupervision_Clicked;
             this.BindingContext = this;
+        }
+        public ListarPlantillaSupervision(int idPlantillaObra)
+        {
+            InitializeComponent();
+            IdPlantillaObra = idPlantillaObra;
+            PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
+            CargarPlantillaSupervision();
+            nuevaSupervision.Clicked += NuevaSupervision_Clicked;
+            this.BindingContext = this;
+        }
+        private void NuevaSupervision_Clicked(object sender, EventArgs e)
+        {
+
+            throw new NotImplementedException();
         }
 
         private async void CargarPlantillaSupervision()
         {
             try
             {
-                for (int i = 0; i < 15; i++)
+                int numeracion = 0;
+                WebService servicio = new WebService();
+                object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
+                dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObra", variables);
+
+                if (result != null)
                 {
-                    PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
+                    if (result.Count == 0) //si está vacío
                     {
-                        nombre = "nombre" + i.ToString(),
-                    });
+                        //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
+                        await DisplayAlert("Supervisiones por plantilla", "No hay plantillas", "Aceptar");
+                        return;
+                    }
+                    else
+                    {
+                        // listando las obras
+                        foreach (var item in result)
+                        {
+                            PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
+                            {
+                                nombre="Supervision",
+                                numero = numeracion++,
+                            });
+                        }
+                        // fin del listado
+                    }
+                }
+                else
+                {
+                    await mensaje.MostrarMensaje("Supervisiones", "Error de respuesta del servicio, Contáctese con el administrador.");
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error: ", ex.Message);
+                await mensaje.MostrarMensaje("Error:", ex.Message);
             }
         }
 

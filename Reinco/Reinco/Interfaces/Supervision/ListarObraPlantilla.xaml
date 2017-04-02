@@ -21,16 +21,16 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                
+                                <ViewCell.ContextActions>
+                                    <MenuItem Clicked="eliminar" CommandParameter="{Binding idPlantillaObra}" Text="Eliminar" IsDestructive="True" />
+                                </ViewCell.ContextActions>
                                 <!-- Inicio Del Contenido Grid -->
                                 <Grid BackgroundColor="{StaticResource Color5}" Padding="8,15,8,15">
                                     
                                     
                                     
                                     <!-- Gesto de Tipo Toque Para Toda La Fila -->
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding PlantillaSupervision}"/>
-                                    </Grid.GestureRecognizers>
+                                    
                                     
                                     
                                     
@@ -56,7 +56,11 @@
 
 
                                     <!-- Elemento En Tercetar columna -->
-                                    <Image Grid.Column="2" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7"></Image>
+                                    <Image Grid.Column="2" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding PlantillaSupervision}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
                                     
                                 </Grid>
                                 <!--  Fin Del Contenido Grid -->

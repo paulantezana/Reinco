@@ -20,7 +20,10 @@ namespace Reinco.Interfaces.Supervision
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         string IdUsuario;
+        //int IdObra;
         private bool isRefreshingObraResponsable { get; set; }
+        //public ObservableCollection<ObraItem> ObraItems { get; set; }
+        string Color;
         #endregion
         
         #region +---- Services ----+
@@ -61,13 +64,11 @@ namespace Reinco.Interfaces.Supervision
             InitializeComponent();
             mensaje = new VentanaMensaje();
             ObraResponsableItems = new ObservableCollection<ObraResponsableItem>();
+            //ObraItems = new ObservableCollection<ObraItem>();
             IdUsuario = idUsuario;
-
-
-
-
+            
             #region Cargar Obras Segun El Cargo
-            if (cargo == "Administrador")
+            if (cargo == "Gerente")
             {
                 CargarObraAdminItems();
                 this.Title = "Administrador";
@@ -83,9 +84,6 @@ namespace Reinco.Interfaces.Supervision
                 CargarObraSupervisorItems();
             } 
             #endregion
-
-
-
 
             RefreshObraCommand = new Command(() =>
             {
@@ -108,35 +106,39 @@ namespace Reinco.Interfaces.Supervision
         } 
         #endregion
 
-
-
-
         #region Cargar Obras Como Administrador
-        private async void CargarObraAdminItems()
-        {
+        public async void CargarObraAdminItems()
+        {        
             try
             {
-                ObraResponsableItems.Clear();
-                // Desde Aqui Logica de Programacion
-                for (int i = 0; i < 15; i++)
+               // ObraResponsableItems.Clear();
+                //servicioObra, mostrarObras--modificado
+                dynamic obras = await Servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillasyObras");
+                foreach (var item in obras)
                 {
+                    if (item.idPlantilla == null)
+                        Color = "#FF7777";
+                    else
+                        Color = "#77FF77";
+                    //IdObra = Convert.ToInt16( item.idObra);
                     ObraResponsableItems.Add(new ObraResponsableItem
-                    {
-                        nombre = "Toda las Obras",
-                        idResponsable = i,
+                    {   
+                        idPlantillaObra = item.idPlantilla == null ? 0 : item.idPlantilla,
+                        idObra =item.idObra,
+                        codigo = item.codigo,
+                        nombre = item.nombre,
+                        idPropietarioObra=item.idPropietario_obra,
+                        colorObra = Color
                     });
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("", ex.Message);
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
 
         #endregion
-
-
-
 
         #region Cargar Obras Como Responsable
 
@@ -182,9 +184,6 @@ namespace Reinco.Interfaces.Supervision
             }
         }
         #endregion
-
-
-
 
         #region Cargar Obras Como Supervisor
 

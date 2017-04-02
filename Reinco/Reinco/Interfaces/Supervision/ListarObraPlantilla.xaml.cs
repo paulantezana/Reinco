@@ -19,8 +19,10 @@ namespace Reinco.Interfaces.Supervision
     {
 
         #region +---- Atributos ----+
-        string IdObra;
+        int IdObra;
         string NombreObra;
+        int IdPropietarioObra;
+        string Mensaje;
 
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
@@ -57,10 +59,11 @@ namespace Reinco.Interfaces.Supervision
         public ICommand asignarPlantilla { get; private set; }
 
 
-        public ListarObraPlantilla(string idObra, string nombreObra = "PLANTILLAS")
+        public ListarObraPlantilla(int idPropietarioObra,int idObra, string nombreObra = "PLANTILLAS")
         {
             InitializeComponent();
-            IdObra = idObra;
+             IdObra = idObra;
+            IdPropietarioObra = idPropietarioObra;
             NombreObra = nombreObra;
             this.Title = nombreObra;
 
@@ -79,7 +82,7 @@ namespace Reinco.Interfaces.Supervision
             // comandos
             asignarPlantilla = new Command(() =>
             {
-                Navigation.PushAsync(new AsignarPlantilla());
+                Navigation.PushAsync(new AsignarPlantilla(IdPropietarioObra));
             });
 
 
@@ -99,7 +102,7 @@ namespace Reinco.Interfaces.Supervision
 
 
 
-        private async void CargarPlantillaObra()
+        public async void CargarPlantillaObra()
         {
 
             try
@@ -112,7 +115,9 @@ namespace Reinco.Interfaces.Supervision
                 {
                     if (result.Count == 0) //si está vacío
                     {
-                        await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
+                        //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
+                        await DisplayAlert("Error", "No hay plantillas", "Aceptar");
+                        return;
                     }
                     else
                     {
@@ -121,9 +126,9 @@ namespace Reinco.Interfaces.Supervision
                         {
                             ObraPlantillaItems.Add(new ObraPlantillaItem
                             {
-                                nombre = "Gestion De Calidad",
-                                codigo = "F",
-                                descripcion = "Breve Descripción"
+                                nombre = item.nombre,
+                                codigo = item.tolerancia,
+                                idPlantillaObra=item.idPlantilla_Propietario_obra
                             });
                         }
                         // fin del listado
@@ -140,7 +145,32 @@ namespace Reinco.Interfaces.Supervision
             }
 
         }
+        public async void eliminar(object sender, EventArgs e)
+        {
+            try
+            {
+                // Recuperando el idPlantilla
+                var idPlantilla = ((MenuItem)sender).CommandParameter;
+                int IdPlantillaPropietarioObra = Convert.ToInt16(idPlantilla);
 
+                // Consumiendo datos de la web service
+                bool respuesta = await DisplayAlert("Eliminar", "¿Desea eliminar esta plantilla de la obra? ", "Aceptar", "Cancelar");
+                object[,] variables = new object[,] { { "idPlantillaPropietarioObra", IdPlantillaPropietarioObra } };
+                dynamic result = await Servicio.MetodoGetString("ServicioPlantillaPropietarioObra.asmx", "EliminarPlantillaPropietarioObra", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Eliminar Plantilla Obra", Mensaje, "OK");
+                    ObraPlantillaItems.Clear();
+                    CargarPlantillaObra();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Eliminar Plantilla Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+        }
 
     }
 }

@@ -42,7 +42,7 @@
                                     <Label Text="{Binding tolerancia}"></Label>
                                 </StackLayout>
 
-                                <Image Grid.Column="4" Source="ic_editar.png"  WidthRequest="30" HeightRequest="30" Margin="7">
+                                <Image Grid.Column="2" Source="ic_editar.png"  WidthRequest="30" HeightRequest="30" Margin="7">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding editarActividad}"/>
                                     </Image.GestureRecognizers>
