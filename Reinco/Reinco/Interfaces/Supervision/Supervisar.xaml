@@ -97,7 +97,7 @@
                                 </Switch>
 
                                 <!-- Fila  = 0 = Columna  = 3 = -->
-                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}" IsEnabled="{Binding ObsLevActivar}" HorizontalOptions="CenterAndExpand"></Switch>
+                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}" HorizontalOptions="CenterAndExpand"></Switch>
 
                                 <!-- Fila  = 1 Combinando 5 Columnas = -->
                                 <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
