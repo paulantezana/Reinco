@@ -26,13 +26,8 @@
                                 </ViewCell.ContextActions>
                                 <!-- Inicio Del Contenido Grid -->
                                 <Grid BackgroundColor="{StaticResource Color5}" Padding="8,15,8,15">
-                                    
-                                    
-                                    
+                                   
                                     <!-- Gesto de Tipo Toque Para Toda La Fila -->
-                                    
-                                    
-                                    
                                     
                                     <!-- Definiendo las Columnas de la Fila -->
                                     <Grid.ColumnDefinitions>
@@ -40,18 +35,14 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
-                                    
-                                    
-                                    
+                                   
                                     <!-- Elemento en la primera columna -->
                                     <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
-                                    
-                                    
                                     
                                     <!-- Elemento en la segunda columna-->
                                     <StackLayout Grid.Column="1">
                                         <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
-                                        <Label Text="{Binding descripcion}" VerticalOptions="Center"></Label>
+                                        <Label Text="{Binding tolerancia}" VerticalOptions="Center"></Label>
                                     </StackLayout>
 
 

@@ -111,9 +111,6 @@ namespace Reinco.Interfaces
                 {
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador");
                 }
-                //List<Usuario> items = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
-                //DataTable dtUsuario = new DataTable();
-                // dynamic array = JsonConvert.DeserializeObject(resultado);
             }
             catch (Exception ex)
             {

@@ -9,43 +9,28 @@
             <StackLayout>
 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Fecha"></Label>
-                    <Entry x:Name="fecha" Keyboard="Numeric" ></Entry>
-                </StackLayout>
 
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Numero"></Label>
-                    <Entry x:Name="numero" Keyboard="Numeric" ></Entry>
-                </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Asigne Asistente"></Label>
+                        
+                    </StackLayout>
 
+                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorResponsable" IsVisible="False"></Label>
 
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Asistente"></Label>
-                    <Entry x:Name="asistente" Keyboard="Numeric" ></Entry>
-                </StackLayout>
-
-
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Partida Evaluada"></Label>
-                    <Entry x:Name="partidaEvaluada" Keyboard="Numeric" ></Entry>
-                </StackLayout>
-
-
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Bloque"></Label>
-                    <Entry x:Name="bloque" Keyboard="Numeric" ></Entry>
-                </StackLayout>
-
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Nivel"></Label>
-                    <Entry x:Name="nivel" Keyboard="Text" ></Entry>
+                    <control:BindablePicker
+                        DisplayMemberPath="nombresApellidos"
+                        SelectedValuePath="idUsuario"
+                        ItemsSource="{Binding personalItem}"
+                        SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"
+                        x:Name="asignarAsistente"/>
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
-                    <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+                    <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
+                    <Button x:Name="guardar"   Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                 </StackLayout>
-
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

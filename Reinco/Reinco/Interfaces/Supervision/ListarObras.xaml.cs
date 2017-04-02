@@ -19,7 +19,7 @@ namespace Reinco.Interfaces.Supervision
     {
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
-        string IdUsuario;
+        int IdUsuario;
         //int IdObra;
         private bool isRefreshingObraResponsable { get; set; }
         //public ObservableCollection<ObraItem> ObraItems { get; set; }
@@ -59,7 +59,7 @@ namespace Reinco.Interfaces.Supervision
         #endregion
 
         #region Constructores
-        public ListarObras(string idUsuario, string cargo = "")
+        public ListarObras(int idUsuario, string cargo = "")
         {
             InitializeComponent();
             mensaje = new VentanaMensaje();
@@ -78,9 +78,9 @@ namespace Reinco.Interfaces.Supervision
                 CargarObraResponsableItems();
                 this.Title = "Responsable";
             }
-            if (cargo == "Supervisor")
+            if (cargo == "Asistente")
             {
-                this.Title = "Supervisor";
+                this.Title = "Asistente";
                 CargarObraSupervisorItems();
             } 
             #endregion
@@ -111,8 +111,9 @@ namespace Reinco.Interfaces.Supervision
         {        
             try
             {
-               // ObraResponsableItems.Clear();
+                // ObraResponsableItems.Clear();
                 //servicioObra, mostrarObras--modificado
+                
                 dynamic obras = await Servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillasyObras");
                 foreach (var item in obras)
                 {
@@ -191,19 +192,31 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-                ObraResponsableItems.Clear();
-                for (int i = 0; i < 15; i++)
+                // ObraResponsableItems.Clear();
+                //servicioObra, mostrarObras--modificado
+                object[,] variables = new object[,] { { "idUsuario", IdUsuario } };
+                dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervision",variables);
+                foreach (var item in obras)
                 {
+                    if (item.idPlantilla == null)
+                        Color = "#FF7777";
+                    else
+                        Color = "#77FF77";
+                    //IdObra = Convert.ToInt16( item.idObra);
                     ObraResponsableItems.Add(new ObraResponsableItem
                     {
-                        nombre = "Toda las Obras",
-                        idResponsable = i,
+                       // idPlantillaObra = item.idPlantilla == null ? 0 : item.idPlantilla,
+                        idObra = item.idObra,
+                        codigo = item.codigo,
+                        nombre = item.nombre,
+                        //idPropietarioObra = item.idPropietario_obra,
+                        colorObra = Color
                     });
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("", ex.Message);
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
         #endregion

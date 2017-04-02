@@ -1,4 +1,5 @@
 ﻿using Reinco.Entidades;
+using Reinco.Interfaces.Plantilla;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,7 @@ namespace Reinco.Interfaces.Supervision
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
-
-
+        public ICommand AgregarSupervision { get; private set; }
 
         public bool IsRefreshingObraPlantilla
         {
@@ -56,20 +55,18 @@ namespace Reinco.Interfaces.Supervision
 
         public ObservableCollection<PlantillaSupervisionItem> PlantillaSupervisionItems { get; set; }
 
-
-
-
         public ICommand RefreshObraPlantillaCommand { get; private set; }
-
-
-
 
         public ListarPlantillaSupervision()
         {
             InitializeComponent();
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
-            nuevaSupervision.Clicked += NuevaSupervision_Clicked;
+            // nuevaSupervision.Clicked += NuevaSupervision_Clicked;
+            AgregarSupervision = new Command(() =>
+            {
+                Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
+            });
             this.BindingContext = this;
         }
         public ListarPlantillaSupervision(int idPlantillaObra)
@@ -78,7 +75,10 @@ namespace Reinco.Interfaces.Supervision
             IdPlantillaObra = idPlantillaObra;
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
-            nuevaSupervision.Clicked += NuevaSupervision_Clicked;
+            AgregarSupervision = new Command(() =>
+            {
+                Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
+            });
             this.BindingContext = this;
         }
         private void NuevaSupervision_Clicked(object sender, EventArgs e)
@@ -87,11 +87,11 @@ namespace Reinco.Interfaces.Supervision
             throw new NotImplementedException();
         }
 
-        private async void CargarPlantillaSupervision()
+        public async void CargarPlantillaSupervision()
         {
             try
             {
-                int numeracion = 0;
+                byte x = 01;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObra", variables);
@@ -112,7 +112,7 @@ namespace Reinco.Interfaces.Supervision
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
                             {
                                 nombre="Supervision",
-                                numero = numeracion++,
+                                numero = x++,
                             });
                         }
                         // fin del listado
@@ -128,9 +128,6 @@ namespace Reinco.Interfaces.Supervision
                 await mensaje.MostrarMensaje("Error:", ex.Message);
             }
         }
-
-
-
 
         #region Global
         protected override void OnAppearing()

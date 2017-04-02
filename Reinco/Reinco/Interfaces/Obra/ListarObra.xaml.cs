@@ -51,12 +51,10 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-
         #region +---- Comandos ----+
         public ICommand CrearObra { get; private set; }
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
-
 
         #region +---- Constructor ----+
         public ListarObra()
@@ -86,7 +84,6 @@ namespace Reinco.Interfaces.Obra
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
         #endregion
-
 
         #region +---- Definiendo Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()

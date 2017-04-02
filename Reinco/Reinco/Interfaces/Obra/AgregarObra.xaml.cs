@@ -156,7 +156,7 @@ namespace Reinco.Interfaces.Obra
         } 
         #endregion
 
-        #region +---- Propiedades ----+
+        #region +---- Corriendo ----+
         public bool IsRunning
         {
             set

@@ -27,13 +27,9 @@ namespace Reinco.Interfaces.Plantilla
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-
-
         #region ObservableCollections
         public ObservableCollection<ActividadItem> ActividadItems { get; set; } 
         #endregion
-
-
 
         public ListarActividad(int idPlantilla, string nombre)
         {
@@ -61,9 +57,6 @@ namespace Reinco.Interfaces.Plantilla
             this.BindingContext = this;
         }
 
-
-
-
         #region=============Refrescar pagina=======================
         private bool isRefreshingActividad { get; set; }
         public bool IsRefreshingActividad
@@ -83,14 +76,10 @@ namespace Reinco.Interfaces.Plantilla
         }
         #endregion
 
-
-
         #region +--- comandos ----+
         public ICommand RefreshActividadCommand { get; private set; }
         public ICommand AgregarActividad { get; private set; }
         #endregion
-
-
 
         #region +---- Definiendo Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
@@ -99,7 +88,6 @@ namespace Reinco.Interfaces.Plantilla
             App.ListarActividad = this;
         }
         #endregion
-
 
         #region================= cargar actividades=====================
         public async void CargarActividadItems()

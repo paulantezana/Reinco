@@ -127,7 +127,7 @@ namespace Reinco.Interfaces.Supervision
                             ObraPlantillaItems.Add(new ObraPlantillaItem
                             {
                                 nombre = item.nombre,
-                                codigo = item.tolerancia,
+                                codigo = item.codigo,
                                 idPlantillaObra=item.idPlantilla_Propietario_obra
                             });
                         }
