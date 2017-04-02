@@ -113,6 +113,7 @@ namespace Reinco.Interfaces.Supervision
                             {
                                 nombre="Supervision",
                                 numero = x++,
+                                idSupervision=item.idSupervision
                             });
                         }
                         // fin del listado

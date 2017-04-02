@@ -42,7 +42,11 @@
                                        <!-- <Label Text="{Binding partidaEvaluada}" FontAttributes="Bold"></Label>
                                         <Label Text="{Binding fecha}"></Label>-->
                                     </StackLayout>
-
+                                    <Image Grid.Column="2" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding verActividades}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
 
                                     <!--<StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
                                         <Label Text="{Binding nivel}"></Label>

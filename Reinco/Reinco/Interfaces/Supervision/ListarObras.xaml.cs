@@ -192,8 +192,6 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-                // ObraResponsableItems.Clear();
-                //servicioObra, mostrarObras--modificado
                 object[,] variables = new object[,] { { "idUsuario", IdUsuario } };
                 dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervision",variables);
                 foreach (var item in obras)
@@ -202,7 +200,6 @@ namespace Reinco.Interfaces.Supervision
                         Color = "#FF7777";
                     else
                         Color = "#77FF77";
-                    //IdObra = Convert.ToInt16( item.idObra);
                     ObraResponsableItems.Add(new ObraResponsableItem
                     {
                        // idPlantillaObra = item.idPlantilla == null ? 0 : item.idPlantilla,
