@@ -19,44 +19,45 @@
                             <ViewCell>
 
 
-                                <!-- ============ Codigo Para Listar Obra ================-->
-                                <Grid>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Supervisar}"/>
-                                    </Grid.GestureRecognizers>
 
+                                <!-- ============ Codigo Para Listar Obra ================-->
+                                <Grid BackgroundColor="{Binding colorSupervision}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5"/>
+                                        <ColumnDefinition Width="70"/>
                                         <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
 
 
-                                    <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
+                                    <StackLayout Grid.Column="0">
+                                        <Label Text="{Binding numero}"></Label>
+                                    </StackLayout>
 
 
-                                    <Image Grid.Column="1" Source="ic_plantilla_color.png" Margin="2"></Image>
+                                    <StackLayout Grid.Column="1">
+                                        <Label Text="{Binding partidaEvaluada}"></Label>
+                                        <Label Text="{Binding fecha}"></Label>
+                                    </StackLayout>
 
 
                                     <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
-                                        <Label Text="{Binding codigo}"></Label>
+                                        <Label Text="{Binding nivel}"></Label>
                                     </StackLayout>
 
 
-                                    <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
-                                        <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
-                                    </StackLayout>
-
-
-
-                                    <Image Grid.Column="4" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7"></Image>
+                                    <Image Grid.Column="3" Source="ic_add.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding crearSupervision}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
 
 
 
                                 </Grid>
                                 <!-- ============ FIN Codigo Para Listar Obra ================-->
+
+
 
 
                             </ViewCell>

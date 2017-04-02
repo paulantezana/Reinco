@@ -80,8 +80,10 @@ namespace Reinco.Interfaces.Supervision
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
                         item = i.ToString(),
-                        actividad = "Temperatura Ambiente",
+                        actividad = "Remitos de mixer Completo (Texto Largo)",
                         observacionLevantada = true,
+                        aprobacion = true,
+                        anotacionAdicinal = "Img Tuberia  30 metros flexible",
                     });
                 }
             }
