@@ -22,18 +22,13 @@ namespace Reinco.Interfaces.Supervision
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         private bool isRefreshingSupervisar { get; set; }
+        int IdSupervision;
         #endregion
-
-
-
 
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
         #endregion
-
-
-
 
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
@@ -70,27 +65,40 @@ namespace Reinco.Interfaces.Supervision
             CargarSupervisarActividadItem();
             this.BindingContext = this;
         }
-
+        public Supervisar(int idSupervision)
+        {
+            InitializeComponent();
+            IdSupervision = idSupervision;
+            SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
+            CargarSupervisarActividadItem();
+            this.BindingContext = this;
+        }
         private async void CargarSupervisarActividadItem()
         {
+            byte x = 01;
             try
             {
-                for (int i = 1; i < 15; i++)
+                object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
+                dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
+                foreach (var item in obras)
                 {
+
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
-                        item = i.ToString(),
-                        actividad = "Remitos de mixer Completo (Texto Largo)",
+                        item =x++.ToString(),
+                        actividad =item.nombre,
+                        tolerancia=item.tolerancia_maxima,
                         observacionLevantada = true,
                         aprobacion = true,
-                        anotacionAdicinal = "Img Tuberia  30 metros flexible",
+                        anotacionAdicinal = "",
                     });
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error", ex.Message);
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
+           
         }
     }
 }

@@ -11,19 +11,22 @@ namespace Reinco.Entidades
 {
     public class PlantillaSupervisionItem
     {
-
+        public int idSupervision { get; set; }
         public string nombre { get; set; }
         public int numero { get; set; }
         public ICommand Supervisar { get; private set; }
-
+        public ICommand verActividades { get; private set; }
 
 
         public PlantillaSupervisionItem()
         {
             Supervisar = new Command(() =>
-            {
-                
+            { 
                 App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar());
+            });
+            verActividades = new Command(() =>
+            {
+                App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar(idSupervision));
             });
         }
         

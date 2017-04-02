@@ -16,7 +16,7 @@ namespace Reinco.Entidades
         public bool aprobacion { get; set; }
         public bool observacionLevantada { get; set; }
         public string anotacionAdicinal { get; set; }
-
+        public string tolerancia { get; set; }
 
 
 

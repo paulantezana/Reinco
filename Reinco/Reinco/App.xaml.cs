@@ -49,6 +49,7 @@ namespace Reinco
             //ObtenerIpAsync();
             //ip = "192.168.1.111";
             ip = "192.168.1.37";
+           // ip = "181.67.192.254";
             InitializeComponent();
             MainPage = new NavigationPage(new Supervisar());
         }

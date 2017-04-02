@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Supervision.ListarPlantillaSupervision"
              Title="SUPERVISIONES">
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding AgregarSupervision}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
@@ -21,27 +23,32 @@
 
 
                                 <!-- ============ Codigo Para Listar Obra ================-->
-                                <Grid BackgroundColor="{Binding colorSupervision}">
+                                <Grid BackgroundColor="{Binding colorSupervision}"  Padding="8,15,8,15">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="70"/>
                                         <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="40"/>
+                                        <!--<ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="40"/>-->
                                     </Grid.ColumnDefinitions>
 
 
                                     <StackLayout Grid.Column="0">
-                                        <Label Text="{Binding numero}"></Label>
+                                        <Label Text="{Binding numero}" FontAttributes="Bold" FontSize="25" VerticalOptions="Center"></Label>
                                     </StackLayout>
 
 
                                     <StackLayout Grid.Column="1">
-                                        <Label Text="{Binding partidaEvaluada}"></Label>
-                                        <Label Text="{Binding fecha}"></Label>
+                                        <Label Text="{Binding nombre}" FontAttributes="Bold" FontSize="18"></Label>
+                                       <!-- <Label Text="{Binding partidaEvaluada}" FontAttributes="Bold"></Label>
+                                        <Label Text="{Binding fecha}"></Label>-->
                                     </StackLayout>
+                                    <Image Grid.Column="2" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding verActividades}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
 
-
-                                    <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
+                                    <!--<StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
                                         <Label Text="{Binding nivel}"></Label>
                                     </StackLayout>
 
@@ -50,7 +57,7 @@
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding crearSupervision}"/>
                                         </Image.GestureRecognizers>
-                                    </Image>
+                                    </Image>-->
 
 
 
@@ -64,9 +71,9 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="nuevaSupervision"   Text="Nueva Supervision" Style="{StaticResource BtnGuardar}"></Button>
-                </StackLayout>
+                </StackLayout>-->
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
