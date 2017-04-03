@@ -68,6 +68,12 @@ namespace Reinco.Interfaces.Supervision
             {
                 Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
             });
+            RefreshObraPlantillaCommand = new Command(() =>
+            {
+                PlantillaSupervisionItems.Clear();
+                CargarPlantillaSupervision();
+                IsRefreshingObraPlantilla = false;
+            });
             this.BindingContext = this;
         }
         public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla)
@@ -84,6 +90,13 @@ namespace Reinco.Interfaces.Supervision
             {
                 Navigation.PushAsync(new Reporte(idObra, idPlantilla));
             });
+            RefreshObraPlantillaCommand= new Command(() =>
+            {
+                PlantillaSupervisionItems.Clear();
+                CargarPlantillaSupervision();
+                IsRefreshingObraPlantilla = false;
+            });
+
             this.BindingContext = this;
         }
         private void NuevaSupervision_Clicked(object sender, EventArgs e)
@@ -91,7 +104,7 @@ namespace Reinco.Interfaces.Supervision
 
             throw new NotImplementedException();
         }
-
+        #region==================cargar supervisiones=========================
         public async void CargarPlantillaSupervision()
         {
             try
@@ -135,7 +148,7 @@ namespace Reinco.Interfaces.Supervision
                 await mensaje.MostrarMensaje("Error:", ex.Message);
             }
         }
-
+        #endregion
         #region Global
         protected override void OnAppearing()
         {

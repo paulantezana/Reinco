@@ -48,22 +48,25 @@ namespace Reinco.Interfaces.Supervision
         }
         private async void CargarReporteItem()
         {
+            int acumular=0;
             try
             {
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idObra", IdObra } , { "idPlantilla", IdPlantilla } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "EnviarReporte", variables);
-                
+                        
                         // listando las obras
                         foreach (var item in result)
                         {
-                              ReporteItems.Add(new ReporteItem
-                              {
-                                descripcion = item.nombre,
-                                si = item.siSuma,
-                                no = item.negativoSuma,
-                                lev = item.observacionSuma,
-                                incidencia = item.incidencia
+                    acumular = item.incidencia + acumular;
+                    ReporteItems.Add(new ReporteItem
+                    {
+                        descripcion = item.nombre,
+                        si = item.siSuma,
+                        no = item.negativoSuma,
+                        lev = item.observacionSuma,
+                        incidencia = item.incidencia,
+                        acumulado=acumular,
                             });
                         }
                         // fin del listado

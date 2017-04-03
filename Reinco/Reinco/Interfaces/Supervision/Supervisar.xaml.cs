@@ -99,6 +99,7 @@ namespace Reinco.Interfaces.Supervision
             activarConformidad = true;
             activarEntrega = true;
             activarRecepcion = true;
+            TraerSupervision(IdSupervision);
             // Guardar Supervision
             guardarSupervision = new Command(() =>
             {
@@ -110,7 +111,12 @@ namespace Reinco.Interfaces.Supervision
             {
                 Navigation.PopAsync();
             });
-
+            RefreshSupervisarCommand = new Command(() =>
+            {
+                SupervisarActividadItems.Clear();
+                CargarSupervisarActividadItem();
+                isRefreshingSupervisar = false;
+            });
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
@@ -144,6 +150,30 @@ namespace Reinco.Interfaces.Supervision
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
            
+        }
+        #endregion
+
+        #region====================Traer Supervision========================
+        public async void TraerSupervision(int idSupervision)
+        {
+            try
+            {
+                object[,] variables = new object[,] { { "idSupervision", idSupervision } };
+                dynamic supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "TraerSupervision", variables);
+                foreach (var item in supervision)
+                {
+                    notaSupervision = item.notaSupervision == null ? "" : item.notaSupervision;
+                    observacion = item.observacion == null ? false : true;
+                    disposicion = item.disposicion == 0 ? true : false;
+                    recepcion = item.firma_Recepcion != 1 ? false : true;
+                    entrega = item.firma_Notificacion != 1 ? false : true;
+                    conformitad = item.firma_Conformidad != 1 ? false : true;
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Error", ex.Message);
+            }
         }
         #endregion
 

@@ -19,7 +19,10 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-
+                                <ViewCell.ContextActions>
+                                    <MenuItem Command="{Binding eliminar}" CommandParameter="{Binding idSupervision}" Text="Eliminar" IsDestructive="True">
+                                    </MenuItem>
+                                </ViewCell.ContextActions>
 
 
                                 <!-- ============ Codigo Para Listar Obra ================-->
