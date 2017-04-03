@@ -14,6 +14,7 @@ namespace Reinco.Entidades
         public int idSupervision { get; set; }
         public string nombre { get; set; }
         public int numero { get; set; }
+        public string fecha { get; set; }
         public ICommand Supervisar { get; private set; }
         public ICommand verActividades { get; private set; }
 

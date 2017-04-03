@@ -206,7 +206,7 @@
                         <!-- Buttons Action -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,30">
                             <Button Command="{Binding CancelarSupervision}" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
-                            <Button Command="{Binding guargarSupervision}" Text="Guardar Y Enviar Al Responsable" Style="{StaticResource BtnGuardar}"></Button>
+                            <Button Command="{Binding guardarSupervision}" Text="Guardar Y Enviar Al Responsable" Style="{StaticResource BtnGuardar}"></Button>
                         </StackLayout>
                         <!-- End -->
 
