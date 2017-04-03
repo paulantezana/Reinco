@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="Entidades\ActividadItem.cs" />
     <Compile Include="Entidades\AsignarPlantillaSupervisorItem.cs" />
+    <Compile Include="Entidades\Fotos.cs" />
     <Compile Include="Entidades\ObraResponsableItem.cs" />
     <Compile Include="Entidades\ObraPlantillaItem.cs" />
     <Compile Include="Entidades\PlantillaSupervisionItem.cs" />

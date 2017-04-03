@@ -110,7 +110,12 @@ namespace Reinco.Interfaces.Supervision
             {
                 Navigation.PopAsync();
             });
-
+            RefreshSupervisarCommand = new Command(() =>
+            {
+                SupervisarActividadItems.Clear();
+                CargarSupervisarActividadItem();
+                IsRefreshingSupervisar = false;
+            });
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
