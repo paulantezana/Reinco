@@ -8,7 +8,6 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <SearchBar Placeholder="Buscar Obra ..." BackgroundColor="{StaticResource Color5}"></SearchBar>
             <ListView
                 ItemsSource="{Binding ObraItems}"
                 BackgroundColor="{StaticResource Color5}"
@@ -29,7 +28,7 @@
 
                             <!-- ============ Codigo Para Listar Obra ================-->
 
-                            <Grid>
+                            <Grid Padding="0,5,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5"/>
                                     <!--<ColumnDefinition Width="auto"/>-->

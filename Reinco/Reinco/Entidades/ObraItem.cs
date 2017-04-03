@@ -41,16 +41,20 @@ namespace Reinco.Entidades
         public ObraItem()
         {
 
-
+            // Editar Obra
             editarObra = new Command(() =>
             {
                 App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre, 
                     this.idPropietario,this.idUsuario,this.idPropietarioObra));
             });
+
+            // Mostrar Plantillas
             mostrarPlantillas = new Command(() =>
             {
                 App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra ));
             });
+            
+            // Eliminar Obra
             eliminar = new Command(async() =>
             {
                 // Eliminar logica de programacion aqui

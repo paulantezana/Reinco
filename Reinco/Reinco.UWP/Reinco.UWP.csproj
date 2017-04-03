@@ -108,6 +108,23 @@
     <None Include="Reinco.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ic_add.png" />
+    <Content Include="ic_camara.png" />
+    <Content Include="ic_editar.png" />
+    <Content Include="ic_eliminar.png" />
+    <Content Include="ic_guardar.png" />
+    <Content Include="ic_obra.png" />
+    <Content Include="ic_obra_color.png" />
+    <Content Include="ic_personal.png" />
+    <Content Include="ic_personal_color.png" />
+    <Content Include="ic_plantilla.png" />
+    <Content Include="ic_plantilla_color.png" />
+    <Content Include="ic_power.png" />
+    <Content Include="ic_profile.png" />
+    <Content Include="ic_profile_color.png" />
+    <Content Include="ic_propietario.png" />
+    <Content Include="ic_propietario_color.png" />
+    <Content Include="ic_right.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
     <Content Include="Assets\LockScreenLogo.scale-125.png" />

@@ -115,7 +115,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 SupervisarActividadItems.Clear();
                 CargarSupervisarActividadItem();
-                isRefreshingSupervisar = false;
+                IsRefreshingSupervisar = false;
             });
             // Contexto Actual Para los bindings
             this.BindingContext = this;
