@@ -3,6 +3,7 @@ using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,14 +95,20 @@ namespace Reinco.Entidades
 
                 // mostrando la imagen en la interfas del telefono
                 if (file != null)
+                {
+                    RutaImagen = ImageSource.FromStream(() =>
                     {
-                        RutaImagen = ImageSource.FromStream(() =>
-                        {
-                            var stream = file.GetStream();
-                            file.Dispose();
-                            return stream;
-                        });
-                    }
+                        var stream = file.GetStream();
+                        file.Dispose();
+                        return stream;
+                    });
+
+                    // Preparando la foto para enviar al webservice
+                    var foto = file.GetStream();
+                    fotoArray = ReadFully(foto);
+                }
+
+
                 // End Camera
             }); 
             #endregion
@@ -146,11 +153,29 @@ namespace Reinco.Entidades
                 return mostrarAnotacion;
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged; 
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
 
         #region ================= Preparando la Interaccion De la Camara =================
+        // Preparadndo la imagen para enviar
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        public byte [] fotoArray { get; set; } // Array De Bits Para Enviar la Foto Al Web Service
+
+        // InterAccion Con la Camara
         private ImageSource rutaImagen;
         public ImageSource RutaImagen
         {
