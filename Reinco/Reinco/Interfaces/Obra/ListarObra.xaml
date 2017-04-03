@@ -32,7 +32,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <!--<ColumnDefinition Width="auto"/>-->
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="40"/>
@@ -41,22 +41,22 @@
 
                                 <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
 
-                                <Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>
+                                <!--<Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>-->
 
-                                <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
+                                <StackLayout Grid.Column="1" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
 
-                                <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
+                                <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                 </StackLayout>
-                                <Image Grid.Column="4" Source="ic_plantilla_color.png" Margin="2">
+                                <Image Grid.Column="3" Source="ic_plantilla_color.png" Margin="2">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding mostrarPlantillas}"/>
                                     </Image.GestureRecognizers>
                                   
                                 </Image>
-                                <Image Grid.Column="5" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding editarObra}"/>
                                     </Image.GestureRecognizers>

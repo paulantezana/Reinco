@@ -112,7 +112,7 @@ namespace Reinco.Interfaces.Supervision
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
                             {
                                 nombre = "Supervision",
-                                numero = x++,
+                                numero =item.nroSupervision==null?0: item.nroSupervision,
                                 fecha = item.fecha,
                                 idSupervision=item.idSupervision
                             });
