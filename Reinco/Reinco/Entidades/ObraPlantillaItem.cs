@@ -19,6 +19,8 @@ namespace Reinco.Entidades
         public string descripcion { get; set; }
         public int idPropietarioObra { get; set; }
         public int idPlantillaObra { get; set; }
+        public int idObra { get; set; }
+        public int idPlantilla { get; set; }
 
 
         public ICommand PlantillaSupervision { get; private set; }
@@ -30,7 +32,7 @@ namespace Reinco.Entidades
         {
             PlantillaSupervision = new Command(() =>
             {
-                App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra));
+                App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra,idObra,idPlantilla));
             });
         }
 

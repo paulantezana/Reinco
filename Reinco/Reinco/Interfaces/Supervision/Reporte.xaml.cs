@@ -1,4 +1,5 @@
 ﻿using Reinco.Entidades;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,8 @@ namespace Reinco.Interfaces.Supervision
         public int sumaLev { get; set; }
         public int sumaIncidencia { get; set; }
         public int sumaAcumulado { get; set; }
+        public int IdObra { get; set; }
+        public int IdPlantilla { get; set; }
 
         public ObservableCollection<ReporteItem> ReporteItems { get; set; }
         public Reporte()
@@ -32,38 +35,42 @@ namespace Reinco.Interfaces.Supervision
             // Contexto para los bindings
             this.BindingContext = this;
         }
+        public Reporte(int idObra, int idPlantilla)
+        {
+            IdObra = idObra;
+            IdPlantilla = idPlantilla;
+            InitializeComponent();
+            ReporteItems = new ObservableCollection<ReporteItem>();
+            CargarReporteItem();
+
+            // Contexto para los bindings
+            this.BindingContext = this;
+        }
         private async void CargarReporteItem()
         {
             try
             {
-                this.sumaSi = 0;
-                this.sumaNo = 0;
-                this.sumaLev = 0;
-                this.sumaIncidencia = 0;
-                this.sumaAcumulado = 0;
-                for (int i = 0; i < 15; i++)
-                {
-                    ReporteItems.Add(new ReporteItem
-                    {
-                        item = i,
-                        descripcion = "Recubrimiento de acero",
-                        si = 120,
-                        no = 500,
-                        lev = 15,
-                        acumulado = 150,
-                        incidencia = 1202,
-                        
-                    });
-                    this.sumaSi += 20;
-                    this.sumaNo += 8;
-                    this.sumaLev += 15;
-                    this.sumaIncidencia += 12;
-                    this.sumaAcumulado += 8;
-                }
+                WebService servicio = new WebService();
+                object[,] variables = new object[,] { { "idObra", IdObra } , { "idPlantilla", IdPlantilla } };
+                dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "EnviarReporte", variables);
+                
+                        // listando las obras
+                        foreach (var item in result)
+                        {
+                              ReporteItems.Add(new ReporteItem
+                              {
+                                descripcion = item.nombre,
+                                si = item.siSuma,
+                                no = item.negativoSuma,
+                                lev = item.observacionSuma,
+                                incidencia = item.incidencia
+                            });
+                        }
+                        // fin del listado
             }
             catch (Exception ex)
             {
-                await DisplayAlert("", ex.Message, "Aceptar");
+                await DisplayAlert("Generar Reporte", ex.Message, "Ok");
             }
         }
     }

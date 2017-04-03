@@ -124,7 +124,9 @@ namespace Reinco.Interfaces.Supervision
                             {
                                 nombre = item.nombre,
                                 codigo = item.codigo,
-                                idPlantillaObra=item.idPlantilla_Propietario_obra
+                                idPlantillaObra=item.idPlantilla_Propietario_obra,
+                                idObra=item.idObra,
+                                idPlantilla=item.idPlantilla
                             });
                         }
                         // fin del listado
