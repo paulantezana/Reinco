@@ -47,9 +47,10 @@ namespace Reinco
             //recupero por única vez cuando entro a la aplicación el IP de servidor
             mensaje = new VentanaMensaje();
             //ObtenerIpAsync();
-           // ip = "192.168.1.112";
+            // ip = "192.168.1.112";
+            //ip = "192.168.1.37";
             ip = "192.168.8.101";
-           // ip = "181.67.192.254";
+            // ip = "181.67.192.254";
             InitializeComponent();
             MainPage = new LoginPage();
         }
