@@ -48,6 +48,9 @@
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
       <DependentUpon>AgregarObra.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Obra\ModificarObra.xaml.cs">
+      <DependentUpon>ModificarObra.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\Plantilla\ListarActividad.xaml.cs">
       <DependentUpon>ListarActividad.xaml</DependentUpon>
     </Compile>
@@ -304,6 +307,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\Reporte.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Obra\ModificarObra.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

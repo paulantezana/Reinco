@@ -378,6 +378,7 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
+
         #region===============Modificar Obra Propietario y Responsable==========================
         public async void ModificarPropietarioResponsableObra(object IdPropietario, object IdResponsable)
         {
