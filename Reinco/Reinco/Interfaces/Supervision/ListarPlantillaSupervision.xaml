@@ -64,6 +64,13 @@
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
+                    <ListView.Footer>
+                        <StackLayout>
+                            <Button Command="{Binding generarReporte} }" Text="Generar Reporte">
+                                
+                            </Button>
+                        </StackLayout>
+                    </ListView.Footer>
                 </ListView>
                 <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="nuevaSupervision"   Text="Nueva Supervision" Style="{StaticResource BtnGuardar}"></Button>

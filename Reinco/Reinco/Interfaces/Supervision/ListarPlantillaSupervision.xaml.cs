@@ -36,6 +36,7 @@ namespace Reinco.Interfaces.Supervision
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
         public ICommand AgregarSupervision { get; private set; }
+        public ICommand generarReporte { get; private set; }
 
         public bool IsRefreshingObraPlantilla
         {
@@ -69,7 +70,7 @@ namespace Reinco.Interfaces.Supervision
             });
             this.BindingContext = this;
         }
-        public ListarPlantillaSupervision(int idPlantillaObra)
+        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla)
         {
             InitializeComponent();
             IdPlantillaObra = idPlantillaObra;
@@ -78,6 +79,10 @@ namespace Reinco.Interfaces.Supervision
             AgregarSupervision = new Command(() =>
             {
                 Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
+            });
+            generarReporte=new Command(() =>
+            {
+                Navigation.PushAsync(new Reporte(idObra, idPlantilla));
             });
             this.BindingContext = this;
         }
