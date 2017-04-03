@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Supervision.Reporte"
+             Title="Reporte">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid BackgroundColor="{StaticResource Color1}" Padding="2,8,2,8" HeightRequest="60">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" TextColor="{StaticResource Color5}" VerticalOptions="CenterAndExpand" Text="Item"></Label>
+                <Label Grid.Column="1" TextColor="{StaticResource Color5}" VerticalOptions="CenterAndExpand" Text="Descripción"></Label>
+                <Label Grid.Column="2" TextColor="{StaticResource Color5}" VerticalOptions="CenterAndExpand" Text="SI"></Label>
+                <Label Grid.Column="3" TextColor="{StaticResource Color5}" VerticalOptions="CenterAndExpand" Text="NO"></Label>
+                <Label Grid.Column="4" TextColor="{StaticResource Color5}" VerticalOptions="CenterAndExpand" Text="Lev."></Label>
+                <Label Grid.Column="5" TextColor="{StaticResource Color5}" VerticalOptions="CenterAndExpand" Text="Incidencia"></Label>
+                <Label Grid.Column="6" TextColor="{StaticResource Color5}" VerticalOptions="CenterAndExpand" Text="Acumulado"></Label>
+            </Grid>
+            <ListView
+                ItemsSource="{Binding ReporteItems}"
+                HasUnevenRows="True">
+                <!-- HEader -->
+
+                <!-- End Header -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="2,10,2,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" Text="{Binding item}"></Label>
+                                <Label Grid.Column="1" Text="{Binding descripcion}"></Label>
+                                <Label Grid.Column="2" Text="{Binding si}"></Label>
+                                <Label Grid.Column="3" Text="{Binding no}"></Label>
+                                <Label Grid.Column="4" Text="{Binding lev}"></Label>
+                                <Label Grid.Column="5" Text="{Binding incidencia}"></Label>
+                                <Label Grid.Column="6" Text="{Binding acumulado}"></Label>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <!-- Footer -->
+                <ListView.Footer>
+                    <StackLayout>
+                        <!-- Gafico estadistico -->
+                        <Grid Padding="2,10,2,10" BackgroundColor="#99E3FF">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+
+                            
+                            
+                            <Label Grid.Column="2" Text="{Binding sumaSi}"></Label>
+                            <Label Grid.Column="3" Text="{Binding sumaNo}"></Label>
+                            <Label Grid.Column="4" Text="{Binding sumaLev}"></Label>
+                            <Label Grid.Column="5" Text="{Binding sumaIncidencia}"></Label>
+                            <Label Grid.Column="6" Text="{Binding sumaAcumulado}"></Label>
+
+                        </Grid>
+                        
+                        <Label Text="Chart"></Label>
+
+                        <!-- Imprimir Reporte -->
+                        <Button Text="Enviar Por Email"></Button>
+
+                    </StackLayout>
+                </ListView.Footer>
+                <!-- End Footer -->
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

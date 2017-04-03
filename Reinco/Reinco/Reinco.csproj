@@ -43,6 +43,7 @@
     <Compile Include="Entidades\ObraResponsableItem.cs" />
     <Compile Include="Entidades\ObraPlantillaItem.cs" />
     <Compile Include="Entidades\PlantillaSupervisionItem.cs" />
+    <Compile Include="Entidades\ReporteItem.cs" />
     <Compile Include="Entidades\SupervisarItem.cs" />
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
       <DependentUpon>AgregarObra.xaml</DependentUpon>
@@ -109,6 +110,9 @@
     </Compile>
     <Compile Include="Interfaces\Supervision\ListarPlantillaSupervision.xaml.cs">
       <DependentUpon>ListarPlantillaSupervision.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\Supervision\Reporte.xaml.cs">
+      <DependentUpon>Reporte.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Supervision\Supervisar.xaml.cs">
       <DependentUpon>Supervisar.xaml</DependentUpon>
@@ -294,6 +298,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Supervision\AsignarSupervisor.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Supervision\Reporte.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
