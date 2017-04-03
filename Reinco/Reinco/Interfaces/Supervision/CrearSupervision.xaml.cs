@@ -64,9 +64,12 @@ namespace Reinco.Interfaces.Supervision
                     await DisplayAlert("Crear Supervision", "Debe asignar un Asistente.", "OK");
                     return;
                 }
-                
+                int nroSupervision = Convert.ToInt16(numeroSupervision.Text);
+
                 object[,] variables = new object[,] { { "idSupervisor", asignarAsistente.SelectedValue },
-                    { "idPlantillaPropietario", IdPlantillaObra } };
+                    { "idPlantillaPropietario", IdPlantillaObra }, { "fecha", fecha.Date.ToString("dd/MM/yyyy") },
+                { "nroSupervision", nroSupervision }, { "partidaEvaluada", partidaEvaluada.Text==null?"":partidaEvaluada.Text },
+                { "bloque", bloque.IsToggled?1:0 }, { "nivel", nivel.Text==null?"":nivel.Text }};
                 dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "CrearSupervision", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)

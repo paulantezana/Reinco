@@ -1,4 +1,5 @@
 ﻿using Plugin.Media;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,10 @@ namespace Reinco.Entidades
 {
     public class SupervisarActividadItem : INotifyPropertyChanged
     {
+        WebService Servicio = new WebService();
+        string Mensaje;
+        VentanaMensaje mensaje = new VentanaMensaje();
+        public int idSupervisionActividad { get; set; }
         public string item { get; set; }
         public string actividad { get; set; }
         public bool aprobacion { get; set; }
@@ -30,7 +35,8 @@ namespace Reinco.Entidades
 
             guardarItem = new Command(() =>
             {
-                App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
+                // App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
+                GuardarActividad();
             });
 
 
@@ -48,8 +54,6 @@ namespace Reinco.Entidades
                     ObsLevActivar = true;
                 } 
             });
-
-
 
             #region ================= Expandir =================
             MostrarAnotacion = false;
@@ -105,7 +109,6 @@ namespace Reinco.Entidades
 
         }
 
-
         public ICommand AprobacionCommand { get; private set; }
         public bool obsLevActivar { get; set; }
         public bool ObsLevActivar
@@ -123,10 +126,6 @@ namespace Reinco.Entidades
                 return obsLevActivar;
             }
         }
-
-
-
-
 
         #region ================ Expadir Actividad Por Cada Items Correspondiente ================
         int toggle = 0;
@@ -168,9 +167,38 @@ namespace Reinco.Entidades
                 return rutaImagen;
             }
         }
-        public ICommand EncenderCamara { get; private set; } 
+        public ICommand EncenderCamara { get; private set; }
         #endregion
 
+        public async void GuardarActividad() {
+            try
+            {
+                int Si, No;
+                if (aprobacion == false) {
+                    Si = 0;
+                    No = 1;
+                }
+                else {
+                    Si = 1;
+                    No = 0;
+                }
+                    object[,] variables = new object[,] {
+                        { "idSupervisionActividad",idSupervisionActividad  } ,{ "si", Si },{ "no", No },
+                        { "observacionLevantada", No }, { "anotacionAdicional", anotacionAdicinal }};
+
+                dynamic result = await Servicio.MetodoGetString("SupervisionActividad.asmx", "guardarSupervisionActividad", variables);
+                    Mensaje = Convert.ToString(result);
+                    if (result != null)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Guardar actividad", Mensaje, "OK");
+                        return;
+                    }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+        }
 
     }
 }

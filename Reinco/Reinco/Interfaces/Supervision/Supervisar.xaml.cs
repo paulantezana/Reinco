@@ -21,16 +21,13 @@ namespace Reinco.Interfaces.Supervision
 
         public VentanaMensaje mensaje;
         int IdSupervision;
-
+        string Mensaje;
 
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
 
 
         new public event PropertyChangedEventHandler PropertyChanged;
-
-
-
 
         public string notaSupervision { get; set; }
         public bool observacion { get; set; }
@@ -44,22 +41,15 @@ namespace Reinco.Interfaces.Supervision
         public bool isRefreshingSupervisar { get; set; }
         public bool guardarSupervisionIsrunning { get; set; }
 
-
-
-
         public ObservableCollection<SupervisarActividadItem> SupervisarActividadItems { get; set; }
-
-
 
         #region ============================= Comandos =============================
 
-        public ICommand guargarSupervision { get; private set; }
+        public ICommand guardarSupervision { get; private set; }
         public ICommand CancelarSupervision { get; private set; }
         public ICommand RefreshSupervisarCommand { get; private set; }
 
         #endregion
-
-
 
         #region ============================= Refrescar =============================
         public bool IsRefreshingSupervisar
@@ -94,9 +84,6 @@ namespace Reinco.Interfaces.Supervision
         }
         #endregion
 
-
-
-
         public Supervisar()
         {
             InitializeComponent();
@@ -111,9 +98,9 @@ namespace Reinco.Interfaces.Supervision
             CargarSupervisarActividadItem();
 
             // Guardar Supervision
-            guargarSupervision = new Command(() =>
+            guardarSupervision = new Command(() =>
             {
-                DisplayAlert("Ok", "Me ejecute", "Aceptar");
+                GuardarSupervision();
             });
 
             // Navegacion hacia atras Boton Cancelar
@@ -125,44 +112,30 @@ namespace Reinco.Interfaces.Supervision
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
-
-
-
+        #region================cargar actividades de la supervision===========================
         private async void CargarSupervisarActividadItem()
         {
             byte x = 01;
             try
             {
-                //object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
-                //dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
-                //foreach (var item in obras)
-                //{
-
-                //    SupervisarActividadItems.Add(new SupervisarActividadItem
-                //    {
-                //        item =x++.ToString(),
-                //        actividad =item.nombre,
-                //        tolerancia=item.tolerancia_maxima,
-                //        observacionLevantada = true,
-                //        aprobacion = true,
-                //        anotacionAdicinal = "",
-                //    });
-                //}
-
-                // Iteracion Solo Para Hacer Pruebas sin Web Service
-                for (int i = 0; i < 15; i++)
+                object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
+                dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
+                foreach (var item in obras)
                 {
+
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
                         item = x++.ToString(),
-                        actividad = "Nombre de la supervision",
-                        tolerancia = "Tolerancia",
-                        observacionLevantada = true,
-                        aprobacion = true,
-                        anotacionAdicinal = "Anotacion adicional",
+                        idSupervisionActividad=item.idSupervision_actividad,
+                        actividad = item.nombre,
+                        tolerancia = item.tolerancia_maxima,
+                        observacionLevantada = item.observacion_levantada==0?false:true,
+                        aprobacion = item.si==0?false:true,
+                        anotacionAdicinal =item.anotacion_adicional,
                     });
                 }
-                // Fin Iteracion De solo Pruebas
+
+
             }
             catch (Exception ex)
             {
@@ -170,7 +143,30 @@ namespace Reinco.Interfaces.Supervision
             }
            
         }
+        #endregion
 
-        
+        #region==================guardar supervision============================
+        public async void GuardarSupervision()
+        {
+            try
+            {
+                object[,] variables = new object[,] {
+                    { "idSupervision", IdSupervision } ,{ "notaSupervision", notaSupervision }, { "observacion", observacion==true?1:0 },
+                    { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },
+                    { "firma_conformidad", conformitad==true?1:0}};
+                dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "GuardarSupervision", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Guardar Supervision", Mensaje, "OK");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+        }
+        #endregion
     }
 }
