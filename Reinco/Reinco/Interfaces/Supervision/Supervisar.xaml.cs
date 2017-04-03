@@ -96,7 +96,9 @@ namespace Reinco.Interfaces.Supervision
             IdSupervision = idSupervision;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
-
+            activarConformidad = true;
+            activarEntrega = true;
+            activarRecepcion = true;
             // Guardar Supervision
             guardarSupervision = new Command(() =>
             {
@@ -151,7 +153,7 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 object[,] variables = new object[,] {
-                    { "idSupervision", IdSupervision } ,{ "notaSupervision", notaSupervision }, { "observacion", observacion==true?1:0 },
+                    { "idSupervision", IdSupervision } ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
                     { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },
                     { "firma_conformidad", conformitad==true?1:0}};
                 dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "GuardarSupervision", variables);

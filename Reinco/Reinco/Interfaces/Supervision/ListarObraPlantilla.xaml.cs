@@ -58,7 +58,6 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshObraPlantillaCommand { get; private set; }
         public ICommand asignarPlantilla { get; private set; }
 
-
         public ListarObraPlantilla(int idPropietarioObra,int idObra, string nombreObra = "PLANTILLAS")
         {
             InitializeComponent();
@@ -93,14 +92,11 @@ namespace Reinco.Interfaces.Supervision
             this.BindingContext = this;  
         }
 
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
             App.ListarObraPlantilla = this;
         }
-
-
 
         public async void CargarPlantillaObra()
         {
