@@ -106,11 +106,15 @@ namespace Reinco.Entidades
                     // Preparando la foto para enviar al webservice
                     var foto = file.GetStream();
                     fotoArray = ReadFully(foto);
+
+                    // Convritienodo nuevamente a image esta operacion debe estar en el servidor
+                    MemoryStream streamm = new MemoryStream(fotoArray);
+                    streamm.Position = 0;
+                    //var path = Path.Combine(HttpContext.Current.Server.MapPath(carpeta), archivo);
+                    //File.WriteAllBytes(path, stream.ToArray());
                 }
-
-
                 // End Camera
-            }); 
+            });
             #endregion
 
 
