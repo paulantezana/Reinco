@@ -106,6 +106,7 @@
 
                     <!-- Supervisar -->
 
+                        <!--
                     <StackLayout Grid.Column="1" Grid.Row="1" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
 
                         <Image Source="ic_obra_color.png"></Image>
@@ -116,6 +117,7 @@
                         </StackLayout.GestureRecognizers>
 
                     </StackLayout>
+                    -->
 
                     <!-- END -->
                     
@@ -146,7 +148,7 @@
                     </Grid.RowDefinitions>
                     
                     <!-- Ir A la Página Listar Plantillas -->
-                    <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+                        <!--<StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
 
                         <Image Source="ic_obra_color.png"></Image>
                         <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras A Tu Responsabilidad" HorizontalTextAlignment="Center"></Label>
@@ -155,7 +157,7 @@
                             <TapGestureRecognizer Tapped="irObraResponsable"/>
                         </StackLayout.GestureRecognizers>
 
-                    </StackLayout>
+                    </StackLayout> -->
                     
                </Grid>
                     
@@ -179,7 +181,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Ir A la Página Listar Plantillas -->
-                        <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+                        <!--<StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
 
                             <Image Source="ic_obra_color.png"></Image>
                             <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras Supervisar" HorizontalTextAlignment="Center"></Label>
@@ -189,7 +191,7 @@
                             </StackLayout.GestureRecognizers>
 
                         </StackLayout>
-
+                        -->
                     </Grid>
                 </StackLayout>
             
