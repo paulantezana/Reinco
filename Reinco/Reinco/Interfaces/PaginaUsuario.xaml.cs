@@ -108,7 +108,8 @@ namespace Reinco.Interfaces
             // Recuperando el id Usuario   cargoUsuario
             int idUsuario = Convert.ToInt16(Application.Current.Properties["idUsuario"]);
             string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-            App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, cargoUsuario));
+            // App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, cargoUsuario));
+            App.Navigator.Detail = new NavigationPage(new ListarObra());
         }
         #endregion
 
@@ -123,7 +124,8 @@ namespace Reinco.Interfaces
             string IdUsuario = Application.Current.Properties["idUsuario"].ToString();
             int idUsuario = Convert.ToInt16(IdUsuario);
             string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-            App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, "Responsable"));
+            // App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, "Responsable"));
+            App.Navigator.Detail = new NavigationPage(new ListarObra());
         }
         #endregion
 
@@ -138,7 +140,8 @@ namespace Reinco.Interfaces
             string idUsuario = Application.Current.Properties["idUsuario"].ToString();
             int IdUsuario = Convert.ToInt16(idUsuario);
             string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-            App.Navigator.Detail = new NavigationPage(new ListarObras(IdUsuario, "Asistente"));
+            // App.Navigator.Detail = new NavigationPage(new ListarObras(IdUsuario, "Asistente"));
+            App.Navigator.Detail = new NavigationPage(new ListarObra());
         }
         #endregion
 

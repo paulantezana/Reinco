@@ -21,7 +21,7 @@ namespace Reinco.Interfaces.Obra
         int IdPropietarioObra;
 
         WebService Servicio = new WebService();
-        string Mensaje;
+        // string Mensaje;
         public VentanaMensaje mensaje;
 
 
@@ -53,14 +53,46 @@ namespace Reinco.Interfaces.Obra
             this.BindingContext = this;
         }
 
-        private void CargarPropietarioItem()
+        private async void CargarPropietarioItem()
         {
-            throw new NotImplementedException();
+            try
+            {
+                propietarioItems.Clear();
+                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                foreach (var item in propietario)
+                {
+                    propietarioItems.Add(new PropietarioItem
+                    {
+                        idPropietario = item.idPropietario,
+                        nombre = item.nombre
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Error", ex.Message);
+            }
         }
-
-        private void CargarPersonalItem()
+        private async void CargarPersonalItem()
         {
-            throw new NotImplementedException();
+            try
+            {
+                personalItems.Clear();
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                foreach (var item in usuarios)
+                {
+                    personalItems.Add(new PersonalItem
+                    {
+                        idUsuario = item.idUsuario,
+                        nombresApellidos = item.nombresApellidos.ToString(),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Error", ex.Message);
+            }
         }
+        // End
     }
 }
