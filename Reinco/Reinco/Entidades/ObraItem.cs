@@ -44,7 +44,7 @@ namespace Reinco.Entidades
             // Editar Obra
             editarObra = new Command(() =>
             {
-                App.ListarObra.Navigation.PushAsync(new AgregarObra(this.idObra, this.codigo, this.nombre, 
+                App.ListarObra.Navigation.PushAsync(new ModificarObra(this.idObra, this.codigo, this.nombre, 
                     this.idPropietario,this.idUsuario,this.idPropietarioObra));
             });
 

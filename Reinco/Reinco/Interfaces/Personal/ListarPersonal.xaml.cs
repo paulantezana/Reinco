@@ -111,8 +111,9 @@ namespace Reinco.Interfaces.Personal
                         correo = item.correo,
                         celular = item.celular,
                         idCargo = item.idCargo,
-                        idCargo_Usuario=item.idCargo_Usuario,
-                        cip = item.cip
+                        idCargo_Usuario = item.idCargo_Usuario,
+                        cip = item.cip,
+                        cargo = item.cargo,
                     });
                 }
 

@@ -28,7 +28,7 @@
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idPropietario}" Text="Eliminar" IsDestructive="True" />
                             </ViewCell.ContextActions>
 
-                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
                                
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -40,7 +40,7 @@
                                         <TapGestureRecognizer Command="{Binding editarPropietario}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
-                                <Image Grid.Column="0" Source="{Binding fotoPerfil}"></Image>
+                                <Image Grid.Column="0" Source="{Binding fotoPerfil}" WidthRequest="30" HeightRequest="30"></Image>
                                 <Label Grid.Column="1" Text="{Binding nombre}" VerticalOptions="Center"></Label>
                             </Grid>
                         </ViewCell>

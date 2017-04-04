@@ -26,8 +26,8 @@
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idActividad}" Text="Eliminar" IsDestructive="True" />
                             </ViewCell.ContextActions>
                             <!-- Contenido -->
-                            
-                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
+
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40"/>

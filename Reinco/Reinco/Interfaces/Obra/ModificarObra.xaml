@@ -86,7 +86,7 @@
                 <!-- Buttons Action -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
-                    <Button x:Name="guardar"   Text="Guardar Cambios" Style="{StaticResource BtnGuardar}"></Button>
+                    <Button Command="{Binding guardar}"  Text="Guardar Cambios" Style="{StaticResource BtnGuardar}"></Button>
                 </StackLayout>
                 <!-- End -->
 

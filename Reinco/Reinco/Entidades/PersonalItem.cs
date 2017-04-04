@@ -22,6 +22,7 @@ namespace Reinco.Entidades
         public string cip { get; set; }
         public int idCargo_Usuario { get; set; }
         public int idCargo { get; set; }
+        public string cargo { get; set; }
 
         public ICommand editarUsuario { get; private set; }
 
@@ -33,8 +34,6 @@ namespace Reinco.Entidades
                         (this.idUsuario, this.dni, this.nombresApellidos, this.usuario, this.contrasena,
                         this.correo, this.celular, this.cip, this.idCargo,this.idCargo_Usuario));
                 });
-           
-           
         }
     }
 }

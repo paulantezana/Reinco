@@ -93,6 +93,7 @@ namespace Reinco.Interfaces.Personal
         {
             InitializeComponent();
             guardar.Text = "Guardar Cambios";
+            this.Title = usuario;
             IdUsuario =idUsuario;
             IdCargoUsuario = idCargoUsuario;
             this.dni.Text = dni;
