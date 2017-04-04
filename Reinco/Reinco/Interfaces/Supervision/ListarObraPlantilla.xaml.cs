@@ -17,8 +17,9 @@ namespace Reinco.Interfaces.Supervision
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListarObraPlantilla : ContentPage, INotifyPropertyChanged
     {
+        new public event PropertyChangedEventHandler PropertyChanged; // Usada paralos refrescar las listas
 
-        #region +---- Atributos ----+
+
         int IdObra;
         string NombreObra;
         int IdPropietarioObra;
@@ -26,16 +27,14 @@ namespace Reinco.Interfaces.Supervision
 
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
-        #endregion
+        public string DireccionApp { get; set; }
 
-        #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
-        #endregion
 
-        #region +---- Eventos ----+
-        new public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
+
+
+
 
         public bool IsRefreshingObraPlantilla
         {
@@ -58,13 +57,15 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshObraPlantillaCommand { get; private set; }
         public ICommand asignarPlantilla { get; private set; }
 
-        public ListarObraPlantilla(int idPropietarioObra,int idObra, string nombreObra = "PLANTILLAS")
+        public ListarObraPlantilla(int idPropietarioObra,int idObra, string nombreObra = "PLANTILLAS",string directorioApp = "")
         {
             InitializeComponent();
-             IdObra = idObra;
+            IdObra = idObra;
             IdPropietarioObra = idPropietarioObra;
             NombreObra = nombreObra;
+
             this.Title = nombreObra;
+            this.DireccionApp = directorioApp + "\\Plantillas";
 
             // ---------------------
             ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
@@ -112,7 +113,7 @@ namespace Reinco.Interfaces.Supervision
                     if (result.Count == 0) //si está vacío
                     {
                         //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
-                        await DisplayAlert("Error", "No hay plantillas", "Aceptar");
+                        await DisplayAlert("Información", "No hay plantillas", "Aceptar");
                         return;
                     }
                     else

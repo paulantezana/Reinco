@@ -22,6 +22,7 @@ namespace Reinco.Interfaces.Supervision
         int IdUsuario;
         //int IdObra;
         private bool isRefreshingObraResponsable { get; set; }
+        public string DireccionApp { get; set; }
         //public ObservableCollection<ObraItem> ObraItems { get; set; }
         string Color;
         #endregion

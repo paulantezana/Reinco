@@ -19,8 +19,6 @@ namespace Reinco.Interfaces.Supervision
     public partial class ListarPlantillaSupervision : ContentPage, INotifyPropertyChanged
     {
 
-
-
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
@@ -38,6 +36,7 @@ namespace Reinco.Interfaces.Supervision
 
         public ICommand AgregarSupervision { get; private set; }
         public ICommand generarReporte { get; private set; }
+        public string DireccionApp { get; set; }
 
         public bool IsRefreshingObraPlantilla
         {
@@ -77,11 +76,13 @@ namespace Reinco.Interfaces.Supervision
             });
             this.BindingContext = this;
         }
-        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
+        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision", string direccionApp = "")
         {
             InitializeComponent();
             IdPlantillaObra = idPlantillaObra;
             this.Title = nombrePlantilla;
+            this.DireccionApp = direccionApp;
+
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
             AgregarSupervision = new Command(() =>

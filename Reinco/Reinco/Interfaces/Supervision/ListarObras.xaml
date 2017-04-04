@@ -15,6 +15,11 @@
                 IsPullToRefreshEnabled="True"
                 RefreshCommand="{Binding RefreshObraResponsableCommand}"
                 IsRefreshing="{Binding IsRefreshingObraResponsable,Mode=TwoWay}">
+                <ListView.Header>
+                    <StackLayout Padding="3,8,3,8">
+                        <Label Text="{Binding DireccionApp}" TextColor="{StaticResource Color1}"></Label>
+                    </StackLayout>
+                </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

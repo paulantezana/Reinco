@@ -29,6 +29,7 @@ namespace Reinco.Interfaces.Supervision
 
         new public event PropertyChangedEventHandler PropertyChanged;
 
+        public string DireccionApp{ get; set; }
         public string notaSupervision { get; set; }
         public bool observacion { get; set; }
         public bool disposicion { get; set; }

@@ -16,7 +16,7 @@ namespace Reinco.Interfaces.Supervision
     public partial class Reporte : ContentPage
     {
 
-
+        public string DireccionApp { get; set; }
         public int sumaSi { get; set; }
         public int sumaNo { get; set; }
         public int sumaLev { get; set; }

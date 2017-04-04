@@ -53,7 +53,8 @@ namespace Reinco.Entidades
             // Mostrar Plantillas
             mostrarPlantillas = new Command(() =>
             {
-                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra,this.nombre ));
+                string directorio = this.nombre;
+                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra,this.nombre, directorio));
             });
             
             // Eliminar Obra

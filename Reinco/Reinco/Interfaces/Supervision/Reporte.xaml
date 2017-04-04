@@ -28,7 +28,11 @@
                 ItemsSource="{Binding ReporteItems}"
                 HasUnevenRows="True">
                 <!-- HEader -->
-
+                <ListView.Header>
+                    <StackLayout Padding="3,8,3,8">
+                        <Label Text="{Binding DireccionApp}" TextColor="{StaticResource Color1}"></Label>
+                    </StackLayout>
+                </ListView.Header>
                 <!-- End Header -->
                 <ListView.ItemTemplate>
                     <DataTemplate>
