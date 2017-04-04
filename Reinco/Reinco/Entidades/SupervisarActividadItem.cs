@@ -114,13 +114,11 @@ namespace Reinco.Entidades
                     // Preparando la foto para enviar al webservice
                     //var foto = file.GetStream();
                     //var fotoArray = ReadFully(foto);
-
                     //var fotos = new Fotos
                     //{
                     //    id = 5,
                     //    array = fotoArray,
                     //};
-
                     //var imagenSerializado = JsonConvert.SerializeObject(fotos);
                     //var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
                     //var client = new HttpClient();
