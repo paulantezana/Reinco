@@ -8,46 +8,46 @@
             <StackLayout Padding="10" Spacing="15">
                 <!-- Nombres Y Apellidos -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Dni"></Label>
+                    <Label Text="DNI" x:Name="LblDni"></Label>
                     <Entry x:Name="dni" Keyboard="Numeric" TextChanged="Limitante"></Entry>
                 </StackLayout>
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Nombre"></Label>
+                    <Label Text="Nombre" x:Name="lblNombre"></Label>
                     <Entry x:Name="nombresApellidos" Keyboard="Text"></Entry>
                 </StackLayout>
                 
                 <!-- Email -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Usuario"></Label>
+                    <Label Text="Usuario" x:Name="lblUsuario"></Label>
                     <Entry x:Name="usuario" Keyboard="Text"></Entry>
                 </StackLayout>
 
                 <!-- Password -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Contraseña"></Label>
+                    <Label Text="Contraseña" x:Name="lblContrasena"></Label>
                     <Entry x:Name="contra" IsPassword="True"></Entry>
                 </StackLayout>
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Confirmar Contraseña"></Label>
+                    <Label Text="Confirmar Contraseña"  x:Name="lblContrasena2"></Label>
                     <Entry x:Name="confirmarContra" IsPassword="True"></Entry>
                 </StackLayout>
                 <!-- Cargo Que Ocupa -->
 
                 <!-- Email -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Email"></Label>
+                    <Label Text="Email"  x:Name="lblEmail"></Label>
                     <Entry x:Name="email" Keyboard="Email"></Entry>
                 </StackLayout>
 
                 <!-- Celular -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Celular"></Label>
+                    <Label Text="Celular" x:Name="lblCelular"></Label>
                     <Entry x:Name="celular" Keyboard="Telephone"></Entry>
                 </StackLayout>
 
                 <!-- CIP -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="CIP"></Label>
+                    <Label Text="CIP" x:Name="lblCIP"></Label>
                     <Entry x:Name="cip"></Entry>
                 </StackLayout>
 

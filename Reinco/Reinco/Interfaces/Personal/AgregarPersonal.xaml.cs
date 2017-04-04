@@ -32,6 +32,10 @@ namespace Reinco.Interfaces.Personal
         public AgregarPersonal()
         {
             InitializeComponent();
+            #region================labels===================
+            lblCelular.Text = "Celular " + App.opcional;
+            lblCIP.Text = "CIP " + App.opcional;
+            #endregion
             guardar.Clicked += Guardar_Clicked;
             dialogService = new VentanaMensaje();
             cancelar.Clicked += Cancelar_Clicked;

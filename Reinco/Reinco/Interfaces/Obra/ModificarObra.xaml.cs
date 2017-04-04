@@ -91,6 +91,8 @@ namespace Reinco.Interfaces.Obra
             commandBorrarPropietario = new Command(() =>
             {
                 asignarPropietario.SelectedValue = 0;
+                DisplayAlert("Mensaje", "Se eliminó al propietario.", "Aceptar");
+                asignarPropietario.Title = "";
             });
             commandCambiarResponsable = new Command(() =>
             {
@@ -101,6 +103,8 @@ namespace Reinco.Interfaces.Obra
             commandBorrarResponsable = new Command(() =>
             {
                 asignarResponsable.SelectedValue = 0;
+                DisplayAlert("Mensaje", "Se eliminó al responsable.", "Aceptar");
+                asignarResponsable.Title = "";
             });
 
             guardar = new Command(() =>
@@ -154,7 +158,7 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 personalItems.Clear();
-                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosResponsables");
                 foreach (var item in usuarios)
                 {
                     personalItems.Add(new PersonalItem
@@ -183,11 +187,12 @@ namespace Reinco.Interfaces.Obra
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
+                    IsRunning = false;
                     await App.Current.MainPage.DisplayAlert("Modificar Obra Propietario y Responsable", Mensaje, "OK");
                     App.ListarObra.ObraItems.Clear();
                     App.ListarObra.CargarObraItems();
                     await Navigation.PopAsync();
-                    IsRunning = false;
+                   
                     return;
                 }
             }

@@ -20,6 +20,7 @@ namespace Reinco
     public partial class App : Application
     {
         #region +---- Atributos ----+
+        public static string opcional = "(Opcional)";
         public static string ip;
         public static string puerto = "80";
         public VentanaMensaje mensaje;
@@ -50,7 +51,7 @@ namespace Reinco
             //ObtenerIpAsync();
             // ip = "192.168.1.112";
             //ip = "192.168.1.37";
-            //ip = "192.168.1.37";
+           // ip = "192.168.1.43";
             ip = "190.42.122.110";
 
             InitializeComponent();
