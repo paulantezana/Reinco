@@ -27,14 +27,14 @@
                 </Button>
 
                 <!-- Recuperar Contraseña -->
-                <Label 
+                <!--<Label 
                     Text="¿Has olvidado la contraseña?" 
                     HorizontalOptions="Center"
                     TextColor="{StaticResource Color2}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="recuperarContra" NumberOfTapsRequired="1"/>
                     </Label.GestureRecognizers>
-                </Label>
+                </Label>-->
 
                 <!-- Nombre De LA Empresa Empresa -->
                 <Label

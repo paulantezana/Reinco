@@ -109,18 +109,6 @@
 
                     <!-- Supervisar -->
 
-
-                    <StackLayout Grid.Column="1" Grid.Row="1" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
-
-                        <Image Source="ic_obra_color.png"></Image>
-                        <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras Admin" HorizontalTextAlignment="Center"></Label>
-
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="irObraAdmin"/>
-                        </StackLayout.GestureRecognizers>
-
-                    </StackLayout>
-
                     <!-- END -->
                     
                 </Grid>

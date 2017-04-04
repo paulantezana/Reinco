@@ -77,8 +77,7 @@ namespace Reinco.Interfaces
         #region * ================================ Iniciando Sesión ================================ *
         private async void Enviar_Clicked(object sender, EventArgs e)
         {
-            IsRunning = true;
-            enviar.IsEnabled = false;
+            cambiarEstado(false);
             try
             {
                 
@@ -94,6 +93,7 @@ namespace Reinco.Interfaces
                 {
                     if (result.Count == 0) //si está vacío
                     {
+                        cambiarEstado(true);
                         await mensaje.MostrarMensaje("Iniciar Sesión", "Usuario o contraseña incorrecta!");
                     }
                     else
@@ -127,16 +127,18 @@ namespace Reinco.Interfaces
                 }
                 else
                 {
+                    cambiarEstado(true);
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador");
                 }
             }
             catch (Exception ex)
             {
+                cambiarEstado(true);
                 await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
             finally
             {
-                IsRunning = false;
+                cambiarEstado(true);
                 enviar.IsEnabled = true;
             }
         } 
@@ -144,13 +146,26 @@ namespace Reinco.Interfaces
 
 
         #region // ============================== Recuperar Contraseña ============================== //
-        private async void recuperarContra(object sender, EventArgs e)
-        {
-            var action = await DisplayActionSheet("Recuperar Por:", "Cancel", null, "Email", "Contactarse Con El Administrador");
-            await DisplayAlert("Respuesta Temporal", action + " Lo sentimos esta funcionalidad aun no esta disponible", "Aceptar");
-        } 
+        //private async void recuperarContra(object sender, EventArgs e)
+        //{
+        //    var action = await DisplayActionSheet("Recuperar Por:", "Cancel", null, "Email", "Contactarse Con El Administrador");
+        //    await DisplayAlert("Respuesta Temporal", action + " Lo sentimos esta funcionalidad aun no esta disponible", "Aceptar");
+        //} 
         #endregion
 
+        public void  cambiarEstado(bool estado)
+        {
+            usuario.IsEnabled = estado;
+            password.IsEnabled = estado;
+            enviar.IsEnabled = estado;
+            if (estado == true) {
+                IsRunning = false;
+            }
+            else
+            {
+                IsRunning = true;
+            }
+        }
 
     }
 }

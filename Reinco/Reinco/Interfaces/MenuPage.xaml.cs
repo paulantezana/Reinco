@@ -32,7 +32,7 @@ namespace Reinco.Interfaces
                 #region  ========================== Menu Perfil Importante para cada tipo de usuario ==========================
                     items.Add(new MenuPrincipalItem
                     {
-                        Titulo = "Perfil",
+                        Titulo = "Home",
                         Icono = "ic_profile.png",
                         TargetType = typeof(PaginaUsuario)
                     });

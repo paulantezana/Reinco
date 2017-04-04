@@ -49,8 +49,8 @@ namespace Reinco.Interfaces
                 #region //============================ Zona Administrador ===================================//
                     if (cargo == "Gerente")
                     {
-                        //interfazResponsable.IsVisible = false;
-                        //interfazSupervisor.IsVisible = false;
+                        interfazResponsable.IsVisible = false;
+                        interfazSupervisor.IsVisible = false;
                     }
                 #endregion
 
@@ -99,18 +99,6 @@ namespace Reinco.Interfaces
             App.Navigator.Detail = new NavigationPage(new ListarPropietario());
         }
 
-
-
-
-        // Listar obras que ya tienen un responsable y propietario
-        private void irObraAdmin(object sender, EventArgs e)
-        {
-            // Recuperando el id Usuario   cargoUsuario
-            int idUsuario = Convert.ToInt16(Application.Current.Properties["idUsuario"]);
-            string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-            // App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, cargoUsuario));
-            App.Navigator.Detail = new NavigationPage(new ListarObra());
-        }
         #endregion
 
 
