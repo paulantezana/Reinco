@@ -127,6 +127,7 @@
                                         <!-- Zona Galeria De Fotos -->
                                         <StackLayout Grid.Column="1" Grid.Row="1">
                                             <Image Source="{Binding RutaImagen}"></Image>
+                                            <Image Source="{Binding ImagenTratado}"></Image>
                                         </StackLayout>
                                         <!-- Galeria -->
 

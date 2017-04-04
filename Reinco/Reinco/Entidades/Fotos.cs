@@ -9,6 +9,7 @@ namespace Reinco.Entidades
 {
     public class Fotos
     {
-        public ImageSource imagen { get; set; }
+        public int id { get; set; }
+        public byte[] array { get; set; }
     }
 }

@@ -88,43 +88,36 @@ namespace Reinco.Entidades
 
                 // Directorio para almacenar la imagen
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    {
-                        Directory = "fotos",
-                        Name = "fotoreinco.jpg"
-                    });
+                {
+                    Directory = "fotos",
+                    Name = "fotoreinco.jpg",
+                    AllowCropping = true,
+                });
 
                 // mostrando la imagen en la interfas del telefono
                 if (file != null)
                 {
+                    await App.Current.MainPage.DisplayAlert("Localizacion Del Archivo", file.Path, "OK");
+
                     RutaImagen = ImageSource.FromStream(() =>
                     {
                         var stream = file.GetStream();
                         file.Dispose();
                         return stream;
                     });
-
+                    
 
                     // Preparando la foto para enviar al webservice
                     var foto = file.GetStream();
-                    fotoArray = ReadFully(foto);
+                    var fotoArray = ReadFully(foto);
 
 
-
-                   
-                    // Convritienodo nuevamente a image esta operacion debe estar en el servidor
-                    //MemoryStream streamm = new MemoryStream();
-                    //streamm.Position = 0;
+                    // Retratado 
+                    var streamTratado = new MemoryStream(fotoArray);
+                    this.ImagenTratado = streamTratado;
 
 
-                    //string convert = "This is the string to be converted";
-
-                    // From string to byte array
-                    //byte[] buffer = Encoding.UTF8.GetBytes(convert);
-
-                    // From byte array to string
-                    //string s = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-
-                    }
+                }
                 // End Camera
             });
             #endregion
@@ -176,6 +169,7 @@ namespace Reinco.Entidades
         #region ================= Preparando la Interaccion De la Camara =================
         // Preparadndo la imagen para enviar
 
+
         public static byte[] ReadFully(Stream input)
         {
             byte[] buffer = new byte[16 * 1024];
@@ -193,6 +187,22 @@ namespace Reinco.Entidades
 
         public byte [] fotoArray { get; set; } // Array De Bits Para Enviar la Foto Al Web Service
 
+        private ImageSource imagenTratado { get; set; }
+        public ImageSource ImagenTratado
+        {
+            set
+            {
+                if (imagenTratado != value)
+                {
+                    imagenTratado = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ImagenTratado"));
+                }
+            }
+            get
+            {
+                return imagenTratado;
+            }
+        }
         // InterAccion Con la Camara
         private ImageSource rutaImagen;
         public ImageSource RutaImagen
