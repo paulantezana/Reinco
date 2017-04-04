@@ -1,4 +1,5 @@
-﻿using Plugin.Media;
+﻿using Newtonsoft.Json;
+using Plugin.Media;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,6 @@ namespace Reinco.Entidades
 
         public SupervisarActividadItem()
         {
-
 
             guardarItem = new Command(() =>
             {
@@ -103,14 +103,30 @@ namespace Reinco.Entidades
                         return stream;
                     });
 
+
                     // Preparando la foto para enviar al webservice
                     var foto = file.GetStream();
                     fotoArray = ReadFully(foto);
-                }
 
 
+
+                   
+                    // Convritienodo nuevamente a image esta operacion debe estar en el servidor
+                    //MemoryStream streamm = new MemoryStream();
+                    //streamm.Position = 0;
+
+
+                    //string convert = "This is the string to be converted";
+
+                    // From string to byte array
+                    //byte[] buffer = Encoding.UTF8.GetBytes(convert);
+
+                    // From byte array to string
+                    //string s = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+
+                    }
                 // End Camera
-            }); 
+            });
             #endregion
 
 
@@ -159,6 +175,7 @@ namespace Reinco.Entidades
 
         #region ================= Preparando la Interaccion De la Camara =================
         // Preparadndo la imagen para enviar
+
         public static byte[] ReadFully(Stream input)
         {
             byte[] buffer = new byte[16 * 1024];
@@ -172,6 +189,7 @@ namespace Reinco.Entidades
                 return ms.ToArray();
             }
         }
+
 
         public byte [] fotoArray { get; set; } // Array De Bits Para Enviar la Foto Al Web Service
 

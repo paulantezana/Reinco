@@ -3,6 +3,7 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Reinco.Interfaces
 {
@@ -97,14 +98,31 @@ namespace Reinco.Interfaces
                     }
                     else
                     {
-                        // ---------- Almacenando Los Datos Del Usuario  En Local -------------------//
-                        //CargoUsuario = result[0].cargo;
-                        Application.Current.Properties["idUsuario"] = result[0].idUsuario;
-                        Application.Current.Properties["nombresApellidos"] = result[0].nombresApellidos;
-                        Application.Current.Properties["cargoUsuario"] = result[0].cargo;
-                        // await Application.Current.SavePropertiesAsync(); // Active esta opcion si dese guardar en el movil permanentemente
+                        foreach (var usuario in result)
+                        {
+                            if(usuario.cargo == "Gerente")
+                            {
+                                Application.Current.Properties["idUsuario"] = usuario.idUsuario;
+                                Application.Current.Properties["nombresApellidos"] = usuario.nombresApellidos;
+                                Application.Current.Properties["cargoUsuario"] = usuario.cargo;
+                                break;
+                            }
+                            else if(usuario.cargo == "Asistente")
+                            {
+                                Application.Current.Properties["idUsuario"] = usuario.idUsuario;
+                                Application.Current.Properties["nombresApellidos"] = usuario.nombresApellidos;
+                                Application.Current.Properties["cargoUsuario"] = usuario.cargo;
+                                break;
+                            }else if(usuario.cargo == "Responsable")
+                            {
+                                Application.Current.Properties["idUsuario"] = usuario.idUsuario;
+                                Application.Current.Properties["nombresApellidos"] = usuario.nombresApellidos;
+                                Application.Current.Properties["cargoUsuario"] = usuario.cargo;
+                            }
+                        }
+                        //Application.Current.Properties["cargoUsuario2"] = result
+                        App.Current.MainPage = new MainPage(); // Navegacion a la pagina usuario
                         
-                        App.Current.MainPage = new MainPage(); // Navegando a la página Main page ( Páina Principal que conecta los de mas páginas)
                     }
                 }
                 else
