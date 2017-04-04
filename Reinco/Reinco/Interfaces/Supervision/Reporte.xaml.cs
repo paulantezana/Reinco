@@ -43,6 +43,8 @@ namespace Reinco.Interfaces.Supervision
             ReporteItems = new ObservableCollection<ReporteItem>();
             CargarReporteItem();
 
+
+            this.DireccionApp = Application.Current.Properties["direccionApp"] + "\\";
             // Contexto para los bindings
             this.BindingContext = this;
         }

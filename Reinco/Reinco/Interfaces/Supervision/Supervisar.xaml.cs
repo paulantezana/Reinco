@@ -29,7 +29,9 @@ namespace Reinco.Interfaces.Supervision
 
         new public event PropertyChangedEventHandler PropertyChanged;
 
-        public string DireccionApp{ get; set; }
+        public string DireccionApp { get; set; }
+        public string tituloSupervisar { get; set; }
+
         public string notaSupervision { get; set; }
         public bool observacion { get; set; }
         public bool disposicion { get; set; }
@@ -85,24 +87,25 @@ namespace Reinco.Interfaces.Supervision
         }
         #endregion
 
-        //public Supervisar()
-        //{
-        //    InitializeComponent();
-        //    SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-        //    CargarSupervisarActividadItem();
-        //}
-        public Supervisar(int idSupervision, string nombreSupervision)
+        public Supervisar()
+        {
+            InitializeComponent();
+            SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
+            CargarSupervisarActividadItem();
+        }
+        public Supervisar(int idSupervision, string directory = "")
         {
             InitializeComponent();
             IdSupervision = idSupervision;
-            tituloSupervision.Text = nombreSupervision; // Titulo De La Supervision
-
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
             activarConformidad = true;
             activarEntrega = true;
             activarRecepcion = true;
             TraerSupervision(IdSupervision);
+            // Valores
+            DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "\\Supervisar";
+            tituloSupervisar = Application.Current.Properties["direccionApp"].ToString();
             // Guardar Supervision
             guardarSupervision = new Command(() =>
             {
@@ -123,7 +126,6 @@ namespace Reinco.Interfaces.Supervision
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
-
         #region================cargar actividades de la supervision===========================
         private async void CargarSupervisarActividadItem()
         {
@@ -138,12 +140,12 @@ namespace Reinco.Interfaces.Supervision
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
                         item = x++.ToString(),
-                        idSupervisionActividad=item.idSupervision_actividad,
+                        idSupervisionActividad = item.idSupervision_actividad,
                         actividad = item.nombre,
                         tolerancia = item.tolerancia_maxima,
-                        observacionLevantada = item.observacion_levantada==0?false:true,
-                        aprobacion = item.si==0?false:true,
-                        anotacionAdicinal =item.anotacion_adicional,
+                        observacionLevantada = item.observacion_levantada == 0 ? false : true,
+                        aprobacion = item.si == 0 ? false : true,
+                        anotacionAdicinal = item.anotacion_adicional,
                     });
                 }
 
@@ -153,7 +155,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
-           
+
         }
         #endregion
 

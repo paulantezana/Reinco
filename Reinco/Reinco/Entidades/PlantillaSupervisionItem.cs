@@ -11,6 +11,8 @@ namespace Reinco.Entidades
 {
     public class PlantillaSupervisionItem
     {
+        public string direccionPath { get; set; }
+
         public int idSupervision { get; set; }
         public string nombre { get; set; }
         public int numero { get; set; }

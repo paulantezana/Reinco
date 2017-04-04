@@ -55,6 +55,7 @@ namespace Reinco
 
             InitializeComponent();
             MainPage = new LoginPage();
+            Current.Properties["direccionApp"] = "";
         }
 
         #endregion

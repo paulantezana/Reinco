@@ -76,12 +76,12 @@ namespace Reinco.Interfaces.Supervision
             });
             this.BindingContext = this;
         }
-        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision", string direccionApp = "")
+        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
         {
             InitializeComponent();
             IdPlantillaObra = idPlantillaObra;
             this.Title = nombrePlantilla;
-            this.DireccionApp = direccionApp;
+            this.DireccionApp = Application.Current.Properties["direccionApp"] + "\\Supervison";
 
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();

@@ -112,8 +112,8 @@ namespace Reinco.Interfaces
             string IdUsuario = Application.Current.Properties["idUsuario"].ToString();
             int idUsuario = Convert.ToInt16(IdUsuario);
             string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-            // App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, "Responsable"));
-            App.Navigator.Detail = new NavigationPage(new ListarObra());
+            App.Navigator.Detail = new NavigationPage(new ListarObras(idUsuario, "Responsable"));
+            // App.Navigator.Detail = new NavigationPage(new ListarObra());
         }
         #endregion
 

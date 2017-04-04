@@ -18,7 +18,6 @@ namespace Reinco.Interfaces.Supervision
     public partial class ListarObras : ContentPage, INotifyPropertyChanged
     {
         #region +---- Atributos ----+
-        public VentanaMensaje mensaje;
         int IdUsuario;
         //int IdObra;
         private bool isRefreshingObraResponsable { get; set; }
@@ -63,9 +62,8 @@ namespace Reinco.Interfaces.Supervision
         public ListarObras(int idUsuario, string cargo = "")
         {
             InitializeComponent();
-            mensaje = new VentanaMensaje();
             ObraResponsableItems = new ObservableCollection<ObraResponsableItem>();
-            //ObraItems = new ObservableCollection<ObraItem>();
+            // ObraItems = new ObservableCollection<ObraItem>();
             IdUsuario = idUsuario;
             
             #region Cargar Obras Segun El Cargo
@@ -89,7 +87,7 @@ namespace Reinco.Interfaces.Supervision
             RefreshObraCommand = new Command(() =>
             {
                 ObraResponsableItems.Clear();
-                // CargarObraResponsableItems();
+                CargarObraResponsableItems();
                 IsRefreshingObraResponsable = false;
             });
 
@@ -159,7 +157,7 @@ namespace Reinco.Interfaces.Supervision
                 {
                     if (result.Count == 0) //si está vacío
                     {
-                        await mensaje.MostrarMensaje("Mostrar Obra Responsable", "No Hay Obras a su cargo");
+                        await DisplayAlert("Mostrar Obra Responsable", "No Hay Obras a su cargo", "OK");
                     }
                     else
                     {
@@ -177,12 +175,12 @@ namespace Reinco.Interfaces.Supervision
                 }
                 else
                 {
-                    await mensaje.MostrarMensaje("Mostrar Obra Responsable", "A ocurrido un error al listar las obras para este usuario");
+                    await DisplayAlert("Mostrar Obra Responsable", "A ocurrido un error al listar las obras para este usuario","OK");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
         #endregion
@@ -214,7 +212,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "Aceptar");
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
         #endregion

@@ -13,7 +13,6 @@ namespace Reinco.Entidades
     public class ObraPlantillaItem
     {
 
-
         public string nombre { get; set; }
         public string codigo { get; set; }
         public string descripcion { get; set; }
@@ -32,6 +31,8 @@ namespace Reinco.Entidades
         {
             PlantillaSupervision = new Command(() =>
             {
+                Application.Current.Properties["direccionApp"] = "";
+                Application.Current.Properties["direccionApp"] = this.nombre;
                 App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra,idObra,idPlantilla,nombre));
             });
         }

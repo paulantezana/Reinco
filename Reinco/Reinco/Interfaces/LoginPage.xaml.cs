@@ -83,6 +83,7 @@ namespace Reinco.Interfaces
                 
                 if (string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(password.Text))
                 {
+                    cambiarEstado(true);
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Ninguno de los campos debe estar vacio");
                     return;
                 }

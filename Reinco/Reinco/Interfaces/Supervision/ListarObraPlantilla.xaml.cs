@@ -24,6 +24,7 @@ namespace Reinco.Interfaces.Supervision
         string NombreObra;
         int IdPropietarioObra;
         string Mensaje;
+        string DireccionPath;
 
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
@@ -57,7 +58,7 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshObraPlantillaCommand { get; private set; }
         public ICommand asignarPlantilla { get; private set; }
 
-        public ListarObraPlantilla(int idPropietarioObra,int idObra, string nombreObra = "PLANTILLAS",string directorioApp = "")
+        public ListarObraPlantilla(int idPropietarioObra,int idObra, string nombreObra = "PLANTILLAS", string direccionPath = "")
         {
             InitializeComponent();
             IdObra = idObra;
@@ -65,7 +66,8 @@ namespace Reinco.Interfaces.Supervision
             NombreObra = nombreObra;
 
             this.Title = nombreObra;
-            this.DireccionApp = directorioApp + "\\Plantillas";
+            DireccionPath = direccionPath;
+            this.DireccionApp = DireccionPath + "\\Plantillas";
 
             // ---------------------
             ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
@@ -125,9 +127,9 @@ namespace Reinco.Interfaces.Supervision
                             {
                                 nombre = item.nombre,
                                 codigo = item.codigo,
-                                idPlantillaObra=item.idPlantilla_Propietario_obra,
-                                idObra=item.idObra,
-                                idPlantilla=item.idPlantilla
+                                idPlantillaObra = item.idPlantilla_Propietario_obra,
+                                idObra = item.idObra,
+                                idPlantilla = item.idPlantilla,
                             });
                         }
                         // fin del listado

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.PaginaUsuario"
-             Title="PERFIL">
+             Title="HOME">
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -34,7 +34,6 @@
                     <Label Text="" IsVisible="False"></Label>
                 </StackLayout>
             </StackLayout>
-            
             
             <!-- =================================================================================
             ====================== INterfas De Usuario Para el Administrador =====================
@@ -108,9 +107,7 @@
                    </StackLayout>
 
                     <!-- Supervisar -->
-
                     <!-- END -->
-                    
                 </Grid>
             </StackLayout>
 
@@ -181,17 +178,10 @@
                             </StackLayout.GestureRecognizers>
 
                         </StackLayout>
-                        
+
                     </Grid>
                 </StackLayout>
             
-
-
-
-
-
-
-
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

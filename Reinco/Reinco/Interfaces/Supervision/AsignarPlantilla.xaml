@@ -10,9 +10,9 @@
             <StackLayout>
 
                 <!-- Asignar Plantilla de la obra-->
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,25,8,25">
+                    <Label Text="Asigne Una Plantilla"></Label>
                     <control:BindablePicker
-                    Title="Asigne Una Plantilla"
                     DisplayMemberPath="nombre"
                     SelectedValuePath="idPlantilla"
                     SelectedValue ="{Binding Path=idPlantilla, Mode=TwoWay}"
@@ -21,6 +21,7 @@
                     VerticalOptions="Center"/>
                 </StackLayout>
 
+                <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
                 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>

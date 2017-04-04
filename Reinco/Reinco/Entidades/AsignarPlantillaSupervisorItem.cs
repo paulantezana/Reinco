@@ -8,6 +8,9 @@ namespace Reinco.Entidades
 {
     public class AsignarPlantillaSupervisorItem
     {
+
+        public string direccionPath { get; set; }
+
         public string codigoPlantilla { get; set; }
         public string nombreObra { get; set; }
         public string supervisorObra { get; set; }

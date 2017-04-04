@@ -17,6 +17,8 @@ namespace Reinco.Entidades
         WebService Servicio = new WebService();
         public VentanaMensaje mensaje;
         string Mensaje;
+
+
         public int idObra { get; set; }
         public string nombre { get; set; }
         public string codigo { get; set; }
@@ -53,8 +55,7 @@ namespace Reinco.Entidades
             // Mostrar Plantillas
             mostrarPlantillas = new Command(() =>
             {
-                string directorio = this.nombre;
-                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra,this.nombre, directorio));
+                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra,this.nombre));
             });
             
             // Eliminar Obra

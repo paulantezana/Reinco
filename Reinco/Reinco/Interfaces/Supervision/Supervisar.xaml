@@ -39,7 +39,7 @@
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Grid.Row="0"  Grid.ColumnSpan="5" Grid.Column="0" BackgroundColor="{StaticResource Color1}">
-                                <Label  x:Name="tituloSupervision" Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{StaticResource Color5}" FontSize="18" FontAttributes="Bold"></Label>
+                                <Label  Text="{Binding tituloSupervisar}" Style="{StaticResource Color5}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{StaticResource Color5}" FontSize="18" FontAttributes="Bold"></Label>
                             </StackLayout>
 
                             <StackLayout  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Color2}">
@@ -86,13 +86,21 @@
                                 <Label Text="{Binding item}" Grid.Column="0"  FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"></Label>
 
                                 <!-- Fila  = 0 = Columna  = 1 = -->
-                                <Label Text="{Binding actividad}" Grid.Column="1" VerticalOptions="CenterAndExpand"></Label>
+                                <Label Text="{Binding actividad}" Grid.Column="1" VerticalOptions="CenterAndExpand">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ExpandirAnotacion}"></TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
 
                                 <!-- Fila  = 0 = Columna  = 2 = -->
-                                <Switch Grid.Column="2" IsToggled="{Binding aprobacion,Mode=TwoWay}" HorizontalOptions="CenterAndExpand"></Switch>
+                                <Switch Grid.Column="2" IsToggled="{Binding aprobacion}" HorizontalOptions="CenterAndExpand">
+                                    <Switch.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AprobacionCommand}"/>
+                                    </Switch.GestureRecognizers>
+                                </Switch>
 
                                 <!-- Fila  = 0 = Columna  = 3 = -->
-                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada,Mode=TwoWay}" HorizontalOptions="CenterAndExpand"></Switch>
+                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}" HorizontalOptions="CenterAndExpand"></Switch>
 
                                 <!-- Fila  = 1 Combinando 5 Columnas = -->
                                 <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
@@ -122,7 +130,6 @@
                                         <!-- Zona Galeria De Fotos -->
                                         <StackLayout Grid.Column="1" Grid.Row="1">
                                             <Image Source="{Binding RutaImagen}"></Image>
-                                            <Image Source="{Binding ImagenTratado}"></Image>
                                         </StackLayout>
                                         <!-- Galeria -->
 
@@ -132,7 +139,7 @@
 
                                 <!-- Indicador de actividad para guardar -->
                                 <!-- <ActivityIndicator Grid.Column="4" Grid.Row="0" IsRunning="True" HeightRequest="20" WidthRequest="20"></ActivityIndicator> -->
-                                
+
                                 <!-- Fila  = 0 = Columna  = 4 = -->
                                 <Image Grid.Column="4" Grid.Row="0"   Source="ic_guardar.png"    WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
@@ -193,12 +200,12 @@
 
                             </Grid>
                         </StackLayout>
-                        
+
                         <!-- Indicador de actividad -->
                         <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}">
-                            
+
                         </ActivityIndicator>
-                        
+
                         <!-- Buttons Action -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,30">
                             <Button Command="{Binding CancelarSupervision}" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>

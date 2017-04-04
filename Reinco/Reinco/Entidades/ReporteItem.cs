@@ -8,6 +8,8 @@ namespace Reinco.Entidades
 {
     public class ReporteItem
     {
+        public string direccionPath { get; set; }
+
         public int item { get; set; }
         public string descripcion { get; set; }
         public int si { get; set; }
