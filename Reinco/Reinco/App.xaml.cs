@@ -1,4 +1,4 @@
-﻿using Reinco.Interfaces;
+using Reinco.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +52,7 @@ namespace Reinco
             //ip = "192.168.1.37";
             //ip = "192.168.1.37";
              ip = "190.42.122.110";
+
             InitializeComponent();
             MainPage = new LoginPage();
         }

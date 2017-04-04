@@ -42,7 +42,7 @@
                     <control:BindablePicker
                         DisplayMemberPath="nombre"
                         SelectedValuePath="idPropietario"
-                        ItemsSource="{Binding propietarioItem}" 
+                        ItemsSource="{Binding propietarioItems}" 
                         SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
@@ -73,7 +73,7 @@
                     <control:BindablePicker
                         DisplayMemberPath="nombresApellidos"
                         SelectedValuePath="idUsuario"
-                        ItemsSource="{Binding personalItem}"
+                        ItemsSource="{Binding personalItems}"
                         SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
