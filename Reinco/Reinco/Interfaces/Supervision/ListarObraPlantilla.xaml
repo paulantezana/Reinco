@@ -30,13 +30,13 @@
                                     <MenuItem Clicked="eliminar" CommandParameter="{Binding idPlantillaObra}" Text="Eliminar" IsDestructive="True" />
                                 </ViewCell.ContextActions>
                                 <!-- Inicio Del Contenido Grid -->
-                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8,15,8,15">
+                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8,3,8,3">
                                    
                                     <!-- Gesto de Tipo Toque Para Toda La Fila -->
                                     
                                     <!-- Definiendo las Columnas de la Fila -->
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
@@ -45,9 +45,9 @@
                                     <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
                                     
                                     <!-- Elemento en la segunda columna-->
-                                    <StackLayout Grid.Column="1">
-                                        <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
-                                        <Label Text="{Binding tolerancia}" VerticalOptions="Center"></Label>
+                                    <StackLayout Grid.Column="1" VerticalOptions="CenterAndExpand">
+                                        <Label Text="{Binding nombre}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"></Label>
+                                        <!--<Label Text="{Binding tolerancia}" VerticalOptions="Center"></Label>-->
                                     </StackLayout>
 
 

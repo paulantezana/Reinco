@@ -19,6 +19,7 @@ namespace Reinco.Entidades
         public string fecha { get; set; }
         public int idObra { get; set; }
         public int idPlantilla { get; set; }
+
         public ICommand Supervisar { get; private set; }
         public ICommand verActividades { get; private set; }
 

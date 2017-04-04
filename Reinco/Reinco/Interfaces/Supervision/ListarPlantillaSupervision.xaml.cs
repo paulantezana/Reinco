@@ -136,6 +136,7 @@ namespace Reinco.Interfaces.Supervision
                                 numero =item.nroSupervision==null?0: item.nroSupervision,
                                 fecha = item.fecha,
                                 idSupervision=item.idSupervision
+                                
                             });
                         }
                         // fin del listado
