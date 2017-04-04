@@ -23,13 +23,14 @@
                             <!-- Eventos -->
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="eliminar" CommandParameter="{Binding idUsuario}" Text="Eliminar"></MenuItem>
-                                <MenuItem Clicked="actualizar" CommandParameter="{Binding idUsuario}" Text="Modificar"></MenuItem>
+                                <!--<MenuItem Clicked="actualizar" CommandParameter="{Binding idUsuario}" Text="Modificar"></MenuItem>-->
                             </ViewCell.ContextActions>
                             <!-- END Eventos -->
                             <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
                                 <Image Source="{Binding fotoPerfil}"  Grid.Column="0"></Image>
                                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Column="1">
@@ -48,6 +49,11 @@
                                         </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
+                                <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarUsuario}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

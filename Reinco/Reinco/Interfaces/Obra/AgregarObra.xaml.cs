@@ -222,6 +222,7 @@ namespace Reinco.Interfaces.Obra
         #region +================== Guardar Nueva Obra ===========================+
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
+            guardar.IsEnabled = false;
             try
             {
                 IsRunning = true;
@@ -290,6 +291,7 @@ namespace Reinco.Interfaces.Obra
         // ============== Ingresar Propietario y Responsable  ===============//
         public async void IngresarPropResponsable(object idPropietario, object idUsuario)
         {
+            
             object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                            { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} };
             dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "IngresarPropietarioResponsableEnObra", variables);
@@ -311,6 +313,7 @@ namespace Reinco.Interfaces.Obra
         #region================== modificar obra =================================
         private async void modificarObra(object sender, EventArgs e)
         {
+            guardar.IsEnabled = false;
             try
             {
                 IsRunning = true;

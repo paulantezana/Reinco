@@ -1,4 +1,4 @@
-﻿using Reinco.Interfaces;
+using Reinco.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +27,7 @@ namespace Reinco
 
 
         #region +---- Propiedades ----+
+       
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
         public static ListarPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
         public static ListarActividad ListarActividad { get; internal set; } // Página listar actividades
@@ -49,8 +50,9 @@ namespace Reinco
             //ObtenerIpAsync();
             // ip = "192.168.1.112";
             //ip = "192.168.1.37";
-            ip = "190.238.172.126";
-            // ip = "181.67.192.254";
+            //ip = "192.168.1.37";
+             ip = "190.42.122.110";
+
             InitializeComponent();
             MainPage = new LoginPage();
         }

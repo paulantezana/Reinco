@@ -19,6 +19,8 @@ namespace Reinco.Interfaces.Personal
         string Mensaje;
         public VentanaMensaje mensaje;
         int IdUsuario;
+        int IdCargoUsuario;
+        int IdCargo;
         VentanaMensaje dialogService;
 
 
@@ -36,6 +38,7 @@ namespace Reinco.Interfaces.Personal
         }
         private async void Guardar_Clicked(object sender, EventArgs e)
         {
+            guardar.IsEnabled = false;
             int enviarCargo=0;
             try
             {
@@ -57,8 +60,9 @@ namespace Reinco.Interfaces.Personal
                 if (contra.Text == confirmarContra.Text)
                 {
                     object[,] variables = new object[,] {
-                        { "dni", dni.Text }, { "nombresApellidos", nombresApellidos.Text },
-                        { "usuario", usuario.Text }, { "contrasenia", contra.Text }, { "correo", email.Text },{ "cip", cip.Text },{ "idCargo", enviarCargo }, { "celular",celular.Text} };
+                        { "dni", dni.Text }, { "nombresApellidos", nombresApellidos.Text },{ "usuario", usuario.Text },
+                       { "contrasenia", contra.Text },  { "correo", email.Text },{ "cip", cip.Text==null?"":cip.Text },
+                       { "idCargo", enviarCargo }, { "celular",celular.Text} };
                     dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "AgregarUsuario", variables);
                     Mensaje = Convert.ToString(result);
                     if (result != null)
@@ -84,17 +88,32 @@ namespace Reinco.Interfaces.Personal
                 await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
         }
-        public AgregarPersonal(object idUsuario)
+        public AgregarPersonal(int idUsuario,string dni, string nombresApellidos,string usuario,string contra,string correo,
+            string celular,string cip,int idCargo,int idCargoUsuario)
         {
             InitializeComponent();
             guardar.Text = "Guardar Cambios";
-            IdUsuario = Convert.ToInt16(idUsuario);
+            IdUsuario =idUsuario;
+            IdCargoUsuario = idCargoUsuario;
+            this.dni.Text = dni;
+            this.nombresApellidos.Text = nombresApellidos;
+            this.usuario.Text = usuario;
+            this.email.Text = correo;
+            this.celular.Text = celular;
+            this.cip.Text = cip;
+            if (idCargo == 1)
+                gerente.IsToggled=true;
+            if (idCargo == 2)
+                responsable.IsToggled= true;
+            if (idCargo == 3)
+                supervisor.IsToggled = true;
             cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += ModificarUsuario_Clicked1;
         }
         #region==============Modificar Usuario======================================
         private async void ModificarUsuario_Clicked1(object sender, EventArgs e)
         {
+            guardar.IsEnabled = false;
             try
             {
                 if (string.IsNullOrEmpty(dni.Text) || string.IsNullOrEmpty(nombresApellidos.Text)  ||
@@ -106,14 +125,24 @@ namespace Reinco.Interfaces.Personal
                 }
                 if (contra.Text == confirmarContra.Text)
                 {
+                    if (supervisor.IsToggled == true)
+                        IdCargo = 3;//supervisor
+                    if (responsable.IsToggled == true)
+                        IdCargo = 2;//responsable
+                    if (gerente.IsToggled == true)
+                        IdCargo = 1;//admin
                     object[,] variables = new object[,] {
                         { "idUsuario", IdUsuario } ,{ "dni", dni.Text }, { "nombresApellidos", nombresApellidos.Text },
-                        { "usuario", usuario.Text }, { "contrasenia", contra.Text }, { "correo", email.Text },{ "cip", cip.Text }};
+                        { "usuario", usuario.Text }, { "contrasenia", contra.Text }, { "correo", email.Text },{ "cip", cip.Text },
+                        { "celular", celular.Text },{ "idCargo",IdCargo  },{ "idCargoUsuario",IdCargoUsuario  }};
                     dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "ModificarUsuario", variables);
                     Mensaje = Convert.ToString(result);
                     if (result != null)
                     {
                         await App.Current.MainPage.DisplayAlert("Modificar Usuario", Mensaje, "OK");
+                        App.ListarPersonal.Personaltems.Clear();
+                        App.ListarPersonal.CargarPersonalItem();
+                        await Navigation.PopAsync();
                         return;
                     }
 
@@ -134,6 +163,14 @@ namespace Reinco.Interfaces.Personal
         {
             Navigation.PopAsync();
         }
+
+        #region=============longitud maxima dni=============0
+        public void Limitante(object sender, TextChangedEventArgs e)
+        {
+            if (e.NewTextValue.Length > 8)
+                dni.Text = dni.Text.Remove(8);
+      }  
+        #endregion
     }
 
 }

@@ -105,7 +105,13 @@ namespace Reinco.Interfaces.Personal
                     {
                         fotoPerfil = "ic_profile_color.png",
                         idUsuario = item.idUsuario,
+                        dni = item.dni,
                         nombresApellidos = item.nombresApellidos.ToString(),
+                        usuario = item.usuario,
+                        correo = item.correo,
+                        celular = item.celular,
+                        idCargo = item.idCargo,
+                        idCargo_Usuario=item.idCargo_Usuario,
                         cip = item.cip
                     });
                 }
@@ -133,6 +139,8 @@ namespace Reinco.Interfaces.Personal
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
+                    App.ListarPersonal.Personaltems.Clear();
+                    App.ListarPersonal.CargarPersonalItem();
                     return;
                 }
             }
@@ -140,13 +148,6 @@ namespace Reinco.Interfaces.Personal
             {
                 await mensaje.MostrarMensaje("Eliminar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
-        }
-        #endregion
-        #region ===================// Modificar Obra CRUD //====================
-        public void actualizar(object sender, EventArgs e)
-        {
-            var idUsuario = ((MenuItem)sender).CommandParameter;
-            Navigation.PushAsync(new AgregarPersonal(idUsuario));
         }
         #endregion
 
