@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,11 +14,15 @@ using Xamarin.Forms;
 
 namespace Reinco.Entidades
 {
-    public class SupervisarActividadItem : INotifyPropertyChanged
+    public class SupervisarActividadItem: INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public static readonly BindableProperty IsToggledProperty;
+
         WebService Servicio = new WebService();
         string Mensaje;
         VentanaMensaje mensaje = new VentanaMensaje();
+
         public int idSupervisionActividad { get; set; }
         public string item { get; set; }
         public string actividad { get; set; }
@@ -29,32 +34,26 @@ namespace Reinco.Entidades
 
 
         public ICommand guardarItem { get; private set; }
+        public ICommand AprobacionCommand { get; private set; }
+
+
+        
 
 
         public SupervisarActividadItem()
         {
-
-            guardarItem = new Command(() =>
-            {
-                // App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
-                GuardarActividad();
-            });
-
-
             AprobacionCommand = new Command(() =>
             {
-                App.Current.MainPage.DisplayAlert("Me Ejecute", "OK", "Aceptar");
-                if (aprobacion == true)
-                {
-                    App.Current.MainPage.DisplayAlert("Me Ejecute", ObsLevActivar + " En Falso", "Aceptar");
-                    ObsLevActivar = false;
-                }
-                else
-                {
-                    App.Current.MainPage.DisplayAlert("Me Ejecute", ObsLevActivar + " En Verdadesro", "Aceptar");
-                    ObsLevActivar = true;
-                } 
+                App.Current.MainPage.DisplayAlert("Alerta", "Me ejecute", "Aceptar");
             });
+
+            #region Lammando A Guardar Actividad
+            guardarItem = new Command(() =>
+                {
+                // App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
+                GuardarActividad();
+                }); 
+            #endregion
 
             #region ================= Expandir =================
             MostrarAnotacion = false;
@@ -72,8 +71,6 @@ namespace Reinco.Entidades
                 }
             }); 
             #endregion
-
-
 
             #region ================ Uso De La Camara ================
             EncenderCamara = new Command(async () =>
@@ -111,36 +108,25 @@ namespace Reinco.Entidades
                     var foto = file.GetStream();
                     var fotoArray = ReadFully(foto);
 
+                    var fotos = new Fotos
+                    {
+                        id = 5,
+                        array = fotoArray,
+                    };
 
+                    var imagenSerializado = JsonConvert.SerializeObject(fotos);
+                    var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
+                    var client = new HttpClient();
+                    var url = "http://190.42.122.110/";
+                    var response = await client.PostAsync(url, body);
                     // Retratado 
-                    var streamTratado = new MemoryStream(fotoArray);
-                    this.ImagenTratado = streamTratado;
-
-
+                    // var streamTratado = new MemoryStream(fotoArray);
+                    // this.ImagenTratado = streamTratado;
                 }
                 // End Camera
             });
             #endregion
 
-
-        }
-
-        public ICommand AprobacionCommand { get; private set; }
-        public bool obsLevActivar { get; set; }
-        public bool ObsLevActivar
-        {
-            set
-            {
-                if (obsLevActivar != value)
-                {
-                    obsLevActivar = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ObsLevActivar"));
-                }
-            }
-            get
-            {
-                return obsLevActivar;
-            }
         }
 
         #region ================ Expadir Actividad Por Cada Items Correspondiente ================
@@ -162,9 +148,7 @@ namespace Reinco.Entidades
                 return mostrarAnotacion;
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
 
         #region ================= Preparando la Interaccion De la Camara =================
         // Preparadndo la imagen para enviar
@@ -223,35 +207,40 @@ namespace Reinco.Entidades
         public ICommand EncenderCamara { get; private set; }
         #endregion
 
-        public async void GuardarActividad() {
+        #region ===================== Guardar Actividad =====================
+        public async void GuardarActividad()
+        {
             try
             {
                 int Si, No;
-                if (aprobacion == false) {
+                if (aprobacion == false)
+                {
                     Si = 0;
                     No = 1;
                 }
-                else {
+                else
+                {
                     Si = 1;
                     No = 0;
                 }
-                    object[,] variables = new object[,] {
+                object[,] variables = new object[,] {
                         { "idSupervisionActividad",idSupervisionActividad  } ,{ "si", Si },{ "no", No },
                         { "observacionLevantada", No }, { "anotacionAdicional", anotacionAdicinal }};
 
                 dynamic result = await Servicio.MetodoGetString("SupervisionActividad.asmx", "guardarSupervisionActividad", variables);
-                    Mensaje = Convert.ToString(result);
-                    if (result != null)
-                    {
-                        await App.Current.MainPage.DisplayAlert("Guardar actividad", Mensaje, "OK");
-                        return;
-                    }
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Guardar actividad", Mensaje, "OK");
+                    return;
+                }
             }
             catch (Exception ex)
             {
                 await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
-        }
-
+        } 
+        #endregion
+        
     }
 }

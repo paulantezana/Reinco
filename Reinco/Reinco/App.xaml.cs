@@ -47,11 +47,11 @@ namespace Reinco
         {
             //recupero por única vez cuando entro a la aplicación el IP de servidor
             mensaje = new VentanaMensaje();
-            //ObtenerIpAsync();
+            ObtenerIpAsync();
             // ip = "192.168.1.112";
             //ip = "192.168.1.37";
             //ip = "192.168.1.37";
-             ip = "190.42.122.110";
+            //ip = "192.168.1.43";
 
             InitializeComponent();
             MainPage = new LoginPage();
@@ -63,7 +63,7 @@ namespace Reinco
         #region +---- Comunicacion ----+
         public async void ObtenerIpAsync()
         {
-            await LeerUrlAsync("ip/ip.txt");//http://...
+            await LeerUrlAsync("http://codeperu.com/ip/ip.txt");//http://...
         }
         public async Task LeerUrlAsync(string url)
         {
@@ -75,7 +75,7 @@ namespace Reinco
                 if (message.StatusCode == HttpStatusCode.OK)
                 {
                     ip = await message.Content.ReadAsStringAsync();
-                    await mensaje.MostrarMensaje("Información", ip);//borrar
+                    //await mensaje.MostrarMensaje("Información", ip);//borrar
                     if (!Regex.IsMatch(ip, @"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"))//validar con lenguajes regulares 192.123.12.32
                         await mensaje.MostrarMensaje("Error", "Error: El URL está respondiendo, sin embargo el servidor no está actualizando su información");
                 }

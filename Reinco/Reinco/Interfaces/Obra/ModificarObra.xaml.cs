@@ -79,6 +79,8 @@ namespace Reinco.Interfaces.Obra
             CargarPropietarioItem();
             CargarPersonalItem();
 
+            //asignarPropietario.
+
             // Comandos
             commandCambiarPropietario = new Command(() =>
             {
