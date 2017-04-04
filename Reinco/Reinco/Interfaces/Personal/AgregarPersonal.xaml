@@ -9,7 +9,7 @@
                 <!-- Nombres Y Apellidos -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Dni"></Label>
-                    <Entry x:Name="dni" Keyboard="Numeric" ></Entry>
+                    <Entry x:Name="dni" Keyboard="Numeric" TextChanged="Limitante"></Entry>
                 </StackLayout>
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Nombre"></Label>

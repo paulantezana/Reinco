@@ -21,12 +21,13 @@ namespace Reinco
     {
         #region +---- Atributos ----+
         public static string ip;
-        public static string puerto = "8080";
-        public VentanaMensaje mensaje; 
+        public static string puerto = "80";
+        public VentanaMensaje mensaje;
         #endregion
 
 
         #region +---- Propiedades ----+
+       
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
         public static ListarPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
         public static ListarActividad ListarActividad { get; internal set; } // Página listar actividades
@@ -49,8 +50,8 @@ namespace Reinco
             //ObtenerIpAsync();
             // ip = "192.168.1.112";
             //ip = "192.168.1.37";
-            ip = "192.168.1.40";
-            // ip = "181.67.192.254";
+            //ip = "192.168.1.37";
+             ip = "190.42.122.110";
             InitializeComponent();
             MainPage = new LoginPage();
         }
