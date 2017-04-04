@@ -18,7 +18,6 @@ namespace Reinco.Interfaces.Obra
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AgregarObra : ContentPage, INotifyPropertyChanged
     {
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
@@ -79,6 +78,7 @@ namespace Reinco.Interfaces.Obra
             commandBorrarPropietario = new Command(() =>
             {
                 asignarPropietario.SelectedValue = 0;
+                DisplayAlert("Mensaje", asignarResponsable.SelectedValue + " " + asignarResponsable.SelectedValuePath, "Aceptar");
             });
 
             commandCambiarResponsable = new Command(() =>
@@ -136,6 +136,7 @@ namespace Reinco.Interfaces.Obra
             commandBorrarPropietario = new Command(() =>
             {
                 asignarPropietario.SelectedValue = 0;
+                DisplayAlert("Mensaje", "Se eliminó al propietario", "Aceptar");
             });
 
             commandCambiarResponsable = new Command(() =>
@@ -147,6 +148,8 @@ namespace Reinco.Interfaces.Obra
             commandBorrarResponsable = new Command(() =>
             {
                 asignarResponsable.SelectedValue = 0;
+                DisplayAlert("Mensaje", "Se eliminó al responsable", "Aceptar");
+
             });
 
             // Eventos Guardar Y Cancelar
@@ -180,7 +183,7 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 personalItem.Clear();
-                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosResponsables");
                 foreach (var item in usuarios)
                 {
                     personalItem.Add(new PersonalItem
@@ -231,16 +234,19 @@ namespace Reinco.Interfaces.Obra
                     #region================ingresar solo obra=============================
                     if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
                     {
+                        guardar.IsEnabled = true;
                         await mensaje.MostrarMensaje("Agregar Obra", "Debe rellenar todos los campos.");
                         return;
+                        
                     }
+                    asignarPropietario.InputTransparent = true;
                     object[,] variables = new object[,] { { "codigo", codigo.Text }, { "nombreObra", nombre.Text } };
                     dynamic result = await Servicio.MetodoGetString("ServicioObra.asmx", "IngresarObra", variables);
                     Mensaje = Convert.ToString(result);
                     if (result != null)
                     {
                         await mensaje.MostrarMensaje("Agregar Obra", Mensaje);
-
+                        
                         // Refrescando la lista
                         App.ListarObra.ObraItems.Clear();
                         App.ListarObra.CargarObraItems();
@@ -272,6 +278,7 @@ namespace Reinco.Interfaces.Obra
                             IngresarPropResponsable(IdPropietario, 0);
                         }
                         await mensaje.MostrarMensaje("Agregar Obra con Responsable y Propietario", Mensaje);
+                        
                         return;
                     }
                 }
@@ -299,6 +306,9 @@ namespace Reinco.Interfaces.Obra
             if (result != null)
             {
                 await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable y Propietario", Mensaje, "OK");
+                App.ListarObra.ObraItems.Clear();
+                App.ListarObra.CargarObraItems();
+                await Navigation.PopAsync();
                 return;
             }
         }
