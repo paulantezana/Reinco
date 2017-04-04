@@ -84,16 +84,18 @@ namespace Reinco.Interfaces.Supervision
         }
         #endregion
 
-        public Supervisar()
-        {
-            InitializeComponent();
-            SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-            CargarSupervisarActividadItem();
-        }
-        public Supervisar(int idSupervision)
+        //public Supervisar()
+        //{
+        //    InitializeComponent();
+        //    SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
+        //    CargarSupervisarActividadItem();
+        //}
+        public Supervisar(int idSupervision, string nombreSupervision)
         {
             InitializeComponent();
             IdSupervision = idSupervision;
+            tituloSupervision.Text = nombreSupervision; // Titulo De La Supervision
+
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
             activarConformidad = true;
@@ -120,6 +122,7 @@ namespace Reinco.Interfaces.Supervision
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
+
         #region================cargar actividades de la supervision===========================
         private async void CargarSupervisarActividadItem()
         {

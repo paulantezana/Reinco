@@ -53,7 +53,7 @@ namespace Reinco.Interfaces.Obra
             }
         }
 
-        public ModificarObra(int idObra, string Codigo, string Nombre, int idPropietario, int idResponsable, int idPropietarioObra)
+        public ModificarObra(int idObra, string Codigo, string Nombre, int idPropietario, int idResponsable, int idPropietarioObra,string nombrePropietario, string nombresApellidos)
         {
             // Preparando la UI(Interfas de usuario) MODIFICAR OBRA
             InitializeComponent();
@@ -68,8 +68,8 @@ namespace Reinco.Interfaces.Obra
             IdPropietarioObra = idPropietarioObra;
 
             // Placeholders
-            asignarPropietario.Title = "Asigne un nuevo propietario"; // Titulo POP UPS Propietario
-            asignarResponsable.Title = "Asigne un nuevo responsable"; // Titulo POP UPS Responsable
+            asignarPropietario.Title = nombrePropietario; // Titulo POP UPS Propietario
+            asignarResponsable.Title = nombresApellidos; // Titulo POP UPS Responsable
 
             // Colecciones
             propietarioItems = new ObservableCollection<PropietarioItem>();
@@ -105,7 +105,21 @@ namespace Reinco.Interfaces.Obra
 
             guardar = new Command(() =>
             {
-                ModificarPropietarioResponsableObra(asignarPropietario.SelectedValue, asignarResponsable.SelectedValue);
+                int enviarPropietario = idPropietario;
+                int enviarResponsable = idResponsable;
+
+                object propietarioSelecionado = asignarPropietario.SelectedValue;
+                object responsableSelecionado = asignarResponsable.SelectedValue;
+
+                if (propietarioSelecionado != null)
+                {
+                    enviarPropietario = Convert.ToInt16(propietarioSelecionado);
+                }
+                if (responsableSelecionado != null)
+                {
+                    enviarResponsable = Convert.ToInt16(responsableSelecionado);
+                }
+                ModificarPropietarioResponsableObra(enviarPropietario, enviarPropietario);
             });
             // Valor Por Defecto en las listas
             asignarResponsable.Focus();
@@ -156,11 +170,12 @@ namespace Reinco.Interfaces.Obra
             }
         }
 
-        public async void ModificarPropietarioResponsableObra(object IdPropietario, object IdResponsable)
+        public async void ModificarPropietarioResponsableObra(int IdPropietario, int IdResponsable)
         {
             try
             {
                 IsRunning = true;
+
                 object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                 { "IdObra", IdObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
                 { "IdPropietarioObra", IdPropietarioObra}};

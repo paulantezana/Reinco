@@ -21,7 +21,7 @@ namespace Reinco
     {
         #region +---- Atributos ----+
         public static string ip;
-        public static string puerto = "80";
+        public static string puerto = "8080";
         public VentanaMensaje mensaje;
         #endregion
 
@@ -47,11 +47,11 @@ namespace Reinco
         {
             //recupero por única vez cuando entro a la aplicación el IP de servidor
             mensaje = new VentanaMensaje();
-            ObtenerIpAsync();
+            //ObtenerIpAsync();
             // ip = "192.168.1.112";
             //ip = "192.168.1.37";
             //ip = "192.168.1.37";
-            //ip = "192.168.1.43";
+            ip = "192.168.1.43";
 
             InitializeComponent();
             MainPage = new LoginPage();

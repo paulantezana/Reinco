@@ -17,7 +17,11 @@ namespace Reinco.Entidades
     public class SupervisarActividadItem: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public static readonly BindableProperty IsToggledProperty;
+        private void OnPropertyChanged(string nombrePropiedad)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nombrePropiedad));
+        }
+
 
         WebService Servicio = new WebService();
         string Mensaje;
@@ -26,18 +30,14 @@ namespace Reinco.Entidades
         public int idSupervisionActividad { get; set; }
         public string item { get; set; }
         public string actividad { get; set; }
-        public bool aprobacion { get; set; }
         public bool observacionLevantada { get; set; }
         public string anotacionAdicinal { get; set; }
         public string tolerancia { get; set; }
-
+        public bool aprobacion { get; set; }
 
 
         public ICommand guardarItem { get; private set; }
         public ICommand AprobacionCommand { get; private set; }
-
-
-        
 
 
         public SupervisarActividadItem()

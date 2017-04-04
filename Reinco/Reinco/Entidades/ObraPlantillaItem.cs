@@ -32,7 +32,7 @@ namespace Reinco.Entidades
         {
             PlantillaSupervision = new Command(() =>
             {
-                App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra,idObra,idPlantilla));
+                App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra,idObra,idPlantilla,nombre));
             });
         }
 

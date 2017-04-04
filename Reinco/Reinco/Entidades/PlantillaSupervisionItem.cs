@@ -20,16 +20,18 @@ namespace Reinco.Entidades
         public ICommand Supervisar { get; private set; }
         public ICommand verActividades { get; private set; }
 
+        public string nombreObra { get; set; }
+
 
         public PlantillaSupervisionItem()
         {
             Supervisar = new Command(() =>
             { 
-                App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar());
+                //App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar());
             });
             verActividades = new Command(() =>
             {
-                App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar(idSupervision));
+                App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar(idSupervision,this.nombre));
             });
         }
         

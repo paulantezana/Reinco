@@ -35,6 +35,7 @@ namespace Reinco.Interfaces.Supervision
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
+
         public ICommand AgregarSupervision { get; private set; }
         public ICommand generarReporte { get; private set; }
 
@@ -76,10 +77,11 @@ namespace Reinco.Interfaces.Supervision
             });
             this.BindingContext = this;
         }
-        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla)
+        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
         {
             InitializeComponent();
             IdPlantillaObra = idPlantillaObra;
+            this.Title = nombrePlantilla;
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
             AgregarSupervision = new Command(() =>
@@ -156,8 +158,6 @@ namespace Reinco.Interfaces.Supervision
             App.ListarPlantillaSupervision = this;
         } 
         #endregion
-
-
 
     }
 }

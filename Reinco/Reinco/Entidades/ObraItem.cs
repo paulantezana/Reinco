@@ -26,6 +26,8 @@ namespace Reinco.Entidades
         public string colorObra { get; set; }
         public int idPropietarioObra { get; set; }
         public int idPlantillaObra { get; set; }
+        public string nombrePropietario { get; set; }
+        public string nombresApellidos { get; set; }
 
 
 
@@ -45,13 +47,13 @@ namespace Reinco.Entidades
             editarObra = new Command(() =>
             {
                 App.ListarObra.Navigation.PushAsync(new ModificarObra(this.idObra, this.codigo, this.nombre, 
-                    this.idPropietario,this.idUsuario,this.idPropietarioObra));
+                    this.idPropietario,this.idUsuario,this.idPropietarioObra,this.nombrePropietario,this.nombresApellidos));
             });
 
             // Mostrar Plantillas
             mostrarPlantillas = new Command(() =>
             {
-                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra ));
+                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this.idPropietarioObra,this.idObra,this.nombre ));
             });
             
             // Eliminar Obra
