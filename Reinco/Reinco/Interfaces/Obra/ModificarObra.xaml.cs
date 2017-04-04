@@ -119,7 +119,7 @@ namespace Reinco.Interfaces.Obra
                 {
                     enviarResponsable = Convert.ToInt16(responsableSelecionado);
                 }
-                ModificarPropietarioResponsableObra(enviarPropietario, enviarPropietario);
+                ModificarPropietarioResponsableObra(enviarPropietario, enviarResponsable);
             });
             // Valor Por Defecto en las listas
             asignarResponsable.Focus();

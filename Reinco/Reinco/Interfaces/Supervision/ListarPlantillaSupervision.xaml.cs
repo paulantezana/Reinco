@@ -111,7 +111,7 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-                byte x = 01;
+                //byte x = 01;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObra", variables);
