@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -76,59 +77,57 @@ namespace Reinco.Entidades
 
 
             #region ================ Uso De La Camara ================
-            EncenderCamara = new Command(async () =>
+            try
             {
-                await CrossMedia.Current.Initialize(); // Inicializando la libreri
-
-                // Verificando si el dispotivo tiene Camara
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                EncenderCamara = new Command(async () =>
                 {
-                    await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
-                }
+                    await CrossMedia.Current.Initialize(); // Inicializando la libreri
 
-                // Directorio para almacenar la imagen
-                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                {
-                    Directory = "fotos",
-                    Name = "fotoreinco.jpg"
-                });
-
-                // mostrando la imagen en la interfas del telefono
-                if (file != null)
-                {
-                    RutaImagen = ImageSource.FromStream(() =>
+                    // Verificando si el dispotivo tiene Camara
+                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                     {
-                        var stream = file.GetStream();
-                        file.Dispose();
-                        return stream;
+                        await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
+                    }
+
+                    // Directorio para almacenar la imagen
+                    var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                    {
+                        Directory = "fotos",
+                        Name = "fotoreinco.jpg"
                     });
 
-
-                    // Preparando la foto para enviar al webservice
-                    var foto = file.GetStream();
-                    fotoArray = ReadFully(foto);
-
-
-
-
-                    // Preparando la foto para enviar al webservice
-                    //var foto = file.GetStream();
-                    //var fotoArray = ReadFully(foto);
-                    //var fotos = new Fotos
-                    //{
-                    //    id = 5,
-                    //    array = fotoArray,
-                    //};
-                    //var imagenSerializado = JsonConvert.SerializeObject(fotos);
-                    //var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
-                    //var client = new HttpClient();
-                    //var url = "http://190.42.122.110/";
-                    //var response = await client.PostAsync(url, body);
+                    // mostrando la imagen en la interfas del telefono
+                    if (file != null)
+                    {
+                        RutaImagen = ImageSource.FromStream(() =>
+                        {
+                            var stream = file.GetStream();
+                            file.Dispose();
+                            return stream;
+                        });
 
 
-                }
-                // End Camera
-            });
+                        // Preparando la foto para enviar al webservice
+                        //var foto = file.GetStream();
+                        //var fotoArray = ReadFully(foto);
+                        //var fotos = new Fotos
+                        //{
+                        //    id = 5,
+                        //    array = fotoArray,
+                        //};
+                        //var imagenSerializado = JsonConvert.SerializeObject(fotos);
+                        //var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
+                        //var client = new HttpClient();
+                        //var url = "http://190.42.122.110/";
+                        //var response = await client.PostAsync(url, body);
+                    }
+                    // End Camera
+                });
+            }
+            catch (Exception ex)
+            {
+                App.Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
+            }
             #endregion
 
 
