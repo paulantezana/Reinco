@@ -60,7 +60,8 @@ namespace Reinco.Interfaces.Obra
             this.Title = Nombre; // nombre de la pagina
             nombre.Text = Nombre; // Lenando el campo Nombre Obra
             codigo.Text = Codigo; // llenando el campo Codigo Obra
-
+            lblPropietario.Text = "Asigne un propietario " + App.opcional;
+            lblResponsable.Text = "Asigne un responsable " + App.opcional;
             // Variables Globales
             IdObra = Convert.ToInt16(idObra);
             IdPropietario = idPropietario;

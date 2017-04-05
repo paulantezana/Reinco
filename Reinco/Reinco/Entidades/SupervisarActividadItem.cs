@@ -117,12 +117,19 @@ namespace Reinco.Entidades
                     var imagenSerializado = JsonConvert.SerializeObject(fotos);
                     var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
                     var client = new HttpClient();
-                    var url = "http://190.42.122.110/";
-                    var response = await client.PostAsync(url, body);
-                    // Retratado 
-                    // var streamTratado = new MemoryStream(fotoArray);
-                    // this.ImagenTratado = streamTratado;
-                }
+                    object[,] variables = new object[,] {
+                    { "foto", body } ,{ "idActividad", idSupervisionActividad }};
+                        dynamic result = await Servicio.MetodoGetString("ServicioFoto.asmx", "IngresarFoto", variables);
+                        Mensaje = Convert.ToString(result);
+                        if (result != null)
+                        {
+                            await App.Current.MainPage.DisplayAlert("Ingresar Foto", Mensaje, "OK");
+                            return;
+                        }
+                        // Retratado 
+                        // var streamTratado = new MemoryStream(fotoArray);
+                        // this.ImagenTratado = streamTratado;
+                    }
                 // End Camera
             });
             #endregion
@@ -225,7 +232,7 @@ namespace Reinco.Entidades
                 }
                 object[,] variables = new object[,] {
                         { "idSupervisionActividad",idSupervisionActividad  } ,{ "si", Si },{ "no", No },
-                        { "observacionLevantada", No }, { "anotacionAdicional", anotacionAdicinal }};
+                        { "observacionLevantada", No }, { "anotacionAdicional", anotacionAdicinal==null?"":anotacionAdicinal }};
 
                 dynamic result = await Servicio.MetodoGetString("SupervisionActividad.asmx", "guardarSupervisionActividad", variables);
                 Mensaje = Convert.ToString(result);

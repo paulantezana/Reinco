@@ -51,7 +51,8 @@ namespace Reinco.Interfaces.Obra
             // Preparando la UI(Interfas de usuario)
             InitializeComponent();
             this.Title = "Crear Obra"; // nombre de la pagina
-
+            lblPropietario.Text = "Asigne un propietario " + App.opcional;
+            lblResponsable.Text="Asigne un responsable "+ App.opcional;
             // Servicios
             mensaje = new VentanaMensaje();
 
@@ -102,6 +103,8 @@ namespace Reinco.Interfaces.Obra
         {
             // Preparando la UI(Interfas de usuario) MODIFICAR OBRA
             InitializeComponent();
+            lblPropietario.Text = "Asigne un propietario " + App.opcional;
+            lblResponsable.Text = "Asigne un responsable " + App.opcional;
             this.Title = Nombre; // nombre de la pagina
             nombre.Text = Nombre; // Lenando el campo Nombre Obra
             codigo.Text = Codigo; // llenando el campo Codigo Obra

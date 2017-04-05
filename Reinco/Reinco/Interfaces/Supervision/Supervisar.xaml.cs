@@ -147,7 +147,6 @@ namespace Reinco.Interfaces.Supervision
                     });
                 }
 
-
             }
             catch (Exception ex)
             {
@@ -166,12 +165,12 @@ namespace Reinco.Interfaces.Supervision
                 dynamic supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "TraerSupervision", variables);
                 foreach (var item in supervision)
                 {
-                    notaSupervision = item.notaSupervision == null ? "" : item.notaSupervision;
-                    observacion = item.observacion == null ? false : true;
-                    disposicion = item.disposicion == 0 ? true : false;
-                    recepcion = item.firma_Recepcion != 1 ? false : true;
-                    entrega = item.firma_Notificacion != 1 ? false : true;
-                    conformitad = item.firma_Conformidad != 1 ? false : true;
+                    EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
+                    Sobservacion.IsToggled = item.observacion == null ? false : true;
+                    Sdisposicion.IsToggled = item.disposicion == 0 ? true : false;
+                    Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
+                    Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
+                    Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
                 }
             }
             catch (Exception ex)
