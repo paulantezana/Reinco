@@ -7,9 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -83,7 +80,6 @@ namespace Reinco.Entidades
             #region ================ Uso De La Camara ================
             EncenderCamara = new Command(async () =>
             {
-               
                 await CrossMedia.Current.Initialize(); // Inicializando la libreri
 
                 // Verificando si el dispotivo tiene Camara
@@ -91,7 +87,7 @@ namespace Reinco.Entidades
                 {
                     await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
                 }
-                
+
                 // Directorio para almacenar la imagen
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
@@ -99,11 +95,9 @@ namespace Reinco.Entidades
                     Name = "fotoreinco.jpg"
                 });
 
-                // mostrando la imagen en la interfaz del teléfono
+                // mostrando la imagen en la interfas del telefono
                 if (file != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Localización Del Archivo", file.Path, "OK");
-
                     RutaImagen = ImageSource.FromStream(() =>
                     {
                         var stream = file.GetStream();
@@ -114,29 +108,30 @@ namespace Reinco.Entidades
 
                     // Preparando la foto para enviar al webservice
                     var foto = file.GetStream();
-                    var fotoArray = ReadFully(foto);
-                    string foto_en_string = Convert.ToBase64String(fotoArray);
+                    fotoArray = ReadFully(foto);
 
-                    //se envía a post tal cual
-                    object[,] variables = new object[,] { { "foto", foto_en_string }, { "idActividad", idSupervisionActividad } };
-                    dynamic result = await Servicio.MetodoPostStringImagenes("ServicioFoto.asmx", "IngresarFoto", variables);
-                    Mensaje = Convert.ToString(result);
-                    if (result != null)
-                    {
-                        await App.Current.MainPage.DisplayAlert("Foto insertada", Mensaje, "OK");
 
-                        return;
-                    }
-                    //Retratado
-                    //var streamTratado = new MemoryStream(fotoArray);
-                    //this.ImagenTratado = streamTratado;
+
+
+                    // Preparando la foto para enviar al webservice
+                    //var foto = file.GetStream();
+                    //var fotoArray = ReadFully(foto);
+                    //var fotos = new Fotos
+                    //{
+                    //    id = 5,
+                    //    array = fotoArray,
+                    //};
+                    //var imagenSerializado = JsonConvert.SerializeObject(fotos);
+                    //var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
+                    //var client = new HttpClient();
+                    //var url = "http://190.42.122.110/";
+                    //var response = await client.PostAsync(url, body);
+
+
                 }
-
-
-                    //}
-                    // End Camera
-                });
-                #endregion
+                // End Camera
+            });
+            #endregion
 
 
         }
