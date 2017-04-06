@@ -16,6 +16,7 @@ namespace Reinco.Interfaces.Supervision
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Supervisar : ContentPage, INotifyPropertyChanged
+
     {
 
 

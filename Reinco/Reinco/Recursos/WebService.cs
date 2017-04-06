@@ -171,6 +171,45 @@ namespace Reinco.Recursos
                 throw;
             }
         }
+        public async Task<string> MetodoPostStringImagenes(string servicio, string metodo, object[,] variables)
+        {
+            try
+            {
+                // Formando la URL unicode resource lacator
+                HttpClient client = new HttpClient();
+                string url = string.Format("{0}/{1}/{2}",new Uri( this.urlBase), servicio, metodo);//cambiar uri
 
-}
+                // Encodificando Para el metodo POST
+                var body = new List<KeyValuePair<string, string>>();
+                for (int i = 0; i < variables.Length / 2; i++)
+                    body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
+                // var content = new  (body);
+                // StringContent content = new StringContent("data=" + HttpUtility.UrlEncode(action.Body), Encoding.UTF8, "application/x-www-form-urlencoded");
+                var content = JsonConvert.SerializeObject(body);
+                var content_2 = new StringContent(content);
+                string contenido;
+                //dynamic datosTabla;
+                var cliente = new HttpClient();
+                client.MaxResponseContentBufferSize = 256000;//eliminar esta fila
+                var message = cliente.PostAsync(url, content_2).Result;
+
+                if (message.StatusCode == HttpStatusCode.OK)
+                {
+                    var json = await message.Content.ReadAsStringAsync();
+                    contenido = Convert.ToString(json);
+                }
+                else
+                {
+                    contenido = message.ReasonPhrase.ToString();// mensaje de error
+                }
+                return contenido;
+            }
+            catch (Exception ex) 
+            {
+                string aux =  ex.Message;
+                throw;
+            }
+        }
+
+    }
 }
