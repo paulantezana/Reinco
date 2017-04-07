@@ -59,24 +59,6 @@ namespace Reinco.Interfaces.Supervision
 
         public ICommand RefreshPlantillaSupervisionCommand { get; private set; }
 
-        //public ListarPlantillaSupervision()
-        //{
-        //    InitializeComponent();
-        //    PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
-        //    CargarPlantillaSupervision();
-        //    // nuevaSupervision.Clicked += NuevaSupervision_Clicked;
-        //    AgregarSupervision = new Command(() =>
-        //    {
-        //        Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
-        //    });
-        //    RefreshObraPlantillaCommand = new Command(() =>
-        //    {
-        //        PlantillaSupervisionItems.Clear();
-        //        CargarPlantillaSupervision();
-        //        IsRefreshingObraPlantilla = false;
-        //    });
-        //    this.BindingContext = this;
-        //}
         #region ========================= Constructor =========================
         public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
         {
