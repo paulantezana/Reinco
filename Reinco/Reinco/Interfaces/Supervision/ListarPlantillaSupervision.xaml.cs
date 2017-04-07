@@ -21,7 +21,7 @@ namespace Reinco.Interfaces.Supervision
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
-        private bool isRefreshingObraPlantilla { get; set; }
+        
         int IdPlantillaObra;
         #endregion
 
@@ -38,44 +38,46 @@ namespace Reinco.Interfaces.Supervision
         public ICommand generarReporte { get; private set; }
         public string DireccionApp { get; set; }
 
-        public bool IsRefreshingObraPlantilla
+        private bool isRefreshingPlantillaSupervision { get; set; }
+        public bool IsRefreshingPlantillaSupervision
         {
             set
             {
-                if (isRefreshingObraPlantilla != value)
+                if (isRefreshingPlantillaSupervision != value)
                 {
-                    isRefreshingObraPlantilla = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObraPlantilla"));
+                    isRefreshingPlantillaSupervision = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingPlantillaSupervision"));
                 }
             }
             get
             {
-                return isRefreshingObraPlantilla;
+                return isRefreshingPlantillaSupervision;
             }
         }
 
         public ObservableCollection<PlantillaSupervisionItem> PlantillaSupervisionItems { get; set; }
 
-        public ICommand RefreshObraPlantillaCommand { get; private set; }
+        public ICommand RefreshPlantillaSupervisionCommand { get; private set; }
 
-        public ListarPlantillaSupervision()
-        {
-            InitializeComponent();
-            PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
-            CargarPlantillaSupervision();
-            // nuevaSupervision.Clicked += NuevaSupervision_Clicked;
-            AgregarSupervision = new Command(() =>
-            {
-                Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
-            });
-            RefreshObraPlantillaCommand = new Command(() =>
-            {
-                PlantillaSupervisionItems.Clear();
-                CargarPlantillaSupervision();
-                IsRefreshingObraPlantilla = false;
-            });
-            this.BindingContext = this;
-        }
+        //public ListarPlantillaSupervision()
+        //{
+        //    InitializeComponent();
+        //    PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
+        //    CargarPlantillaSupervision();
+        //    // nuevaSupervision.Clicked += NuevaSupervision_Clicked;
+        //    AgregarSupervision = new Command(() =>
+        //    {
+        //        Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
+        //    });
+        //    RefreshObraPlantillaCommand = new Command(() =>
+        //    {
+        //        PlantillaSupervisionItems.Clear();
+        //        CargarPlantillaSupervision();
+        //        IsRefreshingObraPlantilla = false;
+        //    });
+        //    this.BindingContext = this;
+        //}
+        #region ========================= Constructor =========================
         public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
         {
             InitializeComponent();
@@ -89,25 +91,26 @@ namespace Reinco.Interfaces.Supervision
             {
                 Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
             });
-            generarReporte=new Command(() =>
-            {
-                Navigation.PushAsync(new Reporte(idObra, idPlantilla));
-            });
-            RefreshObraPlantillaCommand= new Command(() =>
-            {
-                PlantillaSupervisionItems.Clear();
-                CargarPlantillaSupervision();
-                IsRefreshingObraPlantilla = false;
-            });
+            generarReporte = new Command(() =>
+              {
+                  Navigation.PushAsync(new Reporte(idObra, idPlantilla));
+              });
+            RefreshPlantillaSupervisionCommand = new Command(() =>
+             {
+                 PlantillaSupervisionItems.Clear();
+                 CargarPlantillaSupervision();
+                 IsRefreshingPlantillaSupervision = false;
+             });
 
             this.BindingContext = this;
-        }
+        } 
+        #endregion
         private void NuevaSupervision_Clicked(object sender, EventArgs e)
         {
 
             throw new NotImplementedException();
         }
-        #region==================cargar supervisiones=========================
+        #region ================== Cargar Supervisiones =========================
         public async void CargarPlantillaSupervision()
         {
             try
@@ -135,8 +138,9 @@ namespace Reinco.Interfaces.Supervision
                                 nombre = "Supervision",
                                 numero =item.nroSupervision==null?0: item.nroSupervision,
                                 fecha = item.fecha,
-                                idSupervision=item.idSupervision
-                                
+                                partidaEvaluada = item.partidaEvaluada,
+                                nivel = item.nivel,
+                                idSupervision =item.idSupervision
                             });
                         }
                         // fin del listado
@@ -153,6 +157,7 @@ namespace Reinco.Interfaces.Supervision
             }
         }
         #endregion
+
         #region Global
         protected override void OnAppearing()
         {

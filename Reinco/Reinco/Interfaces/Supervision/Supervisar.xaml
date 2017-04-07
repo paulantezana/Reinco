@@ -31,11 +31,11 @@
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="60"/>
-                                <ColumnDefinition Width="60"/>
-                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Grid.Row="0"  Grid.ColumnSpan="5" Grid.Column="0" BackgroundColor="{StaticResource Color1}">
@@ -71,9 +71,9 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="30"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
@@ -93,14 +93,10 @@
                                 </Label>
 
                                 <!-- Fila  = 0 = Columna  = 2 = -->
-                                <Switch Grid.Column="2" IsToggled="{Binding aprobacion}" HorizontalOptions="CenterAndExpand">
-                                    <Switch.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding AprobacionCommand}"/>
-                                    </Switch.GestureRecognizers>
-                                </Switch>
+                                <Switch Grid.Column="2" IsToggled="{Binding aprobacion, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"></Switch>
 
                                 <!-- Fila  = 0 = Columna  = 3 = -->
-                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada}" HorizontalOptions="CenterAndExpand"></Switch>
+                                <Switch Grid.Column="3" IsToggled="{Binding observacionLevantada, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"></Switch>
 
                                 <!-- Fila  = 1 Combinando 5 Columnas = -->
                                 <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
@@ -141,16 +137,12 @@
                                 <!-- <ActivityIndicator Grid.Column="4" Grid.Row="0" IsRunning="True" HeightRequest="20" WidthRequest="20"></ActivityIndicator> -->
 
                                 <!-- Fila  = 0 = Columna  = 4 = -->
-                                <Image Grid.Column="4" Grid.Row="0"   Source="ic_guardar.png"    WidthRequest="30" HeightRequest="30">
+                                <Image Grid.Column="4" Grid.Row="0" Source="ic_guardar.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding guardarIsVisible}">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding guardarItem}"></TapGestureRecognizer>
                                     </Image.GestureRecognizers>
                                 </Image>
-
-
                             </Grid>
-
-
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -209,7 +201,7 @@
                         <!-- Buttons Action -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,30">
                             <Button Command="{Binding CancelarSupervision}" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
-                            <Button Command="{Binding guardarSupervision}" Text="Guardar Y Enviar Al Responsable" Style="{StaticResource BtnGuardar}"></Button>
+                            <Button Command="{Binding guardarSupervision}" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                         </StackLayout>
                         <!-- End -->
 

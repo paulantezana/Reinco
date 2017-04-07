@@ -144,9 +144,11 @@ namespace Reinco.Interfaces.Supervision
                         idSupervisionActividad = item.idSupervision_actividad,
                         actividad = item.nombre,
                         tolerancia = item.tolerancia_maxima,
-                        observacionLevantada = item.observacion_levantada == 0 ? false : true,
-                        aprobacion = item.si == 0 ? false : true,
                         anotacionAdicinal = item.anotacion_adicional,
+                        _aprobacion = item.si == 0 ? false : true,
+                        aprobacion = item.si == 0 ? false : true,
+                        _observacionLevantada = item.observacion_levantada == 0 ? false : true,
+                        observacionLevantada = item.observacion_levantada == 0 ? false : true,
                     });
                 }
 
