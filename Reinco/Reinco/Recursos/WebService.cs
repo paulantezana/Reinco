@@ -55,7 +55,7 @@ namespace Reinco.Recursos
             {
                 HttpClient client = new HttpClient();
                 string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
-                for (int i = 0; i < variables.Length/2; i++)
+                for (int i = 0; i < variables.Length / 2; i++)
                 {
                     if (i == 0)
                         url += "?" + variables[i, 0].ToString() + "=" + variables[i, 1].ToString();
@@ -112,7 +112,7 @@ namespace Reinco.Recursos
                 if (message.StatusCode == HttpStatusCode.OK)
                 {
                     var json = await message.Content.ReadAsStringAsync();
-                     contenido = Convert.ToString(json);
+                    contenido = Convert.ToString(json);
                 }
                 else
                 {
@@ -136,7 +136,7 @@ namespace Reinco.Recursos
 
                 // Encodificando Para el metodo POST
                 var body = new List<KeyValuePair<string, string>>();
-                for (int i = 0; i < variables.Length/2; i++)
+                for (int i = 0; i < variables.Length / 2; i++)
                     body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
                 var content = new FormUrlEncodedContent(body);
 
@@ -177,7 +177,7 @@ namespace Reinco.Recursos
             {
                 // Formando la URL unicode resource lacator
                 HttpClient client = new HttpClient();
-                string url = string.Format("{0}/{1}/{2}",new Uri( this.urlBase), servicio, metodo);//cambiar uri
+                string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
 
                 // Encodificando Para el metodo POST
                 var body = new List<KeyValuePair<string, string>>();
@@ -190,7 +190,6 @@ namespace Reinco.Recursos
                 string contenido;
                 //dynamic datosTabla;
                 var cliente = new HttpClient();
-                client.MaxResponseContentBufferSize = 256000;//eliminar esta fila
                 var message = cliente.PostAsync(url, content_2).Result;
 
                 if (message.StatusCode == HttpStatusCode.OK)
@@ -204,12 +203,11 @@ namespace Reinco.Recursos
                 }
                 return contenido;
             }
-            catch (Exception ex) 
+            catch (Exception)
             {
-                string aux =  ex.Message;
+                // return ex.Message;
                 throw;
             }
         }
-
     }
 }
