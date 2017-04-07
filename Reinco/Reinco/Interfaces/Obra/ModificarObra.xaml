@@ -22,7 +22,7 @@
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
 
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Asigne Un Propietario"></Label>
+                        <Label Text="Asigne Un Propietario" x:Name="lblPropietario"></Label>
                         <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
                             <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarPropietario" Margin="10,0,10,0">
                                 <Label.GestureRecognizers>
@@ -53,7 +53,7 @@
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
 
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Asigne Un Responsable"></Label>
+                        <Label Text="Asigne Un Responsable" x:Name="lblResponsable"></Label>
                         <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
                             <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarResponsable" Margin="10,0,10,0">
                                 <Label.GestureRecognizers>

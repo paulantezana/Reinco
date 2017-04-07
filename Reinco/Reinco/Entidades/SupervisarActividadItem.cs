@@ -1,5 +1,4 @@
-﻿using Java.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Plugin.Media;
 using Reinco.Recursos;
 using System;
@@ -11,53 +10,50 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml.Media.Imaging;
 using Xamarin.Forms;
 
 namespace Reinco.Entidades
 {
-    public class SupervisarActividadItem : INotifyPropertyChanged
+    public class SupervisarActividadItem: INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string nombrePropiedad)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nombrePropiedad));
+        }
+
+
         WebService Servicio = new WebService();
         string Mensaje;
         VentanaMensaje mensaje = new VentanaMensaje();
+
         public int idSupervisionActividad { get; set; }
         public string item { get; set; }
         public string actividad { get; set; }
-        public bool aprobacion { get; set; }
         public bool observacionLevantada { get; set; }
         public string anotacionAdicinal { get; set; }
         public string tolerancia { get; set; }
-
+        public bool aprobacion { get; set; }
 
 
         public ICommand guardarItem { get; private set; }
+        public ICommand AprobacionCommand { get; private set; }
 
 
         public SupervisarActividadItem()
         {
-
-            guardarItem = new Command(() =>
-            {
-                // App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
-                GuardarActividad();
-            });
-
-
             AprobacionCommand = new Command(() =>
             {
-                App.Current.MainPage.DisplayAlert("Me Ejecute", "OK", "Aceptar");
-                if (aprobacion == true)
-                {
-                    App.Current.MainPage.DisplayAlert("Me Ejecute", ObsLevActivar + " En Falso", "Aceptar");
-                    ObsLevActivar = false;
-                }
-                else
-                {
-                    App.Current.MainPage.DisplayAlert("Me Ejecute", ObsLevActivar + " En Verdadesro", "Aceptar");
-                    ObsLevActivar = true;
-                }
+                App.Current.MainPage.DisplayAlert("Alerta", "Me ejecute", "Aceptar");
             });
+
+            #region Lammando A Guardar Actividad
+            guardarItem = new Command(() =>
+                {
+                // App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
+                GuardarActividad();
+                }); 
+            #endregion
 
             #region ================= Expandir =================
             MostrarAnotacion = false;
@@ -73,84 +69,71 @@ namespace Reinco.Entidades
                     MostrarAnotacion = false;
                     toggle = 0;
                 }
-            });
+            }); 
             #endregion
 
-
-
             #region ================ Uso De La Camara ================
-            try
-            {
-                EncenderCamara = new Command(async () =>
+            EncenderCamara = new Command(async () =>
                 {
                     await CrossMedia.Current.Initialize(); // Inicializando la libreri
 
-                    // Verificando si el dispotivo tiene Camara
-                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                // Verificando si el dispotivo tiene Camara
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                     {
                         await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
                     }
 
-                    // Directorio para almacenar la imagen
-                    var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    {
-                        Directory = "fotos",
-                        Name = "fotoreinco.jpg"
-                    });
-
-                    // mostrando la imagen en la interfas del telefono
-                    if (file != null)
-                    {
-                        RutaImagen = ImageSource.FromStream(() =>
-                        {
-                            var stream = file.GetStream();
-                            file.Dispose();
-                            return stream;
-                        });
-
-
-                        // Preparando la foto para enviar al webservice
-                        //var foto = file.GetStream();
-                        //var fotoArray = ReadFully(foto);
-                        //var fotos = new Fotos
-                        //{
-                        //    id = 5,
-                        //    array = fotoArray,
-                        //};
-                        //var imagenSerializado = JsonConvert.SerializeObject(fotos);
-                        //var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
-                        //var client = new HttpClient();
-                        //var url = "http://190.42.122.110/";
-                        //var response = await client.PostAsync(url, body);
-                    }
-                    // End Camera
+                // Directorio para almacenar la imagen
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                {
+                    Directory = "fotos",
+                    Name = "fotoreinco.jpg",
+                    AllowCropping = true,
                 });
-            }
-            catch (Exception ex)
-            {
-                App.Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
-            }
+
+                // mostrando la imagen en la interfas del telefono
+                if (file != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Localizacion Del Archivo", file.Path, "OK");
+
+                    RutaImagen = ImageSource.FromStream(() =>
+                    {
+                        var stream = file.GetStream();
+                        file.Dispose();
+                        return stream;
+                    });
+                    
+
+                    // Preparando la foto para enviar al webservice
+                    var foto = file.GetStream();
+                    var fotoArray = ReadFully(foto);
+
+                    var fotos = new Fotos
+                    {
+                        id = 5,
+                        array = fotoArray,
+                    };
+
+                    var imagenSerializado = JsonConvert.SerializeObject(fotos);
+                    var body = new StringContent(imagenSerializado, Encoding.UTF8, "application/json");
+                    var client = new HttpClient();
+                    object[,] variables = new object[,] {
+                    { "foto", body } ,{ "idActividad", idSupervisionActividad }};
+                        dynamic result = await Servicio.MetodoGetString("ServicioFoto.asmx", "IngresarFoto", variables);
+                        Mensaje = Convert.ToString(result);
+                        if (result != null)
+                        {
+                            await App.Current.MainPage.DisplayAlert("Ingresar Foto", Mensaje, "OK");
+                            return;
+                        }
+                        // Retratado 
+                        // var streamTratado = new MemoryStream(fotoArray);
+                        // this.ImagenTratado = streamTratado;
+                    }
+                // End Camera
+            });
             #endregion
 
-
-        }
-
-        public ICommand AprobacionCommand { get; private set; }
-        public bool obsLevActivar { get; set; }
-        public bool ObsLevActivar
-        {
-            set
-            {
-                if (obsLevActivar != value)
-                {
-                    obsLevActivar = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ObsLevActivar"));
-                }
-            }
-            get
-            {
-                return obsLevActivar;
-            }
         }
 
         #region ================ Expadir Actividad Por Cada Items Correspondiente ================
@@ -172,12 +155,11 @@ namespace Reinco.Entidades
                 return mostrarAnotacion;
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
 
         #region ================= Preparando la Interaccion De la Camara =================
         // Preparadndo la imagen para enviar
+
 
         public static byte[] ReadFully(Stream input)
         {
@@ -194,8 +176,24 @@ namespace Reinco.Entidades
         }
 
 
-        public byte[] fotoArray { get; set; } // Array De Bits Para Enviar la Foto Al Web Service
+        public byte [] fotoArray { get; set; } // Array De Bits Para Enviar la Foto Al Web Service
 
+        private ImageSource imagenTratado { get; set; }
+        public ImageSource ImagenTratado
+        {
+            set
+            {
+                if (imagenTratado != value)
+                {
+                    imagenTratado = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ImagenTratado"));
+                }
+            }
+            get
+            {
+                return imagenTratado;
+            }
+        }
         // InterAccion Con la Camara
         private ImageSource rutaImagen;
         public ImageSource RutaImagen
@@ -216,6 +214,7 @@ namespace Reinco.Entidades
         public ICommand EncenderCamara { get; private set; }
         #endregion
 
+        #region ===================== Guardar Actividad =====================
         public async void GuardarActividad()
         {
             try
@@ -231,14 +230,9 @@ namespace Reinco.Entidades
                     Si = 1;
                     No = 0;
                 }
-                string anotacion = anotacionAdicinal;
-                if (anotacionAdicinal == null)
-                {
-                    anotacion = "";
-                }
                 object[,] variables = new object[,] {
                         { "idSupervisionActividad",idSupervisionActividad  } ,{ "si", Si },{ "no", No },
-                        { "observacionLevantada", No }, { "anotacionAdicional", anotacion }};
+                        { "observacionLevantada", No }, { "anotacionAdicional", anotacionAdicinal==null?"":anotacionAdicinal }};
 
                 dynamic result = await Servicio.MetodoGetString("SupervisionActividad.asmx", "guardarSupervisionActividad", variables);
                 Mensaje = Convert.ToString(result);
@@ -252,35 +246,8 @@ namespace Reinco.Entidades
             {
                 await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
-        }
-        //myImage.Source = ImageSource.FromStream(() => new MemoryStream(bytes));
-       
-        public async Task<string> ConvertirByte(ImageSource img) {
-            byte[] bytes = await DependencyService.Get<IImageLoader>().LoadImageAsync(img);
-            string base64String = Convert.ToBase64String(bytes);
-            return base64String;
-        }
-        //=====================Convertir imagen a string===================================
-        public static string StreamToBase64String(Stream input)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                input.CopyTo(ms);
-                //ms.ToArray();
-                return Convert.ToBase64String(ms.ToArray());
-            }
-        }
-        //==================convertir string a stream======================================
-        public static Stream StringFromBase64Stream(string input)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                byte[] b = Convert.FromBase64String(input);
-                //ms.ToArray();
-
-                return new MemoryStream(b);
-            }
-        }
-
+        } 
+        #endregion
+        
     }
 }

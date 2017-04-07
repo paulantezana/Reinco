@@ -162,19 +162,19 @@
                         <StackLayout>
                             <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,30,8,15">
                                 <Label Text="Nota Supervisión" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
-                                <Editor HeightRequest="400" BackgroundColor="#F5F5F5" Text="{Binding notaSupervision}"></Editor>
+                                <Editor HeightRequest="400" BackgroundColor="#F5F5F5" x:Name="EnotaSupervision" Text="{Binding notaSupervision}"></Editor>
                             </StackLayout>
 
 
                             <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
                                 <Label Text="Observación"></Label>
-                                <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding observacion}"></Switch>
+                                <Switch HorizontalOptions="EndAndExpand" x:Name="Sobservacion" IsToggled="{Binding observacion}"></Switch>
                             </StackLayout>
 
 
                             <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
                                 <Label Text="Disposición"></Label>
-                                <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding disposicion}"></Switch>
+                                <Switch HorizontalOptions="EndAndExpand" x:Name="Sdisposicion" IsToggled="{Binding disposicion}"></Switch>
                             </StackLayout>
                         </StackLayout>
 
@@ -194,9 +194,9 @@
                                 <Label Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" Text="Firma entrega notificación"></Label>
                                 <Label Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" Text="Vº Bº Conformidad"></Label>
 
-                                <Switch Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding recepcion}" IsEnabled="{Binding activarRecepcion}"></Switch>
-                                <Switch Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding entrega}" IsEnabled="{Binding activarEntrega}"></Switch>
-                                <Switch Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand" IsToggled="{Binding conformitad}" IsEnabled="{Binding activarConformidad}"></Switch>
+                                <Switch Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand" x:Name="Srecepcion" IsToggled="{Binding recepcion}" IsEnabled="{Binding activarRecepcion}"></Switch>
+                                <Switch Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand" x:Name="Sentrega" IsToggled="{Binding entrega}" IsEnabled="{Binding activarEntrega}"></Switch>
+                                <Switch Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand" x:Name="Sconformidad" IsToggled="{Binding conformitad}" IsEnabled="{Binding activarConformidad}"></Switch>
 
                             </Grid>
                         </StackLayout>
