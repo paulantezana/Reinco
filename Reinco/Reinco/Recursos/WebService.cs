@@ -18,7 +18,7 @@ namespace Reinco.Recursos
         #region Constructor
         public WebService()
         {
-            this.urlBase = "http://" + App.ip + ":" + App.puerto + "/"+ App.cuenta; // ejemplo: http://192.168.1.37:8080/reinco
+            this.urlBase = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta; // ejemplo: http://192.168.1.37:8080/reinco
         }
         #endregion
         //ejemplo: ServicioUsuario.asmx, Login
@@ -171,61 +171,43 @@ namespace Reinco.Recursos
                 throw;
             }
         }
+        public async Task<string> MetodoPostStringImagenes(string servicio, string metodo, object[,] variables)
+        {
+            try
+            {
+                // Formando la URL unicode resource lacator
+                HttpClient client = new HttpClient();
+                string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
 
-        //public async Task<dynamic> MetodoImagenPost(string servicio, string metodo, object file, object[,] variables)
-        //{
-        //    try
-        //    {
-        //        var contenido = new MultipartFormDataContent();
-        //        contenido.Add(new StreamContent(file.GetStream()), "\"file\"", $"\"{file.Path}\"");
-        //        contenido.Add(new StringContent(file.GetStream()), "\"file\"", $"\"{file.Path}\"");
+                // Encodificando Para el metodo POST
+                var body = new List<KeyValuePair<string, string>>();
+                for (int i = 0; i < variables.Length / 2; i++)
+                    body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
+                // var content = new  (body);
+                // StringContent content = new StringContent("data=" + HttpUtility.UrlEncode(action.Body), Encoding.UTF8, "application/x-www-form-urlencoded");
+                var content = JsonConvert.SerializeObject(body);
+                var content_2 = new StringContent(content);
+                string contenido;
+                //dynamic datosTabla;
+                var cliente = new HttpClient();
+                var message = cliente.PostAsync(url, content_2).Result;
 
-        //        //var servicioUpload = "http://192.168.1.36/reinco/ServicioFoto.asmx/Post";
-        //        //var httpResponserMessage = await httpClient.PostAsync(servicioUpload, contenido);
-        //        //string mensajerespuseta = await httpResponserMessage.Content.ReadAsStringAsync();
-
-
-        //        // Formando la URL unicode resource lacator
-        //        HttpClient client = new HttpClient();
-        //        string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
-
-        //        // Encodificando Para el metodo POST
-        //        var body = new List<KeyValuePair<string, string>>();
-        //        for (int i = 0; i < variables.Length / 2; i++)
-        //            body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
-        //        var content = new FormUrlEncodedContent(body);
-
-        //        dynamic datosTabla;
-        //        var cliente = new HttpClient();
-        //        var message = await client.PostAsync(url, contenido);
-
-
-        //        if (message.StatusCode == HttpStatusCode.OK)
-        //        {
-        //            string mensajeRespuesta = await message.Content.ReadAsStringAsync();
-        //            //intento deserealizar si es un json si no se puede debe ser un texto sin formato json y eso lo muestro
-        //            try
-        //            {
-        //                //[{"idUsuario": 3}], [], mensaje de error de la base de datos u otro error
-        //                datosTabla = JsonConvert.DeserializeObject(mensajeRespuesta);
-        //            }
-        //            catch
-        //            {
-        //                datosTabla = null;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            datosTabla = null;// mensaje de error
-        //        }
-        //        return datosTabla;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // return ex.Message;
-        //        throw;
-        //    }
-        //}
-
+                if (message.StatusCode == HttpStatusCode.OK)
+                {
+                    var json = await message.Content.ReadAsStringAsync();
+                    contenido = Convert.ToString(json);
+                }
+                else
+                {
+                    contenido = message.ReasonPhrase.ToString();// mensaje de error
+                }
+                return contenido;
+            }
+            catch (Exception)
+            {
+                // return ex.Message;
+                throw;
+            }
+        }
     }
 }
