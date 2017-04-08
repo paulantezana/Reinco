@@ -23,6 +23,7 @@ namespace Reinco
         public static string opcional = "(Opcional)";
         public static string ip;
         public static string puerto = "80";
+        public static string cuenta = "reinco";
         public VentanaMensaje mensaje;
         #endregion
 

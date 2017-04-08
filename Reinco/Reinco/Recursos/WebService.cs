@@ -18,7 +18,7 @@ namespace Reinco.Recursos
         #region Constructor
         public WebService()
         {
-            this.urlBase = "http://" + App.ip + ":" + App.puerto; // ejemplo: http://192.168.1.37:8080
+            this.urlBase = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta; // ejemplo: http://192.168.1.37:8080/reinco
         }
         #endregion
         //ejemplo: ServicioUsuario.asmx, Login
