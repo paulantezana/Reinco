@@ -160,27 +160,16 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-
-                //dynamic plantillas = await Servicio.MetodoGet("ServicioPlantilla.asmx", "MostrarPlantillas");
-                //foreach (var plantilla in plantillas)
-                //{
-                //    Plantillas.Add(new PlantillaItem
-                //    {
-                //        idPlantilla = plantilla.idPlantilla,
-                //        codigo = plantilla.codigo,
-                //        nombre = plantilla.nombre,
-                //    });
-                //}
-                for (int i = 0; i < 20; i++)
+                dynamic plantillas = await Servicio.MetodoGet("servicioplantilla.asmx", "mostrarplantillas");
+                foreach (var plantilla in plantillas)
                 {
-                    Plantillas.Add(new PlantillaItem
+                    plantillas.add(new PlantillaItem
                     {
-                        idPlantilla = i,
-                        codigo = "A0" + i.ToString(),
-                        nombre = "name",
+                        idPlantilla = plantilla.idplantilla,
+                        codigo = plantilla.codigo,
+                        nombre = plantilla.nombre,
                     });
                 }
-
             }
             catch (Exception ex)
             {
