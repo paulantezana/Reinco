@@ -136,6 +136,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReducirImagenAndroid.cs" />
+    <Compile Include="ImageResizerAndroid.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

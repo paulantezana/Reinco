@@ -166,6 +166,7 @@ namespace Reinco.Interfaces
             {
                 IsRunning = true;
             }
+            
         }
 
     }

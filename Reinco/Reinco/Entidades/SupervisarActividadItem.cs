@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -167,58 +168,48 @@ namespace Reinco.Entidades
             });
             #endregion
 
-            #region ================ Uso De La Camara ================
+            #region ================ Uso De La Cámara ================
             try
             {
                 EncenderCamara = new Command(async () =>
                 {
+                    await CrossMedia.Current.Initialize(); // Inicializando la libreria CrossMedia
 
-                    await CrossMedia.Current.Initialize(); // Inicializando la libreri
-
-                    // Verificando si el dispotivo tiene Camara
+                    // Verificando si el dispotivo tiene Cámara
                     if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-                    {
                         await App.Current.MainPage.DisplayAlert("Error", ":( No hay cámara disponible.", "Aceptar");
-                    }
 
                     // Directorio para almacenar la imagen
                     var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
-                        Directory = "fotos",
-                        Name = "fotoreinco.jpg"
+                        Directory = "Simple",//storage/emule
+                        Name = "MiImagen.jpg"
                     });
 
-                    // mostrando la imagen en la interfas del telefono
+                    // mostrando la imagen en la interfaz del teléfono
                     if (file != null)
                     {
-                        RutaImagen = ImageSource.FromStream(() =>
+                        RutaImagen = ImageSource.FromStream(() => { return file.GetStream(); });
+                        //var nuevo_file = ReducirImagen.ResizeImage();
+                        var contenido = new MultipartFormDataContent();
+                        contenido.Add(new StreamContent(file.GetStream()), "\"file\"", $"\"{file.Path}\"");
+                        /* var values = new[]
+                         {
+                             new KeyValuePair<string, string>("idSupervisionActividad", idSupervisionActividad.ToString()),
+                         };
+                         foreach (var keyValuePair in values)
+                         {
+                             contenido.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
+                         }*/
+                        //http://192.168.1.36:80/reinco/ServicioFoto.asmx/ImagenPost
+                        var servicioUpload = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/ServicioFoto.asmx/ImagenPost";
+                        var client = new HttpClient();
+                        var httpResponserMessage = await client.PostAsync(servicioUpload, contenido);
+                        var mensajeRespuesta = await httpResponserMessage.Content.ReadAsStringAsync();
+                        /*if (mensajeRespuesta.StatusCode == HttpStatusCode.OK)
                         {
-                            var stream = file.GetStream();
-                            file.Dispose();
-                            return stream;
-                        });
-
-
-
-                        //Preparando la foto para enviar al webservice
-                        var foto = file.GetStream();
-                        ArrayFotos = ReadFully(foto);
-                        var fotos = new Fotos
-                        {
-                            id = 5,
-                            array = fotoArray,
-                        };
-                        string imagen64 = Convert.ToBase64String(ArrayFotos);
-                        object[,] variables = new object[,] {
-                            { "idSupervisionActividad",idSupervisionActividad  } ,{ "foto", imagen64 },{ "anotacionAdicional", "asdfasdf" }};
-
-                        dynamic result = await Servicio.MetodoPostStringImagenes("SupervisionActividad.asmx", "guardarAnotacionFoto", variables);
-                        Mensaje = Convert.ToString(result);
-                        if (result != null)
-                        {
-                            await App.Current.MainPage.DisplayAlert("Guardar Foto y Anotación", Mensaje, "OK");
-                            return;
-                        }
+                            RutaImagen = ImageSource.FromStream(() => { return file.GetStream(); });
+                        }*/
                     }
                     // End Camera
                 });
@@ -312,7 +303,7 @@ namespace Reinco.Entidades
         #endregion
 
         #region ========================== Guardar Anotacion Y Foto ==========================
-        public async void GuardarAnotacionFoto()
+        public async void GuardarAnotacion() //sòlo guardarà la anotación, la foto se guardará cada vez que saque una foto
         {
             try
             {
@@ -324,19 +315,19 @@ namespace Reinco.Entidades
                 }
                 string base64String = Convert.ToBase64String(ArrayFotos);
                 object[,] variables = new object[,] {
-                { "idSupervisionActividad",idSupervisionActividad  } ,{ "foto", base64String },{ "anotacionAdicional", anotacion }};
+                { "idSupervisionActividad",idSupervisionActividad  },{ "anotacionAdicional", anotacion }};
 
-                dynamic result = await Servicio.MetodoPostStringImagenes("SupervisionActividad.asmx", "guardarAnotacionFoto", variables);
+                dynamic result = await Servicio.MetodoGet("SupervisionActividad.asmx", "guardarAnotacion", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Guardar Foto y Anotación", Mensaje, "OK");
+                    await App.Current.MainPage.DisplayAlert("Guardar Anotación", Mensaje, "OK");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Agregar Foto y Anotación", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await mensaje.MostrarMensaje("Agregar Anotación", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
         }
         #endregion
@@ -370,13 +361,13 @@ namespace Reinco.Entidades
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Guardar actividad", Mensaje, "OK");
+                    await App.Current.MainPage.DisplayAlert("Guardar Supervisión", Mensaje, "OK");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await mensaje.MostrarMensaje("Supervisión", "Error al insertar foto: " + ex.ToString());
             }
         }
         #endregion
