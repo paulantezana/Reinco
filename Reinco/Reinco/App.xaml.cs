@@ -26,7 +26,6 @@ namespace Reinco
         public VentanaMensaje mensaje;
         #endregion
 
-
         #region +---- Propiedades ----+
        
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
@@ -41,7 +40,6 @@ namespace Reinco
         public static ListarPersonal ListarPersonal { get; internal set; }
 
         #endregion
-
 
         #region +---- Constrcutor -----+
         public App()
@@ -60,7 +58,6 @@ namespace Reinco
         }
 
         #endregion
-
 
         #region +---- Comunicacion ----+
         public async void ObtenerIpAsync()
@@ -92,7 +89,6 @@ namespace Reinco
             }
         } 
         #endregion
-
 
         protected override void OnStart()
         {

@@ -3,33 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Supervision.AsignarPlantilla"
              xmlns:control="clr-namespace:Reinco.Recursos"
-             Title="ASIGNAR PLANTILLA">
+             Title="Plantillas disponibles">
     
     <ContentPage.Content>
-        <ScrollView>
+        <StackLayout>
+            <ListView
+                ItemsSource="{Binding Plantillas}"
+                BackgroundColor="{StaticResource Color5}"
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="True"
+                RefreshCommand="{Binding RefreshPlantillaCommand}"
+                IsEnabled="{Binding PlantillaIsEnabled}"
+                IsRefreshing="{Binding IsRefreshingPlantilla,Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <SwitchCell Text="{Binding nombre}" On="{Binding Selecionado,Mode=TwoWay}"></SwitchCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <StackLayout>
-
-                <!-- Asignar Plantilla de la obra-->
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,25,8,25">
-                    <Label Text="Asigne Una Plantilla"></Label>
-                    <control:BindablePicker
-                    DisplayMemberPath="nombre"
-                    SelectedValuePath="idPlantilla"
-                    SelectedValue ="{Binding Path=idPlantilla, Mode=TwoWay}"
-                    HorizontalOptions="FillAndExpand"
-                    x:Name="asignarPlantilla"
-                    VerticalOptions="Center"/>
-                </StackLayout>
-
                 <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
-                
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
-                    <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+                    <Button x:Name="guardar"   Text="Añadir Seleccionados" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
                 </StackLayout>
-
-                
             </StackLayout>
-        </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
