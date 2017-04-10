@@ -113,7 +113,7 @@ namespace Reinco.Interfaces.Obra
         public ListarObra(int idUsuario,string cargo)
         {
             InitializeComponent();
-
+            //ocultar.IsVisible = false;
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItemsAsistente(idUsuario);
            // editarObra2.IsVisible = false;
@@ -124,7 +124,6 @@ namespace Reinco.Interfaces.Obra
             {
                 Navigation.PushAsync(new AgregarObra());
             });
-
             // Evento Refrescar La Lista
             RefreshObraCommand = new Command(() =>
             {

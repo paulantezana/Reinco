@@ -38,13 +38,14 @@ namespace Reinco.Entidades
         public ICommand editarObra { get; private set; }
         public ICommand eliminar { get; private set; }
         public ICommand mostrarPlantillas { get; private set; }
+        
         #endregion
 
 
         #region +---- Constructor ----+
         public ObraItem()
         {
-
+            
             // Editar Obra
             editarObra = new Command(() =>
             {

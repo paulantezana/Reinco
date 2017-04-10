@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -127,9 +128,12 @@ namespace Reinco.Interfaces.Supervision
                 }
                 // serializando
                 var idSeleccionados = JsonConvert.SerializeObject(seleccionados);
-
+                string ids="";
+                for (int i = 0; i < seleccionados.Count(); i++)
+                    ids = "idPlantilla=" + idSeleccionados[i] + "&";//cadena de identificadores de plantillas
                 // Desde aqui logica para enviar al web service
-                // var body = new StringContent(content, Encoding.UTF8, "application/json");
+                 var cliente = new HttpClient();
+                //var message = await cliente.GetAsync("192.168.1.36:8080/ServicioPlantillaPropietarioObra.asmx/IngresarPlantillaPropietarioObra?"+ids+ "idPropietarioObra="+IdPlantillaPropietarioObra);
                 object[,] variables = new object[,] { { "idPlantilla", idSeleccionados }, { "idPropietarioObra", IdPlantillaPropietarioObra } };
                 
                 dynamic result = await Servicio.MetodoGetString("ServicioPlantillaPropietarioObra.asmx", "IngresarPlantillaPropietarioObra", variables);
@@ -160,12 +164,12 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-                dynamic plantillas = await Servicio.MetodoGet("servicioplantilla.asmx", "mostrarplantillas");
+                dynamic plantillas = await Servicio.MetodoGet("ServicioPlantilla.asmx", "MostrarPlantillas");
                 foreach (var plantilla in plantillas)
                 {
-                    plantillas.add(new PlantillaItem
+                    Plantillas.Add(new PlantillaItem
                     {
-                        idPlantilla = plantilla.idplantilla,
+                        idPlantilla = plantilla.idPlantilla,
                         codigo = plantilla.codigo,
                         nombre = plantilla.nombre,
                     });
