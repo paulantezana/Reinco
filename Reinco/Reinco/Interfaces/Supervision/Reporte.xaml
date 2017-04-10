@@ -89,7 +89,7 @@
                         <Label Text="Chart"></Label>
 
                         <!-- Imprimir Reporte -->
-                        <Button Text="Enviar Por Email"></Button>
+                        <Button x:Name="enviar" Text="Enviar Por Email"></Button>
 
                     </StackLayout>
                 </ListView.Footer>

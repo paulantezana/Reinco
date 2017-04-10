@@ -30,7 +30,7 @@ namespace Reinco.Interfaces
             if (Application.Current.Properties.ContainsKey("cargoUsuario")) // condisional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
             {
                 string cargo = Application.Current.Properties["cargoUsuario"].ToString(); // Recuperando el cargo string y alamacenando en una variable cargo
-
+               // string correo = Application.Current.Properties["email"].ToString();
 
                 #region ++++++++++++++++++++++++++++++++++++++ General ++++++++++++++++++++++++++++++++++++++
                 // --------------- Imprimiendo datos del usuario logeado --------------- //
@@ -112,6 +112,7 @@ namespace Reinco.Interfaces
             string IdUsuario = Application.Current.Properties["idUsuario"].ToString();
             int idUsuario = Convert.ToInt16(IdUsuario);
             string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
+            App.cargo = cargoUsuario;
             App.Navigator.Detail = new NavigationPage(new ListarObra(idUsuario));
         }
         #endregion
@@ -124,6 +125,7 @@ namespace Reinco.Interfaces
             string idUsuario = Application.Current.Properties["idUsuario"].ToString();
             int IdUsuario = Convert.ToInt16(idUsuario);
             string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
+            App.cargo = cargoUsuario;
             // App.Navigator.Detail = new NavigationPage(new ListarObras(IdUsuario, "Asistente"));
             App.Navigator.Detail = new NavigationPage(new ListarObra(IdUsuario,cargoUsuario));
         }

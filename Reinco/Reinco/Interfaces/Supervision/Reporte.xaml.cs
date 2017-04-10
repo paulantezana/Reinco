@@ -43,11 +43,30 @@ namespace Reinco.Interfaces.Supervision
             ReporteItems = new ObservableCollection<ReporteItem>();
             CargarReporteItem();
 
-
+            enviar.Clicked += Enviar_Clicked;
             this.DireccionApp = Application.Current.Properties["direccionApp"] + "\\";
             // Contexto para los bindings
             this.BindingContext = this;
         }
+
+        private async void Enviar_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                WebService servicio = new WebService();
+                object[,] variables = new object[,] { { "idObra", IdObra }, { "idPlantilla", IdPlantilla } };
+                dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "CrearReporte", variables);
+
+                // listando las obras
+                
+                // fin del listado
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Generar Reporte", ex.Message, "Ok");
+            }
+        }
+
         private async void CargarReporteItem()
         {
             int acumular=0;

@@ -24,6 +24,8 @@ namespace Reinco
         public static string ip;
         public static string puerto = "80";
         public static string cuenta = "reinco";
+        public static string cargo = "";
+        public static string correo = "";
         public VentanaMensaje mensaje;
         #endregion
 

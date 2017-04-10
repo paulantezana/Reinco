@@ -23,6 +23,7 @@ namespace Reinco.Interfaces.Supervision
         public VentanaMensaje mensaje;
         int IdSupervision;
         string Mensaje;
+        string cargoUsuario;
 
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
@@ -107,6 +108,13 @@ namespace Reinco.Interfaces.Supervision
             // Valores
             DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "\\Supervisar";
             tituloSupervisar = Application.Current.Properties["direccionApp"].ToString();
+            cargoUsuario = App.cargo;
+            if (cargoUsuario == "Asistente")
+                Sconformidad.IsEnabled = false;
+            if (cargoUsuario == "")
+                Sentrega.IsEnabled = false;
+            if (cargoUsuario == "Responsable")
+                Srecepcion.IsEnabled = false;
             // Guardar Supervision
             guardarSupervision = new Command(() =>
             {
