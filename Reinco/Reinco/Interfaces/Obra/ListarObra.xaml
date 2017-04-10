@@ -55,11 +55,14 @@
                                     </Image.GestureRecognizers>
                                   
                                 </Image>
-                                <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                
+                                <Image  Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding editarObra}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
+                                
+                               
 
                             </Grid>
                             <!-- ============ FIN Codigo Para Listar Obra ================-->

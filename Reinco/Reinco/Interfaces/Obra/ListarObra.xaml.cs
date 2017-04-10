@@ -52,6 +52,7 @@ namespace Reinco.Interfaces.Obra
         #endregion
 
         #region +---- Comandos ----+
+        public ICommand editarObra { get; private set; }
         public ICommand CrearObra { get; private set; }
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
@@ -65,6 +66,58 @@ namespace Reinco.Interfaces.Obra
             CargarObraItems();
 
 
+            #region +---- Preparando Los Comandos ----+
+            // Evento Crear Obra
+            CrearObra = new Command(() =>
+            {
+                Navigation.PushAsync(new AgregarObra());
+            });
+
+            // Evento Refrescar La Lista
+            RefreshObraCommand = new Command(() =>
+            {
+                ObraItems.Clear();
+                CargarObraItems();
+                IsRefreshingObra = false;
+            });
+            #endregion
+
+            this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
+        }
+        public ListarObra(int idUsuario)
+        {
+            InitializeComponent();
+
+            ObraItems = new ObservableCollection<ObraItem>();
+            CargarObraItems(idUsuario);
+            
+
+            #region +---- Preparando Los Comandos ----+
+            // Evento Crear Obra
+            CrearObra = new Command(() =>
+            {
+                Navigation.PushAsync(new AgregarObra());
+            });
+
+            // Evento Refrescar La Lista
+            RefreshObraCommand = new Command(() =>
+            {
+                ObraItems.Clear();
+                CargarObraItems();
+                IsRefreshingObra = false;
+            });
+            #endregion
+
+            this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
+        }
+        public ListarObra(int idUsuario,string cargo)
+        {
+            InitializeComponent();
+
+            ObraItems = new ObservableCollection<ObraItem>();
+            CargarObraItemsAsistente(idUsuario);
+           // editarObra2.IsVisible = false;
+           
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
             CrearObra = new Command(() =>
@@ -120,6 +173,70 @@ namespace Reinco.Interfaces.Obra
                         idPropietarioObra = item.idPropietario_Obra,
                         nombrePropietario = item.nombrePropietario,
                         nombresApellidos = item.nombresApellidos,
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+        }
+        public async void CargarObraItems(int idUsuario)
+        {
+            try
+            {
+                //servicioObra, mostrarObras--modificado
+                object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario } };
+                dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasResponsable",OidPlantilla);
+                foreach (var item in obras)
+                {
+                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    {
+                        Color = "#FF7777";
+                    }
+                    else
+                        Color = "#77FF77";
+                    ObraItems.Add(new ObraItem
+                    {
+                        idObra = item.idObra,
+                        nombre = item.nombreObra,
+                        codigo = item.codigoObra,
+                        idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                        idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                        colorObra = Color,
+                        idPropietarioObra = item.idPropietario_Obra,
+                        nombrePropietario = item.nombrePropietario,
+                        nombresApellidos = item.responsable,
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+        }
+        public async void CargarObraItemsAsistente(int idUsuario)
+        {
+            try
+            {
+                //servicioObra, mostrarObras--modificado
+                object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario } };
+                dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervision", OidPlantilla);
+                foreach (var item in obras)
+                {
+                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    {
+                        Color = "#FF7777";
+                    }
+                    else
+                        Color = "#77FF77";
+                    ObraItems.Add(new ObraItem
+                    {
+                        idObra = item.idObra,
+                        nombre = item.nombre,
+                        codigo = item.codigo,
+                       
+                        colorObra = Color,
                     });
                 }
             }
