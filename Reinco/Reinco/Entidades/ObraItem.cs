@@ -18,7 +18,6 @@ namespace Reinco.Entidades
         public VentanaMensaje mensaje;
         string Mensaje;
 
-
         public int idObra { get; set; }
         public string nombre { get; set; }
         public string codigo { get; set; }
@@ -31,7 +30,7 @@ namespace Reinco.Entidades
         public string nombrePropietario { get; set; }
         public string nombresApellidos { get; set; }
 
-
+        public bool ocultar { get; set; }
 
         #region +---- Comandos ---+
         public ICommand asignarPlantilla { get; private set; }
@@ -39,6 +38,7 @@ namespace Reinco.Entidades
         public ICommand eliminar { get; private set; }
         public ICommand mostrarPlantillas { get; private set; }
         
+
         #endregion
 
 

@@ -200,9 +200,9 @@ namespace Reinco.Recursos
                 }
                 return datosTabla;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // return ex.Message;
+                 return ex.Message;
                 throw;
             }
         }
@@ -244,5 +244,42 @@ namespace Reinco.Recursos
                 throw;
             }
         }
+        #region===========recibe un string de respuesta=========================
+        public async Task<string> MetodoPostString(string servicio, string metodo, object[,] variables)
+        {
+            try
+            {
+                // Formando la URL unicode resource lacator
+                HttpClient client = new HttpClient();
+                string url = string.Format("{0}/{1}/{2}", this.urlBase, servicio, metodo);
+
+                // Encodificando Para el metodo POST
+                var body = new List<KeyValuePair<string, string>>();
+                for (int i = 0; i < variables.Length / 2; i++)
+                    body.Add(new KeyValuePair<string, string>(variables[i, 0].ToString(), variables[i, 1].ToString()));
+                var content = new FormUrlEncodedContent(body);
+
+                string contenido;
+                var cliente = new HttpClient();
+                var message = cliente.PostAsync(url, content).Result;
+
+                if (message.StatusCode == HttpStatusCode.OK)
+                {
+                    var json = await message.Content.ReadAsStringAsync();
+                    contenido = Convert.ToString(json);
+                }
+                else
+                {
+                    contenido = message.ReasonPhrase.ToString();
+                }
+                return contenido;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+                throw;
+            }
+        }
+        #endregion
     }
 }

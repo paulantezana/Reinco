@@ -22,7 +22,7 @@ namespace Reinco
         #region +---- Atributos ----+
         public static string opcional = "(Opcional)";
         public static string ip;
-        public static string puerto = "8080";
+        public static string puerto = "8082";
         public static string cuenta = "";
         public static string cargo = "";
         public static string correo = "";
@@ -51,7 +51,7 @@ namespace Reinco
             mensaje = new VentanaMensaje();
             //ObtenerIpAsync();
             //ip = "192.168.1.111";
-            ip = "192.168.1.36";
+            ip = "192.168.1.35";
            // ip = "190.117.145.7";
             //ip = "190.42.122.110";
 

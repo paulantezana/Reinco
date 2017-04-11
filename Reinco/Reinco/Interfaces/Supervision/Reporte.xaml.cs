@@ -54,7 +54,7 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idObra", IdObra }, { "idPlantilla", IdPlantilla } };
+                object[,] variables = new object[,] { { "idObra", IdObra }, { "idPlantilla", IdPlantilla }, { "correo", App.correo } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "CrearReporte", variables);
 
                 // listando las obras
@@ -73,7 +73,7 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idObra", IdObra } , { "idPlantilla", IdPlantilla } };
+                object[,] variables = new object[,] { { "idObra", IdObra } , { "idPlantilla", IdPlantilla }  };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "EnviarReporte", variables);
                         
                         // listando las obras

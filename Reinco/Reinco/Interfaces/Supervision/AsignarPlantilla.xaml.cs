@@ -128,23 +128,35 @@ namespace Reinco.Interfaces.Supervision
                 }
                 // serializando
                 var idSeleccionados = JsonConvert.SerializeObject(seleccionados);
-                string ids="";
-                for (int i = 0; i < seleccionados.Count(); i++)
-                    ids = "idPlantilla=" + idSeleccionados[i] + "&";//cadena de identificadores de plantillas
-                // Desde aqui logica para enviar al web service
-                 var cliente = new HttpClient();
-                //var message = await cliente.GetAsync("192.168.1.36:8080/ServicioPlantillaPropietarioObra.asmx/IngresarPlantillaPropietarioObra?"+ids+ "idPropietarioObra="+IdPlantillaPropietarioObra);
-                object[,] variables = new object[,] { { "idPlantilla", idSeleccionados }, { "idPropietarioObra", IdPlantillaPropietarioObra } };
                 
-                dynamic result = await Servicio.MetodoGetString("ServicioPlantillaPropietarioObra.asmx", "IngresarPlantillaPropietarioObra", variables);
+                string ids = idSeleccionados.ToString();
+
+                int[] idPlantilla = seleccionados.ToArray();
+                int tamaño = seleccionados.Count() + 1;
+                object[] idPlantillas = new object[seleccionados.Count()];
+                object[,] variables = new object[tamaño, seleccionados.Count()];
+                string identificador = "idPlantilla";
+                int j = 0;
+                for (int i = 0; i < seleccionados.Count(); i++)
+                {
+                    int numero = Convert.ToInt16(idPlantilla[i]);
+                    for (int k = 0; k < seleccionados.Count()-1; k++)
+                    {
+                        variables[i, k] = identificador;
+                        j++;
+                        variables[i, j] = numero;
+                        j = 0;
+                    }
+                } // Desde aqui logica para enviar al web service
+                variables[seleccionados.Count(), 0] ="idPropietarioObra";
+                variables[seleccionados.Count(), 1] = IdPlantillaPropietarioObra;
+                var cliente = new HttpClient();
+                dynamic result = await Servicio.MetodoPost("ServicioPlantillaPropietarioObra.asmx", "IngresarPlantillaPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
                     cambiarEstado(true);
                     await DisplayAlert("Asignar Plantilla", Mensaje, "Aceptar");
-
-                    // Refrescando la lista
-                    // App.ListarObra.ObraItems.Clear();
                     App.ListarObraPlantilla.ObraPlantillaItems.Clear();
                     App.ListarObraPlantilla.CargarPlantillaObra();
                     await Navigation.PopAsync();

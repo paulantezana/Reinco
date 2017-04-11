@@ -55,8 +55,8 @@
                                     </Image.GestureRecognizers>
                                   
                                 </Image>
-                                
-                                <Image   Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding ocultarEditar}" >
+
+                                <Image IsVisible="{Binding ocultar}" Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30"  >
                                     <Image.GestureRecognizers >
                                         <TapGestureRecognizer Command="{Binding editarObra}"/>
                                     </Image.GestureRecognizers>

@@ -58,7 +58,7 @@ namespace Reinco.Interfaces.Obra
 
             // ObservableCollection
             propietarioItem = new ObservableCollection<PropietarioItem>();
-            personalItem = new ObservableCollection<PersonalItem>();
+            personalItem = new  ObservableCollection<PersonalItem>();
 
             // Cargando las listas en los POP UPS
             CargarPropietarioItem();
@@ -144,7 +144,7 @@ namespace Reinco.Interfaces.Obra
 
             commandCambiarResponsable = new Command(() =>
             {
-                CargarPersonalItem();
+                //CargarPersonalItem();
                 asignarResponsable.ItemsSource = personalItem;
                 asignarResponsable.Focus();
             });

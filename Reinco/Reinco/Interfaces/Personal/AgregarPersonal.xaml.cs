@@ -66,7 +66,7 @@ namespace Reinco.Interfaces.Personal
                     object[,] variables = new object[,] {
                         { "dni", dni.Text }, { "nombresApellidos", nombresApellidos.Text },{ "usuario", usuario.Text },
                        { "contrasenia", contra.Text },  { "correo", email.Text },{ "cip", cip.Text==null?"":cip.Text },
-                       { "idCargo", enviarCargo }, { "celular",celular.Text} };
+                       { "idCargo", enviarCargo }, { "celular",celular.Text==null?"":celular.Text} };
                     dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "AgregarUsuario", variables);
                     Mensaje = Convert.ToString(result);
                     if (result != null)

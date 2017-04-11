@@ -81,9 +81,10 @@ namespace Reinco.Interfaces.Obra
                 IsRefreshingObra = false;
             });
             #endregion
-
+           
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
+        
         public ListarObra(int idUsuario)
         {
             InitializeComponent();
@@ -161,6 +162,7 @@ namespace Reinco.Interfaces.Obra
                     }
                     else
                         Color = "#77FF77";
+
                     ObraItems.Add(new ObraItem
                     {
                         idObra = item.idObra,
@@ -172,6 +174,8 @@ namespace Reinco.Interfaces.Obra
                         idPropietarioObra = item.idPropietario_Obra,
                         nombrePropietario = item.nombrePropietario,
                         nombresApellidos = item.nombresApellidos,
+                        ocultar = true,
+                        
                     });
                 }
             }
@@ -180,6 +184,7 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
+        #region=============obras responsable=======================================
         public async void CargarObraItems(int idUsuario)
         {
             try
@@ -214,10 +219,13 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
+        #endregion
+        #region===================obras asistente=============================
         public async void CargarObraItemsAsistente(int idUsuario)
         {
             try
             {
+                
                 //servicioObra, mostrarObras--modificado
                 object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario } };
                 dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervision", OidPlantilla);
@@ -229,12 +237,13 @@ namespace Reinco.Interfaces.Obra
                     }
                     else
                         Color = "#77FF77";
+                    App.correo = item.correo;//correo del responsable
                     ObraItems.Add(new ObraItem
                     {
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
-                       
+                        //ocultar = false,
                         colorObra = Color,
                     });
                 }
@@ -244,6 +253,7 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
+        #endregion
         #endregion
 
 
