@@ -211,6 +211,7 @@ namespace Reinco.Interfaces.Obra
                         idPropietarioObra = item.idPropietario_Obra,
                         nombrePropietario = item.nombrePropietario,
                         nombresApellidos = item.responsable,
+                        ocultar=true
                     });
                 }
             }
@@ -243,7 +244,7 @@ namespace Reinco.Interfaces.Obra
                         idObra = item.idObra,
                         nombre = item.nombre,
                         codigo = item.codigo,
-                        //ocultar = false,
+                        ocultar = false,
                         colorObra = Color,
                     });
                 }

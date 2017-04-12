@@ -107,7 +107,7 @@ namespace Reinco.Interfaces.Supervision
                     if (result.Count == 0) //si está vacío
                     {
                         //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
-                        await DisplayAlert("Supervisiones por plantilla", "No hay plantillas", "Aceptar");
+                        await DisplayAlert("Supervisiones por plantilla", "No hay supervisiones", "Aceptar");
                         return;
                     }
                     else

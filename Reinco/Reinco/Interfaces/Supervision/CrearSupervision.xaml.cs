@@ -85,7 +85,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Agregar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await mensaje.MostrarMensaje("Agregar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
         }
 

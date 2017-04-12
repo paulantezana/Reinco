@@ -337,7 +337,7 @@ namespace Reinco.Entidades
         {
             try
             {
-                int Si, No;
+                int Si, No,ObservacionLevantada;
                 if (aprobacion == false)
                 {
                     Si = 0;
@@ -348,14 +348,18 @@ namespace Reinco.Entidades
                     Si = 1;
                     No = 0;
                 }
-                string anotacion = anotacionAdicinal;
+                if (observacionLevantada == false)
+                    ObservacionLevantada = 0;
+                else
+                    ObservacionLevantada = 1;
+                string anotacion = anotacionAdicinal.ToString();
                 if (anotacionAdicinal == null)
                 {
                     anotacion = "";
                 }
                 object[,] variables = new object[,] {
                         { "idSupervisionActividad",idSupervisionActividad  } ,{ "si", Si },{ "no", No },
-                        { "observacionLevantada", No }, { "anotacionAdicional", anotacion }};
+                        { "observacionLevantada", ObservacionLevantada }, { "anotacionAdicional", anotacion }};
 
                 dynamic result = await Servicio.MetodoGetString("SupervisionActividad.asmx", "guardarSupervisionActividad", variables);
                 Mensaje = Convert.ToString(result);

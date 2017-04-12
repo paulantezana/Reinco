@@ -135,23 +135,28 @@ namespace Reinco.Interfaces.Supervision
                 int tamaño = seleccionados.Count() + 1;
                 object[] idPlantillas = new object[seleccionados.Count()];
                 object[,] variables = new object[tamaño, seleccionados.Count()];
-                string identificador = "idPlantilla";
-                int j = 0;
-                for (int i = 0; i < seleccionados.Count(); i++)
-                {
-                    int numero = Convert.ToInt16(idPlantilla[i]);
-                    for (int k = 0; k < seleccionados.Count()-1; k++)
+                if(seleccionados.Count()==1)
+                     variables = new object[,] { { "idPlantilla", idPlantilla[0] }, { "idPropietarioObra", IdPlantillaPropietarioObra } };
+                else {
+                    string identificador = "idPlantilla";
+                    int j = 0;
+                    for (int i = 0; i < seleccionados.Count(); i++)
                     {
-                        variables[i, k] = identificador;
-                        j++;
-                        variables[i, j] = numero;
-                        j = 0;
-                    }
-                } // Desde aqui logica para enviar al web service
-                variables[seleccionados.Count(), 0] ="idPropietarioObra";
-                variables[seleccionados.Count(), 1] = IdPlantillaPropietarioObra;
-                var cliente = new HttpClient();
-                dynamic result = await Servicio.MetodoPost("ServicioPlantillaPropietarioObra.asmx", "IngresarPlantillaPropietarioObra", variables);
+                        int numero = Convert.ToInt16(idPlantilla[i]);
+                        for (int k = 0; k < seleccionados.Count() - 1; k++)
+                        {
+                            variables[i, k] = identificador;
+                            j++;
+                            variables[i, j] = numero;
+                            j = 0;
+                        }
+                    } // Desde aqui logica para enviar al web service
+                    variables[seleccionados.Count(), 0] = "idPropietarioObra";
+                    variables[seleccionados.Count(), 1] = IdPlantillaPropietarioObra;
+                    var cliente = new HttpClient();
+                }
+                
+                dynamic result = await Servicio.MetodoPostString("ServicioPlantillaPropietarioObra.asmx", "IngresarPlantillaPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {

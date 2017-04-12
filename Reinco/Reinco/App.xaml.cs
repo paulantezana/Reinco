@@ -51,7 +51,7 @@ namespace Reinco
             mensaje = new VentanaMensaje();
             //ObtenerIpAsync();
             //ip = "192.168.1.111";
-            ip = "192.168.1.35";
+            ip = "192.168.1.36";
            // ip = "190.117.145.7";
             //ip = "190.42.122.110";
 
