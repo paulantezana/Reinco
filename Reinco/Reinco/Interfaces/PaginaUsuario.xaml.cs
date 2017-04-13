@@ -88,7 +88,7 @@ namespace Reinco.Interfaces
         {
             this.grid();
             // Obra
-            uiHome obra = new uiHome("ic_plantilla_color.png", "Plantilla");
+            uiHome obra = new uiHome("ic_plantilla_color.png", "Obras");
             obra.eventoTap.Command = new Command(() =>
             {
                 App.Navigator.Detail = new NavigationPage(new ListarObra());
@@ -133,7 +133,8 @@ namespace Reinco.Interfaces
             uiHome obraResponsable = new uiHome("ic_obra_color.png", "Obra");
             obraResponsable.eventoTap.Command = new Command(() =>
             {
-                // Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Responsable"));
+                Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Responsable"));
+                // App.Navigator.Detail = new NavigationPage(new ListarObra());
             });
 
             // Posicionando los elementos en la interfas
@@ -152,6 +153,7 @@ namespace Reinco.Interfaces
             obraAsistente.eventoTap.Command = new Command(() =>
             {
                 // Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Asistente"));
+                App.Navigator.Detail = new NavigationPage(new ListarObra());
             });
 
             // Posicionando los elementos en la interfas

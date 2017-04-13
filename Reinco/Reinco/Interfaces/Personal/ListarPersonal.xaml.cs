@@ -22,13 +22,9 @@ namespace Reinco.Interfaces.Personal
         public VentanaMensaje mensaje;
         string Mensaje;
 
-
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
-
-
-
 
         #region Refrescar Lista
         private bool isRefreshingPersonal { get; set; }
@@ -49,9 +45,6 @@ namespace Reinco.Interfaces.Personal
         } 
         #endregion
 
-
-
-
         public ObservableCollection<PersonalItem> Personaltems { get; set; }
         
         public ListarPersonal()
@@ -64,7 +57,6 @@ namespace Reinco.Interfaces.Personal
             {
                 Personaltems.Clear();
                 CargarPersonalItem();
-                IsRefreshingPersonal = false;
             });
             AgregarPersonal = new Command(() =>
             {
@@ -74,8 +66,6 @@ namespace Reinco.Interfaces.Personal
             this.BindingContext = this;
         }
 
-
-
         #region Propiedad Global De Esta Pagina
         protected override void OnAppearing()
         {
@@ -84,20 +74,17 @@ namespace Reinco.Interfaces.Personal
         } 
         #endregion
 
-
-
         #region +--- comandos ----+
         public ICommand RefreshPersonalCommand { get; private set; }
         public ICommand AgregarPersonal { get; private set; }
         #endregion
-
-
 
         #region==================cargar usuarios==============================
         public async void CargarPersonalItem()
         {
             try
             {
+                IsRefreshingPersonal = true;
                 dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
                 foreach (var item in result)
                 {
@@ -122,9 +109,12 @@ namespace Reinco.Interfaces.Personal
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
+            finally
+            {
+                IsRefreshingPersonal = false;
+            }
         }
         #endregion
-
 
         #region=======================eliminar obra====================================
         public async void eliminar(object sender, EventArgs e)

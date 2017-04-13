@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Supervision.ListarObraxCargo"
+             Title="OBRAS">
+
+    <!-- Contenido Principal de la página -->
+    <ContentPage.Content>
+        <ListView
+            ItemsSource="{Binding ObraxCargoItems}"
+            BackgroundColor="{StaticResource Color5}"
+            HasUnevenRows="True"
+            IsPullToRefreshEnabled="True"
+            RefreshCommand="{Binding RefreshObraxCargoCommand}"
+            IsRefreshing="{Binding IsRefreshingObraxCargo,Mode=TwoWay}">
+
+            <!-- Encabezado -->
+            <ListView.Header>
+                <StackLayout>
+                    <!-- Buscador -->
+                    <SearchBar></SearchBar>
+                </StackLayout>
+            </ListView.Header>
+
+            <!-- Cuerpo -->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <!-- Cell Personalizado -->
+                    <ViewCell>
+
+                        <!-- ============ Codigo Para Listar Obra ================-->
+                        <Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PlantillaxObra}"/>
+                            </Grid.GestureRecognizers>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" ></BoxView>
+
+                            <Image Grid.Column="1" Source="ic_obra_color.png" Margin="2"></Image>
+
+                            <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
+                                <Label Text="{Binding codigoObra}"></Label>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
+                                <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                            </StackLayout>
+
+                            <Image Grid.Column="4" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7"></Image>
+
+                        </Grid>
+                        <!-- ============ FIN Codigo Para Listar Obra ================-->
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            <!-- Pie De la Página -->
+            <ListView.Footer>
+                <StackLayout x:Name="paginacion" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Padding="0,20,0,20">
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
+    </ContentPage.Content>
+
+</ContentPage>

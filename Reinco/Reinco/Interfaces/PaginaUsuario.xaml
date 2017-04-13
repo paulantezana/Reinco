@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.PaginaUsuario"
+             BackgroundColor="{StaticResource Color5}"
              Title="HOME">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <AbsoluteLayout HeightRequest="200">
+                <AbsoluteLayout HeightRequest="150">
 
                     <!-- Banner -->
                     <BoxView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="{StaticResource Color1}"></BoxView>
@@ -48,7 +49,13 @@
                         </StackLayout>
                     </Grid>
                 </AbsoluteLayout>
-
+                
+                <!-- Textos de bienvenida -->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
+                    <Label Text="Bienvenido a REINCO" HorizontalOptions="Center" FontSize="Large" Margin="0,20,0,0" FontAttributes="Bold" TextColor="{StaticResource Color1}"></Label>
+                    <Label Text="¿Que desa Hacer Hoy?" Margin="0,0,0,20" HorizontalOptions="Center"></Label>
+                </StackLayout>
+                
                 <StackLayout x:Name="uixCargo">
 
                 </StackLayout>
