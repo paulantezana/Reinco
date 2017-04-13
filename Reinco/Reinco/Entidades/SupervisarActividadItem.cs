@@ -352,7 +352,7 @@ namespace Reinco.Entidades
                     ObservacionLevantada = 0;
                 else
                     ObservacionLevantada = 1;
-                string anotacion = anotacionAdicinal.ToString();
+                string anotacion = anotacionAdicinal;
                 if (anotacionAdicinal == null)
                 {
                     anotacion = "";
@@ -365,13 +365,13 @@ namespace Reinco.Entidades
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Guardar Supervisión", Mensaje, "OK");
+                    //await App.Current.MainPage.DisplayAlert("Guardar Supervisión", Mensaje, "OK");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Supervisión", "Error al insertar foto: " + ex.ToString());
+                await mensaje.MostrarMensaje("Supervisión", "Error al actualizar: " + ex.ToString());
             }
         }
         #endregion

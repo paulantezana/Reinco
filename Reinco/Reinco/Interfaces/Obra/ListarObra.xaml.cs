@@ -72,7 +72,6 @@ namespace Reinco.Interfaces.Obra
             {
                 Navigation.PushAsync(new AgregarObra());
             });
-
             // Evento Refrescar La Lista
             RefreshObraCommand = new Command(() =>
             {
@@ -104,7 +103,7 @@ namespace Reinco.Interfaces.Obra
             RefreshObraCommand = new Command(() =>
             {
                 ObraItems.Clear();
-                CargarObraItems();
+                CargarObraItems(idUsuario);
                 IsRefreshingObra = false;
             });
             #endregion
@@ -129,7 +128,7 @@ namespace Reinco.Interfaces.Obra
             RefreshObraCommand = new Command(() =>
             {
                 ObraItems.Clear();
-                CargarObraItems();
+                CargarObraItemsAsistente(idUsuario);
                 IsRefreshingObra = false;
             });
             #endregion
@@ -171,7 +170,7 @@ namespace Reinco.Interfaces.Obra
                         idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
                         idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
                         colorObra = Color,
-                        idPropietarioObra = item.idPropietario_Obra,
+                        idPropietarioObra = item.idPropietario_Obra==null?0: item.idPropietario_Obra,
                         nombrePropietario = item.nombrePropietario,
                         nombresApellidos = item.nombresApellidos,
                         ocultar = true,

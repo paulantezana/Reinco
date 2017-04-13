@@ -22,8 +22,8 @@ namespace Reinco
         #region +---- Atributos ----+
         public static string opcional = "(Opcional)";
         public static string ip;
-        public static string puerto = "8082";
-        public static string cuenta = "";
+        public static string puerto = "80";
+        public static string cuenta = "reinco_pruebas";
         public static string cargo = "";
         public static string correo = "";
         public VentanaMensaje mensaje;
@@ -51,8 +51,8 @@ namespace Reinco
             mensaje = new VentanaMensaje();
             //ObtenerIpAsync();
             //ip = "192.168.1.111";
-            ip = "192.168.1.36";
-           // ip = "190.117.145.7";
+           // ip = "192.168.1.36";
+           ip = "190.117.145.7";
             //ip = "190.42.122.110";
 
             InitializeComponent();
