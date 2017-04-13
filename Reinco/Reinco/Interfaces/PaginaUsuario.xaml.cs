@@ -17,121 +17,162 @@ namespace Reinco.Interfaces
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaUsuario : ContentPage
     {
-        public VentanaMensaje mensaje;
+        public Grid Cuadricula { get; set; }
 
+        #region =============================== GRID ===============================
+        public void grid()
+        {
+            this.Cuadricula = new Grid();
+            this.Cuadricula.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
+            this.Cuadricula.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
+            this.Cuadricula.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
+            this.Cuadricula.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            this.Cuadricula.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            this.Cuadricula.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        }
+        #endregion
+
+        #region =============================== Constructores ===============================
         public PaginaUsuario()
         {
             InitializeComponent(); // inicializa todo los componentes de la UI
 
-            // Servicios
-            mensaje = new VentanaMensaje(); 
-
-
-            if (Application.Current.Properties.ContainsKey("cargoUsuario")) // condisional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
+            if (Application.Current.Properties.ContainsKey("cargoUsuario") && Application.Current.Properties.ContainsKey("idUsuario")) // condisional que busca si cargo usuario exite este valo fue almacenado el iniciar sesión
             {
                 string cargo = Application.Current.Properties["cargoUsuario"].ToString(); // Recuperando el cargo string y alamacenando en una variable cargo
-               // string correo = Application.Current.Properties["email"].ToString();
+                int idUsuario = Convert.ToInt16(Application.Current.Properties["idUsuario"].ToString());
 
-                #region ++++++++++++++++++++++++++++++++++++++ General ++++++++++++++++++++++++++++++++++++++
-                // --------------- Imprimiendo datos del usuario logeado --------------- //
-
-
-                    if (Application.Current.Properties.ContainsKey("nombresApellidos"))
-                    {
-                        nombreUsuario.Text = Application.Current.Properties["nombresApellidos"].ToString();
-                    }
-                    cargoUsuario.Text = cargo;
-
-
-                #endregion
-
-
-                #region //============================ Zona Administrador ===================================//
-                    if (cargo == "Gerente")
-                    {
-                        interfazResponsable.IsVisible = false;
-                        interfazSupervisor.IsVisible = false;
-                    }
-                #endregion
-
-
-
-                #region ++ =============================== Zona Responsable =============================== ++
-                    if (cargo == "Responsable")
-                    {
-                        interfazAdministrador.IsVisible = false;
-                    }
-
-                #endregion
-
-
-
-                #region ** =============================== Zona Supervision =============================== **
-                    if (cargo == "Asistente")
-                    {
-                        interfazAdministrador.IsVisible = false;
-                        interfazResponsable.IsVisible = false;
-                    }
-                #endregion
-
-
+                if (Application.Current.Properties.ContainsKey("nombresApellidos"))
+                {
+                    nombreUsuario.Text = Application.Current.Properties["nombresApellidos"].ToString();
+                }
+                cargoUsuario.Text = cargo;
+                if (cargo == "Gerente")
+                {
+                    this.uiAdmin();
+                }
+                if (cargo == "Responsable")
+                {
+                    this.uiResponsable(idUsuario);
+                }
+                if (cargo == "Asistente")
+                {
+                    this.uiAsistente(idUsuario);
+                }
             }
         }
-
-
-
-
-        #region //=============================  Navegacion Para el Administrador  =============================//
-        private void irObra(object sender, EventArgs e)
+        //  UI Como Perfil de cada usuario
+        public PaginaUsuario(PersonalItem Usuario)
         {
-            App.Navigator.Detail = new NavigationPage(new ListarObra());
-        }
-        private void irPersonal(object sender, EventArgs e)
-        {
-            App.Navigator.Detail = new NavigationPage(new ListarPersonal());
-        }
-        private void irPlantilla(object sender, EventArgs e)
-        {
-            App.Navigator.Detail = new NavigationPage(new ListarPlantilla());
-        }
-        private void irPropietario(object sender, EventArgs e)
-        {
-            App.Navigator.Detail = new NavigationPage(new ListarPropietario());
-        }
+            InitializeComponent();
+            nombreUsuario.Text = Usuario.nombresApellidos;
+            cargoUsuario.Text = Usuario.cargo;
 
+            if (Usuario.cargo == "Gerente")
+            {
+                this.uiAdmin();
+            }
+            if (Usuario.cargo == "Responsable")
+            {
+                this.uiResponsable(Usuario.idUsuario);
+            }
+            if (Usuario.cargo == "Asistente")
+            {
+                this.uiAsistente(Usuario.idUsuario);
+            }
+        } 
         #endregion
 
-
-
-
-        #region Navegacion Responsable
-        // Listar obras que ya tienen un responsable y propietario Solor Del Responsable
-        private void irObraResponsable(object sender, EventArgs e)
+        #region =============================== UI ADMIN ===============================
+        public void uiAdmin()
         {
-            // Recuperando el id Usuario   cargoUsuario
-            string IdUsuario = Application.Current.Properties["idUsuario"].ToString();
-            int idUsuario = Convert.ToInt16(IdUsuario);
-            string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-            App.cargo = cargoUsuario;
-            App.Navigator.Detail = new NavigationPage(new ListarObra(idUsuario));
+            this.grid();
+            // Obra
+            uiHome obra = new uiHome("ic_plantilla_color.png", "Plantilla");
+            obra.eventoTap.Command = new Command(() =>
+            {
+                App.Navigator.Detail = new NavigationPage(new ListarObra());
+            });
+
+            // Plantilla
+            uiHome plantilla = new uiHome("ic_plantilla_color.png", "Plantilla");
+            plantilla.eventoTap.Command = new Command(() =>
+            {
+                App.Navigator.Detail = new NavigationPage(new ListarPlantilla());
+            });
+
+            // Propietario
+            uiHome propietario = new uiHome("ic_propietario_color.png", "Propietario");
+            propietario.eventoTap.Command = new Command(() =>
+            {
+                App.Navigator.Detail = new NavigationPage(new ListarPropietario());
+            });
+
+            // Personal
+            uiHome personal = new uiHome("ic_personal_color.png", "Personal");
+            personal.eventoTap.Command = new Command(() =>
+            {
+                App.Navigator.Detail = new NavigationPage(new ListarPersonal());
+            });
+
+            // Posicionando los elementos en la interfas
+            Cuadricula.Children.Add(obra.contenedor, 0, 0);
+            Cuadricula.Children.Add(plantilla.contenedor, 1, 0);
+            Cuadricula.Children.Add(propietario.contenedor, 2, 0);
+            Cuadricula.Children.Add(personal.contenedor, 0, 1);
+
+            // Pintando la Interfas
+            uixCargo.Children.Add(Cuadricula);
         }
         #endregion
 
-        #region Navegacion ObraSupervisor
-        // Listar obras que ya tienen un responsable y propietario  Solo Del Supervisor
-        private void irObraSupervisor(object sender, EventArgs e)
+        #region =============================== UI RESPONSABLE ===============================
+        public void uiResponsable(int idUsuario)
         {
-            // Recuperando el id Usuario   cargoUsuario
-            string idUsuario = Application.Current.Properties["idUsuario"].ToString();
-            int IdUsuario = Convert.ToInt16(idUsuario);
-            string cargoUsuario = Application.Current.Properties["cargoUsuario"].ToString();
-            App.cargo = cargoUsuario;
-            // App.Navigator.Detail = new NavigationPage(new ListarObras(IdUsuario, "Asistente"));
-            App.Navigator.Detail = new NavigationPage(new ListarObra(IdUsuario,cargoUsuario));
+            this.grid();
+            uiHome obraResponsable = new uiHome("ic_obra_color.png", "Obra");
+            obraResponsable.eventoTap.Command = new Command(() =>
+            {
+                // Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Responsable"));
+            });
+
+            // Posicionando los elementos en la interfas
+            Cuadricula.Children.Add(obraResponsable.contenedor, 0, 0);
+
+            // Pintando la Interfas
+            uixCargo.Children.Add(Cuadricula);
         }
         #endregion
 
+        #region =============================== UI ASISTENTE ===============================
+        public void uiAsistente(int idUsuario)
+        {
+            this.grid();
+            uiHome obraAsistente = new uiHome("ic_obra_color.png", "Obra");
+            obraAsistente.eventoTap.Command = new Command(() =>
+            {
+                // Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Asistente"));
+            });
 
+            // Posicionando los elementos en la interfas
+            Cuadricula.Children.Add(obraAsistente.contenedor, 0, 0);
 
+            // Pintando la Interfas
+            uixCargo.Children.Add(Cuadricula);
+        } 
+        #endregion
+    }
+    public class uiHome
+    {
+        public StackLayout contenedor { get; set; }
+        public TapGestureRecognizer eventoTap { get; set; }
+        public uiHome(string image, string nombre)
+        {
+            this.contenedor = new StackLayout();
+            this.contenedor.Children.Add(new Image { Source = image });
+            this.contenedor.Children.Add(new Label { Text = nombre, HorizontalOptions = LayoutOptions.CenterAndExpand });
+            this.eventoTap = new TapGestureRecognizer();
+            this.contenedor.GestureRecognizers.Add(this.eventoTap);
+        }
     }
 }

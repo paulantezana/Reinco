@@ -3,185 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.PaginaUsuario"
              Title="HOME">
-    
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="estiloCuadriculaAdmin" TargetType="Label" >
-                <Setter Property="TextColor" Value="{StaticResource Color1}"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        
         <ScrollView>
-        <StackLayout>
-            
-            <!-- ==================================================================================
-            ========================== Interfas General Para Cada Usuario =========================
-            =====================================================================================-->
-            <StackLayout BackgroundColor="{StaticResource Color1}" Padding="0,30,0,30">
-                <StackLayout Orientation="Horizontal">
-                    <Image Source="ic_profile.png" WidthRequest="100" HeightRequest="100"></Image>
-                    <StackLayout VerticalOptions="Center">
-                        <Label x:Name="nombreUsuario" FontSize="20"  TextColor="{StaticResource Color5}"></Label>
-                        <Label x:Name="cargoUsuario"  TextColor="{StaticResource Color5}"></Label>
-                    </StackLayout>
-                </StackLayout>
+            <StackLayout>
+                <AbsoluteLayout HeightRequest="200">
 
-                <StackLayout>
-                    <Label Text="" IsVisible="False"></Label>
-                </StackLayout>
-            </StackLayout>
-            
-            <!-- =================================================================================
-            ====================== INterfas De Usuario Para el Administrador =====================
-            =====================================================================================-->
-            <StackLayout x:Name="interfazAdministrador">
-                <!-- Textos de bienvenida -->
-                <StackLayout BackgroundColor="{StaticResource Color5}" Margin="5,0,5,0">
-                    <Label Text="Bienvenido a REINCO" HorizontalOptions="Center" FontSize="Large" Margin="0,20,0,0" FontAttributes="Bold" TextColor="{StaticResource Color1}"></Label>
-                    <Label Text="¿Que desa Hacer Hoy?" Margin="0,0,0,20" HorizontalOptions="Center"></Label>
-                </StackLayout>
-                
-                <!-- Botones de navegacion -->
-                <Grid Margin="5,0,5,0" WidthRequest="800">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
+                    <!-- Banner -->
+                    <BoxView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="{StaticResource Color1}"></BoxView>
 
-                    <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
-                        
-                            <Image Source="ic_obra_color.png"></Image>
-                            <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras"></Label>
-                        
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="irObra"/>
-                            </StackLayout.GestureRecognizers>
-                        
+                    <!-- Perfil -->
+                    <StackLayout AbsoluteLayout.LayoutBounds="0,.3,1,.5" AbsoluteLayout.LayoutFlags="All">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="ic_profile.png" WidthRequest="100" HeightRequest="100"></Image>
+                            <StackLayout VerticalOptions="Center">
+                                <Label x:Name="nombreUsuario" FontSize="20"  TextColor="{StaticResource Color5}"></Label>
+                                <Label x:Name="cargoUsuario"  TextColor="{StaticResource Color5}"></Label>
+                            </StackLayout>
+                        </StackLayout>
                     </StackLayout>
 
-                    <!-- Ir A la Página Listar Personal -->
-                    <StackLayout Grid.Column="1" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
-                        
-                        <Image Source="ic_personal_color.png"></Image>
-                        <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Personal"></Label>
-                        
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="irPersonal"/>
-                        </StackLayout.GestureRecognizers>
-                        
-                    </StackLayout>
-                    
-                    <!-- Ir A la Página Listar Plantillas -->
-                    <StackLayout Grid.Column="2" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
+                    <!-- Footer Banner -->
+                    <Grid AbsoluteLayout.LayoutBounds="0,1,1,30" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional">
 
-                            <Image Source="ic_plantilla_color.png"></Image>
-                            <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Plantillas"></Label>
-                        
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="irPlantilla"/>
-                            </StackLayout.GestureRecognizers>
-                        
-                    </StackLayout>
-
-                    <!-- Ir A la Página Listar Plantillas -->
-                    <StackLayout Grid.Column="0" Grid.Row="1" BackgroundColor="{StaticResource Color5}" Padding="0,15,0,15">
-
-                            <Image Source="ic_propietario_color.png"></Image>
-                            <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Propietarios"></Label>
-                        
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="irPropietario"/>
-                            </StackLayout.GestureRecognizers>
-
-                   </StackLayout>
-
-                    <!-- Supervisar -->
-                    <!-- END -->
-                </Grid>
-            </StackLayout>
-
-
-
-
-
-            <!-- =================================================================================
-            ======================= INterfas De Usuario Para el Responsable ======================
-            =====================================================================================-->
-
-                <StackLayout x:Name="interfazResponsable"  Margin="5,0,5,0">
-
-                    <Grid Margin="5,0,5,0" WidthRequest="800">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    
-                    <!-- Ir A la Página Listar Plantillas -->
-                    <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
-
-                        <Image Source="ic_obra_color.png"></Image>
-                        <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras" HorizontalTextAlignment="Center"></Label>
-
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="irObraResponsable"/>
-                        </StackLayout.GestureRecognizers>
-
-                    </StackLayout> 
-                    
-               </Grid>
-                    
-            </StackLayout>
-
-            <!-- =================================================================================
-            ======================== Interfaz De Usuario Para el Supervisor ======================
-            =====================================================================================-->
-                <StackLayout x:Name="interfazSupervisor">
-                    <Grid Margin="5,0,5,0" WidthRequest="800">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- Ir A la Página Listar Plantillas -->
-                        <StackLayout Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Color5}" Padding="0,20,0,20">
-
-                            <Image Source="ic_obra_color.png"></Image>
-                            <Label  Style="{StaticResource estiloCuadriculaAdmin}" Text="Obras" HorizontalTextAlignment="Center"></Label>
-
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="irObraSupervisor"/>
-                            </StackLayout.GestureRecognizers>
-
+                        
+                        <!-- ZONA DE MENSAJES Y NOTIFICACIONES DE CADA USUARIO -->
+                        <StackLayout Grid.Column="0">
+                            <!--<Image Source="ic_obra.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="CenterAndExpand"></Image>
+                            <Label Text="Obras" TextColor="{StaticResource Color5}"></Label>-->
                         </StackLayout>
 
+                        <StackLayout Grid.Column="1">
+                            <!--<Image Source="ic_obra.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="CenterAndExpand"></Image>
+                            <Label Text="Mensages" TextColor="{StaticResource Color5}"></Label>-->
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="2">
+                            <!--<Image Source="ic_obra.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="CenterAndExpand"></Image>
+                            <Label Text="Pendientes" TextColor="{StaticResource Color5}"></Label>-->
+                        </StackLayout>
                     </Grid>
+                </AbsoluteLayout>
+
+                <StackLayout x:Name="uixCargo">
+
                 </StackLayout>
-            
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
