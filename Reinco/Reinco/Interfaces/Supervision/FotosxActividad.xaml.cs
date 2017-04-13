@@ -3,7 +3,9 @@ using Reinco.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,16 +18,11 @@ namespace Reinco.Interfaces.Supervision
     public partial class FotosxActividad : ContentPage
     {
         public ObservableCollection<FotosxActividadItem> FotosxActividadItems { get; set; }
-        public Grid grid { get; set; }
-        public FotosxActividad(SupervisarActividadItem Actividad)
+        public FotosxActividad(/*SupervisarActividadItem Actividad*/)
         {
             InitializeComponent();
             FotosxActividadItems = new ObservableCollection<FotosxActividadItem>();
             CargarFotosxActividad();
-
-            float fotos = FotosxActividadItems.Count;
-            float columnas = 3;
-            double filas = Math.Ceiling(fotos / columnas);
 
             // Sacar Foto
             StackLayout nuevaFoto = new StackLayout()
@@ -41,52 +38,28 @@ namespace Reinco.Interfaces.Supervision
                 VerticalOptions = LayoutOptions.CenterAndExpand
             });
             nuevaFoto.Children.Add(new Label { Text = "Nueva Foto", VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = Color.FromHex("#FFFFFF") });
+
+            // Llamando al comando para llamar la Camara
             nuevaFoto.GestureRecognizers.Add(new TapGestureRecognizer()
             {
                 Command = new Command(async () =>
                 {
                     await camara();
                     var fotoN = new uiImagen(FotosxActividadItems[FotosxActividadItems.Count() - 1]).layoutImagen;
-                    Double nFila = Math.Ceiling(FotosxActividadItems.Count() - 1 / columnas);
-                    if (nFila > filas)
-                    {
-                        grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                        filas += 1;
-                    }
-                    Double nColumna = Math.Truncate(FotosxActividadItems.Count() - 1 / nFila);
-                    await DisplayAlert("info", (FotosxActividadItems.Count() / nFila).ToString(), "ok");
-                    grid.Children.Add(fotoN, Convert.ToInt16(nColumna), Convert.ToInt16(nFila - 1));
+                    GaleriaContainer.Children.Add(fotoN);
                 })
             });
 
-            grid = new Grid();
-
-            for (int i = 0; i < columnas; i++)
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-            }
-            for (int i = 0; i < filas; i++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            }
-
-            // Rellena
-            int item = 0;
-            for (int y = 0; y < filas; y++)
-            {
-                for (int x = 0; x < columnas; x++)
-                {
-                    if (item < fotos)
-                    {
-                        grid.Children.Add(new uiImagen(FotosxActividadItems[item]).layoutImagen, x, y);
-                        item++;
-                    }
-                }
-            }
+            // Pintando la  Fotos En UI
             GaleriaContainer.Children.Add(nuevaFoto);
-            GaleriaContainer.Children.Add(grid);
+            foreach (var FotosxActividad in FotosxActividadItems)
+            {
+                GaleriaContainer.Children.Add(new uiImagen(FotosxActividad).layoutImagen);
+            }
+            // End
         }
 
+        #region ===================================== Camara =====================================
         private async Task camara()
         {
             await CrossMedia.Current.Initialize();
@@ -118,20 +91,23 @@ namespace Reinco.Interfaces.Supervision
             FotosxActividadItems.Add(new FotosxActividadItem
             {
                 id = 12,
-                foto = file.Path
+                foto = file.Path,
+                file = file.GetStream()
             });
-        }
+        } 
+        #endregion
 
+        #region ================================= Cargando Las Fotos =================================
         private void CargarFotosxActividad()
         {
             try
             {
-                for (int i = 0; i < 11; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     FotosxActividadItems.Add(new FotosxActividadItem
                     {
                         id = i,
-                        foto = "http://lorempixel.com/150/260/"
+                        foto = "http://lorempixel.com/300/400/"
                     });
                 }
             }
@@ -139,8 +115,12 @@ namespace Reinco.Interfaces.Supervision
             {
                 DisplayAlert("Alerta", ex.Message, "Aceptar");
             }
-        }
+        } 
+        #endregion
+
     }
+
+    #region ===================================== UI Imagen =====================================
     public class uiImagen
     {
         public AbsoluteLayout layoutImagen { get; set; }
@@ -150,8 +130,8 @@ namespace Reinco.Interfaces.Supervision
 
             Image imagen = new Image()
             {
-                WidthRequest = 100,
-                HeightRequest = 177,
+                // WidthRequest = 100,
+                // HeightRequest = 177,
             };
             imagen.Source = FotoActividad.foto;
             AbsoluteLayout.SetLayoutBounds(imagen, new Rectangle(1, 1, 1, 1));
@@ -188,9 +168,29 @@ namespace Reinco.Interfaces.Supervision
             App.Current.MainPage.DisplayAlert("Eliminar", FotoActividad.id.ToString(), "Aceptar");
         }
 
-        private void guardarFoto(FotosxActividadItem FotoActividad)
+        private async void guardarFoto(FotosxActividadItem FotoActividad)
         {
-            App.Current.MainPage.DisplayAlert("Guardar", FotoActividad.id.ToString(), "Aceptar");
+            //var nuevo_file = ReducirImagen.ResizeImage();
+            var contenido = new MultipartFormDataContent();
+            contenido.Add(new StreamContent(FotoActividad.file), "\"file\"", $"\"{FotoActividad.foto}\"");
+            /* var values = new[]
+             {
+                 new KeyValuePair<string, string>("idSupervisionActividad", idSupervisionActividad.ToString()),
+             };
+             foreach (var keyValuePair in values)
+             {
+                 contenido.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
+             }*/
+
+            var servicioUpload = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/ServicioFoto.asmx/ImagenPost";
+            var client = new HttpClient();
+            var httpResponserMessage = await client.PostAsync(servicioUpload, contenido);
+            string mensajeRespuesta = await httpResponserMessage.Content.ReadAsStringAsync();
+            await App.Current.MainPage.DisplayAlert("ERROR:", mensajeRespuesta, "Aceptar");
+
+            // App.Current.MainPage.DisplayAlert("Guardar", FotoActividad.id.ToString(), "Aceptar");
         }
-    }
+    } 
+    #endregion
+
 }

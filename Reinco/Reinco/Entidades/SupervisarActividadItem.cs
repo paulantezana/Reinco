@@ -150,7 +150,7 @@ namespace Reinco.Entidades
             });
             verFotos = new Command(() =>
             {
-                App.Supervisar.Navigation.PushAsync(new FotosxActividad(this));
+                App.Supervisar.Navigation.PushAsync(new FotosxActividad());
             });
             guardarIsVisible = false;
 
