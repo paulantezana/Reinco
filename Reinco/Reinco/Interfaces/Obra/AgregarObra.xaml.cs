@@ -36,7 +36,6 @@ namespace Reinco.Interfaces.Obra
         public ICommand commandBorrarResponsable { get; private set; }
         #endregion
          #region +================ Atributos================+
-        private bool isRunning;
         int IdObra;
         int IdPropietario;
         int IdResponsabe;
@@ -61,20 +60,14 @@ namespace Reinco.Interfaces.Obra
             personalItem = new  ObservableCollection<PersonalItem>();
 
             // Cargando las listas en los POP UPS
-            CargarPropietarioItem();
-            CargarPersonalItem();
+            listarBindablePicker();
 
             // Eventos Guardar Y Cancelar
             cancelar.Clicked += Cancelar_Clicked;
             guardar.Clicked += Guardar_Clicked;
 
             // Comandos
-            commandCambiarPropietario = new Command(() =>
-            {
-                CargarPropietarioItem();
-                asignarPropietario.ItemsSource = propietarioItem;
-                asignarPropietario.Focus();
-            });
+
 
             commandBorrarPropietario = new Command(() =>
             {
@@ -82,12 +75,6 @@ namespace Reinco.Interfaces.Obra
                 DisplayAlert("Mensaje", asignarResponsable.SelectedValue + " " + asignarResponsable.SelectedValuePath, "Aceptar");
             });
 
-            commandCambiarResponsable = new Command(() =>
-            {
-                CargarPersonalItem();
-                asignarResponsable.ItemsSource = personalItem;
-                asignarResponsable.Focus();
-            });
             commandBorrarResponsable = new Command(() =>
             {
                 asignarResponsable.SelectedValue = 0;
@@ -124,17 +111,10 @@ namespace Reinco.Interfaces.Obra
             personalItem = new ObservableCollection<PersonalItem>();
 
             // Cargando las listas en los POP UPS
-            CargarPropietarioItem();
-            CargarPersonalItem();
+            listarBindablePicker();
 
 
             // Comandos
-            commandCambiarPropietario = new Command(() =>
-            {
-                CargarPropietarioItem();
-                asignarPropietario.ItemsSource = propietarioItem;
-                asignarPropietario.Focus();
-            });
 
             commandBorrarPropietario = new Command(() =>
             {
@@ -142,12 +122,6 @@ namespace Reinco.Interfaces.Obra
                 DisplayAlert("Mensaje", "Se eliminó al propietario", "Aceptar");
             });
 
-            commandCambiarResponsable = new Command(() =>
-            {
-                //CargarPersonalItem();
-                asignarResponsable.ItemsSource = personalItem;
-                asignarResponsable.Focus();
-            });
             commandBorrarResponsable = new Command(() =>
             {
                 asignarResponsable.SelectedValue = 0;
@@ -159,10 +133,11 @@ namespace Reinco.Interfaces.Obra
             guardar.Clicked += modificarObra;
             cancelar.Clicked += Cancelar_Clicked;
 
-        } 
+        }
         #endregion
 
-        #region +---- Corriendo ----+
+        #region ======================= IsRunnings =======================
+        public bool isRunning { get; set; }
         public bool IsRunning
         {
             set
@@ -173,19 +148,41 @@ namespace Reinco.Interfaces.Obra
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunning"));
                 }
             }
-            get
+            get { return isRunning; }
+        }
+        public bool isRunningPropietario { get; set; }
+        public bool IsRunningPropietario
+        {
+            set
             {
-                return isRunning;
+                if (isRunningPropietario != value)
+                {
+                    isRunningPropietario = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunningPropietario"));
+                }
             }
+            get { return isRunningPropietario; }
+        }
+        public bool isRunningUsuario { get; set; }
+        public bool IsRunningUsuario
+        {
+            set
+            {
+                if (isRunningUsuario != value)
+                {
+                    isRunningUsuario = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunningUsuario"));
+                }
+            }
+            get { return isRunningUsuario; }
         }
         #endregion
 
         #region +--------------- Cargando Usuarios Desde Web Service ---------------------------+
-        private async void CargarPersonalItem()
+        private async Task CargarPersonalItem()
         {
             try
             {
-                personalItem.Clear();
                 dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosResponsables");
                 foreach (var item in usuarios)
                 {
@@ -198,16 +195,15 @@ namespace Reinco.Interfaces.Obra
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error", ex.Message);
+                await DisplayAlert("Error", ex.Message,"Aceptar");
             }
         }
         #endregion
         #region +------------- Cargando Propietarios Desde Web Service -----------------+
-        private async void CargarPropietarioItem()
+        private async Task CargarPropietarioItem()
         {
             try
             {
-                propietarioItem.Clear();
                 dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
                 foreach (var item in propietario)
                 {
@@ -220,7 +216,7 @@ namespace Reinco.Interfaces.Obra
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error", ex.Message);
+                await DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
         #endregion
@@ -298,10 +294,11 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-        // ============== Ingresar Propietario y Responsable  ===============//
+
+        #region =========================== Ingresar Propietario y Responsable ===========================
         public async void IngresarPropResponsable(object idPropietario, object idUsuario)
         {
-            
+
             object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                            { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} };
             dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "IngresarPropietarioResponsableEnObra", variables);
@@ -314,7 +311,8 @@ namespace Reinco.Interfaces.Obra
                 await Navigation.PopAsync();
                 return;
             }
-        }
+        } 
+        #endregion
 
         #region Navegacion para el boton cancelar
         private void Cancelar_Clicked(object sender, EventArgs e)
@@ -413,5 +411,25 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
+
+        public async void listarBindablePicker()
+        {
+            try
+            {
+                IsRunningPropietario = true;
+                IsRunningUsuario = true;
+                await CargarPersonalItem();
+                await CargarPropietarioItem();
+
+                asignarPropietario.ItemsSource = propietarioItem;
+                asignarResponsable.ItemsSource = personalItem;
+                IsRunningPropietario = false;
+                IsRunningUsuario = false;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+        }
     }
 }

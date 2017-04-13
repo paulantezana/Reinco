@@ -77,7 +77,6 @@ namespace Reinco.Interfaces.Obra
             {
                 ObraItems.Clear();
                 CargarObraItems();
-                IsRefreshingObra = false;
             });
             #endregion
            
@@ -151,6 +150,7 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
+                IsRefreshingObra = true;
                 //servicioObra, mostrarObras--modificado
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
                 foreach (var item in obras)
@@ -181,6 +181,10 @@ namespace Reinco.Interfaces.Obra
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+            finally
+            {
+                IsRefreshingObra = false;
             }
         }
         #region=============obras responsable=======================================
