@@ -4,59 +4,76 @@
              x:Class="Reinco.Interfaces.Plantilla.ListarActividad"
              Title="ACTIVIDADES">
 
+    <!-- Icono Para Agregar Actividad -->
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="ic_add.png" Command="{Binding AgregarActividad}"></ToolbarItem>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding agregarActividad}"></ToolbarItem>
     </ContentPage.ToolbarItems>
 
+    <!-- Contenido Principal de la página -->
     <ContentPage.Content>
-        <StackLayout>
-            <ListView 
-                ItemsSource="{Binding ActividadItems}"
-                BackgroundColor="{StaticResource Color5}"
-                HasUnevenRows="True"
-                IsPullToRefreshEnabled="True"
-                RefreshCommand="{Binding RefreshActividadCommand}"
-                IsRefreshing="{Binding IsRefreshingActividad,Mode=TwoWay}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            
-                            <!-- Eventos -->
-                            <ViewCell.ContextActions>
-                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idActividad}" Text="Eliminar" IsDestructive="True" />
-                            </ViewCell.ContextActions>
-                            <!-- Contenido -->
+        <ListView
+            ItemsSource="{Binding ActividadItems}"
+            BackgroundColor="{StaticResource Color5}"
+            HasUnevenRows="True"
+            IsPullToRefreshEnabled="True"
+            RefreshCommand="{Binding RefreshActividadCommand}"
+            IsRefreshing="{Binding IsRefreshingActividad,Mode=TwoWay}">
 
-                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
+            <!-- Encabezado -->
+            <ListView.Header>
+                <StackLayout>
+                    <!-- Buscador -->
+                    <StackLayout Padding="5">
+                        <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </ListView.Header>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Label FontAttributes="Bold" FontSize="20" VerticalOptions="Center" Text="{Binding enumera}" Grid.Column="0"></Label>
+            <!-- Cuerpo -->
+            <ListView.ItemTemplate>
+                <DataTemplate>
 
-                                <StackLayout VerticalOptions="Center" Grid.Column="1">
-                                    <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
-                                    <Label Text="{Binding tolerancia}"></Label>
-                                </StackLayout>
+                    <!-- Cell Personalizado -->
+                    <ViewCell>
+                        <!-- Eventos -->
+                        <ViewCell.ContextActions>
+                            <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True" />
+                        </ViewCell.ContextActions>
+                        <!-- Contenido -->
 
-                                <Image Grid.Column="2" Source="ic_editar.png"  WidthRequest="30" HeightRequest="30" Margin="7">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding editarActividad}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
+                        <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
 
-                            </Grid>
-                            <!-- END Contenido-->
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
 
+                            <Label FontAttributes="Bold" FontSize="20" VerticalOptions="Center" Text="{Binding enumera}" Grid.Column="0"></Label>
+
+                            <StackLayout VerticalOptions="Center" Grid.Column="1">
+                                <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                <Label Text="{Binding tolerancia}"></Label>
+                            </StackLayout>
+
+                            <Image Grid.Column="2" Source="ic_editar.png"  WidthRequest="30" HeightRequest="30" Margin="7">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding editarActividad}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                        </Grid>
+                        <!-- END Contenido-->
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            <!-- Pie De la Página -->
+            <ListView.Footer>
+                <StackLayout x:Name="paginacion" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Padding="0,20,0,20">
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
     </ContentPage.Content>
-
-
 </ContentPage>

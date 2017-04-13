@@ -2,28 +2,37 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Plantilla.AgregarPlantilla"
-             Title="PLANTILLA">
+             BackgroundColor="{StaticResource Color5}"
+             Title="CREAR PLANTILLA">
     <ContentPage.Content>
-
-        <StackLayout Padding="8" Spacing="15">
+        <StackLayout>
+            
+            <!-- Directorio Actual de la pagina -->
+            <StackLayout Padding="5">
+                <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+            </StackLayout>
+            
             <!-- Plantilla Codigo -->
-            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,20,8,20">
                 <Label Text="Codigo Plantilla"></Label>
                 <Entry x:Name="codPlantilla"></Entry>
             </StackLayout>
+            
             <!-- Plantilla Nombre -->
-            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,20,8,20">
                 <Label Text="Nombre Plantilla"></Label>
                 <Entry x:Name="nombrePlantilla"></Entry>
             </StackLayout>
+            
+            <!-- Indicador de Actividad -->
+            <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
 
             <!-- Buttons Action -->
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8,20,8,20">
                 <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
                 <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
             </StackLayout>
             <!-- End -->
         </StackLayout>
-        
     </ContentPage.Content>
 </ContentPage>

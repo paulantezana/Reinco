@@ -16,47 +16,10 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListarPlantilla : ContentPage, INotifyPropertyChanged
     {
-
-        WebService Servicio = new WebService();
-        public VentanaMensaje mensaje;
-        string Mensaje;
-
-        #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
+        WebService Servicio = new WebService();
 
-        #region ObservableCollections
-        public ObservableCollection<PlantillaItem> PlantillaItems { get; set; } 
-        #endregion
-
-        public ListarPlantilla()
-        {
-            InitializeComponent();
-
-            PlantillaItems = new ObservableCollection<PlantillaItem>();
-
-            // cargado las plantillas
-            CargarPlantilla();
-
-            // Comandos
-            RefreshPlantillaCommand = new Command(() =>
-            {
-                PlantillaItems.Clear();
-                CargarPlantilla();
-                IsRefreshingPlantilla = false;
-            });
-
-            CrearPlantilla = new Command(() =>
-            {
-                Navigation.PushAsync(new AgregarPlantilla());
-            });
-
-            // Contecto de los bindings
-            this.BindingContext = this;
-        }
-
-
-        #region +---- Refrescar Lista ----+
+        public ObservableCollection<PlantillaItem> PlantillaItems { get; set; }
         private bool isRefreshingPlantilla { get; set; }
         public bool IsRefreshingPlantilla
         {
@@ -73,12 +36,30 @@ namespace Reinco.Interfaces.Plantilla
                 return isRefreshingPlantilla;
             }
         }
-        #endregion
-
-        #region +---- comandos ----+
         public ICommand RefreshPlantillaCommand { get; private set; }
-        public ICommand CrearPlantilla { get; private set; }
-        #endregion
+        public ICommand agregarPlantilla { get; private set; }
+        public ListarPlantilla()
+        {
+            InitializeComponent();
+            directorio.Text = App.directorio + "\\Plantilla";
+
+            PlantillaItems = new ObservableCollection<PlantillaItem>();
+            CargarPlantilla();
+
+            // Commands
+            RefreshPlantillaCommand = new Command(() =>
+            {
+                PlantillaItems.Clear();
+                CargarPlantilla();
+            });
+            agregarPlantilla = new Command(() =>
+            {
+                Navigation.PushAsync(new AgregarPlantilla());
+            });
+
+            // Contexto Para Los bindings
+            this.BindingContext = this;
+        }
 
         #region +---- Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
@@ -88,11 +69,11 @@ namespace Reinco.Interfaces.Plantilla
         }
         #endregion
 
-        #region======================== cargar plantilla en lista====================================
         public async void CargarPlantilla()
         {
             try
             {
+                IsRefreshingPlantilla = true;
                 dynamic plantillas = await Servicio.MetodoGet("ServicioPlantilla.asmx", "MostrarPlantillas");
                 foreach (var plantilla in plantillas)
                 {
@@ -107,41 +88,12 @@ namespace Reinco.Interfaces.Plantilla
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error", ex.Message);
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+            finally
+            {
+                IsRefreshingPlantilla = false;
             }
         }
-        #endregion
-
-        #region===================// Eliminar Plantilla CRUD //====================
-        public async void eliminar(object sender, EventArgs e)
-        {
-            try
-            {
-                // Recuperando el idPlantilla
-                var idPlantilla = ((MenuItem)sender).CommandParameter;
-                int IdPlantilla = Convert.ToInt16(idPlantilla);
-
-                // Consumiendo datos de la web service
-                bool respuesta = await DisplayAlert("Eliminar", "¿Desea eliminar esta plantilla? ", "Aceptar", "Cancelar");
-                object[,] variables = new object[,] { { "idPlantilla", IdPlantilla } };
-                dynamic result = await Servicio.MetodoGetString("ServicioPlantilla.asmx", "EliminarPlantilla", variables);
-                Mensaje = Convert.ToString(result);
-                if (result != null)
-                {
-                    // await mensaje.MostrarMensaje("Eliminar Plantilla", Mensaje);
-                    await App.Current.MainPage.DisplayAlert("Eliminar Plantilla", Mensaje, "OK");
-                    PlantillaItems.Clear();
-                    CargarPlantilla();
-                    //IsRefreshingPlantilla = false;
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                await mensaje.MostrarMensaje("Eliminar Plantilla", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
-            }
-        }
-        #endregion
-
     }
 }

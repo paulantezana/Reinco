@@ -26,6 +26,7 @@ namespace Reinco
         public static string cuenta = "reinco_pruebas";
         public static string cargo = "";
         public static string correo = "";
+        public static string directorio = "Reicno";
         public VentanaMensaje mensaje;
         #endregion
 

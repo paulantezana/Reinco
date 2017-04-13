@@ -4,12 +4,12 @@
              x:Class="Reinco.Interfaces.Propietario.ListarPropietario"
              Title="PAGINA PROPIETARIO">
 
-    
+    <!-- Icono Para Agregar Propietario -->
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="ic_add.png" Command="{Binding AgregarPropietario}"></ToolbarItem>
     </ContentPage.ToolbarItems>
-
     
+    <!-- Contenido Principal de la página -->
     <ContentPage.Content>
         <StackLayout>
             <ListView
@@ -19,13 +19,25 @@
                 IsPullToRefreshEnabled="True"
                 RefreshCommand="{Binding RefreshPropietarioCommand}"
                 IsRefreshing="{Binding IsRefreshingPropietario,Mode=TwoWay}">
+                <!-- Encabezado -->
 
+                <ListView.Header>
+                    <StackLayout>
+                        <!-- Buscador -->
+                        <StackLayout Padding="5">
+                            <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ListView.Header>
+                
+                <!-- Cuerpo -->
                 <ListView.ItemTemplate>
                     <DataTemplate>
+                        
+                        <!-- Cell Personalizado -->
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <!--<MenuItem Clicked="actualizar" CommandParameter="{Binding idPropietario}" Text="Modificar"/>-->
-                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idPropietario}" Text="Eliminar" IsDestructive="True" />
+                                <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True" />
                             </ViewCell.ContextActions>
 
                             <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
@@ -46,6 +58,13 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                
+                <!-- Pie De la Página -->
+                <ListView.Footer>
+                    <StackLayout x:Name="paginacion" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Padding="0,20,0,20">
+                    </StackLayout>
+                </ListView.Footer>
+                
             </ListView>
         </StackLayout>
     </ContentPage.Content>

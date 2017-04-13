@@ -16,48 +16,11 @@ namespace Reinco.Interfaces.Plantilla
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListarActividad : ContentPage, INotifyPropertyChanged
     {
-
-        WebService Servicio = new WebService();
-        public VentanaMensaje mensaje;
-        string Mensaje;
-        protected int IdPlantilla;
-
-
-        #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
+        WebService Servicio = new WebService();
+        PlantillaItem plantilla;
 
-        #region ObservableCollections
-        public ObservableCollection<ActividadItem> ActividadItems { get; set; } 
-        #endregion
-
-        public ListarActividad(int idPlantilla, string nombre)
-        {
-            InitializeComponent();
-            this.Title = nombre;
-            this.IdPlantilla = idPlantilla;
-
-            ActividadItems = new ObservableCollection<ActividadItem>();
-           
-            CargarActividadItems();
-            // eventos
-            RefreshActividadCommand = new Command(() =>
-            {
-                ActividadItems.Clear();
-                CargarActividadItems();
-                IsRefreshingActividad = false;
-            });
-
-            AgregarActividad = new Command(() =>
-            {
-                Navigation.PushAsync(new AgregarActividad(IdPlantilla));
-            });
-
-
-            this.BindingContext = this;
-        }
-
-        #region=============Refrescar pagina=======================
+        public ObservableCollection<ActividadItem> ActividadItems { get; set; }
         private bool isRefreshingActividad { get; set; }
         public bool IsRefreshingActividad
         {
@@ -69,17 +32,37 @@ namespace Reinco.Interfaces.Plantilla
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingActividad"));
                 }
             }
-            get
-            {
-                return isRefreshingActividad;
-            }
+            get { return isRefreshingActividad; }
         }
-        #endregion
-
-        #region +--- comandos ----+
         public ICommand RefreshActividadCommand { get; private set; }
-        public ICommand AgregarActividad { get; private set; }
-        #endregion
+        public ICommand agregarActividad { get; set; }
+
+        public ListarActividad(PlantillaItem Plantilla)
+        {
+            InitializeComponent();
+            plantilla = Plantilla;
+
+            directorio.Text = App.directorio + "\\" + Plantilla.nombre + "\\Actividades";
+
+            this.Title = Plantilla.nombre;
+
+            ActividadItems = new ObservableCollection<ActividadItem>();
+            CargarActividad();
+
+            // Commands
+            RefreshActividadCommand = new Command(() =>
+            {
+                ActividadItems.Clear();
+                CargarActividad();
+            });
+            agregarActividad = new Command(() =>
+            {
+                Navigation.PushAsync(new AgregarActividad(Plantilla));
+            });
+
+            // Contexto Para Los bindings
+            this.BindingContext = this;
+        }
 
         #region +---- Definiendo Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
@@ -89,23 +72,23 @@ namespace Reinco.Interfaces.Plantilla
         }
         #endregion
 
-        #region================= cargar actividades=====================
-        public async void CargarActividadItems()
+        public async void CargarActividad()
         {
             byte x = 01; // utilizada para la enumeracion de las actividades
             try
             {
-                object[,] OidPlantilla = new object[,] { { "idPlantilla", IdPlantilla } };
+                IsRefreshingActividad = true;
+                object[,] OidPlantilla = new object[,] { { "idPlantilla", plantilla.idPlantilla } };
                 dynamic result = await Servicio.MetodoGet("ServicioPlantillaActividad.asmx", "MostrarActividadxIdPlantilla", OidPlantilla);
                 foreach (var item in result)
                 {
                     ActividadItems.Add(new ActividadItem
                     {
-                        idActividad = item.idPlantilla_Actividad,
-                        nombre = item.nombre,
-                        tolerancia = item.tolerancia,
-                        idPlantilla = item.idPlantilla,
-                        enumera = x++,
+                        idActividad         = item.idPlantilla_Actividad,
+                        nombre              = item.nombre,
+                        tolerancia          = item.tolerancia,
+                        idPlantilla         = item.idPlantilla,
+                        enumera             = x++,
                     });
                 }
 
@@ -114,38 +97,10 @@ namespace Reinco.Interfaces.Plantilla
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
-        }
-        #endregion
-
-        #region=============eliminar actividad=====================
-        public async void eliminar(object sender, EventArgs e)
-        {
-            try
+            finally
             {
-                var idActividad = ((MenuItem)sender).CommandParameter;
-                int IdActividad = Convert.ToInt16(idActividad);
-                bool respuesta = await DisplayAlert("Eliminar", "¿Desea eliminar este Actividad?", "Aceptar", "Cancelar");
-                object[,] variables = new object[,] { { "idPlantillaActividad", IdActividad } };
-                dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "EliminarPlantillaActividad", variables);
-                Mensaje = Convert.ToString(result);
-                if (result != null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Eliminar Actividad", Mensaje, "OK");
-                    App.ListarActividad.ActividadItems.Clear();
-                    App.ListarActividad.CargarActividadItems();
-                   // await Navigation.PopAsync();
-                    return;
-                }
+                IsRefreshingActividad = false;
             }
-            catch (Exception ex)
-            {
-                await mensaje.MostrarMensaje("Eliminar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
-            }
-
         }
-        #endregion
-
-
-
     }
 }

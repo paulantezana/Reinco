@@ -19,20 +19,14 @@ namespace Reinco.Interfaces.Propietario
     public partial class ListarPropietario : ContentPage, INotifyPropertyChanged
     {
         WebService Servicio = new WebService();
-        string Mensaje;
-        public VentanaMensaje mensaje;
-
 
         private bool isRefreshingPropietario { get; set; }
-
 
         #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-
-
-        #region MyRegion
+        #region IsRefreshingPropietario
         public ObservableCollection<PropietarioItem> PropietarioItems { get; set; }
         public bool IsRefreshingPropietario
         {
@@ -51,21 +45,17 @@ namespace Reinco.Interfaces.Propietario
         }
         #endregion
 
-
-
         #region Comands
         public ICommand RefreshPropietarioCommand { get; private set; }
         public ICommand AgregarPropietario { get; private set; }
         #endregion
-
-
-
 
         // datatable usuario;
         #region=============constructor vacio======================
         public ListarPropietario()
         {
             InitializeComponent();
+            directorio.Text = App.directorio + "\\Propietario";
             PropietarioItems = new ObservableCollection<PropietarioItem>();
             CargarPropietarioItem();
 
@@ -73,8 +63,6 @@ namespace Reinco.Interfaces.Propietario
             {
                 PropietarioItems.Clear();
                 CargarPropietarioItem();
-                IsRefreshingPropietario = false;
-
             });
 
             AgregarPropietario = new Command(() =>
@@ -93,11 +81,12 @@ namespace Reinco.Interfaces.Propietario
         }
         #endregion
 
-        #region=============cargar propietarios==================
+        #region ============= Cargar Propietarios==================
         public async void CargarPropietarioItem()
         {
             try
             {
+                IsRefreshingPropietario = true;
                 dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
                 foreach (var item in result)
                 {
@@ -108,49 +97,16 @@ namespace Reinco.Interfaces.Propietario
                         fotoPerfil = "ic_profile_color.png",
                     });
                 }
-
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
-            
+            finally
+            {
+                IsRefreshingPropietario = false;
+            }
         }
         #endregion
-
-
-        #region ===================// Eliminar Propietario====================
-        public async void eliminar(object sender, EventArgs e)
-        {
-            try
-            {
-                var idPropietario = ((MenuItem)sender).CommandParameter;
-                int IdPropietario = Convert.ToInt16(idPropietario);
-                bool respuesta = await DisplayAlert("Eliminar", "¿Desea eliminar al propietario?", "Aceptar", "Cancelar");
-                object[,] variables = new object[,] { { "idPropietario", IdPropietario} };
-                dynamic result = await Servicio.MetodoGetString("ServicioPropietario.asmx", "EliminarPropietario", variables);
-                Mensaje = Convert.ToString(result);
-                if (result != null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
-                    await Navigation.PopAsync();
-
-                    IsRefreshingPropietario = true;
-                    PropietarioItems.Clear();
-                    CargarPropietarioItem();
-                    IsRefreshingPropietario = false;
-
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                await mensaje.MostrarMensaje("Eliminar Propietario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
-            }
-           
-        }
-
-        #endregion
-
     }
 }
