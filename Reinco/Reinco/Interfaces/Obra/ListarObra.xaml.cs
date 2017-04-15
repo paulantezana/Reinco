@@ -202,14 +202,14 @@ namespace Reinco.Interfaces.Obra
                     ObraItems.Add(new ObraItem
                     {
                         idObra = item.idObra,
-                        nombre = item.nombreObra,
-                        codigo = item.codigoObra,
+                        nombre = item.nombre,
+                        codigo = item.codigo,
                         idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
                         idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
                         colorObra = Color,
                         idPropietarioObra = item.idPropietario_Obra,
-                        nombrePropietario = item.nombrePropietario,
-                        nombresApellidos = item.responsable,
+                        nombrePropietario = item.nombrePropietario==null?"": item.nombrePropietario,
+                        nombresApellidos = item.responsable==null?"": item.responsable,
                         ocultar=true
                     });
                 }

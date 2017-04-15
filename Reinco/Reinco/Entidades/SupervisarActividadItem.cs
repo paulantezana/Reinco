@@ -26,6 +26,7 @@ namespace Reinco.Entidades
         public string actividad { get; set; }
         public string anotacionAdicinal { get; set; }
         public string tolerancia { get; set; }
+        public int animacion { get; set; }
 
         #region ================ Preparando pa mostrar o ocultar el boton guardar ================
         public bool GuardarIsVisible { get; set; }
@@ -117,6 +118,7 @@ namespace Reinco.Entidades
                         Aprobacion = value;
                         _aprobacion = value;
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("aprobacion"));
+                        
                         GuardarActividad();
                     }
                     else
@@ -149,7 +151,7 @@ namespace Reinco.Entidades
 
             guardarIsVisible = false;
 
-            #region ================= Expandir Y Havilitar Boton Guardar =================
+            #region ================= Expandir Y Habilitar Boton Guardar =================
             MostrarAnotacion = false;
             ExpandirAnotacion = new Command(() =>
             {
@@ -283,6 +285,8 @@ namespace Reinco.Entidades
 
         // Preparando la interaccion de la camaron y mostrara la foto en la interfaz
         private ImageSource rutaImagen;
+        private Image oculto;
+
         public ImageSource RutaImagen
         {
             set
@@ -337,6 +341,7 @@ namespace Reinco.Entidades
         {
             try
             {
+               
                 int Si, No,ObservacionLevantada;
                 if (aprobacion == false)
                 {
@@ -360,12 +365,14 @@ namespace Reinco.Entidades
                 object[,] variables = new object[,] {
                         { "idSupervisionActividad",idSupervisionActividad  } ,{ "si", Si },{ "no", No },
                         { "observacionLevantada", ObservacionLevantada }, { "anotacionAdicional", anotacion }};
-
+                animacion = 1;
                 dynamic result = await Servicio.MetodoGetString("SupervisionActividad.asmx", "guardarSupervisionActividad", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
                     //await App.Current.MainPage.DisplayAlert("Guardar Supervisión", Mensaje, "OK");
+                    oculto = new Image();
+                    await oculto.FadeTo(1, 4000);
                     return;
                 }
             }

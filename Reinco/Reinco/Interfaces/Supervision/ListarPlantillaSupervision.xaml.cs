@@ -21,7 +21,8 @@ namespace Reinco.Interfaces.Supervision
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
-        
+        string Cargo = "";
+        string Color;
         int IdPlantillaObra;
         #endregion
 
@@ -66,7 +67,7 @@ namespace Reinco.Interfaces.Supervision
             IdPlantillaObra = idPlantillaObra;
             this.Title = nombrePlantilla;
             this.DireccionApp = Application.Current.Properties["direccionApp"] + "\\Supervison";
-
+            Cargo = App.cargo;//cargo de la persona que ha iniciado sesion
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
             AgregarSupervision = new Command(() =>
@@ -98,6 +99,9 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 //byte x = 01;
+                
+                string nombreA = "";
+                string nombreR = "";
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObra", variables);
@@ -115,14 +119,25 @@ namespace Reinco.Interfaces.Supervision
                         // listando las obras
                         foreach (var item in result)
                         {
+                            if(item.firma_recepcion==1&&item.firma_notificacion==1&&item.firma_conformidad==1)
+                                Color = "#77FF77";
+                            else
+                                Color = "#FF7777";
+                            nombreA = "As: "+item.nombreAsistente+" - ";
+                            nombreR = "Resp: "+item.nombreResponsable;
+                            if (Cargo == "Asistente")
+                                nombreA = "";
+                            if (Cargo == "Responsable")
+                                nombreR = "";
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
                             {
-                                nombre = "Supervision",
+                                nombre = nombreA+nombreR,
                                 numero =item.nroSupervision==null?0: item.nroSupervision,
                                 fecha = item.fecha,
                                 partidaEvaluada = item.partidaEvaluada,
                                 nivel = item.nivel,
-                                idSupervision =item.idSupervision
+                                idSupervision =item.idSupervision,
+                                colorSupervision=Color
                             });
                         }
                         // fin del listado

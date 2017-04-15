@@ -21,10 +21,11 @@ namespace Reinco.Entidades
         public int idPlantilla { get; set; }
         public string partidaEvaluada { get; set; }
         public string nivel { get; set; }
-
+        public string nombreAsistente { get; set; }
+        public string nombreResponsable { get; set; }
         public ICommand Supervisar { get; private set; }
         public ICommand verActividades { get; private set; }
-
+        public string colorSupervision { get;set; }
         public string nombreObra { get; set; }
 
 

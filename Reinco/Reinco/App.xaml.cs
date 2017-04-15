@@ -23,9 +23,10 @@ namespace Reinco
         public static string opcional = "(Opcional)";
         public static string ip;
         public static string puerto = "80";
-        public static string cuenta = "reinco_pruebas";
+        public static string cuenta = "reinco_pruebas_code";
         public static string cargo = "";
         public static string correo = "";
+        public static string nombre = "";//nombre de la persona que acaba de loguearse
         public VentanaMensaje mensaje;
         #endregion
 

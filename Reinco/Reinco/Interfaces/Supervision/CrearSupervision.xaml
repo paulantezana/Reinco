@@ -15,22 +15,22 @@
                 </StackLayout>
 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Número Supervision"></Label>
+                    <Label Text="Número de Supervisión" x:Name="lblNroSupervision"></Label>
                     <Entry x:Name="numeroSupervision" Keyboard="Numeric"></Entry>
                 </StackLayout>
 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Partida Evaluada"></Label>
+                    <Label Text="Partida Evaluada" x:Name="lblPartidaEvaluada"></Label>
                     <Entry x:Name="partidaEvaluada" Keyboard="Text"></Entry>
                 </StackLayout>
 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,15,8,15" Orientation="Horizontal">
-                    <Label Text="Bloque"></Label>
+                    <Label Text="Bloque" x:Name="lblBloque"></Label>
                     <Switch x:Name="bloque" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Nivel"></Label>
+                    <Label Text="Nivel" x:Name="lblNivel"></Label>
                     <Entry x:Name="nivel" Keyboard="Text"></Entry>
                 </StackLayout>
 

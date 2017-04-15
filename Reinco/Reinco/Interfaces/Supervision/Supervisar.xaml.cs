@@ -145,9 +145,10 @@ namespace Reinco.Interfaces.Supervision
                 dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
                 foreach (var item in obras)
                 {
-
+                    
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
+                        animacion = 0,
                         item = x++.ToString(),
                         idSupervisionActividad = item.idSupervision_actividad,
                         actividad = item.nombre,

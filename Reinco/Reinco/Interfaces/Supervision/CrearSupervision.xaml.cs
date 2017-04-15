@@ -48,6 +48,10 @@ namespace Reinco.Interfaces.Supervision
             InitializeComponent();
             personalItem = new ObservableCollection<PersonalItem>();
             IdPlantillaObra = idPlantillaObra;
+            lblNroSupervision.Text = "Número de Supervisión";
+            lblPartidaEvaluada.Text="Partida Evaluada " + App.opcional;
+            lblNivel.Text="Nivel " + App.opcional;
+            lblBloque.Text="Bloque " + App.opcional;
             CargarPersonalItem();
             asignarAsistente.ItemsSource = personalItem;
             guardar.Clicked += Guardar_Clicked;
