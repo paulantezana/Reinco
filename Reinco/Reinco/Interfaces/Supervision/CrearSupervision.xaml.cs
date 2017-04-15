@@ -66,6 +66,8 @@ namespace Reinco.Interfaces.Supervision
                 }
                 int nroSupervision = Convert.ToInt16(numeroSupervision.Text);
 
+                var fechatemp = fecha.Date.ToString("dd/MM/yyyy");
+
                 object[,] variables = new object[,] { { "idSupervisor", asignarAsistente.SelectedValue },
                     { "idPlantillaPropietario", IdPlantillaObra }, { "fecha", fecha.Date.ToString("dd/MM/yyyy") },
                 { "nroSupervision", nroSupervision }, { "partidaEvaluada", partidaEvaluada.Text==null?"":partidaEvaluada.Text },

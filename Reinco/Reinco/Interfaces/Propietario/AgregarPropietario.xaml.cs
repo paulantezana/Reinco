@@ -53,6 +53,7 @@ namespace Reinco.Interfaces.Propietario
             propietario = Propietario;
             directorio.Text = App.directorio + "\\Propietario\\Modificar Propietario";
             this.Title = "MODIFICAR PROPIETARIO";
+            guardar.Text = "Guardar Cambios";
             nombrePropietario.Text = Propietario.nombre;
 
             // Eventos

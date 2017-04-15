@@ -135,6 +135,13 @@ namespace Reinco.Interfaces.Supervision
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.Supervisar = this;
+        }
+
         #region================cargar actividades de la supervision===========================
         private async void CargarSupervisarActividadItem()
         {

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Plugin.Media;
+using Reinco.Interfaces.Supervision;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -135,6 +136,7 @@ namespace Reinco.Entidades
         public byte[] ArrayFotos { get; set; }
 
         public ICommand guardarItem { get; private set; }
+        public ICommand verFotos { get; private set; }
 
 
         #region ================ Constructor ================
@@ -146,7 +148,10 @@ namespace Reinco.Entidades
                 // App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
                 GuardarActividad();
             });
-
+            verFotos = new Command(() =>
+            {
+                App.Supervisar.Navigation.PushAsync(new FotosxActividad());
+            });
             guardarIsVisible = false;
 
             #region ================= Expandir Y Havilitar Boton Guardar =================
