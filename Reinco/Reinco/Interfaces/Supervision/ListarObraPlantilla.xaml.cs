@@ -18,24 +18,14 @@ namespace Reinco.Interfaces.Supervision
     public partial class ListarObraPlantilla : ContentPage, INotifyPropertyChanged
     {
         new public event PropertyChangedEventHandler PropertyChanged; // Usada paralos refrescar las listas
-
-
-        int IdObra;
-        string NombreObra;
-        int IdPropietarioObra;
         string Mensaje;
-        string DireccionPath;
+        ObraItem obra;
 
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
-        public string DireccionApp { get; set; }
 
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
-
-
-
-
 
         public bool IsRefreshingObraPlantilla
         {
@@ -47,10 +37,7 @@ namespace Reinco.Interfaces.Supervision
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObraPlantilla"));
                 }
             }
-            get
-            {
-                return isRefreshingObraPlantilla;
-            }
+            get { return isRefreshingObraPlantilla; }
         }
 
         public ObservableCollection<ObraPlantillaItem> ObraPlantillaItems { get; set; }
@@ -58,41 +45,30 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshObraPlantillaCommand { get; private set; }
         public ICommand asignarPlantilla { get; private set; }
 
-        public ListarObraPlantilla(int idPropietarioObra,int idObra, string nombreObra = "PLANTILLAS", string direccionPath = "")
+        public ListarObraPlantilla(ObraItem Obra)
         {
             InitializeComponent();
-            IdObra = idObra;
-            IdPropietarioObra = idPropietarioObra;
-            NombreObra = nombreObra;
+            obra = Obra;
 
-            this.Title = nombreObra;
-            DireccionPath = direccionPath;
-            this.DireccionApp = DireccionPath + "\\Plantillas";
+            this.Title = Obra.nombre;
+            directorio.Text = App.directorio + "\\" + Obra.nombre + "\\Plantillas";
 
-            // ---------------------
             ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
-
-
-            // Refrescar la lista
+            CargarPlantillaObra();
+            
+            // comandos
             RefreshObraPlantillaCommand = new Command(() =>
             {
                 ObraPlantillaItems.Clear();
                 CargarPlantillaObra();
-                IsRefreshingObraPlantilla = false;
             });
-
-            // comandos
             asignarPlantilla = new Command(() =>
             {
-                Navigation.PushAsync(new AsignarPlantilla(IdPropietarioObra));
+                Navigation.PushAsync(new AsignarPlantilla(Obra));
             });
-
-
-            // Cargando la lista
-            CargarPlantillaObra();
-
-            // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
-            this.BindingContext = this;  
+            
+            // Contexto para los bindings
+            this.BindingContext = this;
         }
 
         protected override void OnAppearing()
@@ -100,14 +76,13 @@ namespace Reinco.Interfaces.Supervision
             base.OnAppearing();
             App.ListarObraPlantilla = this;
         }
-
         public async void CargarPlantillaObra()
         {
-
             try
             {
+                IsRefreshingObraPlantilla = true;
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idObra", IdObra } };
+                object[,] variables = new object[,] { { "idObra", obra.idObra } };
                 dynamic result = await servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillaxidObra", variables);
 
                 if (result != null)
@@ -144,34 +119,10 @@ namespace Reinco.Interfaces.Supervision
             {
                 await mensaje.MostrarMensaje("Error:", ex.Message);
             }
-
-        }
-        public async void eliminar(object sender, EventArgs e)
-        {
-            try
+            finally
             {
-                // Recuperando el idPlantilla
-                var idPlantilla = ((MenuItem)sender).CommandParameter;
-                int IdPlantillaPropietarioObra = Convert.ToInt16(idPlantilla);
-
-                // Consumiendo datos de la web service
-                bool respuesta = await DisplayAlert("Eliminar", "¿Desea eliminar esta plantilla de la obra? ", "Aceptar", "Cancelar");
-                object[,] variables = new object[,] { { "idPlantillaPropietarioObra", IdPlantillaPropietarioObra } };
-                dynamic result = await Servicio.MetodoGetString("ServicioPlantillaPropietarioObra.asmx", "EliminarPlantillaPropietarioObra", variables);
-                Mensaje = Convert.ToString(result);
-                if (result != null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Eliminar Plantilla Obra", Mensaje, "OK");
-                    ObraPlantillaItems.Clear();
-                    CargarPlantillaObra();
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                await mensaje.MostrarMensaje("Eliminar Plantilla Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                IsRefreshingObraPlantilla = false;
             }
         }
-
     }
 }

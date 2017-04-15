@@ -58,7 +58,7 @@ namespace Reinco
             //ip = "190.42.122.110";
 
             InitializeComponent();
-            MainPage = new FotosxActividad();
+            MainPage = new LoginPage();
             Current.Properties["direccionApp"] = "";
         }
 

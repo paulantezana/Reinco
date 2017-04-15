@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Reinco.Recursos"
+             BackgroundColor="{StaticResource Color5}"
              x:Class="Reinco.Interfaces.Obra.ModificarObra">
     <ContentPage.Content>
         <ScrollView>

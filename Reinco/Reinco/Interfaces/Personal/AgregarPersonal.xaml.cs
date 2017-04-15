@@ -92,7 +92,7 @@ namespace Reinco.Interfaces.Personal
                 await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
         }
-        public AgregarPersonal(int idUsuario,string dni, string nombresApellidos,string usuario,string contra,string correo,
+        public AgregarPersonal(int idUsuario,string dni, string nombresApellidos, string usuario,string contra,string correo,
             string celular,string cip,int idCargo,int idCargoUsuario)
         {
             InitializeComponent();
@@ -164,6 +164,7 @@ namespace Reinco.Interfaces.Personal
             }
         }
         #endregion
+
         private void Cancelar_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();

@@ -63,7 +63,7 @@ namespace Reinco.Entidades
         {
             try
             {
-                bool respuesta = await App.Current.MainPage.DisplayAlert("Eliminar", "¿Desea eliminar esta plantilla? ", "Aceptar", "Cancelar");
+                bool respuesta = await App.Current.MainPage.DisplayAlert("Eliminar", "¿Desea eliminar la plantilla: " + this.nombre + "? ", "Aceptar", "Cancelar");
                 if (respuesta)
                 {
                     object[,] variables = new object[,] { { "idPlantilla", idPlantilla } };

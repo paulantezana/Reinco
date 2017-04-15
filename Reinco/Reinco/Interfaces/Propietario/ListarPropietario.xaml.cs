@@ -21,10 +21,8 @@ namespace Reinco.Interfaces.Propietario
         WebService Servicio = new WebService();
 
         private bool isRefreshingPropietario { get; set; }
-
-        #region +---- Eventos ----+
+        
         new public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
 
         #region IsRefreshingPropietario
         public ObservableCollection<PropietarioItem> PropietarioItems { get; set; }
@@ -45,12 +43,9 @@ namespace Reinco.Interfaces.Propietario
         }
         #endregion
 
-        #region Comands
         public ICommand RefreshPropietarioCommand { get; private set; }
         public ICommand AgregarPropietario { get; private set; }
-        #endregion
 
-        // datatable usuario;
         #region=============constructor vacio======================
         public ListarPropietario()
         {
@@ -69,6 +64,8 @@ namespace Reinco.Interfaces.Propietario
             {
                 Navigation.PushAsync(new AgregarPropietario());
             });
+
+            // Contexto para los bindings
             this.BindingContext = this;
         }
         #endregion

@@ -17,12 +17,21 @@
                 IsPullToRefreshEnabled="True"
                 RefreshCommand="{Binding RefreshPersonalCommand}"
                 IsRefreshing="{Binding IsRefreshingPersonal,Mode=TwoWay}">
+                <!-- Encabezado -->
+                <ListView.Header>
+                    <StackLayout>
+                        <!-- Buscador -->
+                        <StackLayout Padding="5">
+                            <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <!-- Eventos -->
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idUsuario}" Text="Eliminar"></MenuItem>
+                                <MenuItem Command="{Binding Eliminar}" Text="Eliminar"></MenuItem>
                             </ViewCell.ContextActions>
                             <!-- END Eventos -->
                             <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">

@@ -15,14 +15,23 @@
                 IsPullToRefreshEnabled="True"
                 RefreshCommand="{Binding RefreshObraCommand}"
                 IsRefreshing="{Binding IsRefreshingObra,Mode=TwoWay}">
+                <!-- Encabezado -->
+                <ListView.Header>
+                    <StackLayout>
+                        <!-- Buscador -->
+                        <StackLayout Padding="5">
+                            <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ListView.Header>
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
 
                             <!-- Menu Eliminar Obra CRUD -->
                             <ViewCell.ContextActions>
-                                <MenuItem Command="{Binding eliminar}" CommandParameter="{Binding idObra}" Text="Eliminar" IsDestructive="True">
-                                </MenuItem>
+                                <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True"> </MenuItem>
                             </ViewCell.ContextActions>
                             <!-- End Menu Eliminar Obra CRUD -->
 
@@ -57,13 +66,10 @@
                                 </Image>
 
                                 <Image IsVisible="{Binding ocultar}" Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30"  >
-                                    <Image.GestureRecognizers >
+                                    <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding editarObra}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
-                                
-                               
-
                             </Grid>
                             <!-- ============ FIN Codigo Para Listar Obra ================-->
                         </ViewCell>

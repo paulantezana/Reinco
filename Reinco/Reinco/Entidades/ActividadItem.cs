@@ -43,7 +43,7 @@ namespace Reinco.Entidades
         {
             try
             {
-                bool respuesta = await App.Current.MainPage.DisplayAlert("Eliminar", "¿Desea eliminar este Actividad?", "Aceptar", "Cancelar");
+                bool respuesta = await App.Current.MainPage.DisplayAlert("Eliminar", "¿Desea eliminar esta Actividad: " + this.nombre + "?", "Aceptar", "Cancelar");
                 if (respuesta)
                 {
                     object[,] variables = new object[,] { { "idPlantillaActividad", this.idActividad } };

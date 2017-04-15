@@ -16,14 +16,9 @@ namespace Reinco.Interfaces.Obra
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ModificarObra : ContentPage, INotifyPropertyChanged
     {
-        int IdObra;
-        int IdPropietario;
-        int IdResponsabe;
-        int IdPropietarioObra;
-
         WebService Servicio = new WebService();
         string Mensaje;
-        public VentanaMensaje mensaje;
+        ObraItem obra;
 
         new public event PropertyChangedEventHandler PropertyChanged;
 
@@ -76,24 +71,24 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-        public ModificarObra(int idObra, string Codigo, string Nombre, int idPropietario, int idResponsable, int idPropietarioObra,string nombrePropietario, string nombresApellidos)
+        public ModificarObra(ObraItem Obra)
         {
             // Preparando la UI(Interfas de usuario) MODIFICAR OBRA
             InitializeComponent();
-            this.Title = Nombre; // nombre de la pagina
-            nombre.Text = Nombre; // Lenando el campo Nombre Obra
-            codigo.Text = Codigo; // llenando el campo Codigo Obra
+            obra = Obra;
+
+            this.Title = Obra.nombre;       // nombre de la pagina
+            nombre.Text = Obra.nombre;      // Lenando el campo Nombre Obra
+            codigo.Text = Obra.codigo;           // llenando el campo Codigo Obra
+
             lblPropietario.Text = "Asigne un propietario " + App.opcional;
             lblResponsable.Text = "Asigne un responsable " + App.opcional;
+
             // Variables Globales
-            IdObra = Convert.ToInt16(idObra);
-            IdPropietario = idPropietario;
-            IdResponsabe = idResponsable;
-            IdPropietarioObra = idPropietarioObra;
 
             // Placeholders
-            asignarPropietario.Title = nombrePropietario; // Titulo POP UPS Propietario
-            asignarResponsable.Title = nombresApellidos; // Titulo POP UPS Responsable
+            asignarPropietario.Title = Obra.nombrePropietario; // Titulo POP UPS Propietario
+            asignarResponsable.Title = Obra.nombresApellidos; // Titulo POP UPS Responsable
 
             // Colecciones
             propietarioItems = new ObservableCollection<PropietarioItem>();
@@ -120,8 +115,8 @@ namespace Reinco.Interfaces.Obra
 
             guardar = new Command(() =>
             {
-                int enviarPropietario = idPropietario;
-                int enviarResponsable = idResponsable;
+                int enviarPropietario = Obra.idPropietario;
+                int enviarResponsable = Obra.idUsuario;
 
                 object propietarioSelecionado = asignarPropietario.SelectedValue;
                 object responsableSelecionado = asignarResponsable.SelectedValue;
@@ -138,57 +133,12 @@ namespace Reinco.Interfaces.Obra
             });
             // Valor Por Defecto en las listas
             asignarResponsable.Focus();
-            asignarPropietario.SelectedValue = idPropietario;
-            asignarResponsable.SelectedValue = IdResponsabe;
+            asignarPropietario.SelectedValue = Obra.idPropietario;
+            asignarResponsable.SelectedValue = Obra.idUsuario;
             // Definiendo costeto para los bindings
             this.BindingContext = this;
         }
 
-        #region ============================ Cargar Propietario ============================
-        private async Task CargarPropietarioItem()
-        {
-            try
-            {
-                propietarioItems.Clear();
-                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
-                foreach (var item in propietario)
-                {
-                    propietarioItems.Add(new PropietarioItem
-                    {
-                        idPropietario = item.idPropietario,
-                        nombre = item.nombre
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                await mensaje.MostrarMensaje("Error", ex.Message);
-            }
-        }
-        #endregion
-
-        #region ============================ Cargar Personal ============================
-        private async Task CargarPersonalItem()
-        {
-            try
-            {
-                personalItems.Clear();
-                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosResponsables");
-                foreach (var item in usuarios)
-                {
-                    personalItems.Add(new PersonalItem
-                    {
-                        idUsuario = item.idUsuario,
-                        nombresApellidos = item.nombresApellidos.ToString(),
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                await mensaje.MostrarMensaje("Error", ex.Message);
-            }
-        }
-        #endregion
 
         #region ============================ Modificar Obra ============================
         public async void ModificarPropietarioResponsableObra(int IdPropietario, int IdResponsable)
@@ -197,8 +147,8 @@ namespace Reinco.Interfaces.Obra
             {
                 cambiarEstado(false);
                 object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
-                { "IdObra", IdObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
-                { "IdPropietarioObra", IdPropietarioObra}};
+                { "IdObra", obra.idObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
+                { "IdPropietarioObra", obra.idPropietarioObra}};
                 dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "ModificarPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
@@ -220,10 +170,52 @@ namespace Reinco.Interfaces.Obra
             {
                 cambiarEstado(true);
             }
-        } 
+        }
         #endregion
 
         #region ============================= Listar ==============================
+        // Cargar Personal
+        private async Task CargarPropietarioItem()
+        {
+            try
+            {
+                propietarioItems.Clear();
+                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                foreach (var item in propietario)
+                {
+                    propietarioItems.Add(new PropietarioItem
+                    {
+                        idPropietario = item.idPropietario,
+                        nombre = item.nombre
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message,"Aceptar");
+            }
+        }
+        // Cargar Personal
+        private async Task CargarPersonalItem()
+        {
+            try
+            {
+                personalItems.Clear();
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosResponsables");
+                foreach (var item in usuarios)
+                {
+                    personalItems.Add(new PersonalItem
+                    {
+                        idUsuario = item.idUsuario,
+                        nombresApellidos = item.nombresApellidos.ToString(),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message,"Aceptar");
+            }
+        }
         public async void listarBindablePicker()
         {
             try

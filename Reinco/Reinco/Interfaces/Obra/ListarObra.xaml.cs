@@ -15,7 +15,6 @@ namespace Reinco.Interfaces.Obra
     {
         string Color;
 
-
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
@@ -30,7 +29,6 @@ namespace Reinco.Interfaces.Obra
         string Mensaje;
         private bool isRefreshingObra { get; set; }
         #endregion
-
 
         #region +---- Propiedades ----+
         public ObservableCollection<ObraItem> ObraItems { get; set; }
@@ -61,6 +59,7 @@ namespace Reinco.Interfaces.Obra
         public ListarObra()
         {
             InitializeComponent();
+            directorio.Text = App.directorio + "\\Obras";
 
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItems();
@@ -143,7 +142,6 @@ namespace Reinco.Interfaces.Obra
             App.ListarObra = this;
         }
         #endregion
-
 
         #region +---- Cargando las obras ----+
         public async void CargarObraItems()
@@ -260,7 +258,6 @@ namespace Reinco.Interfaces.Obra
         #endregion
         #endregion
 
-
         #region +---- Evento Eliminar Obra ----+
         public async void eliminar(object sender, EventArgs e)
         {
@@ -295,6 +292,5 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-
     }
 }

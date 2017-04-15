@@ -19,9 +19,9 @@ namespace Reinco.Interfaces.Supervision
     public partial class AsignarPlantilla : ContentPage, INotifyPropertyChanged
     {
         new public event PropertyChangedEventHandler PropertyChanged;
-
-        int IdPlantillaPropietarioObra;
         WebService Servicio = new WebService();
+
+        ObraItem obra;
         string Mensaje;
 
 
@@ -74,12 +74,12 @@ namespace Reinco.Interfaces.Supervision
         #endregion
 
         #region ======================== Constructor ========================
-        public AsignarPlantilla(object idPlantillaPropietarioObra)
+        public AsignarPlantilla(ObraItem Obra)
         {
-
             InitializeComponent();
             PlantillaIsEnabled = true;
-            IdPlantillaPropietarioObra = Convert.ToInt16(idPlantillaPropietarioObra);
+            directorio.Text = App.directorio + "\\" + Obra.nombre + "\\Agregar Plantillas";
+            obra = Obra;
 
             // platilla
             Plantillas = new ObservableCollection<PlantillaItem>();
@@ -94,7 +94,6 @@ namespace Reinco.Interfaces.Supervision
             {
                 Plantillas.Clear();
                 CargarPlantillas();
-                IsRefreshingPlantilla = false;
             });
 
             // contexto para los bindings
@@ -136,7 +135,7 @@ namespace Reinco.Interfaces.Supervision
                 object[] idPlantillas = new object[seleccionados.Count()];
                 object[,] variables = new object[tamaño, seleccionados.Count()];
                 if(seleccionados.Count()==1)
-                     variables = new object[,] { { "idPlantilla", idPlantilla[0] }, { "idPropietarioObra", IdPlantillaPropietarioObra } };
+                     variables = new object[,] { { "idPlantilla", idPlantilla[0] }, { "idPropietarioObra", obra.idPropietarioObra } };
                 else {
                     string identificador = "idPlantilla";
                     int j = 0;
@@ -150,9 +149,10 @@ namespace Reinco.Interfaces.Supervision
                             variables[i, j] = numero;
                             j = 0;
                         }
-                    } // Desde aqui logica para enviar al web service
+                    } 
+                    // Desde aqui logica para enviar al web service
                     variables[seleccionados.Count(), 0] = "idPropietarioObra";
-                    variables[seleccionados.Count(), 1] = IdPlantillaPropietarioObra;
+                    variables[seleccionados.Count(), 1] = obra.idPropietarioObra;
                     var cliente = new HttpClient();
                 }
                 
@@ -171,7 +171,7 @@ namespace Reinco.Interfaces.Supervision
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Ok");
-                cambiarEstado(false);
+                cambiarEstado(true);
             }
         } 
         #endregion
@@ -181,6 +181,7 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
+                IsRefreshingPlantilla = true;
                 dynamic plantillas = await Servicio.MetodoGet("ServicioPlantilla.asmx", "MostrarPlantillas");
                 foreach (var plantilla in plantillas)
                 {
@@ -195,6 +196,10 @@ namespace Reinco.Interfaces.Supervision
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+            finally
+            {
+                IsRefreshingPlantilla = false;
             }
         } 
         #endregion

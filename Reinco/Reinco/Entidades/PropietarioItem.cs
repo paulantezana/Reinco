@@ -18,10 +18,8 @@ namespace Reinco.Entidades
         public string nombre { get; set; }
         public string fotoPerfil { get; set; }
 
-        #region=======comand================
         public ICommand Eliminar { get; private set; }
         public ICommand editarPropietario { get; private set; }
-        #endregion
 
         public PropietarioItem()
         {
@@ -37,11 +35,13 @@ namespace Reinco.Entidades
                 App.ListarPropietarios.Navigation.PushAsync(new AgregarPropietario(this));
             });
         }
+
+        #region ================================ Eliminar Propietario ================================
         private async void eliminar()
         {
             try
             {
-                bool respuesta = await App.Current.MainPage.DisplayAlert("Eliminar", "¿Desea eliminar este propietario?", "Aceptar", "Cancelar");
+                bool respuesta = await App.Current.MainPage.DisplayAlert("Eliminar", "¿Desea eliminar el propietario: " + this.nombre + "?", "Aceptar", "Cancelar");
                 if (respuesta)
                 {
                     object[,] variables = new object[,] { { "idPropietario", this.idPropietario } };
@@ -60,6 +60,8 @@ namespace Reinco.Entidades
             {
                 await App.Current.MainPage.DisplayAlert("Eliminar Propietario", "Error en el dispositivo o URL incorrecto: " + ex.Message, "Aceptar");
             }
-        }
+        } 
+        #endregion
+
     }
 }
