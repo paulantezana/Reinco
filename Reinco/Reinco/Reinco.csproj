@@ -46,6 +46,7 @@
     <Compile Include="Entidades\IPhoto.cs" />
     <Compile Include="Entidades\ObraxCargoItem.cs" />
     <Compile Include="Entidades\ObraPlantillaItem.cs" />
+    <Compile Include="Entidades\Paginacion.cs" />
     <Compile Include="Entidades\PlantillaSupervisionItem.cs" />
     <Compile Include="Entidades\ReporteItem.cs" />
     <Compile Include="Entidades\SupervisarItem.cs" />

@@ -117,7 +117,6 @@ namespace Reinco.Interfaces.Supervision
             }
         } 
         #endregion
-
     }
 
     #region ===================================== UI Imagen =====================================
@@ -187,7 +186,6 @@ namespace Reinco.Interfaces.Supervision
             var httpResponserMessage = await client.PostAsync(servicioUpload, contenido);
             string mensajeRespuesta = await httpResponserMessage.Content.ReadAsStringAsync();
             await App.Current.MainPage.DisplayAlert("ERROR:", mensajeRespuesta, "Aceptar");
-
             // App.Current.MainPage.DisplayAlert("Guardar", FotoActividad.id.ToString(), "Aceptar");
         }
     } 
