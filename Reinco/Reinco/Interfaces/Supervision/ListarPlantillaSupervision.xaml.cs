@@ -36,7 +36,6 @@ namespace Reinco.Interfaces.Supervision
 
         public ICommand AgregarSupervision { get; private set; }
         public ICommand generarReporte { get; private set; }
-        public string DireccionApp { get; set; }
 
         private bool isRefreshingPlantillaSupervision { get; set; }
         public bool IsRefreshingPlantillaSupervision
@@ -63,9 +62,10 @@ namespace Reinco.Interfaces.Supervision
         public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
         {
             InitializeComponent();
+            directorio.Text = App.directorio + "\\Supervisiones";
+
             IdPlantillaObra = idPlantillaObra;
             this.Title = nombrePlantilla;
-            this.DireccionApp = Application.Current.Properties["direccionApp"] + "\\Supervison";
 
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
@@ -81,23 +81,23 @@ namespace Reinco.Interfaces.Supervision
              {
                  PlantillaSupervisionItems.Clear();
                  CargarPlantillaSupervision();
-                 IsRefreshingPlantillaSupervision = false;
              });
 
             this.BindingContext = this;
         } 
         #endregion
+
         private void NuevaSupervision_Clicked(object sender, EventArgs e)
         {
-
             throw new NotImplementedException();
         }
+
         #region ================== Cargar Supervisiones =========================
         public async void CargarPlantillaSupervision()
         {
             try
             {
-                //byte x = 01;
+                IsRefreshingPlantillaSupervision = true;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObra", variables);
@@ -106,13 +106,11 @@ namespace Reinco.Interfaces.Supervision
                 {
                     if (result.Count == 0) //si está vacío
                     {
-                        //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
                         await DisplayAlert("Supervisiones por plantilla", "No hay supervisiones", "Aceptar");
                         return;
                     }
                     else
                     {
-                        // listando las obras
                         foreach (var item in result)
                         {
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
@@ -137,10 +135,14 @@ namespace Reinco.Interfaces.Supervision
             {
                 await mensaje.MostrarMensaje("Error:", ex.Message);
             }
+            finally
+            {
+                IsRefreshingPlantillaSupervision = false;
+            }
         }
         #endregion
 
-        #region Global
+        #region ======================== Global ========================
         protected override void OnAppearing()
         {
             base.OnAppearing();

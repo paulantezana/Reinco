@@ -200,14 +200,12 @@
                         </StackLayout>
 
                         <!-- Indicador de actividad -->
-                        <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}">
-
-                        </ActivityIndicator>
+                        <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}"></ActivityIndicator>
 
                         <!-- Buttons Action -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,30">
-                            <Button Command="{Binding CancelarSupervision}" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
-                            <Button Command="{Binding guardarSupervision}" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
+                            <Button Command="{Binding CancelarSupervision}" x:Name="cancelar" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
+                            <Button Command="{Binding guardarSupervision}" x:Name="guardar" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                         </StackLayout>
                         <!-- End -->
 

@@ -16,11 +16,18 @@
                     IsPullToRefreshEnabled="True"
                     RefreshCommand="{Binding RefreshPlantillaSupervisionCommand}"
                     IsRefreshing="{Binding IsRefreshingPlantillaSupervision,Mode=TwoWay}">
+                    <!-- Encabezado -->
+
                     <ListView.Header>
-                        <StackLayout Padding="3,8,3,8">
-                            <Label Text="{Binding DireccionApp}" TextColor="{StaticResource Color1}"></Label>
+                        <StackLayout>
+                            <!-- Buscador -->
+                            <StackLayout Padding="5">
+                                <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                            </StackLayout>
                         </StackLayout>
                     </ListView.Header>
+                    
+                    <!-- Body -->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

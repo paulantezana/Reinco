@@ -33,9 +33,15 @@ namespace Reinco.Entidades
         {
             PlantillaSupervision = new Command(() =>
             {
-                Application.Current.Properties["direccionApp"] = "";
-                Application.Current.Properties["direccionApp"] = this.nombre;
-                App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra,idObra,idPlantilla,nombre));
+                try
+                {
+                    // App.directorio = App.directorio.Remove(App.directorio.IndexOf("\\",App.directorio.IndexOf("\\")+1)) + "\\" + this.nombre;
+                    App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra,idObra,idPlantilla,nombre));
+                }
+                catch (Exception ex)
+                {
+                    App.Current.MainPage.DisplayAlert("Error: ",  ex.Message, "Aceptar");
+                }
             });
             Eliminar = new Command(() =>
             {

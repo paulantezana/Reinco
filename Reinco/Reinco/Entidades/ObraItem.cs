@@ -47,6 +47,7 @@ namespace Reinco.Entidades
             // Mostrar Plantillas
             mostrarPlantillas = new Command(() =>
             {
+                App.directorio = "Reinco\\" + this.nombre;
                 App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this));
             });
 

@@ -51,7 +51,7 @@ namespace Reinco.Interfaces.Supervision
             obra = Obra;
 
             this.Title = Obra.nombre;
-            directorio.Text = App.directorio + "\\" + Obra.nombre + "\\Plantillas";
+            directorio.Text = App.directorio +  "\\Plantillas";
 
             ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
             CargarPlantillaObra();
