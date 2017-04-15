@@ -15,7 +15,6 @@ namespace Reinco.Interfaces.Obra
     {
         string Color;
 
-
         #region +---- Services ----+
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
@@ -30,7 +29,6 @@ namespace Reinco.Interfaces.Obra
         string Mensaje;
         private bool isRefreshingObra { get; set; }
         #endregion
-
 
         #region +---- Propiedades ----+
         public ObservableCollection<ObraItem> ObraItems { get; set; }
@@ -61,6 +59,7 @@ namespace Reinco.Interfaces.Obra
         public ListarObra()
         {
             InitializeComponent();
+            directorio.Text = App.directorio + "\\Obras";
 
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItems();
@@ -77,7 +76,6 @@ namespace Reinco.Interfaces.Obra
             {
                 ObraItems.Clear();
                 CargarObraItems();
-                IsRefreshingObra = false;
             });
             #endregion
            
@@ -145,12 +143,12 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
 
-
         #region +---- Cargando las obras ----+
         public async void CargarObraItems()
         {
             try
             {
+                IsRefreshingObra = true;
                 //servicioObra, mostrarObras--modificado
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
                 foreach (var item in obras)
@@ -181,6 +179,10 @@ namespace Reinco.Interfaces.Obra
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+            finally
+            {
+                IsRefreshingObra = false;
             }
         }
         #region=============obras responsable=======================================
@@ -256,7 +258,6 @@ namespace Reinco.Interfaces.Obra
         #endregion
         #endregion
 
-
         #region +---- Evento Eliminar Obra ----+
         public async void eliminar(object sender, EventArgs e)
         {
@@ -291,6 +292,5 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-
     }
 }

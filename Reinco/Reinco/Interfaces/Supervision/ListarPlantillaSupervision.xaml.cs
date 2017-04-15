@@ -21,8 +21,7 @@ namespace Reinco.Interfaces.Supervision
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
-        string Cargo = "";
-        string Color;
+        
         int IdPlantillaObra;
         #endregion
 
@@ -37,7 +36,6 @@ namespace Reinco.Interfaces.Supervision
 
         public ICommand AgregarSupervision { get; private set; }
         public ICommand generarReporte { get; private set; }
-        public string DireccionApp { get; set; }
 
         private bool isRefreshingPlantillaSupervision { get; set; }
         public bool IsRefreshingPlantillaSupervision
@@ -64,10 +62,11 @@ namespace Reinco.Interfaces.Supervision
         public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
         {
             InitializeComponent();
+            directorio.Text = App.directorio + "\\Supervisiones";
+
             IdPlantillaObra = idPlantillaObra;
             this.Title = nombrePlantilla;
-            this.DireccionApp = Application.Current.Properties["direccionApp"] + "\\Supervison";
-            Cargo = App.cargo;//cargo de la persona que ha iniciado sesion
+
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
             AgregarSupervision = new Command(() =>
@@ -82,26 +81,23 @@ namespace Reinco.Interfaces.Supervision
              {
                  PlantillaSupervisionItems.Clear();
                  CargarPlantillaSupervision();
-                 IsRefreshingPlantillaSupervision = false;
              });
 
             this.BindingContext = this;
         } 
         #endregion
+
         private void NuevaSupervision_Clicked(object sender, EventArgs e)
         {
-
             throw new NotImplementedException();
         }
+
         #region ================== Cargar Supervisiones =========================
         public async void CargarPlantillaSupervision()
         {
             try
             {
-                //byte x = 01;
-                
-                string nombreA = "";
-                string nombreR = "";
+                IsRefreshingPlantillaSupervision = true;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObra", variables);
@@ -110,34 +106,21 @@ namespace Reinco.Interfaces.Supervision
                 {
                     if (result.Count == 0) //si está vacío
                     {
-                        //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
                         await DisplayAlert("Supervisiones por plantilla", "No hay supervisiones", "Aceptar");
                         return;
                     }
                     else
                     {
-                        // listando las obras
                         foreach (var item in result)
                         {
-                            if(item.firma_recepcion==1&&item.firma_notificacion==1&&item.firma_conformidad==1)
-                                Color = "#77FF77";
-                            else
-                                Color = "#FF7777";
-                            nombreA = "As: "+item.nombreAsistente+" - ";
-                            nombreR = "Resp: "+item.nombreResponsable;
-                            if (Cargo == "Asistente")
-                                nombreA = "";
-                            if (Cargo == "Responsable")
-                                nombreR = "";
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
                             {
-                                nombre = nombreA+nombreR,
+                                nombre = "Supervision",
                                 numero =item.nroSupervision==null?0: item.nroSupervision,
                                 fecha = item.fecha,
                                 partidaEvaluada = item.partidaEvaluada,
                                 nivel = item.nivel,
-                                idSupervision =item.idSupervision,
-                                colorSupervision=Color
+                                idSupervision =item.idSupervision
                             });
                         }
                         // fin del listado
@@ -152,10 +135,14 @@ namespace Reinco.Interfaces.Supervision
             {
                 await mensaje.MostrarMensaje("Error:", ex.Message);
             }
+            finally
+            {
+                IsRefreshingPlantillaSupervision = false;
+            }
         }
         #endregion
 
-        #region Global
+        #region ======================== Global ========================
         protected override void OnAppearing()
         {
             base.OnAppearing();

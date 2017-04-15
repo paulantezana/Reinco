@@ -2,11 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Reinco.Recursos"
+             BackgroundColor="{StaticResource Color5}"
              x:Class="Reinco.Interfaces.Obra.AgregarObra">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="10" Spacing="15">
-            
+                <!-- Directorio Actual de la pagina -->
+                <StackLayout Padding="5">
+                    <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                </StackLayout>
+                
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Código de la obra"></Label>
                     <Entry x:Name="codigo"></Entry>
@@ -20,29 +25,22 @@
 
                 <!-- Asignar propietario de la obra-->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    
+
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Asigne Un Propietario" x:Name="lblPropietario"></Label>
-                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
-                            <Label Text="Recargar"  FontAttributes="Bold" x:Name="cambiarPropietario" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandCambiarPropietario}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarPropietario" TextColor="#FF5555" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandBorrarPropietario}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Asigne Un Propietario" x:Name="lblPropietario"></Label>
+                            <ActivityIndicator IsRunning="{Binding IsRunningPropietario}" WidthRequest="15" HeightRequest="15"></ActivityIndicator>
                         </StackLayout>
+
+                        <Label Text="Limpiar" FontAttributes="Bold" x:Name="borrarPropietario" TextColor="{StaticResource Color4}" Margin="10,0,10,0" HorizontalOptions="EndAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding commandBorrarPropietario}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </StackLayout>
-                    
-                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorPropietario" IsVisible="False"></Label>
-                    
                     <control:BindablePicker
                         DisplayMemberPath="nombre"
                         SelectedValuePath="idPropietario"
-                        ItemsSource="{Binding propietarioItem}" 
                         SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
@@ -51,29 +49,21 @@
 
                 <!-- Añadir Responsable de la Obra  -->
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    
+
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Asigne Un Responsable" x:Name="lblResponsable"></Label>
-                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
-                            <Label Text="Recargar"  FontAttributes="Bold" x:Name="cambiarResponsable" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandCambiarResponsable}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarResponsable" TextColor="#FF5555" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandBorrarResponsable}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Asigne Un Responsable" x:Name="lblResponsable"></Label>
+                            <ActivityIndicator IsRunning="{Binding IsRunningUsuario}" WidthRequest="15" HeightRequest="15"></ActivityIndicator>
                         </StackLayout>
+                        <Label Text="Limpiar" FontAttributes="Bold" x:Name="borrarResponsable" TextColor="{StaticResource Color4}" Margin="10,0,10,0"  HorizontalOptions="EndAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding commandBorrarResponsable}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </StackLayout>
-                    
-                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorResponsable" IsVisible="False"></Label>
-                    
                     <control:BindablePicker
                         DisplayMemberPath="nombresApellidos"
                         SelectedValuePath="idUsuario"
-                        ItemsSource="{Binding personalItem}"
                         SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"

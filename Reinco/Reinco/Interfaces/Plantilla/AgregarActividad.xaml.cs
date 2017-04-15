@@ -1,6 +1,8 @@
-﻿using Reinco.Recursos;
+﻿using Reinco.Entidades;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -12,130 +14,148 @@ using Xamarin.Forms.Xaml;
 namespace Reinco.Interfaces.Plantilla
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AgregarActividad : ContentPage
+    public partial class AgregarActividad : ContentPage, INotifyPropertyChanged
     {
-        int IdPlantilla;
-        int IdActividad;
+        new public event PropertyChangedEventHandler PropertyChanged;
         WebService Servicio = new WebService();
-        string Mensaje;
-        public VentanaMensaje mensaje;
-        public AgregarActividad()
+        ActividadItem actividad;
+        PlantillaItem plantilla;
+
+        #region ========================= IsRunning =========================
+        public bool isRunning { get; set; }
+        public bool IsRunning
+        {
+            set
+            {
+                if (isRunning != value)
+                {
+                    isRunning = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunning"));
+                }
+            }
+            get { return isRunning; }
+        }
+        #endregion
+
+        public AgregarActividad(PlantillaItem Plantilla)
         {
             InitializeComponent();
+            directorio.Text = App.directorio + "\\" + Plantilla.nombre + "\\Agregar Actividad";
+            plantilla = Plantilla;
 
             // Eventos
+            guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
-        }
 
-        private void Cancelar_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PopAsync();
+            // Contexto para los bindings
+            this.BindingContext = this;
         }
-        #region ===================// Constructor Agregar actividad // ===================//
-        public  AgregarActividad(object idPlantilla)
+        public AgregarActividad(ActividadItem Actividad)
         {
             InitializeComponent();
-            guardar.Clicked +=Agregar_Clicked;
-            guardar.Text = "Guardar Cambios";
-            IdPlantilla = Convert.ToInt16(idPlantilla);
-            // eventos
-            guardar.Clicked += GuardarCambios_Clicked;
-            cancelar.Clicked += Cancelar_Clicked1;
-        }
-        #endregion
+            directorio.Text = App.directorio + "\\Actividad\\Modificar Actividad";
+            actividad = Actividad;
 
-        #region ===================// Constructor Modificar actividad // ===================//
-        public AgregarActividad(object idActividad, object nombreActividad, object toleranciaActividad,object idPlantilla)
-        {
-            InitializeComponent();
-            IdPlantilla = Convert.ToInt16(idPlantilla);
-            IdActividad = Convert.ToInt16(idActividad);
-            nombre.Text = nombreActividad.ToString();
-            tolerancia.Text = toleranciaActividad.ToString();
-            // eventos
-            guardar.Clicked += Modificar_Clicked;
-            guardar.Text = "Guardar Cambios";
-            cancelar.Clicked += Cancelar_Clicked1;
-        }
-        #endregion
+            this.Title = "Modificar Actividad";
+            this.guardar.Text = "Guardar Cambios";
 
-        #region=================modificar actividad==============================
-        private async void Modificar_Clicked(object sender, EventArgs e)
+            this.nombre.Text = Actividad.nombre;
+            this.tolerancia.Text = Actividad.tolerancia;
+
+            // Eventos
+            guardar.Clicked += Modificar_Clicked1;
+            cancelar.Clicked += Cancelar_Clicked;
+
+            // Contexto para los bindings
+            this.BindingContext = this;
+        }
+
+        #region ========================== Modificar Actividad ==========================
+        private async void Modificar_Clicked1(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrEmpty(nombre.Text) )
+                cambiarEstado(false);
+                if (string.IsNullOrEmpty(nombre.Text))
                 {
-                    await DisplayAlert("Modificar Actividad", "Debe rellenar el campo nombre", "OK");
+                    cambiarEstado(true);
+                    await DisplayAlert("Modificar Actividad", "Debe rellenar el campo nombre", "Aceptar");
                     return;
                 }
                 object[,] variables = new object[,] {
-                        { "idPlantillaActividad", IdActividad} ,{ "nombre", nombre.Text}, { "tolerancia", tolerancia.Text }, { "idActividad", IdPlantilla } };
+                        { "idPlantillaActividad", actividad.idActividad} ,{ "nombre", nombre.Text}, { "tolerancia", tolerancia.Text }, { "idActividad", actividad.idPlantilla } };
                 dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "ModificarPlantillaActividad", variables);
-                Mensaje = Convert.ToString(result);
+                string Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Modificar Plantilla", Mensaje, "OK");
+                    cambiarEstado(true);
+                    await DisplayAlert("Modificar Plantilla", Mensaje, "Aceptar");
                     App.ListarActividad.ActividadItems.Clear();
-                    App.ListarActividad.CargarActividadItems();
+                    App.ListarActividad.CargarActividad();
                     await Navigation.PopAsync();
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Modificar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                cambiarEstado(true);
+                await DisplayAlert("Modificar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.Message, "Aceptar");
             }
-            
-            //Navigation.PopAsync();
-        }
+        } 
         #endregion
 
-        #region ================agregar actividad====================================
-        private async void Agregar_Clicked(object sender, EventArgs e)
+        #region ========================== Cancelar ==========================
+        private void Cancelar_Clicked(object sender, EventArgs e)
         {
+            Navigation.PopAsync();
+        } 
+        #endregion
 
+        #region ========================== Guardar Actividad ==========================
+        private async void Guardar_Clicked(object sender, EventArgs e)
+        {
             try
             {
-
-                if (string.IsNullOrEmpty(nombre.Text) )
+                cambiarEstado(false);
+                if (string.IsNullOrEmpty(nombre.Text))
                 {
-                    await DisplayAlert("Agregar Actividad", "Debe rellenar el nombre de la actividad.", "OK");
+                    cambiarEstado(true);
+                    await DisplayAlert("Agregar Actividad", "Debe rellenar el nombre de la actividad.", "Aceptar");
                     return;
                 }
                 if (string.IsNullOrEmpty(tolerancia.Text))
-                   tolerancia.Text = "";
-                object[,] variables = new object[,] { { "nombre", nombre.Text }, { "tolerancia", tolerancia.Text }, { "idActividad", IdPlantilla } };
+                    tolerancia.Text = "";
+                object[,] variables = new object[,] { { "nombre", nombre.Text }, { "tolerancia", tolerancia.Text }, { "idActividad", plantilla.idPlantilla } };
                 dynamic result = await Servicio.MetodoGetString("ServicioPlantillaActividad.asmx", "IngresarPlantillaActividad", variables);
-                Mensaje = Convert.ToString(result);
+                string Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Agregar Actividad", Mensaje, "OK");
+                    cambiarEstado(true);
+                    await App.Current.MainPage.DisplayAlert("Agregar Actividad", Mensaje, "Aceptar");
                     App.ListarActividad.ActividadItems.Clear();
-                    App.ListarActividad.CargarActividadItems();
+                    App.ListarActividad.CargarActividad();
                     await Navigation.PopAsync();
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Agregar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                cambiarEstado(true);
+                await DisplayAlert("Agregar Actividad", "Error en el dispositivo o URL incorrecto: " + ex.Message, "Aceptar");
             }
-
         }
         #endregion
 
-        // ===================// GuardarCambios // ===================//
-#pragma warning disable CS1998 // El método asincrónico carece de operadores "await" y se ejecutará de forma sincrónica
-        private async void GuardarCambios_Clicked(object sender, EventArgs e)
-#pragma warning restore CS1998 // El método asincrónico carece de operadores "await" y se ejecutará de forma sincrónica
+        #region ============================== Cambiar Estado ==============================
+        public void cambiarEstado(bool estado)
         {
+            nombre.IsEnabled = estado;
+            tolerancia.IsEnabled = estado;
+            guardar.IsEnabled = estado;
+            cancelar.IsEnabled = estado;
+            if (estado == true) { IsRunning = false; }
+            else { IsRunning = true; }
         }
-        // ===================// Cancelar // =================== //
-        private void Cancelar_Clicked1(object sender, EventArgs e)
-        {
-            Navigation.PopAsync();
-        }
-        // ===================//
+        #endregion
     }
 }

@@ -41,13 +41,17 @@
     <Compile Include="Entidades\ActividadItem.cs" />
     <Compile Include="Entidades\AsignarPlantillaSupervisorItem.cs" />
     <Compile Include="Entidades\Fotos.cs" />
+    <Compile Include="Entidades\FotosxActividadItem.cs" />
     <Compile Include="Entidades\IImageLoader.cs" />
     <Compile Include="Entidades\IPhoto.cs" />
-    <Compile Include="Entidades\ObraResponsableItem.cs" />
+    <Compile Include="Entidades\ObraxCargoItem.cs" />
     <Compile Include="Entidades\ObraPlantillaItem.cs" />
     <Compile Include="Entidades\PlantillaSupervisionItem.cs" />
     <Compile Include="Entidades\ReporteItem.cs" />
     <Compile Include="Entidades\SupervisarItem.cs" />
+    <Compile Include="Interfaces\Supervision\FotosxActividad.xaml.cs">
+      <DependentUpon>FotosxActividad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ISaveAndLoad.cs" />
     <Compile Include="Recursos\ReducirImagen.cs" />
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
@@ -113,8 +117,8 @@
     <Compile Include="Interfaces\Supervision\ListarObraPlantilla.xaml.cs">
       <DependentUpon>ListarObraPlantilla.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Supervision\ListarObras.xaml.cs">
-      <DependentUpon>ListarObras.xaml</DependentUpon>
+    <Compile Include="Interfaces\Supervision\ListarObraxCargo.xaml.cs">
+      <DependentUpon>ListarObraxCargo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Supervision\ListarPlantillaSupervision.xaml.cs">
       <DependentUpon>ListarPlantillaSupervision.xaml</DependentUpon>
@@ -275,7 +279,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Supervision\ListarObras.xaml">
+    <EmbeddedResource Include="Interfaces\Supervision\ListarObraxCargo.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -324,6 +328,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Obra\ModificarObra.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Supervision\FotosxActividad.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

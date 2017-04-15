@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:Reinco.Recursos"
+             BackgroundColor="{StaticResource Color5}"
              x:Class="Reinco.Interfaces.Obra.ModificarObra">
     <ContentPage.Content>
         <ScrollView>
@@ -22,23 +23,16 @@
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
 
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Asigne Un Propietario" x:Name="lblPropietario"></Label>
-                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
-                            <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarPropietario" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandCambiarPropietario}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarPropietario" TextColor="#FF5555" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandBorrarPropietario}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Asigne Un Propietario" x:Name="lblPropietario"></Label>
+                            <ActivityIndicator IsRunning="{Binding IsRunningPropietario}" WidthRequest="15" HeightRequest="15"></ActivityIndicator>
                         </StackLayout>
+                        <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarPropietario" TextColor="#FF5555" Margin="10,0,10,0" HorizontalOptions="EndAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding commandBorrarPropietario}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </StackLayout>
-
-                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorPropietario" IsVisible="False"></Label>
-
                     <control:BindablePicker
                         DisplayMemberPath="nombre"
                         SelectedValuePath="idPropietario"
@@ -53,27 +47,20 @@
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
 
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Asigne Un Responsable" x:Name="lblResponsable"></Label>
-                        <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
-                            <Label Text="Cambiar"  FontAttributes="Bold" x:Name="cambiarResponsable" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandCambiarResponsable}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarResponsable" TextColor="#FF5555" Margin="10,0,10,0">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding commandBorrarResponsable}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Asigne Un Responsable" x:Name="lblResponsable"></Label>
+                            <ActivityIndicator IsRunning="{Binding IsRunningUsuario}" WidthRequest="15" HeightRequest="15"></ActivityIndicator>
                         </StackLayout>
+                        <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarResponsable" TextColor="#FF5555" Margin="10,0,10,0" HorizontalOptions="EndAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding commandBorrarResponsable}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </StackLayout>
-
-                    <Label FontSize="18" Margin="0,8,0,8" TextColor="#2196F3" x:Name="valorResponsable" IsVisible="False"></Label>
-
                     <control:BindablePicker
                         DisplayMemberPath="nombresApellidos"
                         SelectedValuePath="idUsuario"
-                        ItemsSource="{Binding personalItems}"
+                        ItemsSource="{Binding UsuarioItems}"
                         SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
@@ -86,7 +73,7 @@
                 <!-- Buttons Action -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
-                    <Button Command="{Binding guardar}"  Text="Guardar Cambios" Style="{StaticResource BtnGuardar}"></Button>
+                    <Button Command="{Binding guardar}"  Text="Guardar Cambios" x:Name="guardarCambios" Style="{StaticResource BtnGuardar}"></Button>
                 </StackLayout>
                 <!-- End -->
 

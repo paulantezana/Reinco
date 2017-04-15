@@ -2,12 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Plantilla.AgregarActividad"
+             BackgroundColor="{StaticResource Color5}"
              Title="ACTIVIDADES">
+   
     <ContentPage.Content>
-        <ScrollView Padding="8">
-
+        <ScrollView>
             <StackLayout Spacing="15">
-
+                
+                <!-- Directorio Actual de la pagina -->
+                <StackLayout Padding="5">
+                    <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                </StackLayout>
+                
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Nombre del item"></Label>
                     <Entry x:Name="nombre"></Entry>
@@ -18,6 +24,9 @@
                     <Entry x:Name="tolerancia"></Entry>
                 </StackLayout>
 
+                <!-- Indicador de Actividad -->
+                <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
+
                 <!-- Zona Botones Crud -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8">
                     <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
@@ -26,7 +35,6 @@
                 <!-- End Crud -->
 
             </StackLayout>
-            
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

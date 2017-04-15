@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Supervision.AsignarPlantilla"
              xmlns:control="clr-namespace:Reinco.Recursos"
+             BackgroundColor="{StaticResource Color5}"
              Title="Plantillas disponibles">
-    
     <ContentPage.Content>
         <StackLayout>
             <ListView
@@ -15,15 +15,26 @@
                 RefreshCommand="{Binding RefreshPlantillaCommand}"
                 IsEnabled="{Binding PlantillaIsEnabled}"
                 IsRefreshing="{Binding IsRefreshingPlantilla,Mode=TwoWay}">
+                <!-- Encabezado -->
+                <ListView.Header>
+                    <StackLayout>
+                        <!-- Buscador -->
+                        <StackLayout Padding="5">
+                            <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ListView.Header>
+                <!-- Contenido Principal -->
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <SwitchCell Text="{Binding nombre}" On="{Binding Selecionado,Mode=TwoWay}"></SwitchCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <!-- End -->
             </ListView>
             <StackLayout>
                 <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8">
                     <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
                     <Button x:Name="guardar"   Text="Añadir Seleccionados" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
                 </StackLayout>

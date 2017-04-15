@@ -18,22 +18,25 @@
                     IsPullToRefreshEnabled="True"
                     RefreshCommand="{Binding RefreshObraPlantillaCommand}"
                     IsRefreshing="{Binding IsRefreshingObraPlantilla,Mode=TwoWay}">
+                    
                     <ListView.Header>
-                        <StackLayout Padding="3,8,3,8">
-                            <Label Text="{Binding DireccionApp}" TextColor="{StaticResource Color1}"></Label>
+                        <StackLayout>
+                            <!-- Buscador -->
+                            <StackLayout Padding="5">
+                                <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                            </StackLayout>
                         </StackLayout>
                     </ListView.Header>
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.ContextActions>
-                                    <MenuItem Clicked="eliminar" CommandParameter="{Binding idPlantillaObra}" Text="Eliminar" IsDestructive="True" />
+                                    <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True" />
                                 </ViewCell.ContextActions>
                                 <!-- Inicio Del Contenido Grid -->
                                 <Grid BackgroundColor="{StaticResource Color5}" Padding="8,3,8,3">
-                                   
-                                    <!-- Gesto de Tipo Toque Para Toda La Fila -->
-                                    
+                                  
                                     <!-- Definiendo las Columnas de la Fila -->
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50"/>
@@ -42,7 +45,7 @@
                                     </Grid.ColumnDefinitions>
                                    
                                     <!-- Elemento en la primera columna -->
-                                    <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
+                                    <Label Text="{Binding codigo}" Grid.Column="0" FontSize="20" VerticalOptions="Center"></Label>
                                     
                                     <!-- Elemento en la segunda columna-->
                                     <StackLayout Grid.Column="1" VerticalOptions="CenterAndExpand">
@@ -50,14 +53,12 @@
                                         <!--<Label Text="{Binding tolerancia}" VerticalOptions="Center"></Label>-->
                                     </StackLayout>
 
-
                                     <!-- Elemento En Tercetar columna -->
                                     <Image Grid.Column="2" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding PlantillaSupervision}"/>
                                         </Image.GestureRecognizers>
                                     </Image>
-                                    
                                 </Grid>
                                 <!--  Fin Del Contenido Grid -->
                                 

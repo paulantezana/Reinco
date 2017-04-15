@@ -120,17 +120,25 @@
 
 
                                         <!-- Tomar Foto -->
+                                        <StackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="8" BackgroundColor="{StaticResource Color5}">
+                                            <Label Text="Fotos"></Label>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding verFotos}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                        <!-- 
                                         <Image Grid.Column="1" Grid.Row="0" Source="ic_camara.png" WidthRequest="30" HeightRequest="30">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding EncenderCamara}"/>
                                             </Image.GestureRecognizers>
                                         </Image>
+                                        -->
 
 
-                                        <!-- Zona Galeria De Fotos -->
+                                        <!-- Zona Galeria De Fotos
                                         <StackLayout Grid.Column="1" Grid.Row="1">
                                             <Image Source="{Binding RutaImagen}"></Image>
-                                        </StackLayout>
+                                        </StackLayout> -->
                                         <!-- Galeria -->
 
 
@@ -193,14 +201,12 @@
                         </StackLayout>
 
                         <!-- Indicador de actividad -->
-                        <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}">
-
-                        </ActivityIndicator>
+                        <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}"></ActivityIndicator>
 
                         <!-- Buttons Action -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,30">
-                            <Button Command="{Binding CancelarSupervision}" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
-                            <Button Command="{Binding guardarSupervision}" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
+                            <Button Command="{Binding CancelarSupervision}" x:Name="cancelar" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
+                            <Button Command="{Binding guardarSupervision}" x:Name="guardar" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                         </StackLayout>
                         <!-- End -->
 

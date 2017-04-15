@@ -22,12 +22,7 @@ namespace Reinco.Interfaces.Personal
         public VentanaMensaje mensaje;
         string Mensaje;
 
-
-        #region +---- Eventos ----+
         new public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
-
-
 
 
         #region Refrescar Lista
@@ -49,14 +44,15 @@ namespace Reinco.Interfaces.Personal
         } 
         #endregion
 
-
-
-
         public ObservableCollection<PersonalItem> Personaltems { get; set; }
+
+        public ICommand RefreshPersonalCommand { get; private set; }
+        public ICommand AgregarPersonal { get; private set; }
         
         public ListarPersonal()
         {
             InitializeComponent();
+            directorio.Text = App.directorio + "\\Personal";
             Personaltems = new ObservableCollection<PersonalItem>();
             CargarPersonalItem();
 
@@ -64,19 +60,17 @@ namespace Reinco.Interfaces.Personal
             {
                 Personaltems.Clear();
                 CargarPersonalItem();
-                IsRefreshingPersonal = false;
             });
             AgregarPersonal = new Command(() =>
             {
                 Navigation.PushAsync(new AgregarPersonal());
             });
 
+            // Contexto para los bindings
             this.BindingContext = this;
         }
 
-
-
-        #region Propiedad Global De Esta Pagina
+        #region ====================== Propiedad Global De Esta Pagina ======================
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -84,20 +78,12 @@ namespace Reinco.Interfaces.Personal
         } 
         #endregion
 
-
-
-        #region +--- comandos ----+
-        public ICommand RefreshPersonalCommand { get; private set; }
-        public ICommand AgregarPersonal { get; private set; }
-        #endregion
-
-
-
-        #region==================cargar usuarios==============================
+        #region ============================== Cargar usuarios ==============================
         public async void CargarPersonalItem()
         {
             try
             {
+                IsRefreshingPersonal = true;
                 dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
                 foreach (var item in result)
                 {
@@ -122,32 +108,9 @@ namespace Reinco.Interfaces.Personal
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
-        }
-        #endregion
-
-
-        #region=======================eliminar obra====================================
-        public async void eliminar(object sender, EventArgs e)
-        {
-            try
+            finally
             {
-                var idUsuario = ((MenuItem)sender).CommandParameter;
-                int IdUsuario = Convert.ToInt16(idUsuario);
-                bool respuesta = await DisplayAlert("Eliminar", "Eliminar IdUsuario = " + IdUsuario, "Aceptar", "Cancelar");
-                object[,] variables = new object[,] { { "idUsuario", IdUsuario } };
-                dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "EliminarUsuario", variables);
-                Mensaje = Convert.ToString(result);
-                if (result != null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "OK");
-                    App.ListarPersonal.Personaltems.Clear();
-                    App.ListarPersonal.CargarPersonalItem();
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                await mensaje.MostrarMensaje("Eliminar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                IsRefreshingPersonal = false;
             }
         }
         #endregion

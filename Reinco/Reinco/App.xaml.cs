@@ -26,7 +26,7 @@ namespace Reinco
         public static string cuenta = "reinco_pruebas_code";
         public static string cargo = "";
         public static string correo = "";
-        public static string nombre = "";//nombre de la persona que acaba de loguearse
+        public static string directorio = "Reicno";
         public VentanaMensaje mensaje;
         #endregion
 
@@ -36,12 +36,13 @@ namespace Reinco
         public static ListarPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
         public static ListarActividad ListarActividad { get; internal set; } // Página listar actividades
         public static ListarPropietario ListarPropietarios { get; internal set; } // Página listar propietarios
-        public static ListarObras ListarObras { get; internal set; } // Pagina Listar Obra Responsable
         public static ListarObraPlantilla ListarObraPlantilla { get; internal set; }
         public static ListarPlantillaSupervision ListarPlantillaSupervision { get; internal set; }
         //public static ListarObrasAdmin ListarObrasAdmin { get; internal set; }
         public static MainPage Navigator { get; internal set; }
         public static ListarPersonal ListarPersonal { get; internal set; }
+        public static ListarObraxCargo ListarObraxCargo { get; internal set; }
+        public static Supervisar Supervisar { get; internal set; }
 
         #endregion
 

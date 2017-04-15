@@ -16,12 +16,9 @@ namespace Reinco.Interfaces.Supervision
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Supervisar : ContentPage, INotifyPropertyChanged
-
     {
-
-
         public VentanaMensaje mensaje;
-        int IdSupervision;
+        PlantillaSupervisionItem Supervision;
         string Mensaje;
         string cargoUsuario;
 
@@ -95,16 +92,21 @@ namespace Reinco.Interfaces.Supervision
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
         }
-        public Supervisar(int idSupervision, string directory = "")
+        public Supervisar(PlantillaSupervisionItem Supervision)
         {
             InitializeComponent();
-            IdSupervision = idSupervision;
+            this.Supervision = Supervision;
+            tituloSupervisar = Supervision.nombreObra;
+
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
+
+            // Havilitar Firmas
             activarConformidad = true;
             activarEntrega = true;
             activarRecepcion = true;
-            TraerSupervision(IdSupervision);
+
+            TraerSupervision(Supervision.idSupervision);
             // Valores
             DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "\\Supervisar";
             tituloSupervisar = Application.Current.Properties["direccionApp"].ToString();
@@ -115,13 +117,12 @@ namespace Reinco.Interfaces.Supervision
                 Sentrega.IsEnabled = false;
             if (cargoUsuario == "Responsable")
                 Srecepcion.IsEnabled = false;
-            // Guardar Supervision
+
+            // Comandos
             guardarSupervision = new Command(() =>
             {
                 GuardarSupervision();
             });
-
-            // Navegacion hacia atras Boton Cancelar
             CancelarSupervision = new Command(() =>
             {
                 Navigation.PopAsync();
@@ -130,25 +131,31 @@ namespace Reinco.Interfaces.Supervision
             {
                 SupervisarActividadItems.Clear();
                 CargarSupervisarActividadItem();
-                IsRefreshingSupervisar = false;
             });
+
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
-        #region================cargar actividades de la supervision===========================
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.Supervisar = this;
+        }
+
+        #region =========================== cargar actividades de la supervision ===========================
         private async void CargarSupervisarActividadItem()
         {
             byte x = 01;
             try
             {
-                object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
+                IsRefreshingSupervisar = true;
+                object[,] variables = new object[,] { { "IdSupervision", Supervision.idSupervision } };
                 dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
                 foreach (var item in obras)
                 {
-                    
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
-                        animacion = 0,
                         item = x++.ToString(),
                         idSupervisionActividad = item.idSupervision_actividad,
                         actividad = item.nombre,
@@ -166,11 +173,15 @@ namespace Reinco.Interfaces.Supervision
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
+            finally
+            {
+                IsRefreshingSupervisar = false;
+            }
 
         }
         #endregion
 
-        #region====================Traer Supervision========================
+        #region ================================= Traer Supervision =================================
         public async void TraerSupervision(int idSupervision)
         {
             try
@@ -194,28 +205,42 @@ namespace Reinco.Interfaces.Supervision
         }
         #endregion
 
-        #region==================guardar supervision============================
+        #region ============================== guardar supervision ==============================
         public async void GuardarSupervision()
         {
             try
             {
+                cambiarEstado(false);
                 object[,] variables = new object[,] {
-                    { "idSupervision", IdSupervision } ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
+                    { "idSupervision", Supervision.idSupervision } ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
                     { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },
                     { "firma_conformidad", conformitad==true?1:0}};
                 dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "GuardarSupervision", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Guardar Supervision", Mensaje, "OK");
+                    cambiarEstado(true);
+                    await App.Current.MainPage.DisplayAlert("Guardar Supervision", Mensaje, "Aceptar");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                cambiarEstado(true);
+                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.Message,"Aceptar");
             }
         }
         #endregion
+
+        #region ============================== Cambiar Estado ==============================
+        public void cambiarEstado(bool estado)
+        {
+            guardar.IsEnabled = estado;
+            cancelar.IsEnabled = estado;
+            if (estado == true) { GuardarSupervisionIsrunning = false; }
+            else { GuardarSupervisionIsrunning = true; }
+        }
+        #endregion
+
     }
 }

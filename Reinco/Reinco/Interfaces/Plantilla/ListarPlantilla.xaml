@@ -3,68 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Reinco.Interfaces.Plantilla.ListarPlantilla"
              Title="PLANTILLAS">
-    
-    
+
+
+    <!-- Icono Para Agregar Plantilla -->
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="ic_add.png" Command="{Binding CrearPlantilla}"></ToolbarItem>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding agregarPlantilla}"></ToolbarItem>
     </ContentPage.ToolbarItems>
-    
-    
+
+    <!-- Contenido Principal de la página -->
     <ContentPage.Content>
-        <StackLayout>
-            <ListView
-                ItemsSource="{Binding PlantillaItems}"
-                BackgroundColor="{StaticResource Color5}"
-                HasUnevenRows="True"
-                IsPullToRefreshEnabled="True"
-                RefreshCommand="{Binding RefreshPlantillaCommand}"
-                IsRefreshing="{Binding IsRefreshingPlantilla,Mode=TwoWay}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
+        <ListView
+            ItemsSource="{Binding PlantillaItems}"
+            BackgroundColor="{StaticResource Color5}"
+            HasUnevenRows="True"
+            IsPullToRefreshEnabled="True"
+            RefreshCommand="{Binding RefreshPlantillaCommand}"
+            IsRefreshing="{Binding IsRefreshingPlantilla,Mode=TwoWay}">
 
-                            <!-- Eventos -->
-                            <ViewCell.ContextActions>
-                                <MenuItem Clicked="eliminar" CommandParameter="{Binding idPlantilla}" Text="Eliminar" IsDestructive="True" />
-                            </ViewCell.ContextActions>
+            <!-- Encabezado -->
+            <ListView.Header>
+                <StackLayout>
+                    <!-- Buscador -->
+                    <StackLayout Padding="5">
+                        <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </ListView.Header>
 
-                            <!-- Grid -->
-                            <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
-                                
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="40"/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
-                                
-                                
-                                <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
+            <!-- Cuerpo -->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <!-- Cell Personalizado -->
+                    <ViewCell>
+
+                        <!-- Eliminar Plantilla -->
+                        <ViewCell.ContextActions>
+                            <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True" />
+                        </ViewCell.ContextActions>
+
+                        <!-- Grid -->
+                        <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
 
 
-                                <Image Grid.Column="2" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Actividad}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
+                            <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
 
-                                
-                                <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding EditarPlantilla}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
 
-                            </Grid>
-                            <!-- End Grid -->
+                            <Image Grid.Column="2" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Actividad}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
 
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+                            <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding EditarPlantilla}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                        </Grid>
+                        <!-- End Grid -->
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            <!-- Pie De la Página -->
+            <ListView.Footer>
+                <StackLayout x:Name="paginacion" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Padding="0,20,0,20">
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
     </ContentPage.Content>
-
 </ContentPage>
