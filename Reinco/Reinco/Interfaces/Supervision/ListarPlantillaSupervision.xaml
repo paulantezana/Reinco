@@ -38,30 +38,34 @@
 
 
                                 <!-- ============ Codigo Para Listar Obra ================-->
-                                <Grid BackgroundColor="{Binding colorSupervision}"  Padding="8,15,8,15">
+                                <Grid Padding="8,15,8,15">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5"/>
                                         <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
 
-
-                                    <StackLayout Grid.Column="0">
+                                    <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorSupervision}" ></BoxView>
+                                    <StackLayout Grid.Column="1">
                                         <Label Text="{Binding numero}" FontAttributes="Bold" FontSize="18" VerticalOptions="CenterAndExpand"></Label>
                                     </StackLayout>
 
-                                    <StackLayout Grid.Column="1">
-                                        <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
-                                        <Label Text="{Binding partidaEvaluada}" FontAttributes="Bold"></Label>
+                                    <StackLayout Grid.Column="2">
+                                       <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                         <Label Text="{Binding fecha}"></Label>
+                                        <Label Text="{Binding partidaEvaluada}" FontAttributes="Bold"></Label>
+                                        
                                     </StackLayout>
                                     
-                                    <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
+                                    <StackLayout Grid.Column="3" VerticalOptions="CenterAndExpand">
+                                        <Label Text=""></Label>
+                                        <Label Text=""></Label>
                                         <Label Text="{Binding nivel}"></Label>
                                     </StackLayout>
 
-                                    <Image Grid.Column="3" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                    <Image Grid.Column="4" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding verActividades}"/>
                                         </Image.GestureRecognizers>
