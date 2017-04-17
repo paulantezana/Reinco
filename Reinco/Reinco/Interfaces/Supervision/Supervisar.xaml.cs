@@ -42,6 +42,7 @@ namespace Reinco.Interfaces.Supervision
         public bool activarConformidad { get; set; }
         public bool isRefreshingSupervisar { get; set; }
         public bool guardarSupervisionIsrunning { get; set; }
+        public int restringir { get; set; }
 
         public ObservableCollection<SupervisarActividadItem> SupervisarActividadItems { get; set; }
 
@@ -117,7 +118,10 @@ namespace Reinco.Interfaces.Supervision
                 Sentrega.IsEnabled = false;
             if (cargoUsuario == "Responsable")
                 Srecepcion.IsEnabled = false;
-
+            if (restringir == 1)
+            {
+               
+            }
             // Comandos
             guardarSupervision = new Command(() =>
             {
@@ -190,6 +194,7 @@ namespace Reinco.Interfaces.Supervision
                 dynamic supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "TraerSupervision", variables);
                 foreach (var item in supervision)
                 {
+                    restringir = item.firma_Notificacion;
                     EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
                     Sobservacion.IsToggled = item.observacion == null ? false : true;
                     Sdisposicion.IsToggled = item.disposicion == 0 ? true : false;
@@ -211,6 +216,7 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 cambiarEstado(false);
+                
                 object[,] variables = new object[,] {
                     { "idSupervision", Supervision.idSupervision } ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
                     { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },

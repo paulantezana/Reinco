@@ -1,5 +1,7 @@
 ﻿using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Reinco.Entidades;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +10,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,13 +19,19 @@ namespace Reinco.Interfaces.Supervision
     public partial class FotosxActividad : ContentPage
     {
         public ObservableCollection<FotosxActividadItem> FotosxActividadItems { get; set; }
+        private MediaFile file;
+        WebService Servicio = new WebService();
         public FotosxActividad(/*SupervisarActividadItem Actividad*/)
         {
             InitializeComponent();
             FotosxActividadItems = new ObservableCollection<FotosxActividadItem>();
-            CargarFotosxActividad();
-
-            // Sacar Foto
+            DibujarInterfaz();
+        }
+        private async void DibujarInterfaz()
+        {
+            await CargarFotosxActividad();
+            GaleriaContainer.Children.Clear();
+            // INICIO -- Agrega interfaz para el  botòn "Agregar Foto"
             StackLayout nuevaFoto = new StackLayout()
             {
                 Orientation = StackOrientation.Horizontal,
@@ -37,26 +44,24 @@ namespace Reinco.Interfaces.Supervision
                 WidthRequest = 30,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             });
-            nuevaFoto.Children.Add(new Label { Text = "Nueva Foto", VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = Color.FromHex("#FFFFFF") });
+            nuevaFoto.Children.Add(new Label { Text = "Agregar Foto", VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = Color.FromHex("#FFFFFF") });
+            // FIN -- Agrega interfaz para el  botòn "Agregar Foto"
 
-            // Llamando al comando para llamar la Camara
+            // Al Botón Agregar Foto le agregamos el evento: Llamando al comando para llamar la Camara
             nuevaFoto.GestureRecognizers.Add(new TapGestureRecognizer()
             {
                 Command = new Command(async () =>
                 {
                     await camara();
-                    var fotoN = new uiImagen(FotosxActividadItems[FotosxActividadItems.Count() - 1]).layoutImagen;
-                    GaleriaContainer.Children.Add(fotoN);
                 })
             });
 
-            // Pintando la  Fotos En UI
             GaleriaContainer.Children.Add(nuevaFoto);
+            // Pintando la  Fotos En UI
             foreach (var FotosxActividad in FotosxActividadItems)
             {
                 GaleriaContainer.Children.Add(new uiImagen(FotosxActividad).layoutImagen);
             }
-            // End
         }
 
         #region ===================================== Camara =====================================
@@ -66,58 +71,99 @@ namespace Reinco.Interfaces.Supervision
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                await DisplayAlert("Error con la Cámara", "Cámara no Disponible o no soportada.", "OK");
                 return;
             }
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
-                Directory = "Sample",
-                Name = "test.jpg"
+                Directory = "Supervisar",
+                Name = "supervision.jpg",
+                PhotoSize = PhotoSize.Custom,
+                CustomPhotoSize = 10
             });
 
             if (file == null)
                 return;
 
-            await DisplayAlert("File Location", file.Path, "OK");
+            /* FotosxActividadItems.Add(new FotosxActividadItem
+             {
+                 id = 3,//debería recibir respuesta del post FALTA
+                 foto = file.Path,
+                 //file = file.GetStream()
+             });*/
+            // file.Dispose();
 
-            var imageSource = ImageSource.FromStream(() =>
-            {
-                var stream = file.GetStream();
-                file.Dispose();
-                return stream;
-            });
+            var fotoN = new uiImagen(FotosxActividadItems[FotosxActividadItems.Count() - 1]).layoutImagen;//agrego esta foto a fotosXActiviidadItemss
+            GaleriaContainer.Children.Add(fotoN);//Se agrega al final con su respectivo botòn eliminar
+            await guardarFoto();
+
+            DibujarInterfaz();
+
+            //await DisplayAlert("Guardar Imagen", "Foto Guardada Correctamente", "OK");
             // Agregando Uno Nuevos
-            FotosxActividadItems.Add(new FotosxActividadItem
-            {
-                id = 12,
-                foto = file.Path,
-                file = file.GetStream()
-            });
-        } 
+            return;
+            /* var imageSource = ImageSource.FromStream(() =>
+             {
+                 var stream = file.GetStream();
+                 file.Dispose();
+                 return stream;
+             });
+             */
+        }
         #endregion
 
         #region ================================= Cargando Las Fotos =================================
-        private void CargarFotosxActividad()
+        private async Task CargarFotosxActividad()
         {
             try
             {
-                for (int i = 0; i < 2; i++)
+                FotosxActividadItems.Clear();//limpia lo que había
+                // DENNIS, aquì debemos pasar el idSupervisiònActividad, modificar servicio y procedimiento
+                dynamic result = await Servicio.MetodoGet("ServicioFoto.asmx", "MostrarFotos");
+                foreach (var item in result)
                 {
                     FotosxActividadItems.Add(new FotosxActividadItem
                     {
-                        id = i,
-                        foto = "http://lorempixel.com/300/400/"
+                        id = item.idFoto,
+                        foto = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/fotos/" + item.foto
+                        //foto = "http://190.117.145.7/reinco_pruebas_code/fotos/jackeline.jpg"
                     });
+
                 }
+
             }
             catch (Exception ex)
             {
-                DisplayAlert("Alerta", ex.Message, "Aceptar");
+                await DisplayAlert("Alerta", ex.Message, "Aceptar");
             }
-        } 
+        }
         #endregion
+        private async Task guardarFoto()
+        {
+            try
+            {
+                //Si se quería reducir byte se usaba dependencia de servicios, ya no es necesario
+                var contenido = new MultipartFormDataContent();
+                contenido.Add(new StreamContent(file.GetStream()), "\"file\"", $"\"{file.Path}\"");
+                contenido.Add(new StringContent("1"), "idSupervisionActividad");
+
+                var servicioUpload = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/ServicioFoto.asmx/ImagenPost";
+                var client = new HttpClient();
+                var httpResponserMessage = await client.PostAsync(servicioUpload, contenido);
+                string mensajeRespuesta = await httpResponserMessage.Content.ReadAsStringAsync();
+                if ((int)httpResponserMessage.StatusCode != 200)
+                    await App.Current.MainPage.DisplayAlert("Resultado:", "Sucedió un Error al intentar subir la última imagen, inténtelo luego", "Aceptar");
+                // App.Current.MainPage.DisplayAlert("Guardar", servicioUpload.ToString(), "Aceptar");
+            }
+            catch (Exception errr)
+            {
+                await App.Current.MainPage.DisplayAlert("Guardar", "Contacte con el Administrador y reporte el siguiente error:" + errr.ToString(), "Aceptar");
+            }
+        }
+
     }
+
 
     #region ===================================== UI Imagen =====================================
     public class uiImagen
@@ -129,8 +175,8 @@ namespace Reinco.Interfaces.Supervision
 
             Image imagen = new Image()
             {
-                // WidthRequest = 100,
-                // HeightRequest = 177,
+                WidthRequest = 250,
+                HeightRequest = 370,
             };
             imagen.Source = FotoActividad.foto;
             AbsoluteLayout.SetLayoutBounds(imagen, new Rectangle(1, 1, 1, 1));
@@ -146,19 +192,19 @@ namespace Reinco.Interfaces.Supervision
             AbsoluteLayout.SetLayoutBounds(eliminar, new Rectangle(0, 1, 40, 40));
             AbsoluteLayout.SetLayoutFlags(eliminar, AbsoluteLayoutFlags.PositionProportional);
 
-            Image guardar = new Image();
-            guardar.Source = "ic_guardar.png";
-            guardar.GestureRecognizers.Add(new TapGestureRecognizer()
-            {
-                Command = new Command(() => { this.guardarFoto(FotoActividad); })
-            });
-            AbsoluteLayout.SetLayoutBounds(guardar, new Rectangle(1, 1, 40, 40));
-            AbsoluteLayout.SetLayoutFlags(guardar, AbsoluteLayoutFlags.PositionProportional);
-
+            /* Image guardar = new Image();
+             guardar.Source = "ic_guardar.png";
+             guardar.GestureRecognizers.Add(new TapGestureRecognizer()
+             {
+                 Command = new Command(() => { this.guardarFoto(FotoActividad); })
+             });
+             AbsoluteLayout.SetLayoutBounds(guardar, new Rectangle(1, 1, 40, 40));
+             AbsoluteLayout.SetLayoutFlags(guardar, AbsoluteLayoutFlags.PositionProportional);
+             */
             BoxView estado = new BoxView();
 
             layoutImagen.Children.Add(imagen);
-            layoutImagen.Children.Add(guardar);
+            //layoutImagen.Children.Add(guardar);
             layoutImagen.Children.Add(eliminar);
         }
 
@@ -167,28 +213,8 @@ namespace Reinco.Interfaces.Supervision
             App.Current.MainPage.DisplayAlert("Eliminar", FotoActividad.id.ToString(), "Aceptar");
         }
 
-        private async void guardarFoto(FotosxActividadItem FotoActividad)
-        {
-            //var nuevo_file = ReducirImagen.ResizeImage();
-            var contenido = new MultipartFormDataContent();
-            contenido.Add(new StreamContent(FotoActividad.file), "\"file\"", $"\"{FotoActividad.foto}\"");
-            /* var values = new[]
-             {
-                 new KeyValuePair<string, string>("idSupervisionActividad", idSupervisionActividad.ToString()),
-             };
-             foreach (var keyValuePair in values)
-             {
-                 contenido.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
-             }*/
 
-            var servicioUpload = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/ServicioFoto.asmx/ImagenPost";
-            var client = new HttpClient();
-            var httpResponserMessage = await client.PostAsync(servicioUpload, contenido);
-            string mensajeRespuesta = await httpResponserMessage.Content.ReadAsStringAsync();
-            await App.Current.MainPage.DisplayAlert("ERROR:", mensajeRespuesta, "Aceptar");
-            // App.Current.MainPage.DisplayAlert("Guardar", FotoActividad.id.ToString(), "Aceptar");
-        }
-    } 
+    }
     #endregion
 
 }
