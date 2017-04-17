@@ -149,9 +149,10 @@ namespace Reinco.Interfaces.Propietario
             var items = listarPropietario.ItemsSource as IList;
             if (items != null && e.Item == items[items.Count - 1])
             {
-                // int nuevosResgistros = 5;
-                // int totalRegistroActual = PropietarioItems.Count();
-                // App.ListarPropietarios.CargarPropietarioItem();
+                // Aqui Logica de programacion cada ves que se ejecute este evento =====================================================//
+                // int cargarNuevos = 5; // solo de prueva
+                // int totalRegistroActual = PropietarioItems.Count(); // solo de prueva
+                // CargarPropietarioItem();
             }
         } 
         #endregion
