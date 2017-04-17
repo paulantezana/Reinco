@@ -69,7 +69,11 @@
 
                 <!-- Indicador de Actividad -->
                 <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
-
+                <!-- Obra finalizada -->
+                <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
+                    <Label Text="Obra finalizada"></Label>
+                    <Switch HorizontalOptions="EndAndExpand" x:Name="Sfinalizada" ></Switch>
+                </StackLayout>
                 <!-- Buttons Action -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Button x:Name="cancelar"  Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>

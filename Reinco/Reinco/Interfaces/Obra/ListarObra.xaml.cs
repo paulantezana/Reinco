@@ -15,7 +15,7 @@ namespace Reinco.Interfaces.Obra
     {
         string Color;
 
-        #region +---- Services ----+
+        #region +---- Services -------
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
         #endregion
@@ -50,6 +50,7 @@ namespace Reinco.Interfaces.Obra
         #endregion
 
         #region +---- Comandos ----+
+        public ICommand MostrarTodo { get; private set; }
         public ICommand editarObra { get; private set; }
         public ICommand CrearObra { get; private set; }
         public ICommand RefreshObraCommand { get; private set; }
@@ -67,6 +68,11 @@ namespace Reinco.Interfaces.Obra
 
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
+            MostrarTodo = new Command(() =>
+            {
+                ObraItems.Clear();
+                CargarTodasObras();
+            });
             CrearObra = new Command(() =>
             {
                 Navigation.PushAsync(new AgregarObra());
@@ -88,10 +94,15 @@ namespace Reinco.Interfaces.Obra
 
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItems(idUsuario);
-            
+
 
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
+            MostrarTodo = new Command(() =>
+            {
+                ObraItems.Clear();
+                CargarTodasObras();
+            });
             CrearObra = new Command(() =>
             {
                 Navigation.PushAsync(new AgregarObra());
@@ -114,8 +125,12 @@ namespace Reinco.Interfaces.Obra
             //ocultar.IsVisible = false;
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItemsAsistente(idUsuario);
-           // editarObra2.IsVisible = false;
-           
+            // editarObra2.IsVisible = false;
+            MostrarTodo = new Command(() =>
+            {
+                ObraItems.Clear();
+                CargarTodasObras();
+            });
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
             CrearObra = new Command(() =>
@@ -144,37 +159,42 @@ namespace Reinco.Interfaces.Obra
         #endregion
 
         #region +---- Cargando las obras ----+
+        #region==============Solo obras activas===========================================
         public async void CargarObraItems()
         {
             try
             {
                 IsRefreshingObra = true;
                 //servicioObra, mostrarObras--modificado
-                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
+                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarObrasActivas");
                 foreach (var item in obras)
                 {
-                    if (item.idPropietario == null || item.idUsuario_responsable == null)
-                    {
-                        Color = "#FF7777";
-                    }
-                    else
-                        Color = "#77FF77";
+                    
+                        if (item.idPropietario == null || item.idUsuario_responsable == null)
+                        {
+                            Color = "#FF7777";
+                        }
+                        else
+                            Color = "#77FF77";
 
-                    ObraItems.Add(new ObraItem
-                    {
-                        idObra = item.idObra,
-                        nombre = item.nombre,
-                        codigo = item.codigo,
-                        idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
-                        idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
-                        colorObra = Color,
-                        idPropietarioObra = item.idPropietario_Obra==null?0: item.idPropietario_Obra,
-                        nombrePropietario = item.nombrePropietario,
-                        nombresApellidos = item.nombresApellidos,
-                        ocultar = true,
-                        
-                    });
-                }
+                        ObraItems.Add(new ObraItem
+                        {
+                            idObra = item.idObra,
+                            nombre = item.nombre,
+                            codigo = item.codigo,
+                            idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                            idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                            colorObra = Color,
+                            idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
+                            nombrePropietario = item.nombrePropietario,
+                            nombresApellidos = item.nombresApellidos,
+                            finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
+                            ocultar = true,
+
+                        });
+                    }
+                   
+                
             }
             catch (Exception ex)
             {
@@ -185,6 +205,54 @@ namespace Reinco.Interfaces.Obra
                 IsRefreshingObra = false;
             }
         }
+        #endregion
+        #region=================todas las obras=========================================
+        public async void CargarTodasObras()
+        {
+            try
+            {
+                IsRefreshingObra = true;
+                //servicioObra, mostrarObras--modificado
+                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
+                foreach (var item in obras)
+                {
+                    
+                        if (item.idPropietario == null || item.idUsuario_responsable == null)
+                        {
+                            Color = "#FF7777";
+                        }
+                        else
+                            Color = "#77FF77";
+
+                        ObraItems.Add(new ObraItem
+                        {
+                            idObra = item.idObra,
+                            nombre = item.nombre,
+                            codigo = item.codigo,
+                            idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                            idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                            colorObra = Color,
+                            idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
+                            nombrePropietario = item.nombrePropietario,
+                            nombresApellidos = item.nombresApellidos,
+                            finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
+                            ocultar = true,
+
+                        });
+                    }
+
+                
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+            finally
+            {
+                IsRefreshingObra = false;
+            }
+        }
+        #endregion
         #region=============obras responsable=======================================
         public async void CargarObraItems(int idUsuario)
         {

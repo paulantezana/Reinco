@@ -4,6 +4,7 @@
              x:Class="Reinco.Interfaces.Obra.ListarObra"
              Title="Listado De Obras">
     <ContentPage.ToolbarItems >
+        <ToolbarItem Icon="icon_list.png" Command="{Binding MostrarTodo} "></ToolbarItem>
         <ToolbarItem Icon="ic_add.png" Command="{Binding CrearObra} "></ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

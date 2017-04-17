@@ -28,6 +28,7 @@ namespace Reinco.Entidades
         public string nombrePropietario { get; set; }
         public string nombresApellidos { get; set; }
         public bool ocultar { get; set; }
+        public int finalizada { get; set; }
 
         public ICommand asignarPlantilla { get; private set; }
         public ICommand editarObra { get; private set; }

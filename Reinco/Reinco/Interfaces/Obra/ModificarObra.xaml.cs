@@ -28,6 +28,7 @@ namespace Reinco.Interfaces.Obra
         public ICommand commandBorrarPropietario { get; private set; }
         public ICommand commandBorrarResponsable { get; private set; }
         public ICommand guardar { get; set; }
+       // public ICommand finalizada { get; set; }
 
         #region ======================= IsRunnings =======================
         public bool isRunning { get; set; }
@@ -83,7 +84,7 @@ namespace Reinco.Interfaces.Obra
 
             lblPropietario.Text = "Asigne un propietario " + App.opcional;
             lblResponsable.Text = "Asigne un responsable " + App.opcional;
-
+            Sfinalizada.IsToggled = Obra.finalizada != 1 ? false : true;
             // Variables Globales
 
             // Placeholders
@@ -146,9 +147,10 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 cambiarEstado(false);
+                
                 object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                 { "IdObra", obra.idObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
-                { "IdPropietarioObra", obra.idPropietarioObra}};
+                { "IdPropietarioObra", obra.idPropietarioObra}, { "supervisionTerminada", Sfinalizada.IsToggled==true?1:0}};
                 dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "ModificarPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)

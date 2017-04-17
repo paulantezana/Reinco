@@ -21,7 +21,10 @@ namespace Reinco.Interfaces.Supervision
 
         #region +---- Atributos ----+
         public VentanaMensaje mensaje;
-        
+        string nombreA = "";
+        string nombreR = "";
+        string Cargo = "";
+        string Color = "";
         int IdPlantillaObra;
         #endregion
 
@@ -59,14 +62,14 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshPlantillaSupervisionCommand { get; private set; }
 
         #region ========================= Constructor =========================
-        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla = "Spervision")
+        public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla /*= "Supervision"*/)
         {
             InitializeComponent();
             directorio.Text = App.directorio + "\\Supervisiones";
 
             IdPlantillaObra = idPlantillaObra;
             this.Title = nombrePlantilla;
-
+            Cargo = App.cargo;
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
             CargarPlantillaSupervision();
             AgregarSupervision = new Command(() =>
@@ -113,13 +116,26 @@ namespace Reinco.Interfaces.Supervision
                     {
                         foreach (var item in result)
                         {
+                            nombreA ="As: "+ item.nombreAsistente+" - ";
+                            nombreR ="Resp: "+ item.nombreResponsable;
+                            if (item.firma_recepcion==1&&item.firma_notificacion==1&&item.firma_conformidad==1)
+                            {
+                                Color = "#77FF77";
+                            }
+                            else
+                                Color = "#FF7777";
+                            if (Cargo == "Asistente")
+                                nombreA = "";
+                            if (Cargo == "Responsable")
+                                nombreR = "";
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
                             {
-                                nombre = "Supervision",
-                                numero =item.nroSupervision==null?0: item.nroSupervision,
+                                nombre = nombreA + nombreR,
+                                numero = item.nroSupervision == null ? 0 : item.nroSupervision,
                                 fecha = item.fecha,
                                 partidaEvaluada = item.partidaEvaluada,
                                 nivel = item.nivel,
+                                colorSupervision = Color,
                                 idSupervision =item.idSupervision
                             });
                         }
@@ -146,7 +162,7 @@ namespace Reinco.Interfaces.Supervision
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            App.ListarPlantillaSupervision = this;
+           // App.ListarPlantillaSupervision = this;
         } 
         #endregion
 
