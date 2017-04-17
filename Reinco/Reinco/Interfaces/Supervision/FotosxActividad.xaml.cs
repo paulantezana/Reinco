@@ -20,10 +20,14 @@ namespace Reinco.Interfaces.Supervision
     {
         public ObservableCollection<FotosxActividadItem> FotosxActividadItems { get; set; }
         private MediaFile file;
+        SupervisarActividadItem actividad; // Objeto SupervisarActividadItem
+
         WebService Servicio = new WebService();
-        public FotosxActividad(/*SupervisarActividadItem Actividad*/)
+        public FotosxActividad(SupervisarActividadItem Actividad)
         {
             InitializeComponent();
+            this.actividad = Actividad; // Almacenando el objeto SupervisarActividadItem para usar en esta interfas
+
             FotosxActividadItems = new ObservableCollection<FotosxActividadItem>();
             DibujarInterfaz();
         }
