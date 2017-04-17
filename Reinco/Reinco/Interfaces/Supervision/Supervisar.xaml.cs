@@ -105,7 +105,7 @@ namespace Reinco.Interfaces.Supervision
             TraerSupervision(Supervision.idSupervision);
             CargarSupervisarActividadItem();
 
-            // Havilitar Firmas
+            // Habilitar Firmas
             activarConformidad = true;
             activarEntrega = true;
             activarRecepcion = true;
@@ -121,6 +121,7 @@ namespace Reinco.Interfaces.Supervision
                 Sentrega.IsEnabled = false;
             if (cargoUsuario == "Responsable")
                 Srecepcion.IsEnabled = false;
+            //restriccion de modificaciones
             if (restringir == 1)
             {
                 Sobservacion.IsEnabled = false;
