@@ -28,7 +28,7 @@ namespace Reinco.Entidades
         public string anotacionAdicinal { get; set; }
         public string tolerancia { get; set; }
         public int animacion { get; set; }
-
+        public bool restriccion { get; set; }
         #region ================ Preparando pa mostrar o ocultar el boton guardar ================
         public bool GuardarIsVisible { get; set; }
         public bool guardarIsVisible

@@ -90,12 +90,14 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar()
         {
             InitializeComponent();
+            restringir = 0;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
         }
         public Supervisar(PlantillaSupervisionItem Supervision)
         {
             InitializeComponent();
+            restringir = 0;
             this.Supervision = Supervision;
             tituloSupervisar = Supervision.nombreObra;
 
@@ -120,7 +122,9 @@ namespace Reinco.Interfaces.Supervision
                 Srecepcion.IsEnabled = false;
             if (restringir == 1)
             {
-               
+                Sobservacion.IsEnabled = false;
+                Sdisposicion.IsEnabled = false;
+                
             }
             // Comandos
             guardarSupervision = new Command(() =>
@@ -136,7 +140,6 @@ namespace Reinco.Interfaces.Supervision
                 SupervisarActividadItems.Clear();
                 CargarSupervisarActividadItem();
             });
-
             // Contexto Actual Para los bindings
             this.BindingContext = this;
         }
@@ -169,6 +172,7 @@ namespace Reinco.Interfaces.Supervision
                         aprobacion = item.si == 0 ? false : true,
                         _observacionLevantada = item.observacion_levantada == 0 ? false : true,
                         observacionLevantada = item.observacion_levantada == 0 ? false : true,
+                        restriccion = restringir==1?true:false//atributo agregado para que el supervisor no pueda corregir datos cuando ya ha sido enviado
                     });
                 }
 
