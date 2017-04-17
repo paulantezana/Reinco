@@ -54,12 +54,58 @@ namespace Reinco.Interfaces.Propietario
             PropietarioItems = new ObservableCollection<PropietarioItem>();
             CargarPropietarioItem();
 
+            /*
+               @ por el momento no funcion correctamente
+                ================================
+                       PAGINACION
+                ================================
+             */
+            //int paginaActual = 5; 
+            //int paginas = 3;
+
+            //var anterior = new uiPage("< Anterior");
+            //anterior.evento.Command = new Command(() =>
+            //{
+            //    if (paginaActual > 1)
+            //    {
+            //        // CargarPropietarioItem(paginaActual - 1);
+            //    }
+            //});
+            //paginacion.Children.Add(anterior.contenedor); // Pintando En La Interfas ===========================|
+
+            //for (int i = 1; i < paginas; i++)
+            //{
+            //    uiPage page = new uiPage(i.ToString());
+            //    page.evento.Command = new Command(() =>
+            //    {
+            //        DisplayAlert("Info", i.ToString(), "OK");
+            //    });
+            //    paginacion.Children.Add(page.contenedor);
+            //}
+
+            //var siguiente = new uiPage("Siguinete");
+            //siguiente.evento.Command = new Command(() =>
+            //{
+            //    if(paginaActual < paginas)
+            //    {
+            //        // CargarPropietarioItem(paginaActual + 1);
+            //    }
+            //});
+            //paginacion.Children.Add(siguiente.contenedor); // Pintando En La Interfas ===========================|
+
+            /*
+                 @
+                ================================
+                      FIN PAGINACION
+                ================================
+             */
+
+            // Comandos
             RefreshPropietarioCommand = new Command(() =>
             {
                 PropietarioItems.Clear();
                 CargarPropietarioItem();
             });
-
             AgregarPropietario = new Command(() =>
             {
                 Navigation.PushAsync(new AgregarPropietario());
@@ -105,5 +151,25 @@ namespace Reinco.Interfaces.Propietario
             }
         }
         #endregion
+    }
+    public class uiPage
+    {
+        public StackLayout contenedor { get; set; }
+        public TapGestureRecognizer evento { get; set; }
+        public uiPage(string texto, string colorFondo = "#EFEFEF",string colorTexto = "#7777")
+        {
+            contenedor = new StackLayout() {
+                BackgroundColor = Color.FromHex(colorFondo)
+            };
+            contenedor.Padding = new Thickness(5);
+            
+            contenedor.Children.Add(new Label()
+            {
+                Text = texto,
+                TextColor = Color.FromHex(colorTexto)
+            });
+            evento = new TapGestureRecognizer();
+            contenedor.GestureRecognizers.Add(this.evento);
+        }
     }
 }
