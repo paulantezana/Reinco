@@ -162,7 +162,7 @@ namespace Reinco.Interfaces.Supervision
         protected override void OnAppearing()
         {
             base.OnAppearing();
-           // App.ListarPlantillaSupervision = this;
+            App.ListarPlantillaSupervision = this;
         } 
         #endregion
 

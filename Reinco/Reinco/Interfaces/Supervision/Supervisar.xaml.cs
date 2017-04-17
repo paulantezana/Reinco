@@ -18,7 +18,7 @@ namespace Reinco.Interfaces.Supervision
     public partial class Supervisar : ContentPage, INotifyPropertyChanged
     {
         public VentanaMensaje mensaje;
-        PlantillaSupervisionItem Supervision;
+        PlantillaSupervisionItem supervision;
         string Mensaje;
         string cargoUsuario;
 
@@ -96,7 +96,7 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar(PlantillaSupervisionItem Supervision)
         {
             InitializeComponent();
-            this.Supervision = Supervision;
+            supervision = Supervision;
             tituloSupervisar = Supervision.nombreObra;
 
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
@@ -154,7 +154,7 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 IsRefreshingSupervisar = true;
-                object[,] variables = new object[,] { { "IdSupervision", Supervision.idSupervision } };
+                object[,] variables = new object[,] { { "IdSupervision", supervision.idSupervision } };
                 dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
                 foreach (var item in obras)
                 {
@@ -218,7 +218,7 @@ namespace Reinco.Interfaces.Supervision
                 cambiarEstado(false);
                 
                 object[,] variables = new object[,] {
-                    { "idSupervision", Supervision.idSupervision } ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
+                    { "idSupervision", supervision.idSupervision } ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
                     { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },
                     { "firma_conformidad", conformitad==true?1:0}};
                 dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "GuardarSupervision", variables);
