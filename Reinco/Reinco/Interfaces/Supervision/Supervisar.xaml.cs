@@ -121,7 +121,7 @@ namespace Reinco.Interfaces.Supervision
                 Sentrega.IsEnabled = false;
             if (cargoUsuario == "Responsable")
                 Srecepcion.IsEnabled = false;
-            //restriccion de modificaciones
+            //restriccion de modificaciones en la supervision
             if (restringir == 1)
             {
                 Sobservacion.IsEnabled = false;
