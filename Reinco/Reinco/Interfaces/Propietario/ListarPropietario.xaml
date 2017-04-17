@@ -17,7 +17,9 @@
                 BackgroundColor="{StaticResource Color5}"
                 HasUnevenRows="True"
                 IsPullToRefreshEnabled="True"
+                ItemAppearing="ListView_ItemAppearing"
                 RefreshCommand="{Binding RefreshPropietarioCommand}"
+                x:Name="listarPropietario"
                 IsRefreshing="{Binding IsRefreshingPropietario,Mode=TwoWay}">
                 <!-- Encabezado -->
 
