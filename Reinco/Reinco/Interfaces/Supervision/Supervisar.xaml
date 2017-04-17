@@ -116,7 +116,7 @@
                                             </Image>
                                         </StackLayout>
 
-                                        <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="120" Text="{Binding anotacionAdicinal}"></Editor>
+                                        <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="100" Text="{Binding anotacionAdicinal}"></Editor>
 
 
                                         <!-- Tomar Foto -->
@@ -161,7 +161,7 @@
                         <StackLayout>
                             <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,30,8,15">
                                 <Label Text="Nota Supervisión" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
-                                <Editor HeightRequest="400" BackgroundColor="#F5F5F5" x:Name="EnotaSupervision" Text="{Binding notaSupervision}"></Editor>
+                                <Editor HeightRequest="150" BackgroundColor="#F5F5F5" x:Name="EnotaSupervision" Text="{Binding notaSupervision}"></Editor>
                             </StackLayout>
 
 

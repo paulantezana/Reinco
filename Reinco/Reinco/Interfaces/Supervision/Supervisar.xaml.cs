@@ -90,16 +90,19 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar()
         {
             InitializeComponent();
+            restringir = 0;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
         }
         public Supervisar(PlantillaSupervisionItem Supervision)
         {
             InitializeComponent();
+            restringir = 0;
             supervision = Supervision;
             tituloSupervisar = Supervision.nombreObra;
-
+            
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
+            TraerSupervision(Supervision.idSupervision);
             CargarSupervisarActividadItem();
 
             // Havilitar Firmas
@@ -107,7 +110,7 @@ namespace Reinco.Interfaces.Supervision
             activarEntrega = true;
             activarRecepcion = true;
 
-            TraerSupervision(Supervision.idSupervision);
+           
             // Valores
             DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "\\Supervisar";
             tituloSupervisar = Application.Current.Properties["direccionApp"].ToString();
@@ -120,7 +123,8 @@ namespace Reinco.Interfaces.Supervision
                 Srecepcion.IsEnabled = false;
             if (restringir == 1)
             {
-               
+                Sobservacion.IsEnabled = false;
+                Sdisposicion.IsEnabled = false;
             }
             // Comandos
             guardarSupervision = new Command(() =>
@@ -169,6 +173,7 @@ namespace Reinco.Interfaces.Supervision
                         aprobacion = item.si == 0 ? false : true,
                         _observacionLevantada = item.observacion_levantada == 0 ? false : true,
                         observacionLevantada = item.observacion_levantada == 0 ? false : true,
+                        restriccion = restringir == 1 ? true : false
                     });
                 }
 
@@ -194,7 +199,7 @@ namespace Reinco.Interfaces.Supervision
                 dynamic supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "TraerSupervision", variables);
                 foreach (var item in supervision)
                 {
-                    restringir = item.firma_Notificacion;
+                    restringir = item.firma_Notificacion != 1 ? 0 : 1;
                     EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
                     Sobservacion.IsToggled = item.observacion == null ? false : true;
                     Sdisposicion.IsToggled = item.disposicion == 0 ? true : false;
