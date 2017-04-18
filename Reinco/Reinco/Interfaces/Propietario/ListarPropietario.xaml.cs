@@ -20,9 +20,9 @@ namespace Reinco.Interfaces.Propietario
     public partial class ListarPropietario : ContentPage, INotifyPropertyChanged
     {
         WebService Servicio = new WebService();
-
+        int ultimoId = 100000;
         private bool isRefreshingPropietario { get; set; }
-        
+        int nroElementos = App.nroElementos;
         new public event PropertyChangedEventHandler PropertyChanged;
 
         #region IsRefreshingPropietario
@@ -53,7 +53,7 @@ namespace Reinco.Interfaces.Propietario
             InitializeComponent();
             directorio.Text = App.directorio + "\\Propietario";
             PropietarioItems = new ObservableCollection<PropietarioItem>();
-            CargarPropietarioItem();
+            CargarPropietarioItem(nroElementos, ultimoId);
 
             /*
                @ Se usa la uiPage para los eventos y dibujar la interfas
@@ -64,19 +64,19 @@ namespace Reinco.Interfaces.Propietario
             int paginas = 3;
             int paginaActual = 2;
 
-            paginacion.Children.Add(new uiPage("< Anterior",paginaActual - 1).contenedor);
-            for (int i = 1; i <= paginas; i++)
-            {
-                if(i == paginaActual)
-                {
-                    paginacion.Children.Add(new uiPage(i.ToString(), i,"#EFEFEF", "#2196F3").contenedor);
-                }
-                else
-                {
-                    paginacion.Children.Add(new uiPage(i.ToString(), i).contenedor);
-                }
-            }
-            paginacion.Children.Add(new uiPage("< Siguiente", paginaActual + 1).contenedor);
+            //paginacion.Children.Add(new uiPage("< Anterior",paginaActual - 1).contenedor);
+            //for (int i = 1; i <= paginas; i++)
+            //{
+            //    if(i == paginaActual)
+            //    {
+            //        paginacion.Children.Add(new uiPage(i.ToString(), i,"#EFEFEF", "#2196F3").contenedor);
+            //    }
+            //    else
+            //    {
+            //        paginacion.Children.Add(new uiPage(i.ToString(), i).contenedor);
+            //    }
+            //}
+            //paginacion.Children.Add(new uiPage("< Siguiente", paginaActual + 1).contenedor);
 
             /*
                  @
@@ -89,7 +89,7 @@ namespace Reinco.Interfaces.Propietario
             RefreshPropietarioCommand = new Command(() =>
             {
                 PropietarioItems.Clear();
-                CargarPropietarioItem();
+                CargarPropietarioItem(nroElementos, ultimoId);
             });
             AgregarPropietario = new Command(() =>
             {
@@ -110,21 +110,26 @@ namespace Reinco.Interfaces.Propietario
         #endregion
 
         #region ============= Cargar Propietarios==================
-        public async void CargarPropietarioItem()
+        public async void CargarPropietarioItem(int nroEleiementos,int UltimoId)
         {
             try
             {
+               //await DisplayAlert("", "", "OK");
                 IsRefreshingPropietario = true;
-                dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
-                foreach (var item in result)
-                {
-                    PropietarioItems.Add(new PropietarioItem
+                object[,] variables = new object[,] { { "nroElementos", nroEleiementos }, { "ultimoId", UltimoId } };
+                dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios",variables);
+                
+                    foreach (var item in result)
                     {
-                        idPropietario = item.idPropietario,
-                        nombre = item.nombre,
-                        fotoPerfil = "ic_profile_color.png",
-                    });
-                }
+                        PropietarioItems.Add(new PropietarioItem
+                        {
+                            idPropietario = item.idPropietario,
+                            nombre = item.nombre,
+                            fotoPerfil = "ic_profile_color.png",
+                        });
+                    }
+
+                
             }
             catch (Exception ex)
             {
@@ -134,6 +139,7 @@ namespace Reinco.Interfaces.Propietario
             {
                 IsRefreshingPropietario = false;
             }
+            ultimoId = PropietarioItems[PropietarioItems.Count - 1].idPropietario;
         }
         #endregion
 
@@ -152,7 +158,7 @@ namespace Reinco.Interfaces.Propietario
                 // Aqui Logica de programacion cada ves que se ejecute este evento =====================================================//
                 // int cargarNuevos = 5; // solo de prueva
                 // int totalRegistroActual = PropietarioItems.Count(); // solo de prueva
-                // CargarPropietarioItem();
+                 CargarPropietarioItem(nroElementos, ultimoId);
             }
         } 
         #endregion

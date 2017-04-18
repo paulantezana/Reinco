@@ -8,18 +8,7 @@
         <ScrollView>
             <StackLayout Padding="10" Spacing="15" BackgroundColor="{StaticResource Color5}">
 
-                <ResourceDictionary>
-                    <Color x:Key="entry_background">#FAFAFA</Color>
-                    <Color x:Key="entry_border">#C8C8CD</Color>
-                    <Color x:Key="entry_placeholder_text">#808080</Color>
-
-                    <Style x:Key="MyEntry" TargetType="Entry">
-                        <Setter Property="BackgroundColor" Value="{StaticResource entry_background}" />
-                        <Setter Property="PlaceholderColor" Value="{StaticResource entry_placeholder_text}" />
-                        <Setter Property="TextColor" Value="Black" />
-                    </Style>
-                   
-                </ResourceDictionary>
+                
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Fecha d-MM-yyyy"></Label>
                     <DatePicker Format="d-MM-yyyy" x:Name="fecha"></DatePicker>
@@ -27,10 +16,9 @@
 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Número de Supervisión" x:Name="lblNroSupervision"></Label>
-                    <Entry x:Name="numeroSupervision" Keyboard="Numeric" Style="{StaticResource MyEntry}"></Entry>
+                    <Entry x:Name="numeroSupervision" Keyboard="Numeric" ></Entry>
                 </StackLayout>
-
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+               <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
                     <Label Text="Partida Evaluada" x:Name="lblPartidaEvaluada"></Label>
                     <Entry x:Name="partidaEvaluada" Keyboard="Text"></Entry>
                 </StackLayout>

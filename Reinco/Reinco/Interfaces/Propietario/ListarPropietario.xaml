@@ -62,10 +62,10 @@
                 </ListView.ItemTemplate>
                 
                 <!-- Pie De la Página -->
-                <ListView.Footer>
+                <!--<ListView.Footer>
                     <StackLayout x:Name="paginacion" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Padding="0,20,0,20">
                     </StackLayout>
-                </ListView.Footer>
+                </ListView.Footer>-->
                 
             </ListView>
         </StackLayout>

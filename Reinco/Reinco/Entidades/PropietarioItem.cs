@@ -51,7 +51,7 @@ namespace Reinco.Entidades
                     {
                         await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "Aceptar");
                         App.ListarPropietarios.PropietarioItems.Clear();
-                        App.ListarPropietarios.CargarPropietarioItem();
+                        //App.ListarPropietarios.CargarPropietarioItem();
                         return;
                     }
                 }

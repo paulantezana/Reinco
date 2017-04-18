@@ -28,6 +28,7 @@ namespace Reinco
         public static string correo = "";
         public static string directorio = "Reicno";
         public VentanaMensaje mensaje;
+        public static int nroElementos = 10;
         #endregion
 
         #region +---- Propiedades ----+

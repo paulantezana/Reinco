@@ -80,10 +80,9 @@ namespace Reinco.Interfaces.Supervision
             PlantillaIsEnabled = true;
             directorio.Text = App.directorio + "\\" + Obra.nombre + "\\Agregar Plantillas";
             obra = Obra;
-
             // platilla
             Plantillas = new ObservableCollection<PlantillaItem>();
-            CargarPlantillas();
+            CargarPlantillas(Obra.idPropietarioObra);
 
             // Eventos
             guardar.Clicked += Guardar_Clicked;
@@ -93,7 +92,7 @@ namespace Reinco.Interfaces.Supervision
             RefreshPlantillaCommand = new Command(() =>
             {
                 Plantillas.Clear();
-                CargarPlantillas();
+                CargarPlantillas(Obra.idPropietarioObra);
             });
 
             // contexto para los bindings
@@ -177,12 +176,14 @@ namespace Reinco.Interfaces.Supervision
         #endregion
 
         #region ======================== Cargar Plantillas ========================
-        private async void CargarPlantillas()
+        private async void CargarPlantillas(int idPropietarioObra)
         {
             try
             {
                 IsRefreshingPlantilla = true;
-                dynamic plantillas = await Servicio.MetodoGet("ServicioPlantilla.asmx", "MostrarPlantillas");
+                object[,] variables = new object[,] {
+                        { "idPropietarioObra",idPropietarioObra  }  };
+                dynamic plantillas = await Servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillasSinAsignar",variables);
                 foreach (var plantilla in plantillas)
                 {
                     Plantillas.Add(new PlantillaItem
