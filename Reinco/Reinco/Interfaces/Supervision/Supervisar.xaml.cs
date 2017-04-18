@@ -32,8 +32,7 @@ namespace Reinco.Interfaces.Supervision
         public string tituloSupervisar { get; set; }
 
         public string notaSupervision { get; set; }
-        public bool observacion { get; set; }
-        public bool disposicion { get; set; }
+
         public bool recepcion { get; set; }
         public bool activarRecepcion { get; set; }
         public bool entrega { get; set; }
@@ -45,6 +44,10 @@ namespace Reinco.Interfaces.Supervision
         public int restringir { get; set; }
 
         public ObservableCollection<SupervisarActividadItem> SupervisarActividadItems { get; set; }
+        public bool disposicion { get; set; }
+        public bool _disposicion { get; set; }//para poder restringir el cambio si existe firma
+        public bool observacion { get; set; }
+        public bool _observacion { get; set; }
 
         #region ============================= Comandos =============================
 
@@ -90,14 +93,14 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar()
         {
             InitializeComponent();
-            restringir = 0;
+            restringir = 1;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
         }
         public Supervisar(PlantillaSupervisionItem Supervision)
         {
             InitializeComponent();
-            restringir = 0;
+            restringir = 1;//restringe cambios en los botones si la supervision ya esta entregada
             supervision = Supervision;
             tituloSupervisar = Supervision.nombreObra;
             
@@ -109,7 +112,7 @@ namespace Reinco.Interfaces.Supervision
             activarConformidad = true;
             activarEntrega = true;
             activarRecepcion = true;
-
+               
            
             // Valores
             DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "\\Supervisar";
@@ -122,11 +125,7 @@ namespace Reinco.Interfaces.Supervision
             if (cargoUsuario == "Responsable")
                 Srecepcion.IsEnabled = false;
             //restriccion de modificaciones en la supervision
-            if (restringir == 1)
-            {
-                Sobservacion.IsEnabled = false;
-                Sdisposicion.IsEnabled = false;
-            }
+            
             // Comandos
             guardarSupervision = new Command(() =>
             {
@@ -144,6 +143,7 @@ namespace Reinco.Interfaces.Supervision
 
             // Contexto Actual Para los bindings
             this.BindingContext = this;
+            restringir = 1;
         }
 
         protected override void OnAppearing()
@@ -174,7 +174,8 @@ namespace Reinco.Interfaces.Supervision
                         aprobacion = item.si == 0 ? false : true,
                         _observacionLevantada = item.observacion_levantada == 0 ? false : true,
                         observacionLevantada = item.observacion_levantada == 0 ? false : true,
-                        restriccion = restringir == 1 ? true : false
+                        sinFirmaEntrega = restringir == 0 ? true : false
+
                     });
                 }
 
@@ -203,10 +204,21 @@ namespace Reinco.Interfaces.Supervision
                     restringir = item.firma_Notificacion != 1 ? 0 : 1;
                     EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
                     Sobservacion.IsToggled = item.observacion == null ? false : true;
+                    _observacion= item.observacion == null ? false : true;
                     Sdisposicion.IsToggled = item.disposicion == 0 ? true : false;
+                    _disposicion = item.disposicion == 0 ? true : false;
                     Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
                     Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
                     Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
+                    
+                }
+                
+                if (restringir == 1)
+                {
+                    Sdisposicion.PropertyChanged += Sdisposicion_PropertyChanged;
+                    Sobservacion.PropertyChanged += Sobservacion_PropertyChanged;
+                    EnotaSupervision.IsEnabled = false;
+                    guardar.IsEnabled = false;
                 }
             }
             catch (Exception ex)
@@ -214,6 +226,18 @@ namespace Reinco.Interfaces.Supervision
                 await mensaje.MostrarMensaje("Error", ex.Message);
             }
         }
+
+        private void Sobservacion_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Sobservacion.IsToggled = _observacion;
+        }
+
+        private void Sdisposicion_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Sdisposicion.IsToggled = _disposicion;
+        }
+
+
         #endregion
 
         #region ============================== guardar supervision ==============================

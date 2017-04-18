@@ -28,7 +28,8 @@ namespace Reinco.Entidades
         public string anotacionAdicinal { get; set; }
         public string tolerancia { get; set; }
         public int animacion { get; set; }
-        public bool restriccion { get; set; }
+        public bool sinFirmaEntrega { get; set; }
+        public bool obraActiva { get; set; }
         #region ================ Preparando pa mostrar o ocultar el boton guardar ================
         public bool GuardarIsVisible { get; set; }
         public bool guardarIsVisible
@@ -62,24 +63,45 @@ namespace Reinco.Entidades
             }
             set
             {
+
                 if (ObservacionLevantada != value)
                 {
                     if (value != _observacionLevantada)
                     {
-                        if (value == true)
+                        if (sinFirmaEntrega)//==cuando la firma de entrega este activada, se desactiva  
                         {
-                            _aprobacion = false;
-                            aprobacion = false;
+                            if (value == true)
+                            {
+                                _aprobacion = false;
+                                aprobacion = false;
+                            }
+                            else
+                            {
+                                _aprobacion = true;
+                                aprobacion = true;
+                            }
+                            ObservacionLevantada = value;
+                            _observacionLevantada = value;
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacionLevantada"));
+                            GuardarActividad();
                         }
-                        else
+                        else// cuando la firma esta enviada, no se puede modificar
                         {
-                            _aprobacion = true;
-                            aprobacion = true;
+
+                            if (value)
+                            {
+                                ObservacionLevantada = false;
+                                _observacionLevantada = false;
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacionLevantada"));
+                            }
+                            else
+                            {
+                                ObservacionLevantada = true;
+                                _observacionLevantada = true;
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacionLevantada"));
+
+                            }
                         }
-                        ObservacionLevantada = value;
-                        _observacionLevantada = value;
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacionLevantada"));
-                        GuardarActividad();
                     }
                     else
                     {
@@ -104,23 +126,43 @@ namespace Reinco.Entidades
             {
                 if (Aprobacion != value)
                 {
-                    if (value != _aprobacion)
+                    if (value != _aprobacion)//ha cambiado 
                     {
-                        if (value == true)
+                        if (sinFirmaEntrega)//==cuando la firma de entrega este activada, se desactiva  
                         {
-                            _observacionLevantada = false;
-                            observacionLevantada = false;
+                            if (value == true)
+                            {
+                                _observacionLevantada = false;
+                                observacionLevantada = false;
+                            }
+                            else
+                            {
+                                _observacionLevantada = true;
+                                observacionLevantada = true;
+                            }
+                            Aprobacion = value;
+                            _aprobacion = value;
+                            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("aprobacion"));
+
+                            GuardarActividad();
                         }
-                        else
+                        else// cuando la firma esta enviada, no se puede modificar
                         {
-                            _observacionLevantada = true;
-                            observacionLevantada = true;
+                            
+                            if (value)
+                            {
+                                Aprobacion = false;
+                                _aprobacion = false;
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("aprobacion"));
+                            }
+                            else
+                            {
+                                Aprobacion = true;
+                                _aprobacion = true;
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("aprobacion"));
+                            
+                            }
                         }
-                        Aprobacion = value;
-                        _aprobacion = value;
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("aprobacion"));
-                        
-                        GuardarActividad();
                     }
                     else
                     {
@@ -155,7 +197,7 @@ namespace Reinco.Entidades
                 App.Supervisar.Navigation.PushAsync(new FotosxActividad(this));
             });
             guardarIsVisible = false;
-
+            
             #region ================= Expandir Y Habilitar Boton Guardar =================
             MostrarAnotacion = false;
             ExpandirAnotacion = new Command(() =>

@@ -88,7 +88,7 @@ namespace Reinco.Interfaces
         {
             this.grid();
             // Obra
-            uiHome obra = new uiHome("ic_plantilla_color.png", "Obras");
+            uiHome obra = new uiHome("ic_obra_color.png", "Obras");
             obra.eventoTap.Command = new Command(() =>
             {
                 App.Navigator.Detail = new NavigationPage(new ListarObra());

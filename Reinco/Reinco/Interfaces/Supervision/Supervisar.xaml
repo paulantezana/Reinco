@@ -96,7 +96,7 @@
                                 <Switch Grid.Column="4" IsEnabled="{Binding restriccion}" IsToggled="{Binding observacionLevantada, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"></Switch>
 
                                 <!-- Fila  = 1 Combinando 5 Columnas = -->
-                                <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}" >
+                                <StackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" BackgroundColor="#F5F5F5" IsVisible="{Binding MostrarAnotacion}"  >
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -109,21 +109,21 @@
                                         
                                         <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
                                             <Label  Text="Anotacion Adicional" FontAttributes="Bold" VerticalOptions="CenterAndExpand"></Label>
-                                            <Image Grid.Column="4" Grid.Row="0" Source="ic_guardar.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding guardarIsVisible}" VerticalOptions="Center">
+                                            <Image Grid.Column="4" Grid.Row="0" Source="ic_guardar.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding guardarIsVisible}" IsEnabled="{Binding restriccion}" VerticalOptions="Center">
                                                 <Image.GestureRecognizers>
                                                     <TapGestureRecognizer Command="{Binding guardarItem}"></TapGestureRecognizer>
                                                 </Image.GestureRecognizers>
                                             </Image>
                                         </StackLayout>
 
-                                        <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="100" Text="{Binding anotacionAdicinal}"></Editor>
+                                        <Editor Grid.Column="0" Grid.Row="1" Keyboard="Chat" HeightRequest="100" Text="{Binding anotacionAdicinal}" IsEnabled="{Binding sinFirmaEntrega}"></Editor>
 
 
                                         <!-- Tomar Foto -->
-                                        <StackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="8" BackgroundColor="{StaticResource Color5}">
+                                        <StackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" IsEnabled="{Binding restriccion}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="8" BackgroundColor="{StaticResource Color5}">
                                             <Label Text="Fotos"></Label>
                                             <StackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding verFotos}"/>
+                                                <TapGestureRecognizer Command="{Binding verFotos}" />
                                             </StackLayout.GestureRecognizers>
                                         </StackLayout>
                                         <!-- 
@@ -178,7 +178,7 @@
                         </StackLayout>
 
                         <StackLayout>
-                            <Grid Padding="0,15,0,15" BackgroundColor="#EEFFEE" Margin="0,15,0,15">
+                            <Grid Padding="0,15,0,15" BackgroundColor="#EEFFEE" Margin="0,0,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="3*"/>
@@ -204,7 +204,7 @@
                         <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}"></ActivityIndicator>
 
                         <!-- Buttons Action -->
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,30">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,0" Margin="0,0,0,20">
                             <Button Command="{Binding CancelarSupervision}" x:Name="cancelar" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
                             <Button Command="{Binding guardarSupervision}" x:Name="guardar" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                         </StackLayout>
@@ -216,7 +216,15 @@
 
             </ListView>
 
+            <Color x:Key="entry_background">#FAFAFA</Color>
+            <Color x:Key="entry_border">#C8C8CD</Color>
+            <Color x:Key="entry_placeholder_text">#808080</Color>
 
+            <Style x:Key="MyEntry" TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{StaticResource entry_background}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource entry_placeholder_text}" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

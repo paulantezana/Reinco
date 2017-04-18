@@ -56,6 +56,7 @@ namespace Reinco.Interfaces.Supervision
             asignarAsistente.ItemsSource = personalItem;
             guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
+            
         }
 
         private async void Guardar_Clicked(object sender, EventArgs e)

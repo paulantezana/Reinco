@@ -37,14 +37,14 @@
                                 </ViewCell.ContextActions>
 
 
-                                <!-- ============ Codigo Para Listar Obra ================-->
-                                <Grid Padding="8,15,8,15">
+                                <!-- ============ Codigo Para Listar supervisiones ================-->
+                                <Grid Padding="8,15,8,15" HeightRequest="85">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5"/>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="5"/> <!-- ============ barra de color================-->
+                                        <ColumnDefinition Width="50"/> <!-- ============ numero ================-->
+                                        <ColumnDefinition Width="auto"/> <!-- ============ responsable y asistente ================-->
+                                        <ColumnDefinition Width="*"/> <!-- ============ nivel ================-->
+                                        <ColumnDefinition Width="40"/> <!-- ============ ver actividades ================-->
                                     </Grid.ColumnDefinitions>
 
                                     <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorSupervision}" ></BoxView>
@@ -71,7 +71,7 @@
                                         </Image.GestureRecognizers>
                                     </Image>
                                 </Grid>
-                                <!-- ============ FIN Codigo Para Listar Obra ================-->
+                                <!-- ============ FIN Codigo Para Listar supervisiones ================-->
 
 
 
