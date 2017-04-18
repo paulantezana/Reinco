@@ -1,6 +1,7 @@
 ﻿using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -60,7 +61,6 @@ namespace Reinco.Interfaces.Plantilla
             // Contexto Para Los bindings
             this.BindingContext = this;
         }
-
         #region +---- Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
         {
@@ -68,6 +68,27 @@ namespace Reinco.Interfaces.Plantilla
             App.ListarPlantilla = this;
         }
         #endregion
+
+        #region ================================ Scroll Infinito ================================
+        /*
+            @ Evento que se dispara cadaves que el escroll lega al final de ventana
+            ================================
+                    SCROLL INFINITO
+            ================================
+        */
+        private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            var items = listViewPlantilla.ItemsSource as IList;
+            if (items != null && e.Item == items[items.Count - 1])
+            {
+                // Aqui Logica de programacion cada ves que se ejecute este evento =====================================================//
+                // int cargarNuevos = 5; // solo de prueva
+                // int totalRegistroActual = PropietarioItems.Count(); // solo de prueva
+                // CargarPlantilla();
+            }
+        }
+        #endregion
+
 
         public async void CargarPlantilla()
         {

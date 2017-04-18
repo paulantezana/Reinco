@@ -16,6 +16,8 @@
                     BackgroundColor="{StaticResource Color5}"
                     HasUnevenRows="True"
                     IsPullToRefreshEnabled="True"
+                    ItemAppearing="ListView_ItemAppearing"
+                    x:Name="listViewObraPlantilla"
                     RefreshCommand="{Binding RefreshObraPlantillaCommand}"
                     IsRefreshing="{Binding IsRefreshingObraPlantilla,Mode=TwoWay}">
                     

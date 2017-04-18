@@ -11,6 +11,8 @@
             BackgroundColor="{StaticResource Color5}"
             HasUnevenRows="True"
             IsPullToRefreshEnabled="True"
+            ItemAppearing="ListView_ItemAppearing"
+            x:Name="listViewObraxCargo"
             RefreshCommand="{Binding RefreshObraxCargoCommand}"
             IsRefreshing="{Binding IsRefreshingObraxCargo,Mode=TwoWay}">
 
