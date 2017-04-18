@@ -61,8 +61,8 @@ namespace Reinco.Interfaces.Propietario
                        PAGINACION
                 ================================
              */
-            int paginas = 3;
-            int paginaActual = 2;
+            //int paginas = 3;
+            //int paginaActual = 2;
 
             //paginacion.Children.Add(new uiPage("< Anterior",paginaActual - 1).contenedor);
             //for (int i = 1; i <= paginas; i++)
