@@ -22,6 +22,10 @@ namespace Reinco.Interfaces.Supervision
         WebService Servicio = new WebService();
         int IdUsuario;
         string Cargo;
+        bool mostrarResponsable = false;
+        bool mostrarAsistente = false;
+        int nroElementos = App.nroElementos;
+        int ultimoId = 100000;
         public ObservableCollection<ObraxCargoItem> ObraxCargoItems { get; set; }
 
 
@@ -42,20 +46,34 @@ namespace Reinco.Interfaces.Supervision
         public ICommand RefreshObraxCargoCommand { get; }
 
         #region ================================ Constructores ================================
-        public ListarObraxCargo(int idUsuario, string cargo = "")
+        public ListarObraxCargo(int idUsuario, string cargo)
         {
             InitializeComponent();
+            ObraxCargoItems = new ObservableCollection<ObraxCargoItem>();
             IdUsuario = idUsuario;
             Cargo = cargo;
-
-            ObraxCargoItems = new ObservableCollection<ObraxCargoItem>();
-            CargarObraResponsableItems();
+            if (cargo == "Asistente") {
+                CargarObrasAsistenteItems(nroElementos,ultimoId);
+                mostrarAsistente = true;
+            }
+                
+            if (cargo == "Responsable")
+            {
+                CargarObraResponsableItems(nroElementos,ultimoId);
+                mostrarResponsable = true;
+            }
+               
+          
 
             // Comandos
             RefreshObraxCargoCommand = new Command(() =>
             {
+                ultimoId = 10000;
                 ObraxCargoItems.Clear();
-                CargarObraResponsableItems();
+                if (cargo == "Asistente")
+                    CargarObrasAsistenteItems(nroElementos,ultimoId);
+                if (cargo == "Responsable")
+                    CargarObraResponsableItems(nroElementos,ultimoId);
                 IsRefreshingObraxCargo = false;
             });
 
@@ -71,13 +89,13 @@ namespace Reinco.Interfaces.Supervision
             App.ListarObraxCargo = this;
         }
 
-        private async void CargarObraResponsableItems()
+        private async void CargarObraResponsableItems(int elementos, int ultimo)
         {
             try
             {
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idResponsable", IdUsuario } };
-                dynamic obras = await servicio.MetodoPost("ServicioObra.asmx", "MostrarObrasResponsable", variables);
+                object[,] variables = new object[,] { { "idResponsable", IdUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic obras = await servicio.MetodoPost("ServicioPropietarioObra.asmx", "MostrarResponsablexObra", variables);
 
                 if (obras != null)
                 {
@@ -93,7 +111,8 @@ namespace Reinco.Interfaces.Supervision
                             ObraxCargoItems.Add(new ObraxCargoItem
                             {
                                 nombre = obra.nombre,
-                                idObra = obra.idObra
+                                idObra = obra.idObra,
+                                codigoObra=obra.codigo,
                             });
                         }
                         // fin del listado
@@ -109,23 +128,56 @@ namespace Reinco.Interfaces.Supervision
                 await DisplayAlert("Error", ex.Message, "OK");
             }
         }
+        private async void CargarObrasAsistenteItems(int elementos,int ultimo)
+        {
+            try
+            {
+                
+                WebService servicio = new WebService();
+                object[,] variables = new object[,] { { "idUsuario", IdUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic obras = await servicio.MetodoPost("ServicioUsuario.asmx", "MostrarObrasSupervision", variables);
+
+                if (obras != null)
+                {
+                    if (obras.Count == 0) //si está vacío
+                    {
+                        await DisplayAlert("Mostrar Obra Responsable", "No Hay Obras a su cargo", "OK");
+                    }
+                    else
+                    {
+                        // listando las obras
+                        foreach (var obra in obras)
+                        {
+                            ObraxCargoItems.Add(new ObraxCargoItem
+                            {
+                                nombre = obra.nombre,
+                                idObra = obra.idObra,
+                                codigoObra=obra.codigo
+                            });
+                        }
+                        // fin del listado
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Mostrar Obra Responsable", "A ocurrido un error al listar las obras para este usuario", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
+            ultimoId = ObraxCargoItems[ObraxCargoItems.Count - 1].idObra;
+        }
 
 
         #region ================================ Scroll Infinito ================================
-        /*
-            @ Evento que se dispara cadaves que el escroll lega al final de ventana
-            ================================
-                    SCROLL INFINITO
-            ================================
-        */
+        
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var items = listViewObraxCargo.ItemsSource as IList;
             if (items != null && e.Item == items[items.Count - 1])
             {
-                // Aqui Logica de programacion cada ves que se ejecute este evento =====================================================//
-                // int cargarNuevos = 5; // solo de prueva
-                // int totalRegistroActual = PropietarioItems.Count(); // solo de prueva
 
             }
         }

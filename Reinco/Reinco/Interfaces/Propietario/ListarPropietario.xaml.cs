@@ -55,39 +55,9 @@ namespace Reinco.Interfaces.Propietario
             PropietarioItems = new ObservableCollection<PropietarioItem>();
             CargarPropietarioItem(nroElementos, ultimoId);
 
-            /*
-               @ Se usa la uiPage para los eventos y dibujar la interfas
-                ================================
-                       PAGINACION
-                ================================
-             */
-            //int paginas = 3;
-            //int paginaActual = 2;
-
-            //paginacion.Children.Add(new uiPage("< Anterior",paginaActual - 1).contenedor);
-            //for (int i = 1; i <= paginas; i++)
-            //{
-            //    if(i == paginaActual)
-            //    {
-            //        paginacion.Children.Add(new uiPage(i.ToString(), i,"#EFEFEF", "#2196F3").contenedor);
-            //    }
-            //    else
-            //    {
-            //        paginacion.Children.Add(new uiPage(i.ToString(), i).contenedor);
-            //    }
-            //}
-            //paginacion.Children.Add(new uiPage("< Siguiente", paginaActual + 1).contenedor);
-
-            /*
-                 @
-                ================================
-                      FIN PAGINACION
-                ================================
-             */
-
-            // Comandos
             RefreshPropietarioCommand = new Command(() =>
             {
+                ultimoId = 100000;
                 PropietarioItems.Clear();
                 CargarPropietarioItem(nroElementos, ultimoId);
             });
@@ -144,21 +114,13 @@ namespace Reinco.Interfaces.Propietario
         #endregion
 
         #region ================================ Scroll Infinito ================================
-        /*
-            @ Evento que se dispara cadaves que el escroll lega al final de ventana
-            ================================
-                    SCROLL INFINITO
-            ================================
-        */
+      
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var items = listarPropietario.ItemsSource as IList;
             if (items != null && e.Item == items[items.Count - 1])
             {
-                // Aqui Logica de programacion cada ves que se ejecute este evento =====================================================//
-                // int cargarNuevos = 5; // solo de prueva
-                // int totalRegistroActual = PropietarioItems.Count(); // solo de prueva
-                 CargarPropietarioItem(nroElementos, ultimoId);
+                 CargarPropietarioItem(nroElementos, ultimoId);//------el ultimo id que se recoge
             }
         } 
         #endregion

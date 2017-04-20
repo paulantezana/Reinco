@@ -15,7 +15,12 @@ namespace Reinco.Interfaces.Obra
     public partial class ListarObra : ContentPage, INotifyPropertyChanged
     {
         string Color;
-
+        int ultimoId = 100000;
+        int NroElementos = App.nroElementos;
+        int IdUsuario;
+        bool mostrarTodo = false;
+        bool mostrarResponsable = false;
+        bool mostrarAsistente = false;
         #region +---- Services -------
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
@@ -71,8 +76,10 @@ namespace Reinco.Interfaces.Obra
             // Evento Crear Obra
             MostrarTodo = new Command(() =>
             {
+                mostrarTodo = true;
+                ultimoId = 10000;
                 ObraItems.Clear();
-                CargarTodasObras();
+                CargarTodasObras(NroElementos,ultimoId);
             });
             CrearObra = new Command(() =>
             {
@@ -81,7 +88,13 @@ namespace Reinco.Interfaces.Obra
             // Evento Refrescar La Lista
             RefreshObraCommand = new Command(() =>
             {
+                ultimoId = 10000;
                 ObraItems.Clear();
+                if (mostrarTodo == true) {
+                    
+                    CargarTodasObras(NroElementos, ultimoId);
+                }
+
                 CargarObraItems();
             });
             #endregion
@@ -89,60 +102,55 @@ namespace Reinco.Interfaces.Obra
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
         
-        public ListarObra(int idUsuario)
+        public ListarObra(int idUsuario)//---------------Usuario Responsable
         {
+            IdUsuario = idUsuario;
             InitializeComponent();
 
             ObraItems = new ObservableCollection<ObraItem>();
-            CargarObraItems(idUsuario);
-
+            CargarObraItems(idUsuario,NroElementos,ultimoId);
+            mostrarResponsable = true;
 
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
             MostrarTodo = new Command(() =>
             {
                 ObraItems.Clear();
-                CargarTodasObras();
+                CargarTodasObras(NroElementos,ultimoId);
             });
-            CrearObra = new Command(() =>
-            {
-                Navigation.PushAsync(new AgregarObra());
-            });
-
+            
             // Evento Refrescar La Lista
             RefreshObraCommand = new Command(() =>
             {
+                int ultimoId = 100000;
                 ObraItems.Clear();
-                CargarObraItems(idUsuario);
+                CargarObraItems(idUsuario,NroElementos,ultimoId);
                 IsRefreshingObra = false;
             });
             #endregion
 
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
-        public ListarObra(int idUsuario,string cargo)
+        public ListarObra(int idUsuario,string cargo)//----------Usuario asistente 
         {
             InitializeComponent();
-            //ocultar.IsVisible = false;
             ObraItems = new ObservableCollection<ObraItem>();
-            CargarObraItemsAsistente(idUsuario);
-            // editarObra2.IsVisible = false;
+            IdUsuario = idUsuario;
+            
+            CargarObraItemsAsistente(idUsuario,NroElementos,ultimoId);
+            mostrarAsistente = true;
             MostrarTodo = new Command(() =>
             {
+                ultimoId = 100000;
                 ObraItems.Clear();
-                CargarTodasObras();
+                CargarTodasObras(NroElementos,ultimoId);
             });
             #region +---- Preparando Los Comandos ----+
-            // Evento Crear Obra
-            CrearObra = new Command(() =>
-            {
-                Navigation.PushAsync(new AgregarObra());
-            });
-            // Evento Refrescar La Lista
             RefreshObraCommand = new Command(() =>
             {
+                ultimoId = 100000;
                 ObraItems.Clear();
-                CargarObraItemsAsistente(idUsuario);
+                CargarObraItemsAsistente(idUsuario, NroElementos, ultimoId);
                 IsRefreshingObra = false;
             });
             #endregion
@@ -208,13 +216,14 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
         #region=================todas las obras=========================================
-        public async void CargarTodasObras()
+        public async void CargarTodasObras(int elementos, int ultimo)
         {
             try
             {
                 IsRefreshingObra = true;
                 //servicioObra, mostrarObras--modificado
-                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle");
+                object[,] OidPlantilla = new object[,] { { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle", OidPlantilla);
                 foreach (var item in obras)
                 {
                     
@@ -241,7 +250,7 @@ namespace Reinco.Interfaces.Obra
 
                         });
                     }
-
+                
                 
             }
             catch (Exception ex)
@@ -252,16 +261,17 @@ namespace Reinco.Interfaces.Obra
             {
                 IsRefreshingObra = false;
             }
+            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
         }
         #endregion
         #region=============obras responsable=======================================
-        public async void CargarObraItems(int idUsuario)
+        public async void CargarObraItems(int idUsuario, int elementos, int ultimo)
         {
             try
             {
                 //servicioObra, mostrarObras--modificado
-                object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario } };
-                dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasResponsable",OidPlantilla);
+                object[,] OidPlantilla = new object[,] { { "idResponsable", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarResponsablexObra", OidPlantilla);
                 foreach (var item in obras)
                 {
                     if (item.idPropietario == null || item.idUsuario_responsable == null)
@@ -284,6 +294,7 @@ namespace Reinco.Interfaces.Obra
                         ocultar=true
                     });
                 }
+                ultimoId = ObraItems[ObraItems.Count - 1].idObra;
             }
             catch (Exception ex)
             {
@@ -292,13 +303,13 @@ namespace Reinco.Interfaces.Obra
         }
         #endregion
         #region===================obras asistente=============================
-        public async void CargarObraItemsAsistente(int idUsuario)
+        public async void CargarObraItemsAsistente(int idUsuario, int elementos, int ultimo)
         {
             try
             {
                 
                 //servicioObra, mostrarObras--modificado
-                object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario } };
+                object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
                 dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervision", OidPlantilla);
                 foreach (var item in obras)
                 {
@@ -318,11 +329,13 @@ namespace Reinco.Interfaces.Obra
                         colorObra = Color,
                     });
                 }
+               
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
             }
+            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
         }
         #endregion
         #endregion
@@ -363,22 +376,22 @@ namespace Reinco.Interfaces.Obra
         #endregion
 
         #region ================================ Scroll Infinito ================================
-        /*
-            @ Evento que se dispara cadaves que el escroll lega al final de ventana
-            ================================
-                    SCROLL INFINITO
-            ================================
-        */
+        
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var items = listViewObras.ItemsSource as IList;
             if (items != null && e.Item == items[items.Count - 1])
             {
-                // Aqui Logica de programacion cada ves que se ejecute este evento =====================================================//
-                // int cargarNuevos = 5; // solo de prueva
-                // int totalRegistroActual = PropietarioItems.Count(); // solo de prueva
-                
+                if(mostrarTodo==true)
+                     CargarTodasObras(NroElementos,ultimoId);
+                if (mostrarResponsable == true)
+                    CargarObraItems(IdUsuario,NroElementos,ultimoId);
+                if (mostrarAsistente == true) {
+                    CargarObraItemsAsistente(IdUsuario, NroElementos, ultimoId);
+                }
+                    
             }
+         //   mostrarAsistente = false;
         }
         #endregion
 

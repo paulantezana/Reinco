@@ -58,7 +58,11 @@
                                 <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                             </StackLayout>
 
-                            <Image Grid.Column="4" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7"></Image>
+                            <Image Grid.Column="4" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding verPlantillas}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
 
                         </Grid>
                         <!-- ============ FIN Codigo Para Listar Obra ================-->

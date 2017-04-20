@@ -1,4 +1,5 @@
 ﻿using Reinco.Interfaces.Supervision;
+using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Reinco.Entidades
 {
     public class ObraxCargoItem
     {
+        VentanaMensaje mensaje = new VentanaMensaje();
         public int idPropietario_Obra { get; set; }
         public int idObra { get; set; }
         public int idPropietario { get; set; }
@@ -21,13 +23,15 @@ namespace Reinco.Entidades
         public string codigoObra { get; set; }
 
         public ICommand PlantillaxObra { get; private set; }
-
+        public ICommand verPlantillas { get; set; }
         public ObraxCargoItem()
         {
-            PlantillaxObra = new Command(() =>
+           
+            verPlantillas = new Command(() =>
             {
-                // App.ListarObraxCargo.Navigation.PushAsync(new ListarPlantillaxObra(this));
+                App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(idObra));
             });
+           
         }
     }
 }

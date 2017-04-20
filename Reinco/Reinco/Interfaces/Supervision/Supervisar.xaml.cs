@@ -42,7 +42,7 @@ namespace Reinco.Interfaces.Supervision
         public bool isRefreshingSupervisar { get; set; }
         public bool guardarSupervisionIsrunning { get; set; }
         public int restringir { get; set; }
-
+        int IdSupervision;
         public ObservableCollection<SupervisarActividadItem> SupervisarActividadItems { get; set; }
         public bool disposicion { get; set; }
         public bool _disposicion { get; set; }//para poder restringir el cambio si existe firma
@@ -97,15 +97,17 @@ namespace Reinco.Interfaces.Supervision
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
         }
-        public Supervisar(PlantillaSupervisionItem Supervision)
+        // public Supervisar(PlantillaSupervisionItem Supervision)
+        public Supervisar(int idSupervision,string nombreObra)
         {
             InitializeComponent();
             restringir = 1;//restringe cambios en los botones si la supervision ya esta entregada
-            supervision = Supervision;
-            tituloSupervisar = Supervision.nombreObra;
-            
+                           // supervision = Supervision;
+                           //tituloSupervisar = Supervision.nombreObra;
+            IdSupervision = idSupervision;
+            tituloSupervisar = nombreObra;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-            TraerSupervision(Supervision.idSupervision);
+            TraerSupervision(idSupervision);
             CargarSupervisarActividadItem();
 
             // Habilitar Firmas
@@ -159,7 +161,7 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 IsRefreshingSupervisar = true;
-                object[,] variables = new object[,] { { "IdSupervision", supervision.idSupervision } };
+                object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
                 dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
                 foreach (var item in obras)
                 {
@@ -183,6 +185,7 @@ namespace Reinco.Interfaces.Supervision
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
             finally
             {
@@ -203,10 +206,10 @@ namespace Reinco.Interfaces.Supervision
                 {
                     restringir = item.firma_Notificacion != 1 ? 0 : 1;
                     EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
-                    Sobservacion.IsToggled = item.observacion == null ? false : true;
-                    _observacion= item.observacion == null ? false : true;
-                    Sdisposicion.IsToggled = item.disposicion == 0 ? true : false;
-                    _disposicion = item.disposicion == 0 ? true : false;
+                    Sobservacion.IsToggled = item.observacion !=1 ? false : true;
+                    _observacion= item.observacion !=1 ? false : true;
+                    Sdisposicion.IsToggled = item.disposicion != 1 ? false : true;
+                    _disposicion = item.disposicion != 1 ? false : true;
                     Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
                     Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
                     Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
@@ -223,7 +226,8 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error", ex.Message);
+                await App.Current.MainPage.DisplayAlert("Supervisión",ex.Message, "Aceptar");
+                return;
             }
         }
 
@@ -248,7 +252,7 @@ namespace Reinco.Interfaces.Supervision
                 cambiarEstado(false);
                 
                 object[,] variables = new object[,] {
-                    { "idSupervision", supervision.idSupervision } ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
+                    { "idSupervision", IdSupervision} ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
                     { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },
                     { "firma_conformidad", conformitad==true?1:0}};
                 dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "GuardarSupervision", variables);
@@ -264,6 +268,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 cambiarEstado(true);
                 await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.Message,"Aceptar");
+                return;
             }
         }
         #endregion

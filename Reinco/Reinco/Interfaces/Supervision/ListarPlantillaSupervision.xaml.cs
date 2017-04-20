@@ -145,12 +145,14 @@ namespace Reinco.Interfaces.Supervision
                 }
                 else
                 {
-                    await mensaje.MostrarMensaje("Supervisiones", "Error de respuesta del servicio, Contáctese con el administrador.");
+                    await App.Current.MainPage.DisplayAlert("Supervisiones", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error:", ex.Message);
+                await App.Current.MainPage.DisplayAlert("Supervisiones",ex.Message, "Aceptar");
+                return;
             }
             finally
             {

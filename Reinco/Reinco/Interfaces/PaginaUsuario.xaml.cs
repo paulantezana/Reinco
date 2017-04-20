@@ -133,7 +133,8 @@ namespace Reinco.Interfaces
             uiHome obraResponsable = new uiHome("ic_obra_color.png", "Obra");
             obraResponsable.eventoTap.Command = new Command(() =>
             {
-                Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Responsable"));
+                // Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Responsable"));
+                Navigation.PushAsync(new ListarObra(idUsuario));
                 // App.Navigator.Detail = new NavigationPage(new ListarObra());
             });
 
@@ -152,8 +153,9 @@ namespace Reinco.Interfaces
             uiHome obraAsistente = new uiHome("ic_obra_color.png", "Obra");
             obraAsistente.eventoTap.Command = new Command(() =>
             {
-                // Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Asistente"));
-                App.Navigator.Detail = new NavigationPage(new ListarObra());
+                 //Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Asistente"));
+                Navigation.PushAsync(new ListarObra(idUsuario,"Asistente"));
+                // App.Navigator.Detail = new NavigationPage(new ListarObra());
             });
 
             // Posicionando los elementos en la interfas
@@ -161,8 +163,12 @@ namespace Reinco.Interfaces
 
             // Pintando la Interfas
             uixCargo.Children.Add(Cuadricula);
-        } 
+        }
         #endregion
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
     public class uiHome
     {
@@ -177,4 +183,5 @@ namespace Reinco.Interfaces
             this.contenedor.GestureRecognizers.Add(this.eventoTap);
         }
     }
+    
 }

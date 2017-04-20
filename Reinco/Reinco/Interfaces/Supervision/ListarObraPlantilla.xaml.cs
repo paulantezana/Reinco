@@ -21,7 +21,7 @@ namespace Reinco.Interfaces.Supervision
         new public event PropertyChangedEventHandler PropertyChanged; // Usada paralos refrescar las listas
         string Mensaje;
         ObraItem obra;
-
+        int IdObra;
         public VentanaMensaje mensaje;
         private bool isRefreshingObraPlantilla { get; set; }
 
@@ -50,7 +50,7 @@ namespace Reinco.Interfaces.Supervision
         {
             InitializeComponent();
             obra = Obra;
-
+            IdObra = obra.idObra;
             this.Title = Obra.nombre;
             directorio.Text = App.directorio +  "\\Plantillas";
 
@@ -71,7 +71,32 @@ namespace Reinco.Interfaces.Supervision
             // Contexto para los bindings
             this.BindingContext = this;
         }
+        public ListarObraPlantilla(int idObra)
+        {
+            InitializeComponent();
+            ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
+            // obra = nombreObra;
+            IdObra = idObra;
+            this.Title = "asdf";
+            directorio.Text = App.directorio + "\\Plantillas";
 
+            
+           // CargarPlantillaObra();
+
+            // comandos
+            RefreshObraPlantillaCommand = new Command(() =>
+            {
+                ObraPlantillaItems.Clear();
+                CargarPlantillaObra();
+            });
+            asignarPlantilla = new Command(() =>
+            {
+                //Navigation.PushAsync(new AsignarPlantilla(Obra));
+            });
+
+            // Contexto para los bindings
+            this.BindingContext = this;
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -83,7 +108,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 IsRefreshingObraPlantilla = true;
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idObra", obra.idObra } };
+                object[,] variables = new object[,] { { "idObra", IdObra } };
                 dynamic result = await servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillaxidObra", variables);
 
                 if (result != null)
@@ -127,12 +152,7 @@ namespace Reinco.Interfaces.Supervision
         }
 
         #region ================================ Scroll Infinito ================================
-        /*
-            @ Evento que se dispara cadaves que el escroll lega al final de ventana
-            ================================
-                    SCROLL INFINITO
-            ================================
-        */
+        
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var items = listViewObraPlantilla.ItemsSource as IList;

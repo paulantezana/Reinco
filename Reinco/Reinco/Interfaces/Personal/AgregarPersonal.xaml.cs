@@ -51,6 +51,7 @@ namespace Reinco.Interfaces.Personal
                     || string.IsNullOrEmpty(email.Text))
                 {
                     await dialogService.MostrarMensaje("Agregar Usuario", "debe rellenar todos los campos");
+                    guardar.IsEnabled = true;
                     return;
                 }
                 #region=====cargo=====
@@ -89,7 +90,8 @@ namespace Reinco.Interfaces.Personal
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await App.Current.MainPage.DisplayAlert("Agregar Usuario", "Error con el servidor o dispositivo"+ex.Message, "OK");
+                return;
             }
         }
         public AgregarPersonal(int idUsuario,string dni, string nombresApellidos, string usuario,string contra,string correo,
@@ -97,6 +99,8 @@ namespace Reinco.Interfaces.Personal
         {
             InitializeComponent();
             guardar.Text = "Guardar Cambios";
+            lblCelular.Text = "Celular " + App.opcional;
+            lblCIP.Text = "CIP " + App.opcional;
             this.Title = usuario;
             IdUsuario =idUsuario;
             IdCargoUsuario = idCargoUsuario;
@@ -125,7 +129,8 @@ namespace Reinco.Interfaces.Personal
                     string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(contra.Text) || string.IsNullOrEmpty(confirmarContra.Text)
                     || string.IsNullOrEmpty(email.Text))
                 {
-                    await dialogService.MostrarMensaje("Modificar Usuario", "debe rellenar todos los campos");
+                    await App.Current.MainPage.DisplayAlert("Modificar Usuario","Rellene todos los campos", "OK");
+                    guardar.IsEnabled = true;
                     return;
                 }
                 if (contra.Text == confirmarContra.Text)
@@ -160,7 +165,9 @@ namespace Reinco.Interfaces.Personal
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                //await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await App.Current.MainPage.DisplayAlert("Modificar Usuario",ex.Message, "OK");
+                return;
             }
         }
         #endregion

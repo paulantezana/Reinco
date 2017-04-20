@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using Newtonsoft.Json;
 using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
@@ -19,7 +20,8 @@ namespace Reinco.Interfaces.Obra
     public partial class AgregarObra : ContentPage, INotifyPropertyChanged
     {
         new public event PropertyChangedEventHandler PropertyChanged;
-
+        int nroElementos = 10000;// sin funcionalidad para bindable picker(pendiente)
+        int ultimoId = 10000;
         public ObservableCollection<PropietarioItem> propietarioItem {get; set; }
         public ObservableCollection<PersonalItem> personalItem { get; set; }
 
@@ -141,11 +143,12 @@ namespace Reinco.Interfaces.Obra
             }
         }
 
-        private async Task CargarPropietarioItem()
+        private async Task CargarPropietarioItem(int elementos, int ultimo)
         {
             try
             {
-                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                object[,] variables = new object[,] { { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios",variables);
                 foreach (var item in propietario)
                 {
                     propietarioItem.Add(new PropietarioItem
@@ -168,7 +171,7 @@ namespace Reinco.Interfaces.Obra
                 IsRunningPropietario = true;
                 IsRunningUsuario = true;
                 await CargarPersonalItem();
-                await CargarPropietarioItem();
+                await CargarPropietarioItem(nroElementos,ultimoId);
 
                 asignarPropietario.ItemsSource = propietarioItem;
                 asignarResponsable.ItemsSource = personalItem;
@@ -194,7 +197,7 @@ namespace Reinco.Interfaces.Obra
                     if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
                     {
                         cambiarEstado(true);
-                        await mensaje.MostrarMensaje("Agregar Obra", "Debe rellenar todos los campos.");
+                        await App.Current.MainPage.DisplayAlert("Agregar Obra", "Rellene todos los campos", "OK");
                         return;
                         
                     }
@@ -205,8 +208,7 @@ namespace Reinco.Interfaces.Obra
                     if (result != null)
                     {
                         cambiarEstado(true);
-                        await mensaje.MostrarMensaje("Agregar Obra", Mensaje);
-                        
+                        await App.Current.MainPage.DisplayAlert("Agregar Obra",Mensaje, "OK");
                         // Refrescando la lista
                         App.ListarObra.ObraItems.Clear();
                         App.ListarObra.CargarObraItems();
@@ -219,6 +221,13 @@ namespace Reinco.Interfaces.Obra
                 #region===========ingresar con responsable y propietario=============
                 else
                 {
+                    if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
+                    {
+                        cambiarEstado(true);
+                        await App.Current.MainPage.DisplayAlert("Agregar Obra", "Rellene todos los campos", "OK");
+                        return;
+
+                    }
                     if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue!=null)
                     {
 
@@ -238,7 +247,7 @@ namespace Reinco.Interfaces.Obra
                             IngresarPropResponsable(IdPropietario, 0);
                         }
                         cambiarEstado(true);
-                        await mensaje.MostrarMensaje("Agregar Obra con Responsable y Propietario", Mensaje);
+                        await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
                         return;
                     }
                 }
@@ -248,7 +257,8 @@ namespace Reinco.Interfaces.Obra
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await mensaje.MostrarMensaje("Agregar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await App.Current.MainPage.DisplayAlert("Agregar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString(), "OK");
+                return;
             }
             finally
             {
@@ -256,7 +266,17 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
+        #region ================================ Scroll Infinito ================================
 
+        private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            var items = asignarPropietario.ItemsSource as IList;
+            if (items != null && e.Item == items[items.Count - 1])
+            {
+                CargarPropietarioItem(nroElementos, ultimoId);//------el ultimo id que se recoge
+            }
+        }
+        #endregion
         #region ====================== Ingresar Propietario y Responsable ======================
         public async void IngresarPropResponsable(object idPropietario, object idUsuario)
         {

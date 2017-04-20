@@ -19,7 +19,8 @@ namespace Reinco.Interfaces.Obra
         WebService Servicio = new WebService();
         string Mensaje;
         ObraItem obra;
-
+        int nroElementos = 10000;// sin funcionalidad para bindable picker(pendiente)
+        int ultimoId = 10000;
         new public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<PropietarioItem> propietarioItems { get; set; }
@@ -134,7 +135,7 @@ namespace Reinco.Interfaces.Obra
             });
             // Valor Por Defecto en las listas
             asignarResponsable.Focus();
-            asignarPropietario.SelectedValue = Obra.idPropietario;
+            asignarPropietario.SelectedValue = Convert.ToInt16(Obra.idPropietario);
             asignarResponsable.SelectedValue = Obra.idUsuario;
             // Definiendo costeto para los bindings
             this.BindingContext = this;
@@ -177,12 +178,13 @@ namespace Reinco.Interfaces.Obra
 
         #region ============================= Listar ==============================
         // Cargar Personal
-        private async Task CargarPropietarioItem()
+        private async Task CargarPropietarioItem(int elementos, int ultimo)
         {
             try
             {
                 propietarioItems.Clear();
-                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios");
+                object[,] variables = new object[,] { { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic propietario = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios",variables);
                 foreach (var item in propietario)
                 {
                     propietarioItems.Add(new PropietarioItem
@@ -194,7 +196,7 @@ namespace Reinco.Interfaces.Obra
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message,"Aceptar");
+                await DisplayAlert("Error propietario", ex.Message,"Aceptar");
             }
         }
         // Cargar Personal
@@ -225,7 +227,7 @@ namespace Reinco.Interfaces.Obra
                 IsRunningPropietario = true;
                 IsRunningUsuario = true;
                 await CargarPersonalItem();
-                await CargarPropietarioItem();
+                await CargarPropietarioItem(nroElementos, ultimoId);
 
                 asignarPropietario.ItemsSource = propietarioItems;
                 asignarResponsable.ItemsSource = personalItems;

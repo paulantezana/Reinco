@@ -417,7 +417,7 @@ namespace Reinco.Entidades
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Guardar Supervisión", Mensaje, "OK");
+                   
                     oculto = new Image();
                     await oculto.FadeTo(1, 4000);
                     return;

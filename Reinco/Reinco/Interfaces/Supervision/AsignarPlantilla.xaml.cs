@@ -132,8 +132,9 @@ namespace Reinco.Interfaces.Supervision
                 int[] idPlantilla = seleccionados.ToArray();
                 int tamaño = seleccionados.Count() + 1;
                 object[] idPlantillas = new object[seleccionados.Count()];
-                object[,] variables = new object[tamaño, seleccionados.Count()];
-                if(seleccionados.Count()==1)
+                //object[,] variables = new object[tamaño, seleccionados.Count()];
+                object[,] variables = new object[tamaño,2];
+                if (seleccionados.Count()==1)
                      variables = new object[,] { { "idPlantilla", idPlantilla[0] }, { "idPropietarioObra", obra.idPropietarioObra } };
                 else {
                     string identificador = "idPlantilla";

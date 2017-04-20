@@ -43,6 +43,7 @@
                         SelectedValuePath="idPropietario"
                         SelectedValue ="{Binding Path=idPropietario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
+                        
                         VerticalOptions="Center"
                         x:Name="asignarPropietario"/>
                 </StackLayout>
@@ -67,6 +68,7 @@
                         SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center"
+                         
                         x:Name="asignarResponsable"/>
                 </StackLayout>
                 

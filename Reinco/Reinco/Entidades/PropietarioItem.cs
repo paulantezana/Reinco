@@ -13,7 +13,7 @@ namespace Reinco.Entidades
     public class PropietarioItem
     {
         WebService Servicio = new WebService();
-
+        
         public int idPropietario { get; set; }
         public string nombre { get; set; }
         public string fotoPerfil { get; set; }
@@ -51,7 +51,7 @@ namespace Reinco.Entidades
                     {
                         await App.Current.MainPage.DisplayAlert("Eliminar Usuario", Mensaje, "Aceptar");
                         App.ListarPropietarios.PropietarioItems.Clear();
-                        //App.ListarPropietarios.CargarPropietarioItem();
+                        App.ListarPropietarios.CargarPropietarioItem(App.nroElementos,100000);
                         return;
                     }
                 }

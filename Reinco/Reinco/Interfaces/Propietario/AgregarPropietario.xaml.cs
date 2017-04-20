@@ -19,7 +19,8 @@ namespace Reinco.Interfaces.Propietario
         new public event PropertyChangedEventHandler PropertyChanged;
         WebService Servicio = new WebService();
         PropietarioItem propietario;
-
+        int ultimoId = 100000;
+        int nroElementos = App.nroElementos;
         public bool isRunning { get; set; }
         public bool IsRunning
         {
@@ -87,7 +88,7 @@ namespace Reinco.Interfaces.Propietario
                 {
                     await App.Current.MainPage.DisplayAlert("Modificar Propietario", Mensaje, "OK");
                     App.ListarPropietarios.PropietarioItems.Clear();
-                   // App.ListarPropietarios.CargarPropietarioItem();
+                    App.ListarPropietarios.CargarPropietarioItem(nroElementos, ultimoId);
                     cambiarEstado(true);
                     await Navigation.PopAsync();
                     return;
@@ -121,7 +122,7 @@ namespace Reinco.Interfaces.Propietario
                 {
                     await App.Current.MainPage.DisplayAlert("Agregar Propietario", Mensaje, "OK");
                     App.ListarPropietarios.PropietarioItems.Clear();
-                   // App.ListarPropietarios.CargarPropietarioItem();
+                    App.ListarPropietarios.CargarPropietarioItem(nroElementos,ultimoId);
                     cambiarEstado(true);
                     await Navigation.PopAsync();
                     return;

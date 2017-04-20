@@ -35,7 +35,7 @@ namespace Reinco.Entidades
             });
             verActividades = new Command(() =>
             {
-                App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar(this));
+                App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar(idSupervision,nombreObra));
                 //App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar());
             });
         }
