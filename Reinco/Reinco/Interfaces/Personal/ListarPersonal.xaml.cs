@@ -108,6 +108,7 @@ namespace Reinco.Interfaces.Personal
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
             finally
             {
@@ -115,7 +116,12 @@ namespace Reinco.Interfaces.Personal
             }
         }
         #endregion
+        protected override bool OnBackButtonPressed()
+        {
+            App.Navigator.Detail = new NavigationPage(new PaginaUsuario());
+            return true;
 
+        }
         #region ================================ Scroll Infinito ================================
         /*
             @ Evento que se dispara cadaves que el escroll lega al final de ventana

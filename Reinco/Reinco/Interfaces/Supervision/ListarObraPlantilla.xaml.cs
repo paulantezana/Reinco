@@ -38,7 +38,10 @@ namespace Reinco.Interfaces.Supervision
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObraPlantilla"));
                 }
             }
-            get { return isRefreshingObraPlantilla; }
+            get
+            {
+                return isRefreshingObraPlantilla;
+            }
         }
 
         public ObservableCollection<ObraPlantillaItem> ObraPlantillaItems { get; set; }
@@ -63,9 +66,12 @@ namespace Reinco.Interfaces.Supervision
                 ObraPlantillaItems.Clear();
                 CargarPlantillaObra();
             });
+            string cargo = App.cargo;
+            
             asignarPlantilla = new Command(() =>
             {
-                Navigation.PushAsync(new AsignarPlantilla(Obra));
+                if(cargo!="Asistente")
+                    Navigation.PushAsync(new AsignarPlantilla(Obra));
             });
             
             // Contexto para los bindings
@@ -106,7 +112,7 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-                IsRefreshingObraPlantilla = true;
+                //IsRefreshingObraPlantilla = true;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idObra", IdObra } };
                 dynamic result = await servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillaxidObra", variables);
@@ -139,11 +145,13 @@ namespace Reinco.Interfaces.Supervision
                 else
                 {
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador.");
+                    return;
                 }
             }
             catch (Exception ex)
             {
                 await mensaje.MostrarMensaje("Error:", ex.Message);
+                return;
             }
             finally
             {

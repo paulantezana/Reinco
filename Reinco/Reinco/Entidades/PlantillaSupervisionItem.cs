@@ -25,6 +25,7 @@ namespace Reinco.Entidades
         public ICommand verActividades { get; private set; }
         public string colorSupervision { get;set; }
         public string nombreObra { get; set; }
+        public string correo { get; set; }
 
 
         public PlantillaSupervisionItem()

@@ -20,7 +20,9 @@ namespace Reinco.Interfaces.Obra
         int IdUsuario;
         bool mostrarTodo = false;
         bool mostrarResponsable = false;
+        bool mostrarResponsableActivas = false;
         bool mostrarAsistente = false;
+        bool mostrarAsistenteActivas = false;
         #region +---- Services -------
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
@@ -70,8 +72,6 @@ namespace Reinco.Interfaces.Obra
 
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItems();
-
-
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
             MostrarTodo = new Command(() =>
@@ -108,15 +108,18 @@ namespace Reinco.Interfaces.Obra
             InitializeComponent();
 
             ObraItems = new ObservableCollection<ObraItem>();
-            CargarObraItems(idUsuario,NroElementos,ultimoId);
-            mostrarResponsable = true;
+            CargarObraItemsActivas(idUsuario,NroElementos,ultimoId);
+            mostrarResponsableActivas = true;
 
             #region +---- Preparando Los Comandos ----+
             // Evento Crear Obra
             MostrarTodo = new Command(() =>
             {
+                mostrarResponsable = true;
+                mostrarResponsableActivas = false;
+                ultimoId = 10000;
                 ObraItems.Clear();
-                CargarTodasObras(NroElementos,ultimoId);
+                CargarObraItems(idUsuario,NroElementos,ultimoId);
             });
             
             // Evento Refrescar La Lista
@@ -124,7 +127,10 @@ namespace Reinco.Interfaces.Obra
             {
                 int ultimoId = 100000;
                 ObraItems.Clear();
-                CargarObraItems(idUsuario,NroElementos,ultimoId);
+                if(mostrarResponsableActivas==true)
+                     CargarObraItemsActivas(idUsuario,NroElementos,ultimoId);
+                if(mostrarResponsable==true)
+                    CargarObraItems(idUsuario, NroElementos, ultimoId);
                 IsRefreshingObra = false;
             });
             #endregion
@@ -137,20 +143,25 @@ namespace Reinco.Interfaces.Obra
             ObraItems = new ObservableCollection<ObraItem>();
             IdUsuario = idUsuario;
             
-            CargarObraItemsAsistente(idUsuario,NroElementos,ultimoId);
-            mostrarAsistente = true;
+            CargarObraItemsAsistenteActivas(idUsuario,NroElementos,ultimoId);
+            mostrarAsistenteActivas = true;
             MostrarTodo = new Command(() =>
             {
+                mostrarAsistente = true;
+                mostrarAsistenteActivas = false;
                 ultimoId = 100000;
                 ObraItems.Clear();
-                CargarTodasObras(NroElementos,ultimoId);
+                CargarObraItemsAsistente(idUsuario,NroElementos, ultimoId);
             });
             #region +---- Preparando Los Comandos ----+
             RefreshObraCommand = new Command(() =>
             {
                 ultimoId = 100000;
                 ObraItems.Clear();
-                CargarObraItemsAsistente(idUsuario, NroElementos, ultimoId);
+                if(mostrarAsistenteActivas==true)
+                    CargarObraItemsAsistenteActivas(idUsuario, NroElementos, ultimoId);
+                if(mostrarAsistente==true)
+                    CargarObraItemsAsistente(idUsuario, NroElementos, ultimoId);
                 IsRefreshingObra = false;
             });
             #endregion
@@ -173,7 +184,7 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                IsRefreshingObra = true;
+               // IsRefreshingObra = true;
                 //servicioObra, mostrarObras--modificado
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarObrasActivas");
                 foreach (var item in obras)
@@ -208,6 +219,7 @@ namespace Reinco.Interfaces.Obra
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
             finally
             {
@@ -263,6 +275,7 @@ namespace Reinco.Interfaces.Obra
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
         }
+
         #endregion
         #region=============obras responsable=======================================
         public async void CargarObraItems(int idUsuario, int elementos, int ultimo)
@@ -294,12 +307,52 @@ namespace Reinco.Interfaces.Obra
                         ocultar=true
                     });
                 }
-                ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+                
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
+            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+        }
+        public async void CargarObraItemsActivas(int idUsuario, int elementos, int ultimo)
+        {
+            try
+            {
+                //servicioObra, mostrarObras--modificado
+                object[,] OidPlantilla = new object[,] { { "idResponsable", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarResponsablexObraActivas", OidPlantilla);
+                foreach (var item in obras)
+                {
+                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    {
+                        Color = "#FF7777";
+                    }
+                    else
+                        Color = "#77FF77";
+                    ObraItems.Add(new ObraItem
+                    {
+                        idObra = item.idObra,
+                        nombre = item.nombre,
+                        codigo = item.codigo,
+                        idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                        idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                        colorObra = Color,
+                        idPropietarioObra = item.idPropietario_Obra,
+                        nombrePropietario = item.nombrePropietario == null ? "" : item.nombrePropietario,
+                        nombresApellidos = item.responsable == null ? "" : item.responsable,
+                        ocultar = true
+                    });
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
+            }
+            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
         }
         #endregion
         #region===================obras asistente=============================
@@ -334,6 +387,58 @@ namespace Reinco.Interfaces.Obra
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
+            }
+            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+        }
+        public async void CargarObraItemsAsistenteActivas(int idUsuario, int elementos, int ultimo)
+        {
+            try
+            {
+
+                //servicioObra, mostrarObras--modificado
+                object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
+                dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervisionActivas", OidPlantilla);
+                if (obras != null)
+                {
+                    if (obras.Count == 0) //si está vacío
+                    {
+                        await DisplayAlert("Obras", "No hay obras por supervisar", "Aceptar");
+                        return;
+                    }
+                    else
+                    {
+                        foreach (var item in obras)
+                        {
+                            if (item.idPropietario == null || item.idUsuario_responsable == null)
+                            {
+                                Color = "#FF7777";
+                            }
+                            else
+                                Color = "#77FF77";
+                            App.correo = item.correo;//correo del responsable
+                            ObraItems.Add(new ObraItem
+                            {
+                                idObra = item.idObra,
+                                nombre = item.nombre,
+                                codigo = item.codigo,
+                                ocultar = false,
+                                colorObra = Color,
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Obras", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
         }
@@ -386,14 +491,25 @@ namespace Reinco.Interfaces.Obra
                      CargarTodasObras(NroElementos,ultimoId);
                 if (mostrarResponsable == true)
                     CargarObraItems(IdUsuario,NroElementos,ultimoId);
+                if (mostrarResponsableActivas == true)
+                    CargarObraItemsActivas(IdUsuario, NroElementos, ultimoId);
                 if (mostrarAsistente == true) {
                     CargarObraItemsAsistente(IdUsuario, NroElementos, ultimoId);
                 }
-                    
+                if (mostrarAsistenteActivas == true)
+                {
+                    CargarObraItemsAsistenteActivas(IdUsuario, NroElementos, ultimoId);
+                }
+
             }
          //   mostrarAsistente = false;
         }
         #endregion
-
+        protected override bool OnBackButtonPressed()
+        {
+            App.Navigator.Detail = new NavigationPage(new PaginaUsuario());
+            return true;
+            
+        }
     }
 }

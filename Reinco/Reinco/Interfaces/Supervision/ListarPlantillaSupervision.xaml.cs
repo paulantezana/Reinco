@@ -101,7 +101,7 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-                IsRefreshingPlantillaSupervision = true;
+               // IsRefreshingPlantillaSupervision = true;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObra", variables);
@@ -137,8 +137,11 @@ namespace Reinco.Interfaces.Supervision
                                 partidaEvaluada = item.partidaEvaluada,
                                 nivel = item.nivel,
                                 colorSupervision = Color,
-                                idSupervision =item.idSupervision
+                                idSupervision =item.idSupervision,
+                                correo=item.correo,
+                                
                             });
+                            App.correo = item.correo;
                         }
                         // fin del listado
                     }

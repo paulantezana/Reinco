@@ -107,8 +107,9 @@ namespace Reinco.Interfaces.Supervision
             IdSupervision = idSupervision;
             tituloSupervisar = nombreObra;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-            TraerSupervision(idSupervision);
             CargarSupervisarActividadItem();
+            TraerSupervision(idSupervision);
+           
 
             // Habilitar Firmas
             activarConformidad = true;
@@ -122,7 +123,7 @@ namespace Reinco.Interfaces.Supervision
             cargoUsuario = App.cargo;
             if (cargoUsuario == "Asistente")
                 Sconformidad.IsEnabled = false;
-            if (cargoUsuario == "")
+            if (cargoUsuario == "Gerente")
                 Sentrega.IsEnabled = false;
             if (cargoUsuario == "Responsable")
                 Srecepcion.IsEnabled = false;
@@ -160,9 +161,10 @@ namespace Reinco.Interfaces.Supervision
             byte x = 01;
             try
             {
-                IsRefreshingSupervisar = true;
+               IsRefreshingSupervisar = true;
                 object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
                 dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
+                await Task.Delay(1000);
                 foreach (var item in obras)
                 {
                     SupervisarActividadItems.Add(new SupervisarActividadItem
@@ -172,10 +174,10 @@ namespace Reinco.Interfaces.Supervision
                         actividad = item.nombre,
                         tolerancia = item.tolerancia_maxima,
                         anotacionAdicinal = item.anotacion_adicional,
-                        _aprobacion = item.si == 0 ? false : true,
-                        aprobacion = item.si == 0 ? false : true,
-                        _observacionLevantada = item.observacion_levantada == 0 ? false : true,
-                        observacionLevantada = item.observacion_levantada == 0 ? false : true,
+                        _aprobacion = item.si != 1 ? false : true,
+                        aprobacion = item.si != 1 ? false : true,
+                        _observacionLevantada = item.observacion_levantada != 1 ? false : true,
+                        observacionLevantada = item.observacion_levantada != 1 ? false : true,
                         sinFirmaEntrega = restringir == 0 ? true : false
 
                     });
@@ -202,6 +204,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 object[,] variables = new object[,] { { "idSupervision", idSupervision } };
                 dynamic supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "TraerSupervision", variables);
+                
                 foreach (var item in supervision)
                 {
                     restringir = item.firma_Notificacion != 1 ? 0 : 1;

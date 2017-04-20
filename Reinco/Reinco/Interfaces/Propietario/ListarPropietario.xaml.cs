@@ -19,6 +19,12 @@ namespace Reinco.Interfaces.Propietario
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListarPropietario : ContentPage, INotifyPropertyChanged
     {
+        protected override bool OnBackButtonPressed()
+        {
+            App.Navigator.Detail = new NavigationPage(new PaginaUsuario());
+            return true;
+
+        }
         WebService Servicio = new WebService();
         int ultimoId = 100000;
         private bool isRefreshingPropietario { get; set; }
@@ -104,6 +110,7 @@ namespace Reinco.Interfaces.Propietario
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
             finally
             {
@@ -126,7 +133,7 @@ namespace Reinco.Interfaces.Propietario
         #endregion
 
     }
-
+   
     #region ============================== UI Paginas ==============================
     public class uiPage
     {
@@ -159,7 +166,7 @@ namespace Reinco.Interfaces.Propietario
                 })
             });
         }
-    } 
+    }
     #endregion
-
+   
 }

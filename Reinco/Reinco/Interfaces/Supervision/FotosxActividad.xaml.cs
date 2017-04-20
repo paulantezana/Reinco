@@ -21,13 +21,13 @@ namespace Reinco.Interfaces.Supervision
         public ObservableCollection<FotosxActividadItem> FotosxActividadItems { get; set; }
         private MediaFile file;
         SupervisarActividadItem actividad; // Objeto SupervisarActividadItem
-
+        int idSupervisionActividad;
         WebService Servicio = new WebService();
         public FotosxActividad(SupervisarActividadItem Actividad)
         {
             InitializeComponent();
             this.actividad = Actividad; // Almacenando el objeto SupervisarActividadItem para usar en esta interfas
-
+            idSupervisionActividad = actividad.idSupervisionActividad;
             FotosxActividadItems = new ObservableCollection<FotosxActividadItem>();
             DibujarInterfaz();
         }
@@ -89,31 +89,19 @@ namespace Reinco.Interfaces.Supervision
 
             if (file == null)
                 return;
-
-            /* FotosxActividadItems.Add(new FotosxActividadItem
-             {
-                 id = 3,//debería recibir respuesta del post FALTA
-                 foto = file.Path,
-                 //file = file.GetStream()
-             });*/
-            // file.Dispose();
-
-            var fotoN = new uiImagen(FotosxActividadItems[FotosxActividadItems.Count() - 1]).layoutImagen;//agrego esta foto a fotosXActiviidadItemss
-            GaleriaContainer.Children.Add(fotoN);//Se agrega al final con su respectivo botòn eliminar
-            await guardarFoto();
-
-            DibujarInterfaz();
-
-            //await DisplayAlert("Guardar Imagen", "Foto Guardada Correctamente", "OK");
-            // Agregando Uno Nuevos
+            try {
+                
+                await guardarFoto();
+                file.Dispose();
+                DibujarInterfaz();
+            }
+            catch (Exception ex) {
+               await App.Current.MainPage.DisplayAlert("Layout", ex.Message, "Aceptar");
+                return;
+            }
+             
             return;
-            /* var imageSource = ImageSource.FromStream(() =>
-             {
-                 var stream = file.GetStream();
-                 file.Dispose();
-                 return stream;
-             });
-             */
+           
         }
         #endregion
 
@@ -122,9 +110,9 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
-                FotosxActividadItems.Clear();//limpia lo que había
-                // DENNIS, aquì debemos pasar el idSupervisiònActividad, modificar servicio y procedimiento
-                dynamic result = await Servicio.MetodoGet("ServicioFoto.asmx", "MostrarFotos");
+                FotosxActividadItems.Clear();
+                object[,] variables = new object[,] { { "idActividad", idSupervisionActividad } };
+                dynamic result = await Servicio.MetodoGet("ServicioFoto.asmx", "MostrarFotos",variables);
                 foreach (var item in result)
                 {
                     FotosxActividadItems.Add(new FotosxActividadItem
@@ -150,7 +138,7 @@ namespace Reinco.Interfaces.Supervision
                 //Si se quería reducir byte se usaba dependencia de servicios, ya no es necesario
                 var contenido = new MultipartFormDataContent();
                 contenido.Add(new StreamContent(file.GetStream()), "\"file\"", $"\"{file.Path}\"");
-                contenido.Add(new StringContent("1"), "idSupervisionActividad");
+                contenido.Add(new StringContent(idSupervisionActividad.ToString()), "idSupervisionActividad");
 
                 var servicioUpload = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/ServicioFoto.asmx/ImagenPost";
                 var client = new HttpClient();
@@ -175,46 +163,56 @@ namespace Reinco.Interfaces.Supervision
         public AbsoluteLayout layoutImagen { get; set; }
         public uiImagen(FotosxActividadItem FotoActividad)
         {
-            layoutImagen = new AbsoluteLayout();
-
-            Image imagen = new Image()
+            try
             {
-                WidthRequest = 250,
-                HeightRequest = 370,
-            };
-            imagen.Source = FotoActividad.foto;
-            AbsoluteLayout.SetLayoutBounds(imagen, new Rectangle(1, 1, 1, 1));
-            AbsoluteLayout.SetLayoutFlags(imagen, AbsoluteLayoutFlags.All);
+                layoutImagen = new AbsoluteLayout();
+
+                Image imagen = new Image()
+                {
+                    WidthRequest = 250,
+                    HeightRequest = 370,
+                };
+                imagen.Source = FotoActividad.foto;
+                AbsoluteLayout.SetLayoutBounds(imagen, new Rectangle(1, 1, 1, 1));
+                AbsoluteLayout.SetLayoutFlags(imagen, AbsoluteLayoutFlags.All);
 
 
-            Image eliminar = new Image();
-            eliminar.Source = "ic_eliminar.png";
-            eliminar.GestureRecognizers.Add(new TapGestureRecognizer()
+                Image eliminar = new Image();
+                eliminar.Source = "ic_eliminar.png";
+                eliminar.GestureRecognizers.Add(new TapGestureRecognizer()
+                {
+                    Command = new Command(() => { this.eliminarFoto(FotoActividad); })
+                });
+                AbsoluteLayout.SetLayoutBounds(eliminar, new Rectangle(0, 1, 40, 40));
+                AbsoluteLayout.SetLayoutFlags(eliminar, AbsoluteLayoutFlags.PositionProportional);
+
+                /* Image guardar = new Image();
+                 guardar.Source = "ic_guardar.png";
+                 guardar.GestureRecognizers.Add(new TapGestureRecognizer()
+                 {
+                     Command = new Command(() => { this.guardarFoto(FotoActividad); })
+                 });
+                 AbsoluteLayout.SetLayoutBounds(guardar, new Rectangle(1, 1, 40, 40));
+                 AbsoluteLayout.SetLayoutFlags(guardar, AbsoluteLayoutFlags.PositionProportional);
+                 */
+                BoxView estado = new BoxView();
+
+                layoutImagen.Children.Add(imagen);
+                //layoutImagen.Children.Add(guardar);
+                layoutImagen.Children.Add(eliminar);
+            }
+            catch (Exception ex)
             {
-                Command = new Command(() => { this.eliminarFoto(FotoActividad); })
-            });
-            AbsoluteLayout.SetLayoutBounds(eliminar, new Rectangle(0, 1, 40, 40));
-            AbsoluteLayout.SetLayoutFlags(eliminar, AbsoluteLayoutFlags.PositionProportional);
-
-            /* Image guardar = new Image();
-             guardar.Source = "ic_guardar.png";
-             guardar.GestureRecognizers.Add(new TapGestureRecognizer()
-             {
-                 Command = new Command(() => { this.guardarFoto(FotoActividad); })
-             });
-             AbsoluteLayout.SetLayoutBounds(guardar, new Rectangle(1, 1, 40, 40));
-             AbsoluteLayout.SetLayoutFlags(guardar, AbsoluteLayoutFlags.PositionProportional);
-             */
-            BoxView estado = new BoxView();
-
-            layoutImagen.Children.Add(imagen);
-            //layoutImagen.Children.Add(guardar);
-            layoutImagen.Children.Add(eliminar);
+                App.Current.MainPage.DisplayAlert("Layout", ex.Message, "Aceptar");
+                return;
+            }
+           
         }
 
         private void eliminarFoto(FotosxActividadItem FotoActividad)
         {
             App.Current.MainPage.DisplayAlert("Eliminar", FotoActividad.id.ToString(), "Aceptar");
+            return;
         }
 
 

@@ -110,11 +110,18 @@ namespace Reinco.Interfaces.Plantilla
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
             finally
             {
                 IsRefreshingPlantilla = false;
             }
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            App.Navigator.Detail = new NavigationPage(new PaginaUsuario());
+            return true;
+
         }
     }
 }

@@ -106,6 +106,7 @@ namespace Reinco.Interfaces
                                 Application.Current.Properties["idUsuario"] = usuario.idUsuario;
                                 Application.Current.Properties["nombresApellidos"] = usuario.nombresApellidos;
                                 Application.Current.Properties["cargoUsuario"] = usuario.cargo;
+                                App.cargo = usuario.cargo;
                                 break;
                             }
                             else if(usuario.cargo == "Asistente")
@@ -113,12 +114,14 @@ namespace Reinco.Interfaces
                                 Application.Current.Properties["idUsuario"] = usuario.idUsuario;
                                 Application.Current.Properties["nombresApellidos"] = usuario.nombresApellidos;
                                 Application.Current.Properties["cargoUsuario"] = usuario.cargo;
+                                App.cargo = usuario.cargo;
                                 break;
                             }else if(usuario.cargo == "Responsable")
                             {
                                 Application.Current.Properties["idUsuario"] = usuario.idUsuario;
                                 Application.Current.Properties["nombresApellidos"] = usuario.nombresApellidos;
                                 Application.Current.Properties["cargoUsuario"] = usuario.cargo;
+                                App.cargo = usuario.cargo;
                             }
                         }
                         //Application.Current.Properties["cargoUsuario2"] = result
@@ -130,12 +133,14 @@ namespace Reinco.Interfaces
                 {
                     cambiarEstado(true);
                     await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador");
+                    return;
                 }
             }
             catch (Exception ex)
             {
                 cambiarEstado(true);
                 await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                return;
             }
             finally
             {

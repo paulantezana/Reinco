@@ -54,16 +54,24 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 WebService servicio = new WebService();
-                object[,] variables = new object[,] { { "idObra", IdObra }, { "idPlantilla", IdPlantilla }, { "correo", App.correo } };
+                object[,] variables = new object[,] { { "idObra", IdObra }, { "idPlantilla", IdPlantilla }, { "email", App.correo } };
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "CrearReporte", variables);
-
-                // listando las obras
-                
-                // fin del listado
+                string Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await DisplayAlert("Enviar Reporte", Mensaje, "Aceptar");
+                    return;
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Enviar Reporte", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Generar Reporte", ex.Message, "Ok");
+                return;
             }
         }
 
@@ -95,6 +103,7 @@ namespace Reinco.Interfaces.Supervision
             catch (Exception ex)
             {
                 await DisplayAlert("Generar Reporte", ex.Message, "Ok");
+                return;
             }
         }
     }

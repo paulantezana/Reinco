@@ -97,6 +97,7 @@ namespace Reinco.Interfaces.Plantilla
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "Aceptar");
+                return;
             }
             finally
             {
