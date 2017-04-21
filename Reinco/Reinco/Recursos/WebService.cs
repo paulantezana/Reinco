@@ -65,6 +65,7 @@ namespace Reinco.Recursos
                 string contenido;
                 dynamic datosTabla;
                 var cliente = new HttpClient();
+              //  await Task.Run(() => cliente);//linea agregada para evitar bloqueo mutuo
                 var message = await cliente.GetAsync(url);
                 if (message.StatusCode == HttpStatusCode.OK)
                 {
@@ -84,7 +85,7 @@ namespace Reinco.Recursos
                 {
                     datosTabla = null;// mensaje de error
                 }
-                return datosTabla;
+                return  datosTabla;// await agregado
             }
             catch (Exception ex)
             {
@@ -92,6 +93,7 @@ namespace Reinco.Recursos
                 throw;
             }
         }
+      
         // USADO PARA: Llamar servicios web y que esperamos un mensaje de respuesta
         public async Task<string> MetodoGetString(string servicio, string metodo, object[,] variables)
         {

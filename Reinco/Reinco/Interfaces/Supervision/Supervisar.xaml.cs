@@ -41,7 +41,7 @@ namespace Reinco.Interfaces.Supervision
         public bool activarConformidad { get; set; }
         public bool isRefreshingSupervisar { get; set; }
         public bool guardarSupervisionIsrunning { get; set; }
-        public int restringir { get; set; }
+        public int notificacionEnviada { get; set; }
         int IdSupervision;
         public ObservableCollection<SupervisarActividadItem> SupervisarActividadItems { get; set; }
         public bool disposicion { get; set; }
@@ -93,7 +93,7 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar()
         {
             InitializeComponent();
-            restringir = 1;
+            notificacionEnviada = 1;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
         }
@@ -101,13 +101,13 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar(int idSupervision,string nombreObra)
         {
             InitializeComponent();
-            restringir = 1;//restringe cambios en los botones si la supervision ya esta entregada
+            notificacionEnviada = 1;//restringe cambios en los botones si la supervision ya esta entregada
                            // supervision = Supervision;
                            //tituloSupervisar = Supervision.nombreObra;
             IdSupervision = idSupervision;
             tituloSupervisar = nombreObra;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-            CargarSupervisarActividadItem();
+           // CargarSupervisarActividadItem();
             TraerSupervision(idSupervision);
            
 
@@ -146,7 +146,7 @@ namespace Reinco.Interfaces.Supervision
 
             // Contexto Actual Para los bindings
             this.BindingContext = this;
-            restringir = 1;
+            notificacionEnviada = 1;
         }
 
         protected override void OnAppearing()
@@ -163,8 +163,7 @@ namespace Reinco.Interfaces.Supervision
             {
                IsRefreshingSupervisar = true;
                 object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
-                dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
-                await Task.Delay(1000);
+               dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
                 foreach (var item in obras)
                 {
                     SupervisarActividadItems.Add(new SupervisarActividadItem
@@ -178,9 +177,10 @@ namespace Reinco.Interfaces.Supervision
                         aprobacion = item.si != 1 ? false : true,
                         _observacionLevantada = item.observacion_levantada != 1 ? false : true,
                         observacionLevantada = item.observacion_levantada != 1 ? false : true,
-                        sinFirmaEntrega = restringir == 0 ? true : false
+                        sinFirmaEntrega = notificacionEnviada == 0 ? true : false
 
                     });
+                   // await Task.Delay(100);
                 }
 
             }
@@ -202,12 +202,13 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
+                CargarSupervisarActividadItem();
                 object[,] variables = new object[,] { { "idSupervision", idSupervision } };
                 dynamic supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "TraerSupervision", variables);
                 
                 foreach (var item in supervision)
                 {
-                    restringir = item.firma_Notificacion != 1 ? 0 : 1;
+                    notificacionEnviada = item.firma_Notificacion != 1 ? 0 : 1;
                     EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
                     Sobservacion.IsToggled = item.observacion !=1 ? false : true;
                     _observacion= item.observacion !=1 ? false : true;
@@ -216,22 +217,26 @@ namespace Reinco.Interfaces.Supervision
                     Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
                     Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
                     Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
-                    
+                    await Task.Delay(100);
                 }
                 
-                if (restringir == 1)
+                if (notificacionEnviada == 1)
                 {
                     Sdisposicion.PropertyChanged += Sdisposicion_PropertyChanged;
                     Sobservacion.PropertyChanged += Sobservacion_PropertyChanged;
                     EnotaSupervision.IsEnabled = false;
                     guardar.IsEnabled = false;
                 }
+                if (notificacionEnviada == 0)
+                    guardar.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 await App.Current.MainPage.DisplayAlert("Supervisión",ex.Message, "Aceptar");
                 return;
             }
+            notificacionEnviada = 0;
+            
         }
 
         private void Sobservacion_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -59,13 +59,14 @@ namespace Reinco.Interfaces.Obra
 
         #region +---- Comandos ----+
         public ICommand MostrarTodo { get; private set; }
+        public ICommand MostrarActivas { get; private set; }
         public ICommand editarObra { get; private set; }
         public ICommand CrearObra { get; private set; }
         public ICommand RefreshObraCommand { get; private set; }
         #endregion
 
         #region +---- Constructor ----+
-        public ListarObra()
+        public ListarObra()//-------------------Gerente
         {
             InitializeComponent();
             directorio.Text = App.directorio + "\\Obras";
@@ -184,7 +185,7 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-               // IsRefreshingObra = true;
+               IsRefreshingObra = true;
                 //servicioObra, mostrarObras--modificado
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarObrasActivas");
                 foreach (var item in obras)
