@@ -65,9 +65,8 @@
                 <ListView.Footer>
                     <StackLayout>
                         <!-- Gafico estadistico -->
-                        <!--<Grid Padding="2,10,2,10" BackgroundColor="#99E3FF">
+                        <Grid Padding="2,10,2,10" BackgroundColor="#99E3FF">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="30"/>
@@ -78,13 +77,11 @@
 
                             
                             
-                            <Label Grid.Column="2" Text="{Binding sumaSi}"></Label>
-                            <Label Grid.Column="3" Text="{Binding sumaNo}"></Label>
-                            <Label Grid.Column="4" Text="{Binding sumaLev}"></Label>
-                            <Label Grid.Column="5" Text="{Binding sumaIncidencia}"></Label>
-                            <Label Grid.Column="6" Text="{Binding sumaAcumulado}"></Label>
+                            <Label Grid.Column="1" x:Name="lbltotalSi"></Label>
+                            <Label Grid.Column="2" x:Name="lbltotalNo"></Label>
+                            <Label Grid.Column="3" x:Name="lbltotalObs"></Label>
 
-                        </Grid>-->
+                        </Grid>
                         
                         <!-- Imprimir Reporte -->
                         <Button x:Name="enviar" Text="Enviar Por Email"></Button>

@@ -111,6 +111,7 @@ namespace Reinco.Interfaces.Supervision
                     if (result.Count == 0) //si está vacío
                     {
                         await DisplayAlert("Supervisiones por plantilla", "No hay supervisiones", "Aceptar");
+                        btngenerarReporte.IsEnabled = false;
                         return;
                     }
                     else

@@ -88,9 +88,9 @@ namespace Reinco.Interfaces.Supervision
                         // listando las obras
                 foreach (var item in result)
                 {
-                    totalSi = item.siSuma;
-                    totalNo = item.negativoSuma;
-                    totalObs = item.observacionSuma;
+                    totalSi = item.siSuma+totalSi;
+                    totalNo = item.negativoSuma+totalNo;
+                    totalObs = item.observacionSuma+totalObs;
                     acumular = item.incidencia + acumular;
                     ReporteItems.Add(new ReporteItem
                     {
@@ -98,8 +98,8 @@ namespace Reinco.Interfaces.Supervision
                         si = item.siSuma,
                         no = item.negativoSuma,
                         lev = item.observacionSuma,
-                        incidencia = item.incidencia,
-                        acumulado=acumular,
+                        incidencia = item.incidencia+"%",
+                        acumulado=acumular.ToString()+"%",
                             });
                         }
                         // fin del listado
@@ -109,6 +109,9 @@ namespace Reinco.Interfaces.Supervision
                 await DisplayAlert("Generar Reporte", ex.Message, "Ok");
                 return;
             }
+            lbltotalSi.Text = totalSi.ToString();
+            lbltotalNo.Text = totalNo.ToString();
+            lbltotalObs.Text = totalObs.ToString();
         }
     }
 }

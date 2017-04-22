@@ -83,7 +83,7 @@
                     </ListView.ItemTemplate>
                     <ListView.Footer>
                         <StackLayout>
-                            <Button Command="{Binding generarReporte}" Style="{StaticResource BtnGuardar}" Text="Generar Reporte"></Button>
+                            <Button Command="{Binding generarReporte}" Style="{StaticResource BtnGuardar}" Text="Generar Reporte" x:Name="btngenerarReporte"></Button>
                         </StackLayout>
                     </ListView.Footer>
                 </ListView>

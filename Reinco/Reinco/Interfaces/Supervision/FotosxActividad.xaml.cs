@@ -161,6 +161,7 @@ namespace Reinco.Interfaces.Supervision
     public class uiImagen
     {
         public AbsoluteLayout layoutImagen { get; set; }
+        WebService Servicio = new WebService();
         public uiImagen(FotosxActividadItem FotoActividad)
         {
             try
@@ -185,20 +186,9 @@ namespace Reinco.Interfaces.Supervision
                 });
                 AbsoluteLayout.SetLayoutBounds(eliminar, new Rectangle(0, 1, 40, 40));
                 AbsoluteLayout.SetLayoutFlags(eliminar, AbsoluteLayoutFlags.PositionProportional);
-
-                /* Image guardar = new Image();
-                 guardar.Source = "ic_guardar.png";
-                 guardar.GestureRecognizers.Add(new TapGestureRecognizer()
-                 {
-                     Command = new Command(() => { this.guardarFoto(FotoActividad); })
-                 });
-                 AbsoluteLayout.SetLayoutBounds(guardar, new Rectangle(1, 1, 40, 40));
-                 AbsoluteLayout.SetLayoutFlags(guardar, AbsoluteLayoutFlags.PositionProportional);
-                 */
                 BoxView estado = new BoxView();
 
                 layoutImagen.Children.Add(imagen);
-                //layoutImagen.Children.Add(guardar);
                 layoutImagen.Children.Add(eliminar);
             }
             catch (Exception ex)
@@ -209,9 +199,28 @@ namespace Reinco.Interfaces.Supervision
            
         }
 
-        private void eliminarFoto(FotosxActividadItem FotoActividad)
+        public async void eliminarFoto(FotosxActividadItem FotoActividad)
         {
-            App.Current.MainPage.DisplayAlert("Eliminar", FotoActividad.id.ToString(), "Aceptar");
+           await App.Current.MainPage.DisplayAlert("Eliminar", FotoActividad.file.ToString(), "Aceptar");
+            try
+            {
+                string Mensaje;
+                object[,] variables = new object[,] { { "idActividad", FotoActividad.id } };
+                dynamic result = await Servicio.MetodoGet("ServicioFoto.asmx", "EliminarFoto", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Eliminar Foto", Mensaje, "OK");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+              await  App.Current.MainPage.DisplayAlert("Eliminar", ex.Message, "Aceptar");
+                return;
+            }
+            
+
             return;
         }
 

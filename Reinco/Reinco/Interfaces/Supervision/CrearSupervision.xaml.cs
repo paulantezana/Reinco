@@ -115,7 +115,7 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 personalItem.Clear();
-                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosAsistentes");
                 foreach (var item in usuarios)
                 {
                     personalItem.Add(new PersonalItem

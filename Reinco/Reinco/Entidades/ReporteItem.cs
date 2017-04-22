@@ -14,7 +14,8 @@ namespace Reinco.Entidades
         public int si { get; set; }
         public int no { get; set; }
         public int lev { get; set; }
-        public int incidencia { get; set; }
-        public int acumulado { get; set; }
+        public string incidencia { get; set; }
+        public string acumulado { get; set; }
+       // public string acumularSumas { get; set; }
     }
 }
