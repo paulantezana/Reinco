@@ -22,18 +22,24 @@ namespace Reinco.Interfaces.Supervision
         private MediaFile file;
         SupervisarActividadItem actividad; // Objeto SupervisarActividadItem
         int idSupervisionActividad;
+        
         WebService Servicio = new WebService();
+        public FotosxActividad()
+        {
+            InitializeComponent();
+        }
         public FotosxActividad(SupervisarActividadItem Actividad)
         {
             InitializeComponent();
             this.actividad = Actividad; // Almacenando el objeto SupervisarActividadItem para usar en esta interfas
             idSupervisionActividad = actividad.idSupervisionActividad;
+            App.idSupervisionActividadE = idSupervisionActividad;
             FotosxActividadItems = new ObservableCollection<FotosxActividadItem>();
             DibujarInterfaz();
         }
-        private async void DibujarInterfaz()
+        public async void DibujarInterfaz()
         {
-            await CargarFotosxActividad();
+            await CargarFotosxActividad(idSupervisionActividad);
             GaleriaContainer.Children.Clear();
             // INICIO -- Agrega interfaz para el  botòn "Agregar Foto"
             StackLayout nuevaFoto = new StackLayout()
@@ -106,12 +112,12 @@ namespace Reinco.Interfaces.Supervision
         #endregion
 
         #region ================================= Cargando Las Fotos =================================
-        private async Task CargarFotosxActividad()
+        public async Task CargarFotosxActividad(int idsupActividad)
         {
             try
             {
                 FotosxActividadItems.Clear();
-                object[,] variables = new object[,] { { "idActividad", idSupervisionActividad } };
+                object[,] variables = new object[,] { { "idActividad", idsupActividad } };
                 dynamic result = await Servicio.MetodoGet("ServicioFoto.asmx", "MostrarFotos",variables);
                 foreach (var item in result)
                 {
@@ -160,6 +166,7 @@ namespace Reinco.Interfaces.Supervision
     #region ===================================== UI Imagen =====================================
     public class uiImagen
     {
+        FotosxActividad foto = new FotosxActividad();
         public AbsoluteLayout layoutImagen { get; set; }
         WebService Servicio = new WebService();
         public uiImagen(FotosxActividadItem FotoActividad)
@@ -201,16 +208,17 @@ namespace Reinco.Interfaces.Supervision
 
         public async void eliminarFoto(FotosxActividadItem FotoActividad)
         {
-           await App.Current.MainPage.DisplayAlert("Eliminar", FotoActividad.file.ToString(), "Aceptar");
+           await App.Current.MainPage.DisplayAlert("Eliminar", "¿Desea eliminar esta foto?", "Aceptar");
             try
             {
                 string Mensaje;
-                object[,] variables = new object[,] { { "idActividad", FotoActividad.id } };
-                dynamic result = await Servicio.MetodoGet("ServicioFoto.asmx", "EliminarFoto", variables);
+                object[,] variables = new object[,] { { "idFoto", FotoActividad.id } };
+                dynamic result = await Servicio.MetodoGetString("ServicioFoto.asmx", "EliminarFoto", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Foto", Mensaje, "OK");
+                    //await foto.CargarFotosxActividad(App.idSupervisionActividadE);
                     return;
                 }
             }

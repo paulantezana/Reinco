@@ -436,17 +436,18 @@ namespace Reinco.Interfaces.Obra
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
         }
+        int contador = 0;
         public async void CargarObraItemsAsistenteActivas(int idUsuario, int elementos, int ultimo)
         {
             try
             {
-
+                
                 //servicioObra, mostrarObras--modificado
                 object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
                 dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervisionActivas", OidPlantilla);
                 if (obras != null)
                 {
-                    if (obras.Count == 0) //si está vacío
+                    if (obras.Count == 0&& contador==0) //si está vacío
                     {
                         await DisplayAlert("Obras", "No hay obras por supervisar", "Aceptar");
                         return;
@@ -471,6 +472,7 @@ namespace Reinco.Interfaces.Obra
                                 colorObra = Color,
                             });
                         }
+                        contador++;
                     }
                 }
                 else

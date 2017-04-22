@@ -14,6 +14,8 @@ using Reinco.Interfaces.Supervision;
 using Reinco.Interfaces.Obra;
 using Reinco.Interfaces.Personal;
 using Reinco.Interfaces.Propietario;
+using System.Collections.ObjectModel;
+using Reinco.Entidades;
 
 namespace Reinco
 {
@@ -29,10 +31,12 @@ namespace Reinco
         public static string directorio = "Reicno";
         public VentanaMensaje mensaje;
         public static int nroElementos = 10;
+        public static int idSupervisionActividadE;
+        public static ObservableCollection<FotosxActividadItem> FotosxActividadItemsE { get; set; }
         #endregion
 
         #region +---- Propiedades ----+
-       
+
         public static ListarObra ListarObra { get; internal set; } // Página listar Obra
         public static ListarPlantilla ListarPlantilla { get; internal set; } // Página listar Plantilla
         public static ListarActividad ListarActividad { get; internal set; } // Página listar actividades

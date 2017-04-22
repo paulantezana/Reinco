@@ -153,7 +153,7 @@ namespace Reinco.Interfaces.Supervision
            int x = 01;//contador de numero de items
             try
             {
-               IsRefreshingSupervisar = true;
+              // IsRefreshingSupervisar = true;
                 object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
                 Supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
                 foreach (var item in Supervision)
@@ -248,6 +248,9 @@ namespace Reinco.Interfaces.Supervision
                 {
                     cambiarEstado(true);
                     await App.Current.MainPage.DisplayAlert("Guardar Supervision", Mensaje, "Aceptar");
+                    App.ListarPlantillaSupervision.PlantillaSupervisionItems.Clear();
+                    App.ListarPlantillaSupervision.CargarPlantillaSupervision();
+                    await Navigation.PopAsync();
                     return;
                 }
             }
