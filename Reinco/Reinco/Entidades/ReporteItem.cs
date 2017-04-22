@@ -10,7 +10,6 @@ namespace Reinco.Entidades
     {
         public string direccionPath { get; set; }
 
-        public int item { get; set; }
         public string descripcion { get; set; }
         public int si { get; set; }
         public int no { get; set; }

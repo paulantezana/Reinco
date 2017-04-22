@@ -271,22 +271,6 @@ namespace Reinco.Entidades
         } 
         #endregion
 
-        //public bool obsLevActivar { get; set; }
-        //public bool ObsLevActivar
-        //{
-        //    set
-        //    {
-        //        if (obsLevActivar != value)
-        //        {
-        //            obsLevActivar = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ObsLevActivar"));
-        //        }
-        //    }
-        //    get
-        //    {
-        //        return obsLevActivar;
-        //    }
-        //}
 
         #region ================ Expadir Actividad Por Cada Items Correspondiente ================
         int toggle = 0;

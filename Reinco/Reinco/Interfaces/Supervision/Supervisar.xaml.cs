@@ -18,14 +18,12 @@ namespace Reinco.Interfaces.Supervision
     public partial class Supervisar : ContentPage, INotifyPropertyChanged
     {
         public VentanaMensaje mensaje;
-        PlantillaSupervisionItem supervision;
         string Mensaje;
         string cargoUsuario;
-
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
-
-
+        dynamic Supervision;
+        #region======================== atributos=====================
         new public event PropertyChangedEventHandler PropertyChanged;
 
         public string DireccionApp { get; set; }
@@ -48,6 +46,7 @@ namespace Reinco.Interfaces.Supervision
         public bool _disposicion { get; set; }//para poder restringir el cambio si existe firma
         public bool observacion { get; set; }
         public bool _observacion { get; set; }
+        #endregion
 
         #region ============================= Comandos =============================
 
@@ -93,30 +92,24 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar()
         {
             InitializeComponent();
-            notificacionEnviada = 1;
-            SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-            CargarSupervisarActividadItem();
+           // notificacionEnviada = 1;
+           // SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
+           // CargarSupervisarActividadItem();
         }
         // public Supervisar(PlantillaSupervisionItem Supervision)
         public Supervisar(int idSupervision,string nombreObra)
         {
             InitializeComponent();
             notificacionEnviada = 1;//restringe cambios en los botones si la supervision ya esta entregada
-                           // supervision = Supervision;
-                           //tituloSupervisar = Supervision.nombreObra;
             IdSupervision = idSupervision;
             tituloSupervisar = nombreObra;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-           // CargarSupervisarActividadItem();
-            TraerSupervision(idSupervision);
-           
+            CargarSupervisarActividadItem();
 
-            // Habilitar Firmas
             activarConformidad = true;
             activarEntrega = true;
             activarRecepcion = true;
-               
-           
+                         
             // Valores
             DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "\\Supervisar";
             tituloSupervisar = Application.Current.Properties["direccionApp"].ToString();
@@ -158,16 +151,18 @@ namespace Reinco.Interfaces.Supervision
         #region =========================== cargar actividades de la supervision ===========================
         private async void CargarSupervisarActividadItem()
         {
-            byte x = 01;
+           int x = 01;//contador de numero de items
             try
             {
                IsRefreshingSupervisar = true;
                 object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
-               dynamic obras = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
-                foreach (var item in obras)
+                Supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "ActividadesxSupervision", variables);
+                foreach (var item in Supervision)
                 {
+                    notificacionEnviada = item.firma_Notificacion != 1 ? 0 : 1;
                     SupervisarActividadItems.Add(new SupervisarActividadItem
                     {
+
                         item = x++.ToString(),
                         idSupervisionActividad = item.idSupervision_actividad,
                         actividad = item.nombre,
@@ -182,6 +177,36 @@ namespace Reinco.Interfaces.Supervision
                     });
                    // await Task.Delay(100);
                 }
+                int i = 0;
+                foreach (var item in Supervision)
+                {
+                    i++;
+                    
+                    EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
+                    Sobservacion.IsToggled = item.observacion != 1 ? false : true;
+                    _observacion = item.observacion != 1 ? false : true;
+                    Sdisposicion.IsToggled = item.disposicion != 1 ? false : true;
+                    _disposicion = item.disposicion != 1 ? false : true;
+                    Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
+                    Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
+                    Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
+                    if (i == 1)
+                        break;
+                }
+
+                if (notificacionEnviada == 1)
+                {
+                    Sdisposicion.PropertyChanged += Sdisposicion_PropertyChanged;
+                    Sobservacion.PropertyChanged += Sobservacion_PropertyChanged;
+                    if (cargoUsuario != "Gerente")
+                    {
+                        EnotaSupervision.IsEnabled = false;
+                        guardar.IsEnabled = false;
+                    }
+                    
+                }
+                if (notificacionEnviada == 0)
+                    guardar.IsEnabled = true;
 
             }
             catch (Exception ex)
@@ -197,48 +222,6 @@ namespace Reinco.Interfaces.Supervision
         }
         #endregion
 
-        #region ================================= Traer Supervision =================================
-        public async void TraerSupervision(int idSupervision)
-        {
-            try
-            {
-                CargarSupervisarActividadItem();
-                object[,] variables = new object[,] { { "idSupervision", idSupervision } };
-                dynamic supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "TraerSupervision", variables);
-                
-                foreach (var item in supervision)
-                {
-                    notificacionEnviada = item.firma_Notificacion != 1 ? 0 : 1;
-                    EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
-                    Sobservacion.IsToggled = item.observacion !=1 ? false : true;
-                    _observacion= item.observacion !=1 ? false : true;
-                    Sdisposicion.IsToggled = item.disposicion != 1 ? false : true;
-                    _disposicion = item.disposicion != 1 ? false : true;
-                    Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
-                    Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
-                    Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
-                    await Task.Delay(100);
-                }
-                
-                if (notificacionEnviada == 1)
-                {
-                    Sdisposicion.PropertyChanged += Sdisposicion_PropertyChanged;
-                    Sobservacion.PropertyChanged += Sobservacion_PropertyChanged;
-                    EnotaSupervision.IsEnabled = false;
-                    guardar.IsEnabled = false;
-                }
-                if (notificacionEnviada == 0)
-                    guardar.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Supervisión",ex.Message, "Aceptar");
-                return;
-            }
-            notificacionEnviada = 0;
-            
-        }
-
         private void Sobservacion_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Sobservacion.IsToggled = _observacion;
@@ -248,9 +231,6 @@ namespace Reinco.Interfaces.Supervision
         {
             Sdisposicion.IsToggled = _disposicion;
         }
-
-
-        #endregion
 
         #region ============================== guardar supervision ==============================
         public async void GuardarSupervision()

@@ -55,7 +55,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idObra", IdObra }, { "idPlantilla", IdPlantilla }, { "email", App.correo } };
-                dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "CrearReporte", variables);
+                dynamic result = await servicio.MetodoGetString("ServicioSupervision.asmx", "CrearReporte", variables);
                 string Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
@@ -78,6 +78,7 @@ namespace Reinco.Interfaces.Supervision
         private async void CargarReporteItem()
         {
             int acumular=0;
+            int totalSi = 0,totalNo=0,totalObs=0;
             try
             {
                 WebService servicio = new WebService();
@@ -85,8 +86,11 @@ namespace Reinco.Interfaces.Supervision
                 dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "EnviarReporte", variables);
                         
                         // listando las obras
-                        foreach (var item in result)
-                        {
+                foreach (var item in result)
+                {
+                    totalSi = item.siSuma;
+                    totalNo = item.negativoSuma;
+                    totalObs = item.observacionSuma;
                     acumular = item.incidencia + acumular;
                     ReporteItems.Add(new ReporteItem
                     {

@@ -44,16 +44,17 @@ namespace Reinco.Interfaces.Obra
         {
             set
             {
-                if (isRefreshingObra != value)
-                {
-                    isRefreshingObra = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
+                    if (isRefreshingObra != value)
+                    {
+                        isRefreshingObra = value;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshingObra"));
+                    }
                 }
-            }
-            get
+                get
             {
-                return isRefreshingObra;
-            }
+                    return isRefreshingObra;
+                }
+           
         }
         #endregion
 
@@ -72,34 +73,56 @@ namespace Reinco.Interfaces.Obra
             directorio.Text = App.directorio + "\\Obras";
 
             ObraItems = new ObservableCollection<ObraItem>();
+            //Carga las obras activas solamente
             CargarObraItems();
             #region +---- Preparando Los Comandos ----+
-            // Evento Crear Obra
+            // Muestra todas las obras
             MostrarTodo = new Command(() =>
             {
-                mostrarTodo = true;
+                mostrarTodo = true;//activamos el mostrar todas las obras
                 ultimoId = 10000;
                 ObraItems.Clear();
                 CargarTodasObras(NroElementos,ultimoId);
             });
+            //Solo muestra las obras activas
+            MostrarActivas = new Command(() =>
+            {
+                mostrarTodo = false;
+                ObraItems.Clear();
+                CargarObraItems();
+            });
+            //Crear obras
             CrearObra = new Command(() =>
             {
                 Navigation.PushAsync(new AgregarObra());
             });
             // Evento Refrescar La Lista
-            RefreshObraCommand = new Command(() =>
+            try {
+                RefreshObraCommand = new Command(() =>
+                {
+                    try
+                    {
+                        ultimoId = 10000;
+                        ObraItems.Clear();
+                        if (mostrarTodo == true)
+                        {
+                            CargarTodasObras(NroElementos, ultimoId);
+                        }
+                        else
+                            CargarObraItems();
+                    }
+                    catch (Exception ex)
+                    {
+                        DisplayAlert("", ex.Message, "ok");
+                    }
+                });
+            }
+            catch (Exception ex)
             {
-                ultimoId = 10000;
-                ObraItems.Clear();
-                if (mostrarTodo == true) {
-                    
-                    CargarTodasObras(NroElementos, ultimoId);
-                }
-
-                CargarObraItems();
-            });
+                DisplayAlert("", ex.Message, "ok");
+            }
             #endregion
-           
+
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
         
@@ -122,7 +145,14 @@ namespace Reinco.Interfaces.Obra
                 ObraItems.Clear();
                 CargarObraItems(idUsuario,NroElementos,ultimoId);
             });
-            
+            MostrarActivas = new Command(() =>
+            {
+                mostrarResponsable = false;
+                mostrarResponsableActivas = true;
+                ultimoId = 10000;
+                ObraItems.Clear();
+                CargarObraItemsActivas(idUsuario, NroElementos, ultimoId);
+            });
             // Evento Refrescar La Lista
             RefreshObraCommand = new Command(() =>
             {
@@ -154,6 +184,14 @@ namespace Reinco.Interfaces.Obra
                 ObraItems.Clear();
                 CargarObraItemsAsistente(idUsuario,NroElementos, ultimoId);
             });
+            MostrarActivas = new Command(() =>
+            {
+                mostrarAsistente = false;
+                mostrarAsistenteActivas = true;
+                ultimoId = 100000;
+                ObraItems.Clear();
+                CargarObraItemsAsistenteActivas(idUsuario, NroElementos, ultimoId);
+            });
             #region +---- Preparando Los Comandos ----+
             RefreshObraCommand = new Command(() =>
             {
@@ -174,8 +212,14 @@ namespace Reinco.Interfaces.Obra
         #region +---- Definiendo Propiedad Global De esta Pagina ----+
         protected override void OnAppearing()
         {
-            base.OnAppearing();
-            App.ListarObra = this;
+            try
+            {
+                base.OnAppearing();
+                App.ListarObra = this;
+            }
+            catch(Exception ex) {
+                DisplayAlert("", ex.Message, "Ok");
+            }
         }
         #endregion
 
@@ -485,24 +529,38 @@ namespace Reinco.Interfaces.Obra
         
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            var items = listViewObras.ItemsSource as IList;
-            if (items != null && e.Item == items[items.Count - 1])
+            try
             {
-                if(mostrarTodo==true)
-                     CargarTodasObras(NroElementos,ultimoId);
-                if (mostrarResponsable == true)
-                    CargarObraItems(IdUsuario,NroElementos,ultimoId);
-                if (mostrarResponsableActivas == true)
-                    CargarObraItemsActivas(IdUsuario, NroElementos, ultimoId);
-                if (mostrarAsistente == true) {
-                    CargarObraItemsAsistente(IdUsuario, NroElementos, ultimoId);
-                }
-                if (mostrarAsistenteActivas == true)
+                var items = listViewObras.ItemsSource as IList;
+                if (items != null && e.Item == items[items.Count - 1])
                 {
-                    CargarObraItemsAsistenteActivas(IdUsuario, NroElementos, ultimoId);
-                }
+                    if (mostrarTodo == true)
+                        //===mostramos todas las obras del gerente
+                        CargarTodasObras(NroElementos, ultimoId);
+                    if (mostrarResponsable == true)
+                        //=========Mostramos todas las obras del responsable
+                        CargarObraItems(IdUsuario, NroElementos, ultimoId);
+                    if (mostrarResponsableActivas == true)
+                        //========Mostramos solo las obras activas del responsable
+                        CargarObraItemsActivas(IdUsuario, NroElementos, ultimoId);
+                    if (mostrarAsistente == true)
+                    {
+                        //=========Mostramos todas las obras del asistente
+                        CargarObraItemsAsistente(IdUsuario, NroElementos, ultimoId);
+                    }
+                    if (mostrarAsistenteActivas == true)
+                    {
+                        //========Mostramos solo las obras activas del asistente
+                        CargarObraItemsAsistenteActivas(IdUsuario, NroElementos, ultimoId);
+                    }
 
+                }
             }
+            catch (Exception ex)
+            {
+                DisplayAlert("", ex.Message, "Ok");
+            }
+            
          //   mostrarAsistente = false;
         }
         #endregion

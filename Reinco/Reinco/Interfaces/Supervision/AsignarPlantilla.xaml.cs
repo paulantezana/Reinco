@@ -142,13 +142,9 @@ namespace Reinco.Interfaces.Supervision
                     for (int i = 0; i < seleccionados.Count(); i++)
                     {
                         int numero = Convert.ToInt16(idPlantilla[i]);
-                        for (int k = 0; k < seleccionados.Count() - 1; k++)
-                        {
-                            variables[i, k] = identificador;
-                            j++;
-                            variables[i, j] = numero;
-                            j = 0;
-                        }
+                        variables[i, 0] = identificador;
+                        variables[i, 1] = numero;
+
                     } 
                     // Desde aqui logica para enviar al web service
                     variables[seleccionados.Count(), 0] = "idPropietarioObra";

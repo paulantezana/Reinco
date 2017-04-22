@@ -60,6 +60,7 @@ namespace Reinco
 
             InitializeComponent();
             MainPage = new LoginPage();
+           // MainPage = new Hola();
             Current.Properties["direccionApp"] = "";
         }
 
