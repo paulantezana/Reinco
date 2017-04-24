@@ -9,7 +9,7 @@
             
             <!-- Directorio Actual de la pagina -->
             <StackLayout Padding="5">
-                <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                <Label x:Name="directorio" TextColor="#2cade0"></Label>
             </StackLayout>
             
             <!-- Plantilla Codigo -->

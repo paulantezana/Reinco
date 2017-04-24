@@ -43,7 +43,7 @@ namespace Reinco.Interfaces.Plantilla
             InitializeComponent();
             plantilla = Plantilla;
 
-            directorio.Text = App.directorio + "\\" + Plantilla.nombre + "\\Actividades";
+            directorio.Text = App.directorio + "/" + Plantilla.nombre + "/Actividades";
 
             this.Title = Plantilla.nombre;
 
@@ -78,9 +78,15 @@ namespace Reinco.Interfaces.Plantilla
             byte x = 01; // utilizada para la enumeracion de las actividades
             try
             {
-                IsRefreshingActividad = true;
+                // IsRefreshingActividad = true;
+                listaVacia.IsVisible = false;
                 object[,] OidPlantilla = new object[,] { { "idPlantilla", plantilla.idPlantilla } };
                 dynamic result = await Servicio.MetodoGet("ServicioPlantillaActividad.asmx", "MostrarActividadxIdPlantilla", OidPlantilla);
+                if (result.Count == 0) //si está vacío
+                {
+                    listaVacia.IsVisible = true;
+                    lblListaVacia.Text = "No hay Actividades para esta plantilla.";
+                }
                 foreach (var item in result)
                 {
                     ActividadItems.Add(new ActividadItem

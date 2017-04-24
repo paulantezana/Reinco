@@ -57,7 +57,8 @@ namespace Reinco.Interfaces.Propietario
         public ListarPropietario()
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Propietario";
+            App.directorio = "";
+            directorio.Text = App.directorio + "/Propietario";
             PropietarioItems = new ObservableCollection<PropietarioItem>();
             CargarPropietarioItem(nroElementos, ultimoId);
 
@@ -127,7 +128,7 @@ namespace Reinco.Interfaces.Propietario
             var items = listarPropietario.ItemsSource as IList;
             if (items != null && e.Item == items[items.Count - 1])
             {
-                 CargarPropietarioItem(nroElementos, ultimoId);//------el ultimo id que se recoge
+                CargarPropietarioItem(nroElementos, ultimoId);//------el ultimo id que se recoge
             }
         } 
         #endregion

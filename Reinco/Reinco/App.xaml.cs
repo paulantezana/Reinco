@@ -28,7 +28,8 @@ namespace Reinco
         public static string cuenta = "reinco_pruebas_code";
         public static string cargo = "";
         public static string correo = "";
-        public static string directorio = "Reicno";
+        public static string directorio = "Reinco";
+        public static int ultimoNroSupervision = 0;
         public VentanaMensaje mensaje;
         public static int nroElementos = 10;
         public static int idSupervisionActividadE;
@@ -64,7 +65,7 @@ namespace Reinco
 
             InitializeComponent();
             MainPage = new LoginPage();
-           // MainPage = new Hola();
+           //MainPage = new Cargos();
             Current.Properties["direccionApp"] = "";
         }
 

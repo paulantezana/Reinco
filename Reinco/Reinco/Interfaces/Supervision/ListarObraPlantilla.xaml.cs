@@ -55,7 +55,7 @@ namespace Reinco.Interfaces.Supervision
             obra = Obra;
             IdObra = obra.idObra;
             this.Title = Obra.nombre;
-            directorio.Text = App.directorio +  "\\Plantillas";
+            directorio.Text = App.directorio +  "/Plantillas";
 
             ObraPlantillaItems = new ObservableCollection<ObraPlantillaItem>();
             CargarPlantillaObra();
@@ -84,7 +84,7 @@ namespace Reinco.Interfaces.Supervision
             // obra = nombreObra;
             IdObra = idObra;
             this.Title = "asdf";
-            directorio.Text = App.directorio + "\\Plantillas";
+            directorio.Text = App.directorio + "/Plantillas";
 
             
            // CargarPlantillaObra();
@@ -113,17 +113,19 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 //IsRefreshingObraPlantilla = true;
+               listaVacia.IsVisible = false;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idObra", IdObra } };
                 dynamic result = await servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillaxidObra", variables);
-
+                string Color = "";
                 if (result != null)
                 {
                     if (result.Count == 0) //si está vacío
                     {
                         //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
-                        await DisplayAlert("Información", "No hay plantillas", "Aceptar");
-                        return;
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay plantillas";
+                        //await DisplayAlert("Información", "No hay plantillas", "Aceptar");
                     }
                     else
                     {
@@ -137,6 +139,7 @@ namespace Reinco.Interfaces.Supervision
                                 idPlantillaObra = item.idPlantilla_Propietario_obra,
                                 idObra = item.idObra,
                                 idPlantilla = item.idPlantilla,
+                                colorPlantilla = "#c94036",
                             });
                         }
                         // fin del listado

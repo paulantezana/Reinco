@@ -20,6 +20,9 @@ namespace Reinco.Interfaces.Supervision
         public VentanaMensaje mensaje;
         string Mensaje;
         string cargoUsuario;
+        int propAsistente = 0;//si es asistente, se pone en 1
+        int propGerente = 0;
+        int propResidente = 0;
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
         dynamic Supervision;
@@ -110,15 +113,18 @@ namespace Reinco.Interfaces.Supervision
             activarRecepcion = true;
                          
             // Valores
-            DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "\\Supervisar";
+            DireccionApp = Application.Current.Properties["direccionApp"].ToString() + "/Supervisar";
             tituloSupervisar = Application.Current.Properties["direccionApp"].ToString();
             cargoUsuario = App.cargo;
             if (cargoUsuario == "Asistente")
-                Sconformidad.IsEnabled = false;
+                // Sconformidad.IsEnabled = false;
+                propAsistente = 1;
             if (cargoUsuario == "Gerente")
-                Sentrega.IsEnabled = false;
+                propGerente = 1;
+            // Sentrega.IsEnabled = false;
             if (cargoUsuario == "Responsable")
-                Srecepcion.IsEnabled = false;
+                propResidente = 1;
+                //Srecepcion.IsEnabled = false;
             //restriccion de modificaciones en la supervision
             
             // Comandos
@@ -187,8 +193,14 @@ namespace Reinco.Interfaces.Supervision
                     Sdisposicion.IsToggled = item.disposicion != 1 ? false : true;
                     _disposicion = item.disposicion != 1 ? false : true;
                     Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
+                    activarRecepcion =item.firma_Recepcion != 1 ? false : true;
                     Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
+                    activarEntrega= item.firma_Notificacion != 1 ? false : true;
                     Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
+                    activarConformidad =item.firma_Conformidad != 1 ? false : true; ;
+                    fechaFirmaConformidad.Text = item.fecha_firma_conformidad == null ? "" : item.fecha_firma_conformidad;
+                    fechaFirmaEntrega.Text = item.fecha_firma_entrega == null ? "" : item.fecha_firma_entrega;
+                    fechaFirmaRecepcion.Text = item.fecha_firma_recepcion == null ? "" : item.fecha_firma_recepcion;
                     if (i == 1)
                         break;
                 }
@@ -206,7 +218,12 @@ namespace Reinco.Interfaces.Supervision
                 }
                 if (notificacionEnviada == 0)
                     guardar.IsEnabled = true;
-
+                if(propAsistente==1)
+                    Sconformidad.PropertyChanged += Sconformidad_PropertyChanged;
+                if(propGerente==1)
+                    Sentrega.PropertyChanged += Sentrega_PropertyChanged;
+                if(propResidente==1)
+                    Sentrega.PropertyChanged += Sentrega_PropertyChanged;
             }
             catch (Exception ex)
             {
@@ -219,8 +236,20 @@ namespace Reinco.Interfaces.Supervision
             }
 
         }
-        #endregion
 
+        private void Sentrega_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Sentrega.IsToggled = activarEntrega;
+        }
+        #region=============si es asistente, evento que no permita cambiar firma de conformidad y entrega
+        private void Sconformidad_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Sconformidad.IsToggled = activarConformidad;
+            Sentrega.IsToggled = activarEntrega;
+        }
+        #endregion
+        #endregion
+        #region==========================evento que restringe si las firmas estan activadas
         private void Sobservacion_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Sobservacion.IsToggled = _observacion;
@@ -230,7 +259,7 @@ namespace Reinco.Interfaces.Supervision
         {
             Sdisposicion.IsToggled = _disposicion;
         }
-
+        #endregion
         #region ============================== guardar supervision ==============================
         public async void GuardarSupervision()
         {

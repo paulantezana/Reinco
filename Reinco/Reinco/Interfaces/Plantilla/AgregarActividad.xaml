@@ -6,35 +6,40 @@
              Title="ACTIVIDADES">
    
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Spacing="15">
-                
-                <!-- Directorio Actual de la pagina -->
-                <StackLayout Padding="5">
-                    <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
-                </StackLayout>
-                
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Nombre del item"></Label>
-                    <Entry x:Name="nombre"></Entry>
-                </StackLayout>
-
-                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Tolerancia"></Label>
-                    <Entry x:Name="tolerancia"></Entry>
-                </StackLayout>
-
-                <!-- Indicador de Actividad -->
-                <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
-
-                <!-- Zona Botones Crud -->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8">
-                    <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
-                    <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
-                </StackLayout>
-                <!-- End Crud -->
-
+        <StackLayout>
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:Name="listaVacia">
+                <Label x:Name="lblListaVacia" TextColor="Black" FontSize="Medium" ></Label>
             </StackLayout>
-        </ScrollView>
+            <ScrollView>
+                <StackLayout Spacing="15">
+
+                    <!-- Directorio Actual de la pagina -->
+                    <StackLayout Padding="5">
+                        <Label x:Name="directorio" TextColor="#2cade0"></Label>
+                    </StackLayout>
+
+                    <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                        <Label Text="Nombre del item"></Label>
+                        <Entry x:Name="nombre"></Entry>
+                    </StackLayout>
+
+                    <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                        <Label Text="Tolerancia" x:Name="lblTolerancia"></Label>
+                        <Entry x:Name="tolerancia"></Entry>
+                    </StackLayout>
+
+                    <!-- Indicador de Actividad -->
+                    <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
+
+                    <!-- Zona Botones Crud -->
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8">
+                        <!--<Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>-->
+                        <Button x:Name="guardar"   Text="Guardar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+                    </StackLayout>
+                    <!-- End Crud -->
+
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

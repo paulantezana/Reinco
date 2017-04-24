@@ -11,6 +11,9 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:Name="listaVacia">
+                    <Label x:Name="lblListaVacia" TextColor="Black" FontSize="Medium" ></Label>
+                </StackLayout>
                 <ListView
                     ItemsSource="{Binding ObraPlantillaItems}"
                     BackgroundColor="{StaticResource Color5}"
@@ -25,7 +28,7 @@
                         <StackLayout>
                             <!-- Buscador -->
                             <StackLayout Padding="5">
-                                <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                                <Label x:Name="directorio" TextColor="#2cade0"></Label>
                             </StackLayout>
                         </StackLayout>
                     </ListView.Header>
@@ -36,27 +39,29 @@
                                 <ViewCell.ContextActions>
                                     <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True" />
                                 </ViewCell.ContextActions>
+                                
                                 <!-- Inicio Del Contenido Grid -->
                                 <Grid BackgroundColor="{StaticResource Color5}" Padding="8,3,8,3">
                                   
                                     <!-- Definiendo las Columnas de la Fila -->
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5"/>
                                         <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
-                                   
+                                    <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorPlantilla}" x:Name="estadoObra"></BoxView>
                                     <!-- Elemento en la primera columna -->
-                                    <Label Text="{Binding codigo}" Grid.Column="0" FontSize="20" VerticalOptions="Center"></Label>
+                                    <Label Text="{Binding codigo}" Grid.Column="1" FontSize="20" VerticalOptions="Center"></Label>
                                     
                                     <!-- Elemento en la segunda columna-->
-                                    <StackLayout Grid.Column="1" VerticalOptions="CenterAndExpand">
+                                    <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
                                         <Label Text="{Binding nombre}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"></Label>
                                         <!--<Label Text="{Binding tolerancia}" VerticalOptions="Center"></Label>-->
                                     </StackLayout>
 
                                     <!-- Elemento En Tercetar columna -->
-                                    <Image Grid.Column="2" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                    <Image Grid.Column="3" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding PlantillaSupervision}"/>
                                         </Image.GestureRecognizers>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Reinco.Interfaces.Cargos">
+    <ContentPage.Content BackgroundColor="{StaticResource Color5}">
+        <StackLayout Padding="10" Spacing="15" Orientation="Vertical" VerticalOptions="Center">
+            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+                <Label Text="Cargo Que Ocupa" HorizontalOptions="Center"></Label>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Gerente" VerticalOptions="Center"></Label>
+                    <Switch x:Name="gerente" HorizontalOptions="EndAndExpand"></Switch>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Responsable" VerticalOptions="Center"></Label>
+                    <Switch x:Name="responsable" HorizontalOptions="EndAndExpand"></Switch>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Asistente" VerticalOptions="Center"></Label>
+                    <Switch x:Name="supervisor" HorizontalOptions="EndAndExpand"></Switch>
+                </StackLayout>
+            </StackLayout>
+            <!-- Buttons Action -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button x:Name="guardar"   Text="Entrar" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+   
+</ContentPage>

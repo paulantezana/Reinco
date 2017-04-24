@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -66,7 +67,7 @@ namespace Reinco.Interfaces.Supervision
         public ListarPlantillaSupervision(int idPlantillaObra, int idObra, int idPlantilla, string nombrePlantilla /*= "Supervision"*/)
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Supervisiones";
+            directorio.Text = App.directorio + "/Supervisiones";
 
             IdPlantillaObra = idPlantillaObra;
             this.Title = nombrePlantilla;
@@ -101,6 +102,7 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
+                listaVacia.IsVisible = false;
                // IsRefreshingPlantillaSupervision = true;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra } };
@@ -110,7 +112,8 @@ namespace Reinco.Interfaces.Supervision
                 {
                     if (result.Count == 0) //si está vacío
                     {
-                        await DisplayAlert("Supervisiones por plantilla", "No hay supervisiones", "Aceptar");
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay supervisiones para esta plantilla.";
                         btngenerarReporte.IsEnabled = false;
                         return;
                     }
@@ -120,6 +123,8 @@ namespace Reinco.Interfaces.Supervision
                         {
                             nombreA ="As: "+ item.nombreAsistente+" - ";
                             nombreR ="Resp: "+ item.nombreResponsable;
+                            string fechaSt = item.fecha;//convertir a string el json de fecha
+                            DateTime fechaS = Convert.ToDateTime(fechaSt);//convertir a datetime el string de la fecha
                             if (item.firma_recepcion==1&&item.firma_notificacion==1&&item.firma_conformidad==1)
                             {
                                 Color = "#77FF77";
@@ -134,7 +139,7 @@ namespace Reinco.Interfaces.Supervision
                             {
                                 nombre = nombreA + nombreR,
                                 numero = item.nroSupervision == null ? 0 : item.nroSupervision,
-                                fecha = item.fecha,
+                                fecha = fechaS.ToString("dd/M/yyyy", CultureInfo.InvariantCulture),//convertir a date el datetime de fecha
                                 partidaEvaluada = item.partidaEvaluada,
                                 nivel = item.nivel,
                                 colorSupervision = Color,
@@ -145,6 +150,7 @@ namespace Reinco.Interfaces.Supervision
                             App.correo = item.correo;
                         }
                         // fin del listado
+                        App.ultimoNroSupervision = PlantillaSupervisionItems[PlantillaSupervisionItems.Count - 1].numero;
                     }
                 }
                 else
@@ -174,12 +180,6 @@ namespace Reinco.Interfaces.Supervision
         #endregion
 
         #region ================================ Scroll Infinito ================================
-        /*
-            @ Evento que se dispara cadaves que el escroll lega al final de ventana
-            ================================
-                    SCROLL INFINITO
-            ================================
-        */
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var items = listViewPlantillaSupervicion.ItemsSource as IList;

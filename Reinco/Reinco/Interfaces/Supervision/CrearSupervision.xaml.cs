@@ -51,12 +51,13 @@ namespace Reinco.Interfaces.Supervision
             lblNroSupervision.Text = "Número de Supervisión";
             lblPartidaEvaluada.Text="Partida Evaluada " + App.opcional;
             lblNivel.Text="Nivel " + App.opcional;
-            lblBloque.Text="Bloque " + App.opcional;
+            lblBloque.Text = "Bloque " + App.opcional;
             CargarPersonalItem();
             asignarAsistente.ItemsSource = personalItem;
             guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
-           
+            // lblNroSupervision.Text = App.ultimoNroSupervision.ToString();
+            numeroSupervision.Text = (App.ultimoNroSupervision+1).ToString();
         }
 
         private async void Guardar_Clicked(object sender, EventArgs e)
@@ -81,10 +82,9 @@ namespace Reinco.Interfaces.Supervision
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
+                    guardar.IsEnabled = false;
                     await App.Current.MainPage.DisplayAlert("Agregar Supervision", Mensaje, "OK");
-                    //App.ListarActividad.ActividadItems.Clear();
                     App.ListarPlantillaSupervision.PlantillaSupervisionItems.Clear();
-                    // App.ListarActividad.CargarActividadItems();
                     App.ListarPlantillaSupervision.CargarPlantillaSupervision();
                     await Navigation.PopAsync();
                     return;

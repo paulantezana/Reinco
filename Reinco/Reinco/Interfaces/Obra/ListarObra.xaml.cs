@@ -70,7 +70,7 @@ namespace Reinco.Interfaces.Obra
         public ListarObra()//-------------------Gerente
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Obras";
+            directorio.Text = App.directorio + "/Obras";
 
             ObraItems = new ObservableCollection<ObraItem>();
             //Carga las obras activas solamente
@@ -283,15 +283,16 @@ namespace Reinco.Interfaces.Obra
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle", OidPlantilla);
                 foreach (var item in obras)
                 {
-                    
-                        if (item.idPropietario == null || item.idUsuario_responsable == null)
-                        {
-                            Color = "#FF7777";
-                        }
-                        else
-                            Color = "#77FF77";
-
-                        ObraItems.Add(new ObraItem
+                   
+                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    {
+                        Color = "#c94036";//ambar, obra sin responsable o propietario
+                    }
+                    else
+                        Color = "#e09833";
+                    if (item.supervision_terminada == 1)
+                        Color = "#77FF77";
+                    ObraItems.Add(new ObraItem
                         {
                             idObra = item.idObra,
                             nombre = item.nombre,
@@ -332,6 +333,7 @@ namespace Reinco.Interfaces.Obra
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarResponsablexObra", OidPlantilla);
                 foreach (var item in obras)
                 {
+                    
                     if (item.idPropietario == null || item.idUsuario_responsable == null)
                     {
                         Color = "#FF7777";
@@ -449,7 +451,7 @@ namespace Reinco.Interfaces.Obra
                 {
                     if (obras.Count == 0&& contador==0) //si está vacío
                     {
-                        await DisplayAlert("Obras", "No hay obras por supervisar", "Aceptar");
+                        //await DisplayAlert("Obras", "No hay obras por supervisar", "Aceptar");
                         return;
                     }
                     else

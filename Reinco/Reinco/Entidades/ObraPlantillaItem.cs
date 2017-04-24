@@ -22,7 +22,7 @@ namespace Reinco.Entidades
         public int idPlantillaObra { get; set; }
         public int idObra { get; set; }
         public int idPlantilla { get; set; }
-
+        public string colorPlantilla { get; set; }
 
         public ICommand PlantillaSupervision { get; private set; }
         public ICommand Eliminar { get; private set; }

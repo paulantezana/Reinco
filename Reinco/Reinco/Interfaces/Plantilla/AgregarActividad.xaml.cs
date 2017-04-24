@@ -40,20 +40,20 @@ namespace Reinco.Interfaces.Plantilla
         public AgregarActividad(PlantillaItem Plantilla)
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\" + Plantilla.nombre + "\\Agregar Actividad";
+            directorio.Text = App.directorio + "/" + Plantilla.nombre + "/Agregar Actividad";
             plantilla = Plantilla;
 
             // Eventos
             guardar.Clicked += Guardar_Clicked;
-            cancelar.Clicked += Cancelar_Clicked;
-
+            //cancelar.Clicked += Cancelar_Clicked;
+            lblTolerancia.Text = "Tolerancia " + App.opcional;
             // Contexto para los bindings
             this.BindingContext = this;
         }
         public AgregarActividad(ActividadItem Actividad)
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Actividad\\Modificar Actividad";
+            directorio.Text = App.directorio + "/Actividad/Modificar Actividad";
             actividad = Actividad;
 
             this.Title = "Modificar Actividad";
@@ -61,10 +61,10 @@ namespace Reinco.Interfaces.Plantilla
 
             this.nombre.Text = Actividad.nombre;
             this.tolerancia.Text = Actividad.tolerancia;
-
+            lblTolerancia.Text = "Tolerancia " + App.opcional;
             // Eventos
             guardar.Clicked += Modificar_Clicked1;
-            cancelar.Clicked += Cancelar_Clicked;
+            //cancelar.Clicked += Cancelar_Clicked;
 
             // Contexto para los bindings
             this.BindingContext = this;
@@ -131,6 +131,7 @@ namespace Reinco.Interfaces.Plantilla
                 if (result != null)
                 {
                     cambiarEstado(true);
+                    guardar.IsEnabled = false;
                     await App.Current.MainPage.DisplayAlert("Agregar Actividad", Mensaje, "Aceptar");
                     App.ListarActividad.ActividadItems.Clear();
                     App.ListarActividad.CargarActividad();
@@ -152,7 +153,7 @@ namespace Reinco.Interfaces.Plantilla
             nombre.IsEnabled = estado;
             tolerancia.IsEnabled = estado;
             guardar.IsEnabled = estado;
-            cancelar.IsEnabled = estado;
+            //cancelar.IsEnabled = estado;
             if (estado == true) { IsRunning = false; }
             else { IsRunning = true; }
         }

@@ -53,7 +53,8 @@ namespace Reinco.Interfaces.Personal
         public ListarPersonal()
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Personal";
+            App.directorio = "";
+            directorio.Text = App.directorio + "/Personal";
             Personaltems = new ObservableCollection<PersonalItem>();
             CargarPersonalItem();
 

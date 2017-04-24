@@ -42,7 +42,8 @@ namespace Reinco.Interfaces.Plantilla
         public ListarPlantilla()
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Plantilla";
+            App.directorio = "";
+            directorio.Text = App.directorio + "/Plantilla";
 
             PlantillaItems = new ObservableCollection<PlantillaItem>();
             CargarPlantilla();

@@ -38,7 +38,7 @@ namespace Reinco.Interfaces.Propietario
         public AgregarPropietario()
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Propietario\\Agregar Propietario";
+            directorio.Text = App.directorio + "/Propietario/Agregar Propietario";
 
             guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
@@ -52,7 +52,7 @@ namespace Reinco.Interfaces.Propietario
             // Preparando la interfas para modificar propietario
             InitializeComponent();
             propietario = Propietario;
-            directorio.Text = App.directorio + "\\Propietario\\Modificar Propietario";
+            directorio.Text = App.directorio + "/Propietario/Modificar Propietario";
             this.Title = "MODIFICAR PROPIETARIO";
             guardar.Text = "Guardar Cambios";
             nombrePropietario.Text = Propietario.nombre;
@@ -120,6 +120,7 @@ namespace Reinco.Interfaces.Propietario
                 string Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
+                    guardar.IsEnabled = false;
                     await App.Current.MainPage.DisplayAlert("Agregar Propietario", Mensaje, "OK");
                     App.ListarPropietarios.PropietarioItems.Clear();
                     App.ListarPropietarios.CargarPropietarioItem(nroElementos,ultimoId);

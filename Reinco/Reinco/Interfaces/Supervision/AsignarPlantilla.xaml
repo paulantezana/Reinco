@@ -7,6 +7,9 @@
              Title="Plantillas disponibles">
     <ContentPage.Content>
         <StackLayout>
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:Name="listaVacia">
+                <Label x:Name="lblListaVacia" TextColor="Black" FontSize="Medium" ></Label>
+            </StackLayout>
             <ListView
                 ItemsSource="{Binding Plantillas}"
                 BackgroundColor="{StaticResource Color5}"
@@ -15,12 +18,14 @@
                 RefreshCommand="{Binding RefreshPlantillaCommand}"
                 IsEnabled="{Binding PlantillaIsEnabled}"
                 IsRefreshing="{Binding IsRefreshingPlantilla,Mode=TwoWay}">
+               
                 <!-- Encabezado -->
                 <ListView.Header>
+                    
                     <StackLayout>
                         <!-- Buscador -->
                         <StackLayout Padding="5">
-                            <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                            <Label x:Name="directorio" TextColor="#2cade0"></Label>
                         </StackLayout>
                     </StackLayout>
                 </ListView.Header>
@@ -35,7 +40,7 @@
             <StackLayout>
                 <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="8">
-                    <Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>
+                    <!--<Button x:Name="cancelar"  Text="Cancelar" BackgroundColor="#d6d6d6"></Button>-->
                     <Button x:Name="guardar"   Text="Añadir Seleccionados" BackgroundColor="#72bb53" TextColor="#ffffff"></Button>
                 </StackLayout>
             </StackLayout>

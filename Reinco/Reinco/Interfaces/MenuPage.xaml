@@ -6,7 +6,7 @@
              BackgroundColor="{StaticResource Color3}">
     <StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Padding="10">
-            <Image Source="icon.png"></Image>
+            <Image Source="logo.png" HeightRequest="55"></Image>
             <Label Text="REINCO" FontSize="20" VerticalOptions="Center" TextColor="{StaticResource Color5}"></Label>
         </StackLayout>
         <ListView x:Name="listView" SeparatorVisibility="None" VerticalOptions="FillAndExpand">

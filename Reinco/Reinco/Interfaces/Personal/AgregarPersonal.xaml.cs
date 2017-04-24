@@ -46,6 +46,7 @@ namespace Reinco.Interfaces.Personal
             int enviarCargo=0;
             try
             {
+
                 if (string.IsNullOrEmpty(dni.Text) || string.IsNullOrEmpty(nombresApellidos.Text) || 
                     string.IsNullOrEmpty(usuario.Text) || string.IsNullOrEmpty(contra.Text) || string.IsNullOrEmpty(confirmarContra.Text)
                     || string.IsNullOrEmpty(email.Text))
@@ -72,6 +73,7 @@ namespace Reinco.Interfaces.Personal
                     Mensaje = Convert.ToString(result);
                     if (result != null)
                     {
+                        guardar.IsEnabled = false;
                         await App.Current.MainPage.DisplayAlert("Agregar Usuario", Mensaje, "OK");
                         App.ListarPersonal.IsRefreshingPersonal = true;
                         App.ListarPersonal.Personaltems.Clear();
@@ -95,7 +97,7 @@ namespace Reinco.Interfaces.Personal
             }
         }
         public AgregarPersonal(int idUsuario,string dni, string nombresApellidos, string usuario,string contra,string correo,
-            string celular,string cip,int idCargo,int idCargoUsuario)
+            string celular,string cip,int idCargo,int idCargoUsuario)//-----Modificar usuario
         {
             InitializeComponent();
             guardar.Text = "Guardar Cambios";
@@ -149,6 +151,7 @@ namespace Reinco.Interfaces.Personal
                     Mensaje = Convert.ToString(result);
                     if (result != null)
                     {
+                        guardar.IsEnabled = false;
                         await App.Current.MainPage.DisplayAlert("Modificar Usuario", Mensaje, "OK");
                         App.ListarPersonal.Personaltems.Clear();
                         App.ListarPersonal.CargarPersonalItem();

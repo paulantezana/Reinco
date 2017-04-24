@@ -45,7 +45,7 @@ namespace Reinco.Interfaces.Obra
         {
             // Preparando la UI(Interfas de usuario)
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Obra\\Crear Obra";
+            directorio.Text = App.directorio + "/Obra/Crear Obra";
             this.Title = "Crear Obra"; // nombre de la pagina
 
             lblPropietario.Text = "Asigne un propietario " + App.opcional;
@@ -208,6 +208,7 @@ namespace Reinco.Interfaces.Obra
                     if (result != null)
                     {
                         cambiarEstado(true);
+                        guardar.IsEnabled = false;
                         await App.Current.MainPage.DisplayAlert("Agregar Obra",Mensaje, "OK");
                         // Refrescando la lista
                         App.ListarObra.ObraItems.Clear();
@@ -247,6 +248,7 @@ namespace Reinco.Interfaces.Obra
                             IngresarPropResponsable(IdPropietario, 0);
                         }
                         cambiarEstado(true);
+                        guardar.IsEnabled = false;
                         await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
                         return;
                     }
@@ -288,6 +290,7 @@ namespace Reinco.Interfaces.Obra
             if (result != null)
             {
                 cambiarEstado(true);
+                guardar.IsEnabled = false;
                 await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable y Propietario", Mensaje, "OK");
                 App.ListarObra.ObraItems.Clear();
                 App.ListarObra.CargarObraItems();

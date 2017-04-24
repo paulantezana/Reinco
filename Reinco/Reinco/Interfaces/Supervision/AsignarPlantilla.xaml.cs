@@ -78,7 +78,7 @@ namespace Reinco.Interfaces.Supervision
         {
             InitializeComponent();
             PlantillaIsEnabled = true;
-            directorio.Text = App.directorio + "\\" + Obra.nombre + "\\Agregar Plantillas";
+            directorio.Text = App.directorio + "/" + Obra.nombre + "/Agregar Plantillas";
             obra = Obra;
             // platilla
             Plantillas = new ObservableCollection<PlantillaItem>();
@@ -86,7 +86,7 @@ namespace Reinco.Interfaces.Supervision
 
             // Eventos
             guardar.Clicked += Guardar_Clicked;
-            cancelar.Clicked += Cancelar_Clicked;
+            //cancelar.Clicked += Cancelar_Clicked;
 
             // Comandos
             RefreshPlantillaCommand = new Command(() =>
@@ -157,6 +157,7 @@ namespace Reinco.Interfaces.Supervision
                 if (result != null)
                 {
                     cambiarEstado(true);
+                    guardar.IsEnabled = false;
                     await DisplayAlert("Asignar Plantilla", Mensaje, "Aceptar");
                     App.ListarObraPlantilla.ObraPlantillaItems.Clear();
                     App.ListarObraPlantilla.CargarPlantillaObra();
@@ -177,10 +178,17 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
+                listaVacia.IsVisible = false;
                 IsRefreshingPlantilla = true;
                 object[,] variables = new object[,] {
                         { "idPropietarioObra",idPropietarioObra  }  };
                 dynamic plantillas = await Servicio.MetodoGet("ServicioPlantillaPropietarioObra.asmx", "MostrarPlantillasSinAsignar",variables);
+                if (plantillas.Count == 0) //si está vacío
+                {
+                    listaVacia.IsVisible = true;
+                    lblListaVacia.Text = "No hay plantillas para asignar";
+                    guardar.IsEnabled = false;
+                }
                 foreach (var plantilla in plantillas)
                 {
                     Plantillas.Add(new PlantillaItem

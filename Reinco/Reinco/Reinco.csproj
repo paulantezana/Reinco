@@ -50,8 +50,8 @@
     <Compile Include="Entidades\PlantillaSupervisionItem.cs" />
     <Compile Include="Entidades\ReporteItem.cs" />
     <Compile Include="Entidades\SupervisarItem.cs" />
-    <Compile Include="Interfaces\Hola.xaml.cs">
-      <DependentUpon>Hola.xaml</DependentUpon>
+    <Compile Include="Interfaces\Cargos.xaml.cs">
+      <DependentUpon>Cargos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Supervision\FotosxActividad.xaml.cs">
       <DependentUpon>FotosxActividad.xaml</DependentUpon>
@@ -343,7 +343,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interfaces\Hola.xaml">
+    <EmbeddedResource Include="Interfaces\Cargos.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

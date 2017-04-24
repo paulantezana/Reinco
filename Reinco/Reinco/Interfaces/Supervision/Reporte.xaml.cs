@@ -44,7 +44,7 @@ namespace Reinco.Interfaces.Supervision
             CargarReporteItem();
 
             enviar.Clicked += Enviar_Clicked;
-            this.DireccionApp = Application.Current.Properties["direccionApp"] + "\\";
+            this.DireccionApp = Application.Current.Properties["direccionApp"] + "/";
             // Contexto para los bindings
             this.BindingContext = this;
         }
@@ -59,6 +59,7 @@ namespace Reinco.Interfaces.Supervision
                 string Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
+                    enviar.IsEnabled = false;
                     await DisplayAlert("Enviar Reporte", Mensaje, "Aceptar");
                     return;
                 }

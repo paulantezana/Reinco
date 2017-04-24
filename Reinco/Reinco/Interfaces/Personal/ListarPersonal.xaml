@@ -24,7 +24,7 @@
                     <StackLayout>
                         <!-- Buscador -->
                         <StackLayout Padding="5">
-                            <Label x:Name="directorio" TextColor="{StaticResource Gray}"></Label>
+                            <Label x:Name="directorio" TextColor="#2cade0"></Label>
                         </StackLayout>
                     </StackLayout>
                 </ListView.Header>

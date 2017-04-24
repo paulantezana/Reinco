@@ -157,6 +157,7 @@ namespace Reinco.Interfaces.Obra
                 if (result != null)
                 {
                     cambiarEstado(true);
+                    guardarCambios.IsEnabled = false;
                     await App.Current.MainPage.DisplayAlert("Modificar Obra Propietario y Responsable", Mensaje, "Aceptar");
                     App.ListarObra.ObraItems.Clear();
                     App.ListarObra.CargarObraItems();

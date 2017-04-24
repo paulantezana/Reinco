@@ -77,8 +77,8 @@ namespace Reinco.Entidades
                             }
                             else
                             {
-                                _aprobacion = true;
-                                aprobacion = true;
+                               // _aprobacion = true;
+                             //   aprobacion = true;
                             }
                             ObservacionLevantada = value;
                             _observacionLevantada = value;

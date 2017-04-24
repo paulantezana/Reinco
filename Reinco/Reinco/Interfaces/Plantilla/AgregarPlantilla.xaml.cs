@@ -41,7 +41,7 @@ namespace Reinco.Interfaces.Plantilla
         public AgregarPlantilla()
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Plantilla\\Crear Plantilla";
+            directorio.Text = App.directorio + "/Plantilla/Crear Plantilla";
 
             // Eventos
             guardar.Clicked += Guardar_Clicked;
@@ -55,7 +55,7 @@ namespace Reinco.Interfaces.Plantilla
         public AgregarPlantilla(int idPlantilla, string codigo, string nombre)
         {
             InitializeComponent();
-            directorio.Text = App.directorio + "\\Plantilla\\Modificar Plantilla";
+            directorio.Text = App.directorio + "/Plantilla/Modificar Plantilla";
 
             // Preparando interfas Modificar
             this.Title = "Modificar Plantilla";
@@ -132,6 +132,7 @@ namespace Reinco.Interfaces.Plantilla
                 string Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
+                    guardar.IsEnabled = false;
                     await DisplayAlert("Agregar Plantilla", Mensaje, "Aceptar");
                     App.ListarPlantilla.PlantillaItems.Clear();
                     App.ListarPlantilla.CargarPlantilla();
