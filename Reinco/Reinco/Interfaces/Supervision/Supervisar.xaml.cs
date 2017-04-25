@@ -199,7 +199,7 @@ namespace Reinco.Interfaces.Supervision
                     Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
                     activarConformidad =item.firma_Conformidad != 1 ? false : true; ;
                     fechaFirmaConformidad.Text = item.fecha_firma_conformidad == null ? "" : item.fecha_firma_conformidad;
-                    fechaFirmaEntrega.Text = item.fecha_firma_entrega == null ? "" : item.fecha_firma_entrega;
+                    fechaFirmaEntrega.Text = item.fecha_firma_notificacion == null ? "" : item.fecha_firma_notificacion;
                     fechaFirmaRecepcion.Text = item.fecha_firma_recepcion == null ? "" : item.fecha_firma_recepcion;
                     if (i == 1)
                         break;

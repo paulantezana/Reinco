@@ -55,20 +55,84 @@ namespace Reinco.Interfaces.Personal
                     guardar.IsEnabled = true;
                     return;
                 }
+                int contadorCargos = 0;
+                int idSupervisor = 0;
+                int idResponsable = 0;
+                int idGerente = 0;
                 #region=====cargo=====
-                if (supervisor.IsToggled == true)
-                    enviarCargo = 3;//supervisor
-                if (responsable.IsToggled == true)
-                    enviarCargo = 2;//responsable
-                if (gerente.IsToggled == true)
-                    enviarCargo = 1;//admin
-                #endregion
+                if (supervisor.IsToggled == true) {
+                    idSupervisor = 3;//supervisor
+                    contadorCargos++;
+                }
+
+                if (responsable.IsToggled == true) {
+                    idResponsable = 2;//responsable
+                    contadorCargos++;
+                }
+
+                if (gerente.IsToggled == true) {
+                    idGerente = 1;//admin
+                    contadorCargos++;
+                }
+                int[] idCargo = new int[contadorCargos];
+                bool revisado1 = false;
+                bool revisado2 = false;
+                bool revisado3 = false;
+                for (int i = 0; i < contadorCargos; i++)
+                {
+
+                    if (supervisor.IsToggled == true && revisado3 == false)
+                    {
+                        idCargo[i] = 3;
+                        revisado3 = true;
+                        continue;
+                    }
+
+                    if (responsable.IsToggled == true && revisado2 == false)
+                    {
+                        revisado2 = true;
+                        idCargo[i] = 2;
+                        continue;
+                    }
+                    if (gerente.IsToggled == true&&revisado1==false)
+                    {
+                        revisado1 = true;
+                        idCargo[i] = 1;
+                        continue;
+                    }
+                        
+                }
+                
+                    #endregion
                 if (contra.Text == confirmarContra.Text)
                 {
-                    object[,] variables = new object[,] {
-                        { "dni", dni.Text }, { "nombresApellidos", nombresApellidos.Text },{ "usuario", usuario.Text },
-                       { "contrasenia", contra.Text },  { "correo", email.Text },{ "cip", cip.Text==null?"":cip.Text },
-                       { "idCargo", enviarCargo }, { "celular",celular.Text==null?"":celular.Text} };
+                    object[,] variables = new object[contadorCargos + 7, 2];
+                    variables[0, 0] = "dni";
+                    variables[0, 1] = dni.Text;
+                    variables[1, 0] = "nombresApellidos";
+                    variables[1, 1] = nombresApellidos.Text;
+                    variables[2, 0] = "usuario";
+                    variables[2, 1] = usuario.Text;
+                    variables[3, 0] = "contrasenia";
+                    variables[3, 1] = contra.Text;
+                    variables[4, 0] = "correo";
+                    variables[4, 1] = email.Text;
+                    variables[5, 0] = "cip";
+                    variables[5, 1] = cip.Text == null ? "" : cip.Text;
+                    string identificador = "idCargo";
+                    int j = 6;//numoero de objetos que estan en la variable
+                    int k = 0;//index del arreglo de cargos
+                    for (int i = 6; i < contadorCargos + 6; i++)
+                    {
+                        int numero = Convert.ToInt16(idCargo[k]);
+                        variables[i, 0] = identificador;
+                        variables[i, 1] = numero;
+                        j++;
+                        k++;
+                    }
+                    // Desde aqui logica para enviar al web service
+                    variables[j, 0] = "celular";
+                    variables[j, 1] = celular.Text == null ? "" : celular.Text;
                     dynamic result = await Servicio.MetodoGetString("ServicioUsuario.asmx", "AgregarUsuario", variables);
                     Mensaje = Convert.ToString(result);
                     if (result != null)

@@ -87,11 +87,15 @@ namespace Reinco.Interfaces.Personal
             {
                 IsRefreshingPersonal = true;
                 dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
+                int idUsuarioDuplicado = 0;
+                string cargo = "";
                 foreach (var item in result)
                 {
+                    
                     Personaltems.Add(new PersonalItem
                     {
                         fotoPerfil = "ic_profile_color.png",
+                    
                         idUsuario = item.idUsuario,
                         dni = item.dni,
                         nombresApellidos = item.nombresApellidos.ToString(),
