@@ -121,7 +121,7 @@ namespace Reinco.Interfaces.Supervision
                     {
                         foreach (var item in result)
                         {
-                            nombreA ="As: "+ item.nombreAsistente+" - ";
+                            nombreA ="As: "+ item.nombresApellidos+" - ";
                             nombreR ="Resp: "+ item.nombreResponsable;
                             string fechaSt = item.fecha;//convertir a string el json de fecha
                             DateTime fechaS = Convert.ToDateTime(fechaSt);//convertir a datetime el string de la fecha
@@ -138,6 +138,7 @@ namespace Reinco.Interfaces.Supervision
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
                             {
                                 nombre = nombreA + nombreR,
+                                nombreAsistente=item.nombresApellidos,
                                 numero = item.nroSupervision == null ? 0 : item.nroSupervision,
                                 fecha = fechaS.ToString("dd/M/yyyy", CultureInfo.InvariantCulture),//convertir a date el datetime de fecha
                                 partidaEvaluada = item.partidaEvaluada,
@@ -145,7 +146,7 @@ namespace Reinco.Interfaces.Supervision
                                 colorSupervision = Color,
                                 idSupervision =item.idSupervision,
                                 correo=item.correo,
-                                
+                                bloque=item.block
                             });
                             App.correo = item.correo;
                         }

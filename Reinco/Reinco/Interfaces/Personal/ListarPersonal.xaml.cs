@@ -85,13 +85,22 @@ namespace Reinco.Interfaces.Personal
         {
             try
             {
+                int cargo1 = 0, cargo2 = 0, cargo3 = 0;//gerente,responsable,asistente
                 IsRefreshingPersonal = true;
                 dynamic result = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuarios");
-                int idUsuarioDuplicado = 0;
-                string cargo = "";
                 foreach (var item in result)
                 {
-                    
+                    string cargos = item.cargos;
+                    string[] words = cargos.Split(' ');
+                    foreach (string word in words)
+                    {
+                        if (word == "Asistente")
+                            cargo3 = 1;
+                        if (word == "Responsable")
+                            cargo2 = 1;
+                        if (word == "Gerente")
+                            cargo1 = 1;
+                    }
                     Personaltems.Add(new PersonalItem
                     {
                         fotoPerfil = "ic_profile_color.png",
@@ -102,11 +111,15 @@ namespace Reinco.Interfaces.Personal
                         usuario = item.usuario,
                         correo = item.correo,
                         celular = item.celular,
-                        idCargo = item.idCargo,
-                        idCargo_Usuario = item.idCargo_Usuario,
+                        idCargo1=cargo1,
+                        idCargo2=cargo2,
+                        idCargo3=cargo3,
                         cip = item.cip,
-                        cargo = item.cargo,
+                        cargo = item.cargos,
                     });
+                    cargo1 = 0;
+                    cargo2 = 0;
+                    cargo3 = 0;
                 }
 
             }

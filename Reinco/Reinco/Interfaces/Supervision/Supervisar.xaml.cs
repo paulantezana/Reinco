@@ -99,6 +99,7 @@ namespace Reinco.Interfaces.Supervision
            // SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
            // CargarSupervisarActividadItem();
         }
+        
         public Supervisar(int idSupervision,string nombreObra)
         {
             InitializeComponent();

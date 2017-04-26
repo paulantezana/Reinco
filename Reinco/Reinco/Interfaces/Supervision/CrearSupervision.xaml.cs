@@ -20,6 +20,7 @@ namespace Reinco.Interfaces.Supervision
         private bool isRunning;
         int IdPlantillaObra;
         WebService Servicio = new WebService();
+        int IdSupervision;
         string Mensaje;
         public VentanaMensaje mensaje;
         #endregion
@@ -43,6 +44,57 @@ namespace Reinco.Interfaces.Supervision
             }
         }
         #endregion
+        public CrearSupervision(PlantillaSupervisionItem plantilla)//-----------Modificar supervision
+        {
+            InitializeComponent();
+            personalItem = new ObservableCollection<PersonalItem>();
+            IdSupervision =plantilla.idSupervision;
+            lblNroSupervision.Text = "Número de Supervisión";
+            lblPartidaEvaluada.Text = "Partida Evaluada " + App.opcional;
+            lblNivel.Text = "Nivel " + App.opcional;
+            lblBloque.Text = "Bloque " + App.opcional;
+            CargarPersonalItem();
+            asignarAsistente.ItemsSource = personalItem;
+            lblFecha.Text =plantilla.fecha.ToString() +" (fecha creada)";
+            numeroSupervision.Text = plantilla.numero.ToString();
+            partidaEvaluada.Text = plantilla.partidaEvaluada;
+            bloque.IsToggled = plantilla.bloque==1?true:false;
+            nivel.Text = plantilla.nivel;
+            asignarAsistente.Title = plantilla.nombreAsistente;
+            guardar.Clicked += Modificar_Supervision;
+        }
+
+        private async void Modificar_Supervision(object sender, EventArgs e)//--Modificar la supervision
+        {
+            try
+            {
+
+                int nroSupervision = Convert.ToInt16(numeroSupervision.Text);
+
+                var fechatemp = fecha.Date.ToString("dd/MM/yyyy");
+
+                object[,] variables = new object[,] { { "idSupervision",IdSupervision}
+                    , { "fecha", fecha.Date.ToString("dd/MM/yyyy") },
+                { "nroSupervision", nroSupervision }, { "partidaEvaluada", partidaEvaluada.Text==null?"":partidaEvaluada.Text },
+                { "bloque", bloque.IsToggled?1:0 }, { "nivel", nivel.Text==null?"":nivel.Text },{ "idAsistente", asignarAsistente.SelectedValue==null?0:asignarAsistente.SelectedValue }};
+                dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "ModificarSupervisionCreada", variables);
+                Mensaje = Convert.ToString(result);
+                if (result != null)
+                {
+                    guardar.IsEnabled = false;
+                    await App.Current.MainPage.DisplayAlert("Modificar Supervisión", Mensaje, "OK");
+                    App.ListarPlantillaSupervision.PlantillaSupervisionItems.Clear();
+                    App.ListarPlantillaSupervision.CargarPlantillaSupervision();
+                    await Navigation.PopAsync();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await mensaje.MostrarMensaje("Modificar Supervisión ", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+            }
+        }
+
         public CrearSupervision(int idPlantillaObra)
         {
             InitializeComponent();
@@ -57,6 +109,7 @@ namespace Reinco.Interfaces.Supervision
             guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
             // lblNroSupervision.Text = App.ultimoNroSupervision.ToString();
+            
             numeroSupervision.Text = (App.ultimoNroSupervision+1).ToString();
         }
 
@@ -65,16 +118,11 @@ namespace Reinco.Interfaces.Supervision
             try
             {
 
-                if (asignarAsistente.SelectedValue==null)
-                {
-                    await DisplayAlert("Crear Supervision", "Debe asignar un Asistente.", "OK");
-                    return;
-                }
                 int nroSupervision = Convert.ToInt16(numeroSupervision.Text);
 
                 var fechatemp = fecha.Date.ToString("dd/MM/yyyy");
 
-                object[,] variables = new object[,] { { "idSupervisor", asignarAsistente.SelectedValue },
+                object[,] variables = new object[,] { { "idSupervisor", asignarAsistente.SelectedValue==null?0:asignarAsistente.SelectedValue },
                     { "idPlantillaPropietario", IdPlantillaObra }, { "fecha", fecha.Date.ToString("dd/MM/yyyy") },
                 { "nroSupervision", nroSupervision }, { "partidaEvaluada", partidaEvaluada.Text==null?"":partidaEvaluada.Text },
                 { "bloque", bloque.IsToggled?1:0 }, { "nivel", nivel.Text==null?"":nivel.Text }};
@@ -83,7 +131,7 @@ namespace Reinco.Interfaces.Supervision
                 if (result != null)
                 {
                     guardar.IsEnabled = false;
-                    await App.Current.MainPage.DisplayAlert("Agregar Supervision", Mensaje, "OK");
+                    await App.Current.MainPage.DisplayAlert("Crear Supervisión", Mensaje, "OK");
                     App.ListarPlantillaSupervision.PlantillaSupervisionItems.Clear();
                     App.ListarPlantillaSupervision.CargarPlantillaSupervision();
                     await Navigation.PopAsync();
@@ -92,7 +140,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Agregar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await mensaje.MostrarMensaje("Crear Supervisión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
         }
 

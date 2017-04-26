@@ -10,7 +10,7 @@
 
                 
                 <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
-                    <Label Text="Fecha d-MM-yyyy"></Label>
+                    <Label Text="Fecha d-MM-yyyy" x:Name="lblFecha"></Label>
                     <DatePicker Format="d-MM-yyyy" x:Name="fecha"></DatePicker>
                 </StackLayout>
 

@@ -21,7 +21,9 @@ namespace Reinco.Entidades
         public string nivel { get; set; }
         public string nombreAsistente { get; set; }
         public string nombreResponsable { get; set; }
+        public int bloque { get; set; }
         public ICommand Supervisar { get; private set; }
+        public ICommand editarSupervision { get; private set; }
         public ICommand verActividades { get; private set; }
         public string colorSupervision { get;set; }
         public string nombreObra { get; set; }
@@ -37,6 +39,11 @@ namespace Reinco.Entidades
             verActividades = new Command(() =>
             {
                 App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar(idSupervision,nombreObra));
+                //App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar());
+            });
+            editarSupervision = new Command(() =>
+            {
+                App.ListarPlantillaSupervision.Navigation.PushAsync(new CrearSupervision(this));
                 //App.ListarPlantillaSupervision.Navigation.PushAsync(new Supervisar());
             });
         }

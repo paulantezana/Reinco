@@ -24,7 +24,10 @@ namespace Reinco.Entidades
         public string celular { get; set; }
         public string cip { get; set; }
         public int idCargo_Usuario { get; set; }
-        public int idCargo { get; set; }
+        public int idCargo1 { get; set; }
+        public int idCargo2 { get; set; }
+        public int idCargo3 { get; set; }
+
         public string cargo { get; set; }
 
         public ICommand editarUsuario { get; private set; }
@@ -36,7 +39,7 @@ namespace Reinco.Entidades
             {
                 App.ListarPersonal.Navigation.PushAsync(new AgregarPersonal
                     (this.idUsuario, this.dni, this.nombresApellidos, this.usuario, this.contrasena,
-                    this.correo, this.celular, this.cip, this.idCargo,this.idCargo_Usuario));
+                    this.correo, this.celular, this.cip, this.idCargo1, this.idCargo2, this.idCargo3, this.idCargo_Usuario));
             });
             Eliminar = new Command(() =>
             {
