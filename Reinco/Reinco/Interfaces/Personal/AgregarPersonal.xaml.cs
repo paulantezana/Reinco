@@ -223,11 +223,9 @@ namespace Reinco.Interfaces.Personal
                 {
                     await DisplayAlert("", ex.Message, "ok");
                 }
-
-
-                }
+             }
             
-            }
+         }
        
         private async void Responsable_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

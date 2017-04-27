@@ -23,6 +23,7 @@ namespace Reinco.Interfaces.Obra
         bool mostrarResponsableActivas = false;
         bool mostrarAsistente = false;
         bool mostrarAsistenteActivas = false;
+        int entradas = 0;//si no hay obras, que muestre alguna mensaje
         #region +---- Services -------
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
@@ -71,7 +72,7 @@ namespace Reinco.Interfaces.Obra
         {
             InitializeComponent();
             directorio.Text = App.directorio + "/Obras";
-
+            entradas = 0;
             ObraItems = new ObservableCollection<ObraItem>();
             //Carga las obras activas solamente
             CargarObraItems();
@@ -130,7 +131,7 @@ namespace Reinco.Interfaces.Obra
         {
             IdUsuario = idUsuario;
             InitializeComponent();
-
+            entradas = 0;
             ObraItems = new ObservableCollection<ObraItem>();
             CargarObraItemsActivas(idUsuario,NroElementos,ultimoId);
             mostrarResponsableActivas = true;
@@ -143,15 +144,19 @@ namespace Reinco.Interfaces.Obra
                 mostrarResponsableActivas = false;
                 ultimoId = 10000;
                 ObraItems.Clear();
+                entradas = 0;
                 CargarObraItems(idUsuario,NroElementos,ultimoId);
+                
             });
             MostrarActivas = new Command(() =>
             {
                 mostrarResponsable = false;
                 mostrarResponsableActivas = true;
                 ultimoId = 10000;
+                entradas = 0;
                 ObraItems.Clear();
                 CargarObraItemsActivas(idUsuario, NroElementos, ultimoId);
+                
             });
             // Evento Refrescar La Lista
             RefreshObraCommand = new Command(() =>
@@ -173,7 +178,7 @@ namespace Reinco.Interfaces.Obra
             InitializeComponent();
             ObraItems = new ObservableCollection<ObraItem>();
             IdUsuario = idUsuario;
-            
+            entradas = 0;
             CargarObraItemsAsistenteActivas(idUsuario,NroElementos,ultimoId);
             mostrarAsistenteActivas = true;
             MostrarTodo = new Command(() =>
@@ -182,6 +187,7 @@ namespace Reinco.Interfaces.Obra
                 mostrarAsistenteActivas = false;
                 ultimoId = 100000;
                 ObraItems.Clear();
+                entradas = 0;
                 CargarObraItemsAsistente(idUsuario,NroElementos, ultimoId);
             });
             MostrarActivas = new Command(() =>
@@ -189,6 +195,7 @@ namespace Reinco.Interfaces.Obra
                 mostrarAsistente = false;
                 mostrarAsistenteActivas = true;
                 ultimoId = 100000;
+                entradas = 0;
                 ObraItems.Clear();
                 CargarObraItemsAsistenteActivas(idUsuario, NroElementos, ultimoId);
             });
@@ -227,38 +234,61 @@ namespace Reinco.Interfaces.Obra
         #region==============Solo obras activas===========================================
         public async void CargarObraItems()
         {
+            listaVacia.IsVisible = false;
             try
             {
                IsRefreshingObra = true;
-                //servicioObra, mostrarObras--modificado
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarObrasActivas");
-                foreach (var item in obras)
+                if (obras != null)
                 {
-                    
-                        if (item.idPropietario == null || item.idUsuario_responsable == null)
-                        {
-                            Color = "#FF7777";
-                        }
-                        else
-                            Color = "#77FF77";
+                    if (entradas == 0 && obras.Count == 0)
+                    {
 
-                        ObraItems.Add(new ObraItem
-                        {
-                            idObra = item.idObra,
-                            nombre = item.nombre,
-                            codigo = item.codigo,
-                            idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
-                            idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
-                            colorObra = Color,
-                            idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
-                            nombrePropietario = item.nombrePropietario,
-                            nombresApellidos = item.nombresApellidos,
-                            finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
-                            ocultar = true,
-
-                        });
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay obras activas.";
+                        return;
                     }
-                   
+                    else
+                    {
+                        foreach (var item in obras)
+                        {
+                            if (item.nroPlantillas == 0)
+                            {
+                                Color = "#c94036";//rojo si no hay plantillas 
+                            }
+                            else
+                                Color = "#ffa20c";//ambar, obra si hay alguna plantilla
+                            if (item.supervision_terminada == 1)
+                                Color = "#77FF77";//verde si la supervision esta terminada
+
+                            ObraItems.Add(new ObraItem
+                            {
+                                idObra = item.idObra,
+                                nombre = item.nombre,
+                                codigo = item.codigo,
+                                idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                                idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                                colorObra = Color,
+                                idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
+                                nombrePropietario = item.nombrePropietario,
+                                nombresApellidos = item.nombresApellidos,
+                                finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
+                                ocultar = true,
+
+                            });
+                        }
+                    }
+                    
+
+                }
+
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Listar Obras", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
+
+                entradas++;
                 
             }
             catch (Exception ex)
@@ -275,40 +305,61 @@ namespace Reinco.Interfaces.Obra
         #region=================todas las obras=========================================
         public async void CargarTodasObras(int elementos, int ultimo)
         {
+            listaVacia.IsVisible = false;
             try
             {
                 IsRefreshingObra = true;
                 //servicioObra, mostrarObras--modificado
                 object[,] OidPlantilla = new object[,] { { "nroElementos", elementos }, { "ultimoId", ultimo } };
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle", OidPlantilla);
-                foreach (var item in obras)
+                if (obras != null)
                 {
-                   
-                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    if (entradas == 0 && obras.Count == 0)
                     {
-                        Color = "#c94036";//ambar, obra sin responsable o propietario
+
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay obras.";
+                        return;
                     }
                     else
-                        Color = "#e09833";
-                    if (item.supervision_terminada == 1)
-                        Color = "#77FF77";
-                    ObraItems.Add(new ObraItem
+                    {
+                        foreach (var item in obras)
                         {
-                            idObra = item.idObra,
-                            nombre = item.nombre,
-                            codigo = item.codigo,
-                            idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
-                            idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
-                            colorObra = Color,
-                            idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
-                            nombrePropietario = item.nombrePropietario,
-                            nombresApellidos = item.nombresApellidos,
-                            finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
-                            ocultar = true,
 
-                        });
+                            if (item.nroPlantillas == 0)
+                            {
+                                Color = "#c94036";//rojo si no hay plantillas 
+                            }
+                            else
+                                Color = "#ffa20c";//ambar, obra si hay alguna plantilla
+                            if (item.supervision_terminada == 1)
+                                Color = "#77FF77";//verde si la supervision esta terminada
+                            ObraItems.Add(new ObraItem
+                            {
+                                idObra = item.idObra,
+                                nombre = item.nombre,
+                                codigo = item.codigo,
+                                idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                                idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                                colorObra = Color,
+                                idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
+                                nombrePropietario = item.nombrePropietario,
+                                nombresApellidos = item.nombresApellidos,
+                                finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
+                                ocultar = true,
+
+                            });
+                        }
                     }
+                }
+                    
                 
+
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Listar Obras", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
                 
             }
             catch (Exception ex)
@@ -320,41 +371,64 @@ namespace Reinco.Interfaces.Obra
                 IsRefreshingObra = false;
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            entradas++;
         }
 
         #endregion
         #region=============obras responsable=======================================
         public async void CargarObraItems(int idUsuario, int elementos, int ultimo)
         {
+            listaVacia.IsVisible = false;
             try
             {
                 //servicioObra, mostrarObras--modificado
                 object[,] OidPlantilla = new object[,] { { "idResponsable", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarResponsablexObra", OidPlantilla);
-                foreach (var item in obras)
+                if (obras != null)
                 {
-                    
-                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    if (entradas == 0 && obras.Count == 0)
                     {
-                        Color = "#FF7777";
+
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay obras.";
+                        return;
                     }
                     else
-                        Color = "#77FF77";
-                    ObraItems.Add(new ObraItem
                     {
-                        idObra = item.idObra,
-                        nombre = item.nombre,
-                        codigo = item.codigo,
-                        idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
-                        idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
-                        colorObra = Color,
-                        idPropietarioObra = item.idPropietario_Obra,
-                        nombrePropietario = item.nombrePropietario==null?"": item.nombrePropietario,
-                        nombresApellidos = item.responsable==null?"": item.responsable,
-                        ocultar=true
-                    });
+                        foreach (var item in obras)
+                        {
+
+                        if (item.nroPlantillas == 0)
+                        {
+                            Color = "#c94036";//rojo si no hay plantillas 
+                        }
+                        else
+                            Color = "#ffa20c";//ambar, obra si hay alguna plantilla
+                        if (item.supervision_terminada == 1)
+                            Color = "#77FF77";//verde si la supervision esta terminada
+
+                        ObraItems.Add(new ObraItem
+                        {
+                            idObra = item.idObra,
+                            nombre = item.nombre,
+                            codigo = item.codigo,
+                            idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                            idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                            colorObra = Color,
+                            idPropietarioObra = item.idPropietario_Obra,
+                            nombrePropietario = item.nombrePropietario==null?"": item.nombrePropietario,
+                            nombresApellidos = item.responsable==null?"": item.responsable,
+                            ocultar=true
+                        });
+                    }
+                  }
                 }
-                
+
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Listar Obras", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -362,37 +436,60 @@ namespace Reinco.Interfaces.Obra
                 return;
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            entradas++;
         }
         public async void CargarObraItemsActivas(int idUsuario, int elementos, int ultimo)
         {
+            listaVacia.IsVisible = false;
             try
             {
                 //servicioObra, mostrarObras--modificado
                 object[,] OidPlantilla = new object[,] { { "idResponsable", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarResponsablexObraActivas", OidPlantilla);
-                foreach (var item in obras)
+                if (obras != null)
                 {
-                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    if (entradas == 0 && obras.Count == 0)
                     {
-                        Color = "#FF7777";
+
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay obras.";
+                        return;
                     }
                     else
-                        Color = "#77FF77";
-                    ObraItems.Add(new ObraItem
                     {
-                        idObra = item.idObra,
-                        nombre = item.nombre,
-                        codigo = item.codigo,
-                        idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
-                        idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
-                        colorObra = Color,
-                        idPropietarioObra = item.idPropietario_Obra,
-                        nombrePropietario = item.nombrePropietario == null ? "" : item.nombrePropietario,
-                        nombresApellidos = item.responsable == null ? "" : item.responsable,
-                        ocultar = true
-                    });
+                        foreach (var item in obras)
+                        {
+                            if (item.nroPlantillas == 0)
+                            {
+                                Color = "#c94036";//rojo si no hay plantillas 
+                            }
+                            else
+                                Color = "#ffa20c";//ambar, obra si hay alguna plantilla
+                            if (item.supervision_terminada == 1)
+                                Color = "#77FF77";//verde si la supervision esta terminada
+
+                            ObraItems.Add(new ObraItem
+                            {
+                                idObra = item.idObra,
+                                nombre = item.nombre,
+                                codigo = item.codigo,
+                                idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
+                                idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                                colorObra = Color,
+                                idPropietarioObra = item.idPropietario_Obra,
+                                nombrePropietario = item.nombrePropietario == null ? "" : item.nombrePropietario,
+                                nombresApellidos = item.responsable == null ? "" : item.responsable,
+                                ocultar = true
+                            });
+                        }
+                    }
                 }
-                
+
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Listar Obras", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -400,36 +497,58 @@ namespace Reinco.Interfaces.Obra
                 return;
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            entradas++;
         }
         #endregion
         #region===================obras asistente=============================
         public async void CargarObraItemsAsistente(int idUsuario, int elementos, int ultimo)
         {
+            listaVacia.IsVisible = false;//oculta el espacio de no hay obras
             try
             {
                 
                 //servicioObra, mostrarObras--modificado
                 object[,] OidPlantilla = new object[,] { { "idUsuario", idUsuario }, { "nroElementos", elementos }, { "ultimoId", ultimo } };
                 dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervision", OidPlantilla);
-                foreach (var item in obras)
+                if (obras != null)
                 {
-                    if (item.idPropietario == null || item.idUsuario_responsable == null)
+                    if (entradas == 0 && obras.Count == 0)
                     {
-                        Color = "#FF7777";
+
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay obras.";
+                        return;
                     }
                     else
-                        Color = "#77FF77";
-                    App.correo = item.correo;//correo del responsable
-                    ObraItems.Add(new ObraItem
                     {
-                        idObra = item.idObra,
-                        nombre = item.nombre,
-                        codigo = item.codigo,
-                        ocultar = false,
-                        colorObra = Color,
-                    });
+                        foreach (var item in obras)
+                        {
+                            if (item.nroPlantillas == 0)
+                            {
+                                Color = "#c94036";//rojo si no hay plantillas 
+                            }
+                            else
+                                Color = "#ffa20c";//ambar, obra si hay alguna plantilla
+                            if (item.supervision_terminada == 1)
+                                Color = "#77FF77";//verde si la supervision esta terminada
+                            App.correo = item.correo;//correo del responsable
+                            ObraItems.Add(new ObraItem
+                            {
+                                idObra = item.idObra,
+                                nombre = item.nombre,
+                                codigo = item.codigo,
+                                ocultar = false,
+                                colorObra = Color,
+                            });
+                        }
+                    }
                 }
-               
+
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Listar Obras", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -437,10 +556,12 @@ namespace Reinco.Interfaces.Obra
                 return;
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            entradas++;
         }
         int contador = 0;
         public async void CargarObraItemsAsistenteActivas(int idUsuario, int elementos, int ultimo)
         {
+            listaVacia.IsVisible = false;
             try
             {
                 
@@ -449,21 +570,24 @@ namespace Reinco.Interfaces.Obra
                 dynamic obras = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarObrasSupervisionActivas", OidPlantilla);
                 if (obras != null)
                 {
-                    if (obras.Count == 0&& contador==0) //si está vacío
+                    if (entradas == 0 && obras.Count == 0)
                     {
-                        //await DisplayAlert("Obras", "No hay obras por supervisar", "Aceptar");
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay obras.";
                         return;
                     }
                     else
                     {
                         foreach (var item in obras)
                         {
-                            if (item.idPropietario == null || item.idUsuario_responsable == null)
+                            if (item.nroPlantillas == 0)
                             {
-                                Color = "#FF7777";
+                                Color = "#c94036";//rojo si no hay plantillas 
                             }
                             else
-                                Color = "#77FF77";
+                                Color = "#ffa20c";//ambar, obra si hay alguna plantilla
+                            if (item.supervision_terminada == 1)
+                                Color = "#77FF77";//verde si la supervision esta terminada
                             App.correo = item.correo;//correo del responsable
                             ObraItems.Add(new ObraItem
                             {
@@ -490,6 +614,7 @@ namespace Reinco.Interfaces.Obra
                 return;
             }
             ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            entradas++;
         }
         #endregion
         #endregion

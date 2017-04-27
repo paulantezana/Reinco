@@ -122,16 +122,23 @@ namespace Reinco.Interfaces.Supervision
                 {
                     if (result.Count == 0) //si está vacío
                     {
-                        //await mensaje.MostrarMensaje("Mostrar Obra Plantilla", "No hay plantillas que mostrar");
                         listaVacia.IsVisible = true;
                         lblListaVacia.Text = "No hay plantillas";
-                        //await DisplayAlert("Información", "No hay plantillas", "Aceptar");
                     }
                     else
                     {
                         // listando las obras
                         foreach (var item in result)
                         {
+                            if (item.totalSupervisiones == 0)
+                                Color = "#dd2400";//si no hay supervisiones, muestra de color rojo
+                            else {
+                                if (item.totalSupervisiones == item.firmasCompletas)
+                                    Color = "#38b503";//si hay supervisiones pero con todas sus firmas, entonces el color es verde
+                                else
+                                    Color = "#ff9926";//si hay supervisiones incompletas, muestra de color ambar
+                            }
+                           
                             ObraPlantillaItems.Add(new ObraPlantillaItem
                             {
                                 nombre = item.nombre,
@@ -139,7 +146,7 @@ namespace Reinco.Interfaces.Supervision
                                 idPlantillaObra = item.idPlantilla_Propietario_obra,
                                 idObra = item.idObra,
                                 idPlantilla = item.idPlantilla,
-                                colorPlantilla = "#c94036",
+                                colorPlantilla = Color,
                             });
                         }
                         // fin del listado

@@ -133,13 +133,17 @@ namespace Reinco.Interfaces
             uiHome obraResponsable = new uiHome("ic_obra_color.png", "Obra");
             obraResponsable.eventoTap.Command = new Command(() =>
             {
-                // Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Responsable"));
                 Navigation.PushAsync(new ListarObra(idUsuario));
-                // App.Navigator.Detail = new NavigationPage(new ListarObra());
+            });
+            uiHome obraSupervisar = new uiHome("ic_obra_color.png", "Supervisiones");
+            obraSupervisar.eventoTap.Command = new Command(() =>
+            {
+                Navigation.PushAsync(new ListarObra(idUsuario,"Asistente"));
             });
 
-            // Posicionando los elementos en la interfas
+            // Posicionando los elementos en la interfaz
             Cuadricula.Children.Add(obraResponsable.contenedor, 0, 0);
+            Cuadricula.Children.Add(obraSupervisar.contenedor, 1, 0);
 
             // Pintando la Interfas
             uixCargo.Children.Add(Cuadricula);
@@ -153,12 +157,10 @@ namespace Reinco.Interfaces
             uiHome obraAsistente = new uiHome("ic_obra_color.png", "Obra");
             obraAsistente.eventoTap.Command = new Command(() =>
             {
-                 //Navigation.PushAsync(new ListarObraxCargo(idUsuario, "Asistente"));
                 Navigation.PushAsync(new ListarObra(idUsuario,"Asistente"));
-                // App.Navigator.Detail = new NavigationPage(new ListarObra());
             });
 
-            // Posicionando los elementos en la interfas
+            // Posicionando los elementos en la interfaz
             Cuadricula.Children.Add(obraAsistente.contenedor, 0, 0);
 
             // Pintando la Interfas

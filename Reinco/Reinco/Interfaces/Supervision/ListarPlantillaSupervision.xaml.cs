@@ -125,12 +125,17 @@ namespace Reinco.Interfaces.Supervision
                             nombreR ="Resp: "+ item.nombreResponsable;
                             string fechaSt = item.fecha;//convertir a string el json de fecha
                             DateTime fechaS = Convert.ToDateTime(fechaSt);//convertir a datetime el string de la fecha
-                            if (item.firma_recepcion==1&&item.firma_notificacion==1&&item.firma_conformidad==1)
+                            if (item.firma_recepcion == 1 && item.firma_notificacion == 1 && item.firma_conformidad == 1)
                             {
-                                Color = "#77FF77";
+                                Color = "#77FF77";//si tiene todas las firmas
                             }
-                            else
-                                Color = "#FF7777";
+                            else {
+                                if (item.firma_recepcion == 1 || item.firma_notificacion == 1 || item.firma_conformidad == 1)
+                                    Color = "#ffa20c";//si tiene alguna firma
+                                else
+                                    Color = "#FF7777";//si no tiene ninguna firma
+                            }
+                            
                             if (Cargo == "Asistente")
                                 nombreA = "";
                             if (Cargo == "Responsable")
