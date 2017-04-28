@@ -22,7 +22,9 @@
                 x:Name="listarPropietario"
                 IsRefreshing="{Binding IsRefreshingPropietario,Mode=TwoWay}">
                 <!-- Encabezado -->
-
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" x:Name="listaVacia">
+                    <Label x:Name="lblListaVacia" TextColor="Black" FontSize="Medium" ></Label>
+                </StackLayout>
                 <ListView.Header>
                     <StackLayout>
                         <!-- Buscador -->

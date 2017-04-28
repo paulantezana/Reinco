@@ -95,8 +95,17 @@ namespace Reinco.Interfaces.Propietario
                 IsRefreshingPropietario = true;
                 object[,] variables = new object[,] { { "nroElementos", nroEleiementos }, { "ultimoId", UltimoId } };
                 dynamic result = await Servicio.MetodoGet("ServicioPropietario.asmx", "MostrarPropietarios",variables);
-                
-                    foreach (var item in result)
+                if (result != null)
+                {
+                    if (result.Count == 0) //si está vacío
+                    {
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay propietarios.";
+                        return;
+                    }
+                    else
+                    {
+                        foreach (var item in result)
                     {
                         PropietarioItems.Add(new PropietarioItem
                         {
@@ -105,8 +114,15 @@ namespace Reinco.Interfaces.Propietario
                             fotoPerfil = "ic_profile_color.png",
                         });
                     }
+                    }
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Supervisiones", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
 
-                
+
             }
             catch (Exception ex)
             {
