@@ -115,7 +115,7 @@ namespace Reinco.Interfaces.Obra
                 }
             }
             get { return isRunningPropietario; }
-        }
+        }//==============
         public bool isRunningUsuario { get; set; }
         public bool IsRunningUsuario
         {
