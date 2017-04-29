@@ -140,6 +140,10 @@ namespace Reinco.Interfaces.Personal
             return true;
 
         }
+        public void OnMore(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+        }
         #region ================================ Scroll Infinito ================================
         /*
             @ Evento que se dispara cadaves que el escroll lega al final de ventana

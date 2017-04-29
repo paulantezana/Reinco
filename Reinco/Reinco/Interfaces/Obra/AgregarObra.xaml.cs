@@ -22,12 +22,15 @@ namespace Reinco.Interfaces.Obra
         new public event PropertyChangedEventHandler PropertyChanged;
         int nroElementos = 10000;// sin funcionalidad para bindable picker(pendiente)
         int ultimoId = 10000;
+        int IdAsistente;
         public ObservableCollection<PropietarioItem> propietarioItem {get; set; }
         public ObservableCollection<PersonalItem> personalItem { get; set; }
+        public ObservableCollection<PersonalItem> asistenteItem { get; set; }
 
         #region =============================== Comandos ===============================
         public ICommand commandBorrarPropietario { get; private set; }
         public ICommand commandBorrarResponsable { get; private set; }
+        public ICommand commandBorrarAsistente { get; private set; }
         #endregion
 
         #region ============================== Atributos ==============================
@@ -50,6 +53,7 @@ namespace Reinco.Interfaces.Obra
 
             lblPropietario.Text = "Asigne un propietario " + App.opcional;
             lblResponsable.Text="Asigne un responsable "+ App.opcional;
+            lblAsistente.Text="Asigne un Asistente" + App.opcional; 
 
             // Servicios
             mensaje = new VentanaMensaje();
@@ -57,6 +61,7 @@ namespace Reinco.Interfaces.Obra
             // ObservableCollection
             propietarioItem = new ObservableCollection<PropietarioItem>();
             personalItem = new  ObservableCollection<PersonalItem>();
+            asistenteItem = new ObservableCollection<PersonalItem>(); ;
 
             // Cargando las listas en los POP UPS
             listarBindablePicker();
@@ -73,6 +78,10 @@ namespace Reinco.Interfaces.Obra
             commandBorrarResponsable = new Command(() =>
             {
                 asignarResponsable.SelectedValue = 0;
+            });
+            commandBorrarAsistente= new Command(() =>
+            {
+                asignarAsistente.SelectedValue = 0;
             });
 
             // Contexto para los bindings
@@ -120,6 +129,19 @@ namespace Reinco.Interfaces.Obra
             }
             get { return isRunningUsuario; }
         }
+        public bool isRunningAsistente { get; set; }
+        public bool IsRunningAsistente
+        {
+            set
+            {
+                if (isRunningAsistente != value)
+                {
+                    isRunningAsistente = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRunningAsistente"));
+                }
+            }
+            get { return isRunningAsistente; }
+        }
         #endregion
 
         #region =========================== listar BindablePicker ===========================
@@ -142,7 +164,25 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message,"Aceptar");
             }
         }
-
+        private async Task CargarAsistenteItem()
+        {
+            try
+            {
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosAsistentes");
+                foreach (var item in usuarios)
+                {
+                    personalItem.Add(new PersonalItem
+                    {
+                        idUsuario = item.idUsuario,
+                        nombresApellidos = item.nombresApellidos.ToString(),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+        }
         private async Task CargarPropietarioItem(int elementos, int ultimo)
         {
             try
@@ -170,13 +210,16 @@ namespace Reinco.Interfaces.Obra
             {
                 IsRunningPropietario = true;
                 IsRunningUsuario = true;
+                IsRunningAsistente = true;
                 await CargarPersonalItem();
+                await CargarAsistenteItem();
                 await CargarPropietarioItem(nroElementos,ultimoId);
-
+                asignarAsistente.ItemsSource = asistenteItem;
                 asignarPropietario.ItemsSource = propietarioItem;
                 asignarResponsable.ItemsSource = personalItem;
                 IsRunningPropietario = false;
                 IsRunningUsuario = false;
+                IsRunningAsistente = false;
             }
             catch (Exception ex)
             {
@@ -229,23 +272,54 @@ namespace Reinco.Interfaces.Obra
                         return;
 
                     }
-                    if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue!=null)
+                    if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue!=null&&asignarAsistente!=null)
                     {
 
                         IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
                         IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
-                        IngresarPropResponsable(IdPropietario, IdResponsabe);
+                        IdAsistente = Convert.ToInt16(asignarAsistente.SelectedValue);
+                        IngresarPropResponsable(IdPropietario, IdResponsabe,IdAsistente);
                     }
                     else {
-                        if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue != null)
+                        if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue != null&&asignarAsistente!=null)
                         {
                             IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
-                            IngresarPropResponsable(0, IdResponsabe);
+                            IdAsistente= Convert.ToInt16(asignarAsistente.SelectedValue);
+                            IngresarPropResponsable(0, IdResponsabe,IdAsistente);
                         }
-                        if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue == null)
+                        if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue == null && asignarAsistente.SelectedValue == null)
                         {
                             IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
-                            IngresarPropResponsable(IdPropietario, 0);
+                            IngresarPropResponsable(IdPropietario, 0,0);
+                        }
+                        if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue == null && asignarAsistente.SelectedValue != null)
+                        {
+                            IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                            IdAsistente= Convert.ToInt16(asignarAsistente.SelectedValue);
+                            IngresarPropResponsable(IdPropietario, 0, IdAsistente);
+                        }
+                        if (asignarPropietario.SelectedValue != null && asignarResponsable.SelectedValue != null && asignarAsistente.SelectedValue == null)
+                        {
+                            IdPropietario = Convert.ToInt16(asignarPropietario.SelectedValue);
+                            IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
+                            IngresarPropResponsable(IdPropietario, IdResponsabe, 0);
+                        }
+                        if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue != null && asignarAsistente.SelectedValue == null)
+                        {
+                            
+                            IdResponsabe = Convert.ToInt16(asignarResponsable.SelectedValue);
+                            IngresarPropResponsable(0, IdResponsabe, 0);
+                        }
+                        if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue == null && asignarAsistente.SelectedValue != null)
+                        {
+
+                            IdAsistente = Convert.ToInt16(asignarAsistente.SelectedValue);
+                            IngresarPropResponsable(0, 0,IdAsistente );
+                        }
+                        if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue == null && asignarAsistente.SelectedValue == null)
+                        {
+
+                            IngresarPropResponsable(0, 0, 0);
                         }
                         cambiarEstado(true);
                         guardar.IsEnabled = false;
@@ -279,19 +353,19 @@ namespace Reinco.Interfaces.Obra
             }
         }
         #endregion
-        #region ====================== Ingresar Propietario y Responsable ======================
-        public async void IngresarPropResponsable(object idPropietario, object idUsuario)
+        #region ====================== Ingresar Propietario, Responsable y Asistente ======================
+        public async void IngresarPropResponsable(object idPropietario, object idUsuario,object idAsistente)
         {
             cambiarEstado(false);
             object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
-                           { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} };
+                           { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} , { "idUsuarioAsistente", idAsistente} };
             dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "IngresarPropietarioResponsableEnObra", variables);
             Mensaje = Convert.ToString(result);
             if (result != null)
             {
                 cambiarEstado(true);
                 guardar.IsEnabled = false;
-                await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable y Propietario", Mensaje, "OK");
+                await App.Current.MainPage.DisplayAlert("Agregar Obra con Responsable, Propietario y Asistente", Mensaje, "OK");
                 App.ListarObra.ObraItems.Clear();
                 App.ListarObra.CargarObraItems();
                 await Navigation.PopAsync();
@@ -308,7 +382,7 @@ namespace Reinco.Interfaces.Obra
 
             asignarPropietario.IsEnabled = estado;
             asignarResponsable.IsEnabled = estado;
-
+            asignarAsistente.IsEnabled = estado;
             guardar.IsEnabled = estado;
             cancelar.IsEnabled = estado;
 

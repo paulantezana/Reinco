@@ -33,6 +33,7 @@ namespace Reinco
         public VentanaMensaje mensaje;
         public static int nroElementos = 10;
         public static int idSupervisionActividadE;
+        public static int terminoCargadoSupervisiones = 0;
         public static ObservableCollection<FotosxActividadItem> FotosxActividadItemsE { get; set; }
         #endregion
 

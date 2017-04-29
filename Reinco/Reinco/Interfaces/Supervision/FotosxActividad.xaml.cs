@@ -218,7 +218,7 @@ namespace Reinco.Interfaces.Supervision
                 if (result != null)
                 {
                     await App.Current.MainPage.DisplayAlert("Eliminar Foto", Mensaje, "OK");
-                    //await foto.CargarFotosxActividad(App.idSupervisionActividadE);
+                    await CargarFotosxActividad(App.idSupervisionActividadE);
                     return;
                 }
             }
@@ -231,7 +231,32 @@ namespace Reinco.Interfaces.Supervision
 
             return;
         }
+        #region ================================= Cargando Las Fotos =================================
+        public async Task CargarFotosxActividad(int idsupActividad)
+        {
+            try
+            {
+                foto.FotosxActividadItems.Clear();
+                object[,] variables = new object[,] { { "idActividad", idsupActividad } };
+                dynamic result = await Servicio.MetodoGet("ServicioFoto.asmx", "MostrarFotos", variables);
+                foreach (var item in result)
+                {
+                    foto.FotosxActividadItems.Add(new FotosxActividadItem
+                    {
+                        id = item.idFoto,
+                        foto = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/fotos/" + item.foto
+                        //foto = "http://190.117.145.7/reinco_pruebas_code/fotos/jackeline.jpg"
+                    });
 
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Eliminar", ex.Message, "Aceptar");
+            }
+        }
+        #endregion
 
     }
     #endregion

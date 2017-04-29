@@ -46,7 +46,7 @@ namespace Reinco.Entidades
                 eliminar();
             });
         }
-
+       
         #region======================= Eliminar Personal ====================================
         public async void eliminar()
         {

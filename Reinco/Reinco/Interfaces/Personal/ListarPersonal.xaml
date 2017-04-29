@@ -18,7 +18,8 @@
                 ItemAppearing="ListView_ItemAppearing"
                 x:Name="listViewPersonal"
                 RefreshCommand="{Binding RefreshPersonalCommand}"
-                IsRefreshing="{Binding IsRefreshingPersonal,Mode=TwoWay}">
+                IsRefreshing="{Binding IsRefreshingPersonal,Mode=TwoWay}"
+                >
                 <!-- Encabezado -->
                 <ListView.Header>
                     <StackLayout>
@@ -33,7 +34,7 @@
                         <ViewCell>
                             <!-- Eventos -->
                             <ViewCell.ContextActions>
-                                <MenuItem Command="{Binding Eliminar}" Text="Eliminar"></MenuItem>
+                                <MenuItem Command="{Binding Eliminar}" Text="Eliminar" ></MenuItem>
                             </ViewCell.ContextActions>
                             <!-- END Eventos -->
                             <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">

@@ -76,7 +76,8 @@ namespace Reinco.Interfaces.Supervision
             CargarPlantillaSupervision();
             AgregarSupervision = new Command(() =>
             {
-                Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
+                if(App.terminoCargadoSupervisiones==1)
+                     Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
             });
             generarReporte = new Command(() =>
               {
@@ -89,6 +90,8 @@ namespace Reinco.Interfaces.Supervision
              });
 
             this.BindingContext = this;
+            if (App.cargo == "Asistente")
+                btngenerarReporte.IsEnabled = false;
         } 
         #endregion
 
@@ -174,6 +177,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 IsRefreshingPlantillaSupervision = false;
             }
+            App.terminoCargadoSupervisiones = 1;
         }
         #endregion
 

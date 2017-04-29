@@ -370,7 +370,9 @@ namespace Reinco.Interfaces.Obra
             {
                 IsRefreshingObra = false;
             }
-            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            if(ObraItems.Count==1)
+                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            ultimoId = ObraItems[ObraItems.Count-1].idPropietarioObra;
             entradas++;
         }
 
@@ -435,7 +437,9 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            if (ObraItems.Count == 1)
+                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
         public async void CargarObraItemsActivas(int idUsuario, int elementos, int ultimo)
@@ -496,7 +500,9 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            if (ObraItems.Count == 1)
+                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
         #endregion
@@ -555,7 +561,9 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            if (ObraItems.Count == 1)
+                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
         int contador = 0;
@@ -613,7 +621,9 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            ultimoId = ObraItems[ObraItems.Count - 1].idObra;
+            if (ObraItems.Count == 1)
+                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
         #endregion

@@ -25,9 +25,10 @@ namespace Reinco.Interfaces.Obra
 
         public ObservableCollection<PropietarioItem> propietarioItems { get; set; }
         public ObservableCollection<PersonalItem> personalItems { get; set; }
-
+        public ObservableCollection<PersonalItem> asistenteItems { get; set; }
         public ICommand commandBorrarPropietario { get; private set; }
         public ICommand commandBorrarResponsable { get; private set; }
+        public ICommand commandBorrarAsistente { get; private set; }
         public ICommand guardar { get; set; }
        // public ICommand finalizada { get; set; }
 
@@ -85,17 +86,18 @@ namespace Reinco.Interfaces.Obra
 
             lblPropietario.Text = "Asigne un propietario " + App.opcional;
             lblResponsable.Text = "Asigne un responsable " + App.opcional;
+            lblAsistente.Text= "Asigne un Asistente " + App.opcional;
             Sfinalizada.IsToggled = Obra.finalizada != 1 ? false : true;
             // Variables Globales
 
             // Placeholders
             asignarPropietario.Title = Obra.nombrePropietario; // Titulo POP UPS Propietario
             asignarResponsable.Title = Obra.nombresApellidos; // Titulo POP UPS Responsable
-
+            asignarAsistente.Title = Obra.nombreAsistente;
             // Colecciones
             propietarioItems = new ObservableCollection<PropietarioItem>();
             personalItems = new ObservableCollection<PersonalItem>();
-
+            asistenteItems = new ObservableCollection<PersonalItem>();
             // Cargando las listas
             listarBindablePicker();
 
@@ -114,15 +116,21 @@ namespace Reinco.Interfaces.Obra
                 DisplayAlert("Mensaje", "Se eliminó al responsable.", "Aceptar");
                 asignarResponsable.Title = "";
             });
+            commandBorrarAsistente = new Command(() =>
+            {
+                asignarAsistente.SelectedValue = 0;
+                DisplayAlert("Mensaje", "Se eliminó al asistente.", "Aceptar");
+                asignarAsistente.Title = "";
+            });
 
             guardar = new Command(() =>
             {
                 int enviarPropietario = Obra.idPropietario;
                 int enviarResponsable = Obra.idUsuario;
-
+                int enviarAsistente = obra.idAsistente;
                 object propietarioSelecionado = asignarPropietario.SelectedValue;
                 object responsableSelecionado = asignarResponsable.SelectedValue;
-
+                object asistenteSeleccionado = asignarAsistente.SelectedValue;
                 if (propietarioSelecionado != null)
                 {
                     enviarPropietario = Convert.ToInt16(propietarioSelecionado);
@@ -131,19 +139,24 @@ namespace Reinco.Interfaces.Obra
                 {
                     enviarResponsable = Convert.ToInt16(responsableSelecionado);
                 }
-                ModificarPropietarioResponsableObra(enviarPropietario, enviarResponsable);
+                if (asistenteSeleccionado != null)
+                {
+                    enviarAsistente = Convert.ToInt16(asistenteSeleccionado);
+                }
+                ModificarPropietarioResponsableObra(enviarPropietario, enviarResponsable,enviarAsistente);
             });
             // Valor Por Defecto en las listas
             asignarResponsable.Focus();
             asignarPropietario.SelectedValue = Convert.ToInt16(Obra.idPropietario);
             asignarResponsable.SelectedValue = Obra.idUsuario;
+            asignarAsistente.SelectedValue = Obra.idAsistente;
             // Definiendo costeto para los bindings
             this.BindingContext = this;
         }
 
 
         #region ============================ Modificar Obra ============================
-        public async void ModificarPropietarioResponsableObra(int IdPropietario, int IdResponsable)
+        public async void ModificarPropietarioResponsableObra(int IdPropietario, int IdResponsable,int IdAsistente)
         {
             try
             {
@@ -151,14 +164,14 @@ namespace Reinco.Interfaces.Obra
                 
                 object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                 { "IdObra", obra.idObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
-                { "IdPropietarioObra", obra.idPropietarioObra}, { "supervisionTerminada", Sfinalizada.IsToggled==true?1:0}};
+                { "IdPropietarioObra", obra.idPropietarioObra}, { "supervisionTerminada", Sfinalizada.IsToggled==true?1:0}, { "IdAsistente", obra.idAsistente}};
                 dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "ModificarPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
                     cambiarEstado(true);
                     guardarCambios.IsEnabled = false;
-                    await App.Current.MainPage.DisplayAlert("Modificar Obra Propietario y Responsable", Mensaje, "Aceptar");
+                    await App.Current.MainPage.DisplayAlert("Modificar Obra Propietario, Responsable y Asistente", Mensaje, "Aceptar");
                     App.ListarObra.ObraItems.Clear();
                     App.ListarObra.CargarObraItems();
                     await Navigation.PopAsync();
@@ -221,6 +234,26 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message,"Aceptar");
             }
         }
+        private async Task CargarAsistenteItem()
+        {
+            try
+            {
+                personalItems.Clear();
+                dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosAsistentes");
+                foreach (var item in usuarios)
+                {
+                    personalItems.Add(new PersonalItem
+                    {
+                        idUsuario = item.idAsistente,
+                        nombresApellidos = item.nombreAsistente.ToString(),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Aceptar");
+            }
+        }
         public async void listarBindablePicker()
         {
             try
@@ -229,9 +262,10 @@ namespace Reinco.Interfaces.Obra
                 IsRunningUsuario = true;
                 await CargarPersonalItem();
                 await CargarPropietarioItem(nroElementos, ultimoId);
-
+                await CargarAsistenteItem();
                 asignarPropietario.ItemsSource = propietarioItems;
                 asignarResponsable.ItemsSource = personalItems;
+                asignarAsistente.ItemsSource = asistenteItems;
                 IsRunningPropietario = false;
                 IsRunningUsuario = false;
             }

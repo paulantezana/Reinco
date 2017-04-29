@@ -66,6 +66,28 @@
                         VerticalOptions="Center"
                         x:Name="asignarResponsable"/>
                 </StackLayout>
+                <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8">
+
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Asigne Un Responsable" x:Name="lblAsistente"></Label>
+                            <ActivityIndicator IsRunning="{Binding IsRunningAsistente}" WidthRequest="15" HeightRequest="15"></ActivityIndicator>
+                        </StackLayout>
+                        <Label Text="Borrar" FontAttributes="Bold" x:Name="borrarAsistente" TextColor="#FF5555" Margin="10,0,10,0" HorizontalOptions="EndAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding commandBorrarAsistente}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                    <control:BindablePicker
+                        DisplayMemberPath="nombresApellidos"
+                        SelectedValuePath="idUsuario"
+                        ItemsSource="{Binding UsuarioItems}"
+                        SelectedValue ="{Binding Path=idUsuario, Mode=TwoWay}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"
+                        x:Name="asignarAsistente"/>
+                </StackLayout>
 
                 <!-- Indicador de Actividad -->
                 <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
