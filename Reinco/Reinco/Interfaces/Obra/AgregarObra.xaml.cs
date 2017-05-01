@@ -171,7 +171,7 @@ namespace Reinco.Interfaces.Obra
                 dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosAsistentes");
                 foreach (var item in usuarios)
                 {
-                    personalItem.Add(new PersonalItem
+                    asistenteItem.Add(new PersonalItem
                     {
                         idUsuario = item.idUsuario,
                         nombresApellidos = item.nombresApellidos.ToString(),
@@ -234,7 +234,7 @@ namespace Reinco.Interfaces.Obra
             try
             {
                 cambiarEstado(false);
-                if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue == null)
+                if (asignarPropietario.SelectedValue == null && asignarResponsable.SelectedValue == null&&asignarAsistente.SelectedValue==null)
                 {
                     #region================ingresar solo obra=============================
                     if (string.IsNullOrEmpty(codigo.Text) || string.IsNullOrEmpty(nombre.Text))
@@ -323,8 +323,8 @@ namespace Reinco.Interfaces.Obra
                         }
                         cambiarEstado(true);
                         guardar.IsEnabled = false;
-                        await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
-                        return;
+                       // await App.Current.MainPage.DisplayAlert("Agregar Obra", Mensaje, "OK");
+                       // return;
                     }
                 }
                 #endregion
@@ -358,7 +358,7 @@ namespace Reinco.Interfaces.Obra
         {
             cambiarEstado(false);
             object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
-                           { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} , { "idUsuarioAsistente", idAsistente} };
+                           { "idPropietario",  idPropietario }, { "idUsuarioResponsable", idUsuario} , { "idAsistente", idAsistente} };
             dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "IngresarPropietarioResponsableEnObra", variables);
             Mensaje = Convert.ToString(result);
             if (result != null)

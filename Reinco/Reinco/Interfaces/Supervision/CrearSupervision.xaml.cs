@@ -61,6 +61,8 @@ namespace Reinco.Interfaces.Supervision
             bloque.IsToggled = plantilla.bloque==1?true:false;
             nivel.Text = plantilla.nivel;
             asignarAsistente.Title = plantilla.nombreAsistente;
+            if (App.cargo == "Asistente")
+                asignarAsistente.IsEnabled = false;
             guardar.Clicked += Modificar_Supervision;
         }
 
@@ -105,11 +107,16 @@ namespace Reinco.Interfaces.Supervision
             lblNivel.Text="Nivel " + App.opcional;
             lblBloque.Text = "Bloque " + App.opcional;
             CargarPersonalItem();
+            asignarAsistente.Title = App.nombreUsuarioAsistente; // Titulo POP UPS Responsable
+            asignarAsistente.SelectedValue = App.idUsuarioAsistente;
+            if (App.cargo == "Asistente")
+                asignarAsistente.IsEnabled = false;
             asignarAsistente.ItemsSource = personalItem;
             guardar.Clicked += Guardar_Clicked;
             cancelar.Clicked += Cancelar_Clicked;
-            // lblNroSupervision.Text = App.ultimoNroSupervision.ToString();
             
+            // lblNroSupervision.Text = App.ultimoNroSupervision.ToString();
+
             numeroSupervision.Text = (App.ultimoNroSupervision+1).ToString();
         }
 
@@ -142,6 +149,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 await mensaje.MostrarMensaje("Crear Supervisión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
             }
+            App.ultimoNroSupervision = 0;
         }
 
        

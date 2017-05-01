@@ -39,12 +39,13 @@
                             <!-- Menu Eliminar Obra CRUD -->
                             <ViewCell.ContextActions>
                                 <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True"></MenuItem>
+                                
                             </ViewCell.ContextActions>
                             <!-- End Menu Eliminar Obra CRUD -->
-
+                           
                             <!-- ============ Codigo Para Listar Obra ================-->
 
-                            <Grid BackgroundColor="{StaticResource Color5}" Padding="0" Margin="1">
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="0" Margin="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5"/>
                                     <!--<ColumnDefinition Width="auto"/>-->
@@ -62,8 +63,11 @@
                                     <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
 
-                                <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
-                                    <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
+                                <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand" HeightRequest="30">
+                                    <Label Text="{Binding nombre}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"></Label>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding mostrarPlantillas}"/>
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
                                 <Image Grid.Column="3" Source="ic_plantilla_color.png" Margin="2">
                                     <Image.GestureRecognizers>
@@ -71,7 +75,7 @@
                                     </Image.GestureRecognizers>
                                   
                                 </Image>
-
+                                
                                 <Image IsVisible="{Binding ocultar}" Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30"  >
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding editarObra}"/>

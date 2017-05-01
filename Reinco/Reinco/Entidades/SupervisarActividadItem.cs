@@ -30,6 +30,8 @@ namespace Reinco.Entidades
         public int animacion { get; set; }
         public bool sinFirmaEntrega { get; set; }
         public bool obraActiva { get; set; }
+        public bool firmaEntregaNotificacion { get; set; }
+        public bool firmaConformidad { get; set; }
         #region ================ Preparando pa mostrar o ocultar el boton guardar ================
         public bool GuardarIsVisible { get; set; }
         public bool guardarIsVisible
@@ -68,12 +70,12 @@ namespace Reinco.Entidades
                 {
                     if (value != _observacionLevantada)
                     {
-                        if (sinFirmaEntrega)//==cuando la firma de entrega este activada, se desactiva  
+                        if (firmaConformidad==false)//==cuando la firma de entrega este activada, se desactiva  antes sinfirmaentrega
                         {
                             if (value == true)
                             {
-                                _aprobacion = false;
-                                aprobacion = false;
+                               // _aprobacion = false;
+                               // aprobacion = false;
                             }
                             else
                             {
@@ -96,7 +98,7 @@ namespace Reinco.Entidades
                             }
                             else
                             {
-                                ObservacionLevantada = true;
+                                ObservacionLevantada = true ;
                                 _observacionLevantada = true;
                                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacionLevantada"));
 

@@ -160,7 +160,7 @@
                         <!-- Notas Del Supervisor -->
                         <StackLayout>
                             <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,30,8,15">
-                                <Label Text="Nota Supervisión" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
+                                <Label Text="Nota Supervisión (Sólo Responsable)" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
                                 <Editor HeightRequest="150" BackgroundColor="#F5F5F5" x:Name="EnotaSupervision" Text="{Binding notaSupervision}"></Editor>
                             </StackLayout>
 
@@ -208,7 +208,7 @@
 
                         <!-- Buttons Action -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,0" Margin="0,0,0,20">
-                            <Button Command="{Binding CancelarSupervision}" x:Name="cancelar" Text="Cancelar" Style="{StaticResource BtnCancelar}"></Button>
+                            <Button  x:Name="btnverPdf" Text="Ver Pdf" ></Button>
                             <Button Command="{Binding guardarSupervision}" x:Name="guardar" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                         </StackLayout>
                         <!-- End -->

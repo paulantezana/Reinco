@@ -56,6 +56,9 @@
     <Compile Include="Interfaces\Supervision\FotosxActividad.xaml.cs">
       <DependentUpon>FotosxActividad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Supervision\Pdf.xaml.cs">
+      <DependentUpon>Pdf.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ISaveAndLoad.cs" />
     <Compile Include="Recursos\ReducirImagen.cs" />
     <Compile Include="Interfaces\Obra\AgregarObra.xaml.cs">
@@ -344,6 +347,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Interfaces\Cargos.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Interfaces\Supervision\Pdf.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

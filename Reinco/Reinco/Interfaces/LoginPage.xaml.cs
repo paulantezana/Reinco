@@ -115,6 +115,8 @@ namespace Reinco.Interfaces
                                 Application.Current.Properties["nombresApellidos"] = usuario.nombresApellidos;
                                 Application.Current.Properties["cargoUsuario"] = usuario.cargo;
                                 App.cargo = usuario.cargo;
+                                App.nombreUsuarioAsistente = usuario.nombresApellidos;
+                                App.idUsuarioAsistente = usuario.idUsuario;
                                 break;
                             }else if(usuario.cargo == "Responsable")
                             {

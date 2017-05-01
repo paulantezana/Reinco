@@ -34,6 +34,8 @@ namespace Reinco
         public static int nroElementos = 10;
         public static int idSupervisionActividadE;
         public static int terminoCargadoSupervisiones = 0;
+        public static int idUsuarioAsistente = 0;
+        public static string nombreUsuarioAsistente = "";
         public static ObservableCollection<FotosxActividadItem> FotosxActividadItemsE { get; set; }
         #endregion
 

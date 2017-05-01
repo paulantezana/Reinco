@@ -252,6 +252,7 @@ namespace Reinco.Interfaces.Obra
                     {
                         foreach (var item in obras)
                         {
+
                             if (item.nroPlantillas == 0)
                             {
                                 Color = "#c94036";//rojo si no hay plantillas 
@@ -268,6 +269,8 @@ namespace Reinco.Interfaces.Obra
                                 codigo = item.codigo,
                                 idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
                                 idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                                idAsistente= item.idUsuarioAsistente == null ? 0 : item.idUsuarioAsistente,
+                                nombreAsistente=item.nombreAsistente,
                                 colorObra = Color,
                                 idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
                                 nombrePropietario = item.nombrePropietario,
@@ -314,6 +317,7 @@ namespace Reinco.Interfaces.Obra
                 dynamic obras = await Servicio.MetodoGet("ServicioPropietarioObra.asmx", "MostrarPropietarioObraDetalle", OidPlantilla);
                 if (obras != null)
                 {
+                   
                     if (entradas == 0 && obras.Count == 0)
                     {
 
@@ -341,6 +345,8 @@ namespace Reinco.Interfaces.Obra
                                 codigo = item.codigo,
                                 idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
                                 idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                                idAsistente = item.idUsuarioAsistente == null ? 0 : item.idUsuarioAsistente,
+                                nombreAsistente = item.nombreAsistente,
                                 colorObra = Color,
                                 idPropietarioObra = item.idPropietario_Obra == null ? 0 : item.idPropietario_Obra,
                                 nombrePropietario = item.nombrePropietario,
@@ -416,11 +422,13 @@ namespace Reinco.Interfaces.Obra
                             codigo = item.codigo,
                             idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
                             idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                            idAsistente = item.idUsuarioAsistente == null ? 0 : item.idUsuarioAsistente,
+                            nombreAsistente = item.nombreUsuarioAsistente == null ? "" : item.nombreUsuarioAsistente,
                             colorObra = Color,
                             idPropietarioObra = item.idPropietario_Obra,
-                            nombrePropietario = item.nombrePropietario==null?"": item.nombrePropietario,
-                            nombresApellidos = item.responsable==null?"": item.responsable,
-                            ocultar=true
+                            nombrePropietario = item.nombrePropietario == null ? "" : item.nombrePropietario,
+                            nombresApellidos = item.responsable == null ? "" : item.responsable,
+                            ocultar = true
                         });
                     }
                   }
@@ -479,6 +487,8 @@ namespace Reinco.Interfaces.Obra
                                 codigo = item.codigo,
                                 idPropietario = item.idPropietario == null ? 0 : item.idPropietario,
                                 idUsuario = item.idUsuario_responsable == null ? 0 : item.idUsuario_responsable,
+                                idAsistente = item.idUsuarioAsistente == null ? 0 : item.idUsuarioAsistente,
+                                nombreAsistente = item.nombreUsuarioAsistente,
                                 colorObra = Color,
                                 idPropietarioObra = item.idPropietario_Obra,
                                 nombrePropietario = item.nombrePropietario == null ? "" : item.nombrePropietario,
@@ -542,6 +552,7 @@ namespace Reinco.Interfaces.Obra
                             {
                                 idObra = item.idObra,
                                 nombre = item.nombre,
+                                idPropietarioObra=item.idPropietario_Obra,
                                 codigo = item.codigo,
                                 ocultar = false,
                                 colorObra = Color,
@@ -561,9 +572,10 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            if (ObraItems.Count == 1)
-                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
-            ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
+            //if (ObraItems.Count == 1)
+            //    ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            //else
+                ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
         int contador = 0;
@@ -600,6 +612,7 @@ namespace Reinco.Interfaces.Obra
                             ObraItems.Add(new ObraItem
                             {
                                 idObra = item.idObra,
+                                idPropietarioObra = item.idPropietario_obra,
                                 nombre = item.nombre,
                                 codigo = item.codigo,
                                 ocultar = false,
@@ -621,9 +634,10 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            if (ObraItems.Count == 1)
-                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
-            ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
+            //if (ObraItems.Count == 1)
+            //    ultimoId = ObraItems[0].idPropietarioObra;
+            //else
+             ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
         #endregion
@@ -708,6 +722,11 @@ namespace Reinco.Interfaces.Obra
             App.Navigator.Detail = new NavigationPage(new PaginaUsuario());
             return true;
             
+        }
+        public void OnDelete(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
         }
     }
 }

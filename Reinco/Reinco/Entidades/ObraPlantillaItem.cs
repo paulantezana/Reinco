@@ -35,7 +35,6 @@ namespace Reinco.Entidades
             {
                 try
                 {
-                    // App.directorio = App.directorio.Remove(App.directorio.IndexOf("\\",App.directorio.IndexOf("\\")+1)) + "\\" + this.nombre;
                     App.ListarObraPlantilla.Navigation.PushAsync(new ListarPlantillaSupervision(idPlantillaObra,idObra,idPlantilla,nombre));
                 }
                 catch (Exception ex)

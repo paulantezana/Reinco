@@ -57,10 +57,13 @@
 
                             <Label FontAttributes="Bold" FontSize="20" VerticalOptions="Center" Text="{Binding enumera}" Grid.Column="0"></Label>
 
-                            <StackLayout VerticalOptions="Center" Grid.Column="1">
+                                <StackLayout VerticalOptions="Center" Grid.Column="1" HeightRequest="30">
                                 <Label Text="{Binding nombre}" FontAttributes="Bold"></Label>
                                 <Label Text="{Binding tolerancia}"></Label>
-                            </StackLayout>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarActividad}"/>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
 
                             <Image Grid.Column="2" Source="ic_editar.png"  WidthRequest="30" HeightRequest="30" Margin="7">
                                 <Image.GestureRecognizers>

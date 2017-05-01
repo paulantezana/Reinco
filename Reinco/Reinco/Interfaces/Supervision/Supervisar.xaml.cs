@@ -1,4 +1,5 @@
-﻿using Reinco.Entidades;
+﻿using Android.Content;
+using Reinco.Entidades;
 using Reinco.Recursos;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace Reinco.Interfaces.Supervision
         #region ============================= Comandos =============================
 
         public ICommand guardarSupervision { get; private set; }
-        public ICommand CancelarSupervision { get; private set; }
+       // public ICommand verPdf { get; private set; }
         public ICommand RefreshSupervisarCommand { get; private set; }
 
         #endregion
@@ -108,7 +109,8 @@ namespace Reinco.Interfaces.Supervision
             tituloSupervisar = nombreObra;
             SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
             CargarSupervisarActividadItem();
-
+            if(App.cargo=="Asistente")
+            EnotaSupervision.IsEnabled = false;
             activarConformidad = true;
             activarEntrega = true;
             activarRecepcion = true;
@@ -133,10 +135,11 @@ namespace Reinco.Interfaces.Supervision
             {
                 GuardarSupervision();
             });
-            CancelarSupervision = new Command(() =>
-            {
-                Navigation.PopAsync();
-            });
+            //verPdf = new Command(() =>
+            //{
+            //    mostrarPdf(idSupervision);
+            //});
+            btnverPdf.Clicked += BtnverPdf_Clicked;
             RefreshSupervisarCommand = new Command(() =>
             {
                 SupervisarActividadItems.Clear();
@@ -146,6 +149,14 @@ namespace Reinco.Interfaces.Supervision
             // Contexto Actual Para los bindings
             this.BindingContext = this;
             notificacionEnviada = 1;
+        }
+
+        private void BtnverPdf_Clicked(object sender, EventArgs e)
+        {
+            //WebView wv = new WebView();
+            //wv.Source = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" + "ejemplo.pdf";
+            //Content = wv;
+            Device.OpenUri(new Uri("http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" + "ejemplo.pdf"));
         }
 
         protected override void OnAppearing()
@@ -178,9 +189,10 @@ namespace Reinco.Interfaces.Supervision
                         aprobacion = item.si != 1 ? false : true,
                         _observacionLevantada = item.observacion_levantada != 1 ? false : true,
                         observacionLevantada = item.observacion_levantada != 1 ? false : true,
-                        sinFirmaEntrega = notificacionEnviada == 0 ? true : false
-
-                    });
+                        sinFirmaEntrega = notificacionEnviada == 0 ? true : false,
+                        firmaEntregaNotificacion = item.firma_Notificacion != 1 ? false : true,//--------verifica firma entrega notificacion true or false
+                        firmaConformidad = item.firma_Conformidad != 1 ? false : true//----verifica firma conformidad  true or false
+                });
                    // await Task.Delay(100);
                 }
                 int i = 0;
@@ -196,9 +208,9 @@ namespace Reinco.Interfaces.Supervision
                     Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
                     activarRecepcion =item.firma_Recepcion != 1 ? false : true;
                     Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
-                    activarEntrega= item.firma_Notificacion != 1 ? false : true;
+                    activarEntrega= item.firma_Notificacion != 1 ? false : true;//--------verifica firma entrega notificacion true or false
                     Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
-                    activarConformidad =item.firma_Conformidad != 1 ? false : true; ;
+                    activarConformidad =item.firma_Conformidad != 1 ? false : true; ;//----verifica firma conformidad  true or false
                     fechaFirmaConformidad.Text = item.fecha_firma_conformidad == null ? "" : item.fecha_firma_conformidad;
                     fechaFirmaEntrega.Text = item.fecha_firma_notificacion == null ? "" : item.fecha_firma_notificacion;
                     fechaFirmaRecepcion.Text = item.fecha_firma_recepcion == null ? "" : item.fecha_firma_recepcion;
@@ -206,7 +218,7 @@ namespace Reinco.Interfaces.Supervision
                         break;
                 }
 
-                if (notificacionEnviada == 1)
+                if (notificacionEnviada == 1&&activarConformidad==true)
                 {
                     Sdisposicion.PropertyChanged += Sdisposicion_PropertyChanged;
                     Sobservacion.PropertyChanged += Sobservacion_PropertyChanged;
@@ -220,7 +232,7 @@ namespace Reinco.Interfaces.Supervision
                 if (notificacionEnviada == 0)
                     guardar.IsEnabled = true;
                 if(propAsistente==1)
-                    Sconformidad.PropertyChanged += Sconformidad_PropertyChanged;
+                    Srecepcion.PropertyChanged += Srecepcion_PropertyChanged;
                 if(propGerente==1)
                     Sentrega.PropertyChanged += Sentrega_PropertyChanged;
                 if(propResidente==1)
@@ -236,6 +248,11 @@ namespace Reinco.Interfaces.Supervision
                 IsRefreshingSupervisar = false;
             }
 
+        }
+
+        private void Srecepcion_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Srecepcion.IsToggled = activarRecepcion;
         }
 
         private void Sentrega_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -297,11 +314,50 @@ namespace Reinco.Interfaces.Supervision
         public void cambiarEstado(bool estado)
         {
             guardar.IsEnabled = estado;
-            cancelar.IsEnabled = estado;
             if (estado == true) { GuardarSupervisionIsrunning = false; }
             else { GuardarSupervisionIsrunning = true; }
         }
         #endregion
+        public async void mostrarPdf(int idAsistente)
+        {
+            try
+            {
+                //FotosxActividadItems.Clear();
+                //object[,] variables = new object[,] { { "idSupervision", IdSupervision } };
+                //dynamic result = await Servicio.MetodoGet("ServicioSupervision.asmx", "MostrarFotos", variables);
+                //foreach (var item in result)
+                //{
+                //    //FotosxActividadItems.Add(new FotosxActividadItem
+                //    //{
+                //    //    id = item.idFoto,
+                //    //    foto = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/fotos/" + item.foto
+                //    //    //foto = "http://190.117.145.7/reinco_pruebas_code/fotos/jackeline.jpg"
+                //    //});
+                //    string pdf = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" + IdSupervision+".pdf";
 
+                //}
+                //Android.Net.Uri uri = Android.Net.Uri.Parse("file:///" + filePath);
+                //Intent intent = new Intent(Intent.ActionView);
+                //intent.SetDataAndType(uri, "application/pdf");
+                //intent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
+
+                //try
+                //{
+                //    Xamarin.Forms.Context.StartActivity(intent);
+                //}
+                //catch (Exception)
+                //{
+                //    Toast.MakeText(Xamarin.Forms.Context, "No Application Available to View PDF", ToastLength.Short).Show();
+                //}
+                WebView wv = new WebView();
+                wv.Source = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" +"ejemplo.pdf";
+                Content = wv;
+
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Alerta", ex.Message, "Aceptar");
+            }
+        }
     }
 }

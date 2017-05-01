@@ -164,7 +164,7 @@ namespace Reinco.Interfaces.Obra
                 
                 object[,] variables = new object[,] { { "codigoObra", codigo.Text }, { "nombreObra", nombre.Text },
                 { "IdObra", obra.idObra },{ "IdPropietario", IdPropietario}, { "IdResponsable", IdResponsable},
-                { "IdPropietarioObra", obra.idPropietarioObra}, { "supervisionTerminada", Sfinalizada.IsToggled==true?1:0}, { "IdAsistente", obra.idAsistente}};
+                { "IdPropietarioObra", obra.idPropietarioObra}, { "supervisionTerminada", Sfinalizada.IsToggled==true?1:0}, { "idUsuarioAsistente",  IdAsistente}};
                 dynamic result = await Servicio.MetodoGetString("ServicioPropietarioObra.asmx", "ModificarPropietarioObra", variables);
                 Mensaje = Convert.ToString(result);
                 if (result != null)
@@ -238,14 +238,14 @@ namespace Reinco.Interfaces.Obra
         {
             try
             {
-                personalItems.Clear();
+                asistenteItems.Clear();
                 dynamic usuarios = await Servicio.MetodoGet("ServicioUsuario.asmx", "MostrarUsuariosAsistentes");
                 foreach (var item in usuarios)
                 {
-                    personalItems.Add(new PersonalItem
+                    asistenteItems.Add(new PersonalItem
                     {
-                        idUsuario = item.idAsistente,
-                        nombresApellidos = item.nombreAsistente.ToString(),
+                        idUsuario = item.idUsuario,
+                        nombresApellidos = item.nombresApellidos.ToString(),
                     });
                 }
             }

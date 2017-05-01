@@ -57,7 +57,11 @@
                                     </Image.GestureRecognizers>
                                 </Image>
                                 <Image Grid.Column="0" Source="{Binding fotoPerfil}" WidthRequest="30" HeightRequest="30"></Image>
-                                <Label Grid.Column="1" Text="{Binding nombre}" VerticalOptions="Center"></Label>
+                                <Label Grid.Column="1" Text="{Binding nombre}" VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding editarPropietario}"></TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

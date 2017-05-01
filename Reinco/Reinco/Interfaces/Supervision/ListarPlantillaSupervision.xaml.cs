@@ -73,10 +73,14 @@ namespace Reinco.Interfaces.Supervision
             this.Title = nombrePlantilla;
             Cargo = App.cargo;
             PlantillaSupervisionItems = new ObservableCollection<PlantillaSupervisionItem>();
+            if(App.cargo=="Asistente")
+                CargarPlantillaSupervisionAsistente();
+            else
             CargarPlantillaSupervision();
             AgregarSupervision = new Command(() =>
             {
-                if(App.terminoCargadoSupervisiones==1)
+               
+                if (App.terminoCargadoSupervisiones==1)
                      Navigation.PushAsync(new CrearSupervision(IdPlantillaObra));
             });
             generarReporte = new Command(() =>
@@ -86,12 +90,16 @@ namespace Reinco.Interfaces.Supervision
             RefreshPlantillaSupervisionCommand = new Command(() =>
              {
                  PlantillaSupervisionItems.Clear();
-                 CargarPlantillaSupervision();
+                 if (App.cargo == "Asistente")
+                     CargarPlantillaSupervisionAsistente();
+                 else
+                     CargarPlantillaSupervision();
              });
 
             this.BindingContext = this;
             if (App.cargo == "Asistente")
                 btngenerarReporte.IsEnabled = false;
+           
         } 
         #endregion
 
@@ -105,6 +113,7 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
+                App.ultimoNroSupervision = 0;
                 listaVacia.IsVisible = false;
                // IsRefreshingPlantillaSupervision = true;
                 WebService servicio = new WebService();
@@ -118,6 +127,8 @@ namespace Reinco.Interfaces.Supervision
                         listaVacia.IsVisible = true;
                         lblListaVacia.Text = "No hay supervisiones para esta plantilla.";
                         btngenerarReporte.IsEnabled = false;
+                        App.terminoCargadoSupervisiones = 1;
+                        App.ultimoNroSupervision = 0;
                         return;
                     }
                     else
@@ -159,7 +170,7 @@ namespace Reinco.Interfaces.Supervision
                             App.correo = item.correo;
                         }
                         // fin del listado
-                        App.ultimoNroSupervision = PlantillaSupervisionItems[PlantillaSupervisionItems.Count - 1].numero;
+                      
                     }
                 }
                 else
@@ -178,9 +189,93 @@ namespace Reinco.Interfaces.Supervision
                 IsRefreshingPlantillaSupervision = false;
             }
             App.terminoCargadoSupervisiones = 1;
+            App.ultimoNroSupervision = PlantillaSupervisionItems[PlantillaSupervisionItems.Count - 1].numero;
         }
         #endregion
+        #region ================== Cargar Supervisiones del asistente =========================
+        public async void CargarPlantillaSupervisionAsistente()
+        {
+            try
+            {
+                listaVacia.IsVisible = false;
+                // IsRefreshingPlantillaSupervision = true;
+                WebService servicio = new WebService();
+                object[,] variables = new object[,] { { "idPlantillaPropObra", IdPlantillaObra }, { "idAsistente", App.idUsuarioAsistente } };
+                dynamic result = await servicio.MetodoGet("ServicioSupervision.asmx", "SupervisionesxIdPlantillaObraAsistente", variables);
 
+                if (result != null)
+                {
+                    if (result.Count == 0) //si está vacío
+                    {
+                        listaVacia.IsVisible = true;
+                        lblListaVacia.Text = "No hay supervisiones para esta plantilla.";
+                        btngenerarReporte.IsEnabled = false;
+                        App.terminoCargadoSupervisiones = 1;
+                        App.ultimoNroSupervision = 0;
+                        return;
+                    }
+                    else
+                    {
+                        foreach (var item in result)
+                        {
+                            nombreA = "As: " + item.nombresApellidos + " - ";
+                            nombreR = "Resp: " + item.nombreResponsable;
+                            string fechaSt = item.fecha;//convertir a string el json de fecha
+                            DateTime fechaS = Convert.ToDateTime(fechaSt);//convertir a datetime el string de la fecha
+                            if (item.firma_recepcion == 1 && item.firma_notificacion == 1 && item.firma_conformidad == 1)
+                            {
+                                Color = "#77FF77";//si tiene todas las firmas
+                            }
+                            else
+                            {
+                                if (item.firma_recepcion == 1 || item.firma_notificacion == 1 || item.firma_conformidad == 1)
+                                    Color = "#ffa20c";//si tiene alguna firma
+                                else
+                                    Color = "#FF7777";//si no tiene ninguna firma
+                            }
+
+                            if (Cargo == "Asistente")
+                                nombreA = "";
+                            if (Cargo == "Responsable")
+                                nombreR = "";
+                            PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
+                            {
+                                nombre = nombreA + nombreR,
+                                nombreAsistente = item.nombresApellidos,
+                                numero = item.nroSupervision == null ? 0 : item.nroSupervision,
+                                fecha = fechaS.ToString("dd/M/yyyy", CultureInfo.InvariantCulture),//convertir a date el datetime de fecha
+                                partidaEvaluada = item.partidaEvaluada,
+                                nivel = item.nivel,
+                                colorSupervision = Color,
+                                idSupervision = item.idSupervision,
+                                correo = item.correo,
+                                bloque = item.block
+                            });
+                            App.correo = item.correo;
+                        }
+                        // fin del listado
+
+                    }
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Supervisiones", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Supervisiones", ex.Message, "Aceptar");
+                return;
+            }
+            finally
+            {
+                IsRefreshingPlantillaSupervision = false;
+            }
+            App.terminoCargadoSupervisiones = 1;
+            App.ultimoNroSupervision = PlantillaSupervisionItems[PlantillaSupervisionItems.Count - 1].numero;
+        }
+        #endregion
         #region ======================== Global ========================
         protected override void OnAppearing()
         {

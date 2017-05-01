@@ -50,6 +50,11 @@ namespace Reinco.Entidades
             mostrarPlantillas = new Command(() =>
             {
                 App.directorio = "Reinco/" + this.nombre;
+                if (App.cargo != "Asistente") {
+                    App.idUsuarioAsistente = idAsistente;
+                    App.nombreUsuarioAsistente = nombreAsistente;
+                }
+               
                 App.ListarObra.Navigation.PushAsync(new ListarObraPlantilla(this));
             });
 

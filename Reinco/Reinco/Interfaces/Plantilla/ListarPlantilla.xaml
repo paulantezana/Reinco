@@ -54,16 +54,25 @@
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"></Label>
+                            <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center" HeightRequest="30">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Actividad}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
 
 
-                            <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="Center"></Label>
+                            <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="CenterAndExpand" HeightRequest="30">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Actividad}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
 
 
                             <Image Grid.Column="2" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Actividad}"/>
                                 </Image.GestureRecognizers>
+                               
                             </Image>
 
                             <Image Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30">

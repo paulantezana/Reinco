@@ -22,7 +22,9 @@
                     ItemAppearing="ListView_ItemAppearing"
                     x:Name="listViewObraPlantilla"
                     RefreshCommand="{Binding RefreshObraPlantillaCommand}"
-                    IsRefreshing="{Binding IsRefreshingObraPlantilla,Mode=TwoWay}">
+                    IsRefreshing="{Binding IsRefreshingObraPlantilla,Mode=TwoWay}"
+                    
+                    >
                     
                     <ListView.Header>
                         <StackLayout>
@@ -55,9 +57,11 @@
                                     <Label Text="{Binding codigo}" Grid.Column="1" FontSize="20" VerticalOptions="Center"></Label>
                                     
                                     <!-- Elemento en la segunda columna-->
-                                    <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand">
+                                    <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand" HeightRequest="32">
                                         <Label Text="{Binding nombre}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"></Label>
-                                        <!--<Label Text="{Binding tolerancia}" VerticalOptions="Center"></Label>-->
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding PlantillaSupervision}"/>
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
 
                                     <!-- Elemento En Tercetar columna -->
