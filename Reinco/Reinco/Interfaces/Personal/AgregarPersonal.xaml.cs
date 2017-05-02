@@ -185,6 +185,8 @@ namespace Reinco.Interfaces.Personal
             this.nombresApellidos.Text = nombresApellidos;
             this.usuario.Text = usuario;
             this.email.Text = correo;
+            this.contra.Text = contra;
+            this.confirmarContra.Text = contra;
             this.celular.Text = celular;
             this.cip.Text = cip;
             if (idCargo1 == 1)

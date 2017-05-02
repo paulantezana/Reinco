@@ -72,18 +72,30 @@ namespace Reinco.Entidades
                     {
                         if (firmaConformidad==false)//==cuando la firma de entrega este activada, se desactiva  antes sinfirmaentrega
                         {
-                            if (value == true)
+                            if (firmaEntregaNotificacion == true)
                             {
-                               // _aprobacion = false;
-                               // aprobacion = false;
+                                if (aprobacion == false) {
+                                    _observacionLevantada = value;
+                                    ObservacionLevantada = value;
+                                }
+                               
                             }
-                            else
-                            {
-                               // _aprobacion = true;
-                             //   aprobacion = true;
+
+                            else {
+                                if (value == true)
+                                {
+                                    ObservacionLevantada = false;
+                                    _observacionLevantada = false;
+                                }
+                                else
+                                {
+                                    ObservacionLevantada = false;
+                                    _observacionLevantada = false;
+                                }
                             }
-                            ObservacionLevantada = value;
-                            _observacionLevantada = value;
+                            
+                            //ObservacionLevantada = false;
+                           // _observacionLevantada = false;
                             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacionLevantada"));
                             GuardarActividad();
                         }
@@ -139,8 +151,8 @@ namespace Reinco.Entidades
                             }
                             else
                             {
-                                _observacionLevantada = true;
-                                observacionLevantada = true;
+                                _observacionLevantada = false;
+                                observacionLevantada = false;
                             }
                             Aprobacion = value;
                             _aprobacion = value;

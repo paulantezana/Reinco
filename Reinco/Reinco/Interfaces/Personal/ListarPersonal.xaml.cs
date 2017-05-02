@@ -110,6 +110,7 @@ namespace Reinco.Interfaces.Personal
                         nombresApellidos = item.nombresApellidos.ToString(),
                         usuario = item.usuario,
                         correo = item.correo,
+                        contrasena=item.contrasena,
                         celular = item.celular,
                         idCargo1=cargo1,
                         idCargo2=cargo2,

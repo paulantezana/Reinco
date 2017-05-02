@@ -151,12 +151,21 @@ namespace Reinco.Interfaces.Supervision
             notificacionEnviada = 1;
         }
 
-        private void BtnverPdf_Clicked(object sender, EventArgs e)
+        private async void BtnverPdf_Clicked(object sender, EventArgs e)
         {
             //WebView wv = new WebView();
             //wv.Source = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" + "ejemplo.pdf";
             //Content = wv;
-            Device.OpenUri(new Uri("http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" + "ejemplo.pdf"));
+            object[,] variables = new object[,] { { "IdSupervision", IdSupervision } };
+            Supervision = await Servicio.MetodoGet("ServicioSupervision.asmx", "ConvertirSupervisionPDF", variables);
+            if (Supervision == null)
+            {
+                await DisplayAlert("Supervisión", Supervision.ToString(), "Ok");
+            }
+            else {
+                Device.OpenUri(new Uri("http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" + IdSupervision + ".pdf"));
+            }
+          
         }
 
         protected override void OnAppearing()
@@ -233,10 +242,14 @@ namespace Reinco.Interfaces.Supervision
                     guardar.IsEnabled = true;
                 if(propAsistente==1)
                     Srecepcion.PropertyChanged += Srecepcion_PropertyChanged;
-                if(propGerente==1)
+                //if(propGerente==1)
+                //    //Sentrega.PropertyChanged += Sentrega_PropertyChanged;
+                if (propResidente == 1)
+                {
                     Sentrega.PropertyChanged += Sentrega_PropertyChanged;
-                if(propResidente==1)
-                    Sentrega.PropertyChanged += Sentrega_PropertyChanged;
+                    Sconformidad.PropertyChanged += Sconformidad_PropertyChanged;
+                }
+                  
             }
             catch (Exception ex)
             {
@@ -263,7 +276,7 @@ namespace Reinco.Interfaces.Supervision
         private void Sconformidad_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Sconformidad.IsToggled = activarConformidad;
-            Sentrega.IsToggled = activarEntrega;
+           // Sentrega.IsToggled = activarEntrega;
         }
         #endregion
         #endregion
