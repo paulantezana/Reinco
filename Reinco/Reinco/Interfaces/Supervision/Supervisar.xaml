@@ -88,7 +88,7 @@
                                         <TapGestureRecognizer Command="{Binding ExpandirAnotacion}"></TapGestureRecognizer>
                                     </Label.GestureRecognizers>
                                 </Label>
-                                <Image  Opacity="{Binding animacion}" x:Name="oculto" Grid.Column="2"  Source="Image_Checked.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"> </Image>
+                                <Image  Opacity="{Binding verCheck}"  x:Name="oculto" Grid.Column="2"  Source="Image_Checked.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"> </Image>
                                 <!-- Fila  = 0 = Columna  = 2 = -->
                                 <Switch Grid.Column="3" IsEnabled="{Binding restriccion}" IsToggled="{Binding aprobacion, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"></Switch>
 
@@ -208,7 +208,7 @@
 
                         <!-- Buttons Action -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,0" Margin="0,0,0,20">
-                            <Button  x:Name="btnverPdf" Text="Ver Pdf" ></Button>
+                            <Button  x:Name="btnverPdf" Text="PDF" ></Button>
                             <Button Command="{Binding guardarSupervision}" x:Name="guardar" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
                         </StackLayout>
                         <!-- End -->

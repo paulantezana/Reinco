@@ -32,6 +32,7 @@ namespace Reinco.Entidades
         public bool obraActiva { get; set; }
         public bool firmaEntregaNotificacion { get; set; }
         public bool firmaConformidad { get; set; }
+        public bool activado { get; set; }
         #region ================ Preparando pa mostrar o ocultar el boton guardar ================
         public bool GuardarIsVisible { get; set; }
         public bool guardarIsVisible
@@ -48,7 +49,23 @@ namespace Reinco.Entidades
             {
                 return GuardarIsVisible;
             }
-        } 
+        }
+        public bool VerCheck { get; set; }
+        public bool verCheck
+        {
+            set
+            {
+                if (VerCheck != value)
+                {
+                    VerCheck = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("verCheck"));
+                }
+            }
+            get
+            {
+                return VerCheck;
+            }
+        }
         #endregion
 
         #region ================ Detectar Cambios y guardar ================
@@ -70,13 +87,14 @@ namespace Reinco.Entidades
                 {
                     if (value != _observacionLevantada)
                     {
-                        if (firmaConformidad==false)//==cuando la firma de entrega este activada, se desactiva  antes sinfirmaentrega
+                        if (firmaConformidad==false)//==cuando la firma de entrega este activada, se desactiva  (antes sinfirmaentrega)
                         {
-                            if (firmaEntregaNotificacion == true)
+                            if (firmaEntregaNotificacion == true)//si hay firma de entrega notificacion
                             {
-                                if (aprobacion == false) {
+                                if (aprobacion == false) {//si el switch de aprobacion esta en false, recien poder cambiar la observacion levantada
                                     _observacionLevantada = value;
                                     ObservacionLevantada = value;
+                                    GuardarActividad();
                                 }
                                
                             }
@@ -97,7 +115,7 @@ namespace Reinco.Entidades
                             //ObservacionLevantada = false;
                            // _observacionLevantada = false;
                             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacionLevantada"));
-                            GuardarActividad();
+                            
                         }
                         else// cuando la firma esta enviada, no se puede modificar
                         {
@@ -195,12 +213,11 @@ namespace Reinco.Entidades
 
         public ICommand guardarItem { get; private set; }
         public ICommand verFotos { get; private set; }
-
+       
 
         #region ================ Constructor ================
         public SupervisarActividadItem()
         {
-
             guardarItem = new Command(() =>
             {
                 // App.Current.MainPage.DisplayAlert("Aceptar", this.actividad + this.anotacionAdicinal, "Aceptar");
@@ -230,7 +247,10 @@ namespace Reinco.Entidades
                 }
             });
             #endregion
-
+            if (verCheck == true)
+            {
+                
+            }
             #region ================ Uso De La Cámara ================
             try
             {
@@ -410,14 +430,14 @@ namespace Reinco.Entidades
                 object[,] variables = new object[,] {
                         { "idSupervisionActividad",idSupervisionActividad  } ,{ "si", Si },{ "no", No },
                         { "observacionLevantada", ObservacionLevantada }, { "anotacionAdicional", anotacion }};
-                animacion = 1;
                 dynamic result = await Servicio.MetodoGetString("SupervisionActividad.asmx", "guardarSupervisionActividad", variables);
                 Mensaje = Convert.ToString(result);
+                activado = true;
                 if (result != null)
                 {
-                   
-                    oculto = new Image();
-                    await oculto.FadeTo(1, 4000);
+                    verCheck = true;
+                   await Task.Delay(1000);
+                    verCheck = false;
                     return;
                 }
             }

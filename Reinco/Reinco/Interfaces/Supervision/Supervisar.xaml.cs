@@ -55,7 +55,6 @@ namespace Reinco.Interfaces.Supervision
         #region ============================= Comandos =============================
 
         public ICommand guardarSupervision { get; private set; }
-       // public ICommand verPdf { get; private set; }
         public ICommand RefreshSupervisarCommand { get; private set; }
 
         #endregion
@@ -96,9 +95,7 @@ namespace Reinco.Interfaces.Supervision
         public Supervisar()
         {
             InitializeComponent();
-           // notificacionEnviada = 1;
-           // SupervisarActividadItems = new ObservableCollection<SupervisarActividadItem>();
-           // CargarSupervisarActividadItem();
+
         }
         
         public Supervisar(int idSupervision,string nombreObra)
@@ -120,14 +117,12 @@ namespace Reinco.Interfaces.Supervision
             tituloSupervisar = Application.Current.Properties["direccionApp"].ToString();
             cargoUsuario = App.cargo;
             if (cargoUsuario == "Asistente")
-                // Sconformidad.IsEnabled = false;
                 propAsistente = 1;
             if (cargoUsuario == "Gerente")
                 propGerente = 1;
             // Sentrega.IsEnabled = false;
             if (cargoUsuario == "Responsable")
                 propResidente = 1;
-                //Srecepcion.IsEnabled = false;
             //restriccion de modificaciones en la supervision
             
             // Comandos
@@ -135,10 +130,7 @@ namespace Reinco.Interfaces.Supervision
             {
                 GuardarSupervision();
             });
-            //verPdf = new Command(() =>
-            //{
-            //    mostrarPdf(idSupervision);
-            //});
+
             btnverPdf.Clicked += BtnverPdf_Clicked;
             RefreshSupervisarCommand = new Command(() =>
             {
@@ -249,7 +241,10 @@ namespace Reinco.Interfaces.Supervision
                     Sentrega.PropertyChanged += Sentrega_PropertyChanged;
                     Sconformidad.PropertyChanged += Sconformidad_PropertyChanged;
                 }
-                  
+                if (activarEntrega == true)
+                    btnverPdf.IsEnabled = true;
+                else
+                    btnverPdf.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -331,46 +326,6 @@ namespace Reinco.Interfaces.Supervision
             else { GuardarSupervisionIsrunning = true; }
         }
         #endregion
-        public async void mostrarPdf(int idAsistente)
-        {
-            try
-            {
-                //FotosxActividadItems.Clear();
-                //object[,] variables = new object[,] { { "idSupervision", IdSupervision } };
-                //dynamic result = await Servicio.MetodoGet("ServicioSupervision.asmx", "MostrarFotos", variables);
-                //foreach (var item in result)
-                //{
-                //    //FotosxActividadItems.Add(new FotosxActividadItem
-                //    //{
-                //    //    id = item.idFoto,
-                //    //    foto = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/fotos/" + item.foto
-                //    //    //foto = "http://190.117.145.7/reinco_pruebas_code/fotos/jackeline.jpg"
-                //    //});
-                //    string pdf = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" + IdSupervision+".pdf";
-
-                //}
-                //Android.Net.Uri uri = Android.Net.Uri.Parse("file:///" + filePath);
-                //Intent intent = new Intent(Intent.ActionView);
-                //intent.SetDataAndType(uri, "application/pdf");
-                //intent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
-
-                //try
-                //{
-                //    Xamarin.Forms.Context.StartActivity(intent);
-                //}
-                //catch (Exception)
-                //{
-                //    Toast.MakeText(Xamarin.Forms.Context, "No Application Available to View PDF", ToastLength.Short).Show();
-                //}
-                WebView wv = new WebView();
-                wv.Source = "http://" + App.ip + ":" + App.puerto + "/" + App.cuenta + "/pdf/" +"ejemplo.pdf";
-                Content = wv;
-
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Alerta", ex.Message, "Aceptar");
-            }
-        }
+       
     }
 }

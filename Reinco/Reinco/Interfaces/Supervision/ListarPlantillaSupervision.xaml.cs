@@ -28,6 +28,7 @@ namespace Reinco.Interfaces.Supervision
         string Cargo = "";
         string Color = "";
         int IdPlantillaObra;
+        string resultado;
         #endregion
 
         #region +---- Services ----+
@@ -111,6 +112,7 @@ namespace Reinco.Interfaces.Supervision
         #region ================== Cargar Supervisiones =========================
         public async void CargarPlantillaSupervision()
         {
+            
             try
             {
                 App.ultimoNroSupervision = 0;
@@ -137,8 +139,9 @@ namespace Reinco.Interfaces.Supervision
                         {
                             nombreA ="As: "+ item.nombresApellidos+" - ";
                             nombreR ="Resp: "+ item.nombreResponsable;
-                            string fechaSt = item.fecha;//convertir a string el json de fecha
-                            DateTime fechaS = Convert.ToDateTime(fechaSt);//convertir a datetime el string de la fecha
+                            string fechaSt = item.fecha ;//convertir a string el json de fecha
+                            char[] MyChar = {' ',':','0',' '};
+                            string NewString = fechaSt.TrimEnd(MyChar);
                             if (item.firma_recepcion == 1 && item.firma_notificacion == 1 && item.firma_conformidad == 1)
                             {
                                 Color = "#77FF77";//si tiene todas las firmas
@@ -157,9 +160,11 @@ namespace Reinco.Interfaces.Supervision
                             PlantillaSupervisionItems.Add(new PlantillaSupervisionItem
                             {
                                 nombre = nombreA + nombreR,
-                                nombreAsistente=item.nombresApellidos,
+                                nombreAsistente = item.nombresApellidos,
                                 numero = item.nroSupervision == null ? 0 : item.nroSupervision,
-                                fecha = fechaS.ToString("dd/M/yyyy", CultureInfo.InvariantCulture),//convertir a date el datetime de fecha
+                                // fecha = fechaS.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                                fecha = NewString,
+                                //.ToString("dd/M/yyyy", CultureInfo.InvariantCulture),//convertir a date el datetime de fecha
                                 partidaEvaluada = item.partidaEvaluada,
                                 nivel = item.nivel,
                                 colorSupervision = Color,
@@ -221,7 +226,8 @@ namespace Reinco.Interfaces.Supervision
                             nombreA = "As: " + item.nombresApellidos + " - ";
                             nombreR = "Resp: " + item.nombreResponsable;
                             string fechaSt = item.fecha;//convertir a string el json de fecha
-                            DateTime fechaS = Convert.ToDateTime(fechaSt);//convertir a datetime el string de la fecha
+                            char[] MyChar = { ' ', ':', '0', ' ' };
+                            string NewString = fechaSt.TrimEnd(MyChar);
                             if (item.firma_recepcion == 1 && item.firma_notificacion == 1 && item.firma_conformidad == 1)
                             {
                                 Color = "#77FF77";//si tiene todas las firmas
@@ -243,7 +249,8 @@ namespace Reinco.Interfaces.Supervision
                                 nombre = nombreA + nombreR,
                                 nombreAsistente = item.nombresApellidos,
                                 numero = item.nroSupervision == null ? 0 : item.nroSupervision,
-                                fecha = fechaS.ToString("dd/M/yyyy", CultureInfo.InvariantCulture),//convertir a date el datetime de fecha
+                               // fecha = fechaS.ToString("dd/M/yyyy", CultureInfo.InvariantCulture),//convertir a date el datetime de fecha
+                                fecha = NewString,
                                 partidaEvaluada = item.partidaEvaluada,
                                 nivel = item.nivel,
                                 colorSupervision = Color,
