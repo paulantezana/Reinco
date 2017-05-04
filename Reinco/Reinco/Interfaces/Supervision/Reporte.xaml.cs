@@ -53,13 +53,14 @@ namespace Reinco.Interfaces.Supervision
         {
             try
             {
+                enviar.IsEnabled = false;
                 WebService servicio = new WebService();
                 object[,] variables = new object[,] { { "idObra", IdObra }, { "idPlantilla", IdPlantilla }, { "email", App.correo } };
                 dynamic result = await servicio.MetodoGetString("ServicioSupervision.asmx", "CrearReporte", variables);
                 string Mensaje = Convert.ToString(result);
                 if (result != null)
                 {
-                    enviar.IsEnabled = false;
+                   
                     await DisplayAlert("Enviar Reporte", Mensaje, "Aceptar");
                     return;
                 }
@@ -71,7 +72,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Generar Reporte", ex.Message, "Ok");
+                await App.Current.MainPage.DisplayAlert("Generar Reporte", "App.Current.MainPage.DisplayAlert", "Ok");
                 return;
             }
         }
@@ -92,14 +93,14 @@ namespace Reinco.Interfaces.Supervision
                     totalSi = item.siSuma+totalSi;
                     totalNo = item.negativoSuma+totalNo;
                     totalObs = item.observacionSuma+totalObs;
-                    acumular = item.incidencia + acumular;
+                    acumular = item.incidencia==null?0 : item.incidencia + acumular;
                     ReporteItems.Add(new ReporteItem
                     {
                         descripcion = item.nombre,
                         si = item.siSuma,
                         no = item.negativoSuma,
                         lev = item.observacionSuma,
-                        incidencia = item.incidencia+"%",
+                        incidencia = (item.incidencia == null ? 0 : item.incidencia) + "%",
                         acumulado=acumular.ToString()+"%",
                             });
                         }
@@ -107,7 +108,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Generar Reporte", ex.Message, "Ok");
+                await App.Current.MainPage.DisplayAlert("Generar Reporte", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Ok");
                 return;
             }
             lbltotalSi.Text = totalSi.ToString();

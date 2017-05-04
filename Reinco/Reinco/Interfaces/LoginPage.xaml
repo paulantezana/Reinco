@@ -37,13 +37,21 @@
                 </Label>-->
 
                 <!-- Nombre De LA Empresa Empresa -->
-                <Image Source="logo.png" WidthRequest="80" HeightRequest="80"  VerticalOptions="Center">
+                <Image Source="logo.png" WidthRequest="60" HeightRequest="70"  VerticalOptions="Center">
                 </Image>
-                <Label
+                <!--<Label
                     Text="APP Supervisión de Obras v.1.0"
                     FontSize="15"
                     HorizontalOptions="Center"
                     Margin="0,30,0,30"
+                    TextColor="{StaticResource Color1}">
+                </Label>-->
+                <Label
+                    Text="REINCO"
+                    FontSize="55"
+                   FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Margin="0,20,0,20"
                     TextColor="{StaticResource Color1}">
                 </Label>
 

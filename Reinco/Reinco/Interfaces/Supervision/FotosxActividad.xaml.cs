@@ -102,7 +102,7 @@ namespace Reinco.Interfaces.Supervision
                 DibujarInterfaz();
             }
             catch (Exception ex) {
-               await App.Current.MainPage.DisplayAlert("Layout", ex.Message, "Aceptar");
+               await App.Current.MainPage.DisplayAlert("Layout", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 return;
             }
              
@@ -133,7 +133,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Alerta", ex.Message, "Aceptar");
+                await DisplayAlert("Alerta", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
             }
         }
         #endregion
@@ -224,7 +224,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-              await  App.Current.MainPage.DisplayAlert("Eliminar", ex.Message, "Aceptar");
+              await  App.Current.MainPage.DisplayAlert("Eliminar", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 return;
             }
             
@@ -253,7 +253,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Eliminar", ex.Message, "Aceptar");
+                await App.Current.MainPage.DisplayAlert("Eliminar", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
             }
         }
         #endregion

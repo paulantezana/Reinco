@@ -147,7 +147,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Crear Supervisión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await DisplayAlert("Crear Supervisión", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador","Ok");
             }
             App.ultimoNroSupervision = 0;
         }

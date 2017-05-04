@@ -272,7 +272,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Supervisiones", ex.Message, "Aceptar");
+                await App.Current.MainPage.DisplayAlert("Supervisiones", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 return;
             }
             finally

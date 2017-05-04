@@ -131,7 +131,7 @@ namespace Reinco.Interfaces.Propietario
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", "Error en el dispositivo o URL incorrecto: " + ex.Message, "Aceptar");
+                await DisplayAlert("Error", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 cambiarEstado(true);
             }
         } 

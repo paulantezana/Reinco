@@ -118,7 +118,7 @@ namespace Reinco.Interfaces.Propietario
                 }
                 else
                 {
-                    await App.Current.MainPage.DisplayAlert("Supervisiones", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    await App.Current.MainPage.DisplayAlert("Supervisiones", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                     return;
                 }
 

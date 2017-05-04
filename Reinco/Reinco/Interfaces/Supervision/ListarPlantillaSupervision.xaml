@@ -36,13 +36,12 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
 
-                            <View.MainMenuItemCell Command="{Binding eliminar}"></View.MainMenuItemCell>
                             <ViewCell>
                                 
-                                <ViewCell.ContextActions>
+                                <!--<ViewCell.ContextActions>
                                     <MenuItem Command="{Binding eliminar}" CommandParameter="{Binding idSupervision}" Text="Eliminar" IsDestructive="True">
                                     </MenuItem>
-                                </ViewCell.ContextActions>
+                                </ViewCell.ContextActions>-->
                                 
 
                                 <!-- ============ Codigo Para Listar supervisiones ================-->
@@ -54,6 +53,7 @@
                                         <ColumnDefinition Width="*"/> <!-- ============ nivel ================-->
                                         <ColumnDefinition Width="40"/><!-- ============ ver actividades ================-->
                                         <ColumnDefinition Width="40"/> <!-- ============ ver actividades ================-->
+                                        <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
 
                                     <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorSupervision}" ></BoxView>
@@ -86,6 +86,11 @@
                                     <Image Grid.Column="5" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding verActividades}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image  Grid.Column="6" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30"  >
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding eliminar}"/>
                                         </Image.GestureRecognizers>
                                     </Image>
                                 </Grid>

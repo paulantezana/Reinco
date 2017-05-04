@@ -354,7 +354,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "Aceptar");
+                await App.Current.MainPage.DisplayAlert("Error", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 return;
             }
             finally
@@ -421,7 +421,7 @@ namespace Reinco.Interfaces.Supervision
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.Message,"Aceptar");
+                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador.", "Aceptar");
                 return;
             }
         }
@@ -462,7 +462,7 @@ namespace Reinco.Interfaces.Supervision
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.Message, "Aceptar");
+                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 return;
             }
         }

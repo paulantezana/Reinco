@@ -142,7 +142,7 @@ namespace Reinco.Interfaces.Plantilla
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Agregar Plantilla", "Error en el dispositivo o URL incorrecto: " + ex.ToString(), "Aceptar");
+                await DisplayAlert("Agregar Plantilla", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 cambiarEstado(true);
             }
         }

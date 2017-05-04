@@ -42,9 +42,9 @@
                     <!-- Cell Personalizado -->
                     <ViewCell>
                         <!-- Eventos -->
-                        <ViewCell.ContextActions>
+                        <!--<ViewCell.ContextActions>
                             <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True" />
-                        </ViewCell.ContextActions>
+                        </ViewCell.ContextActions>-->
                         <!-- Contenido -->
 
                         <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
@@ -53,7 +53,8 @@
                                 <ColumnDefinition Width="40"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="40"/>
-                            </Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
 
                             <Label FontAttributes="Bold" FontSize="20" VerticalOptions="Center" Text="{Binding enumera}" Grid.Column="0"></Label>
 
@@ -70,8 +71,12 @@
                                     <TapGestureRecognizer Command="{Binding editarActividad}"/>
                                 </Image.GestureRecognizers>
                             </Image>
-
-                        </Grid>
+                                <Image  Grid.Column="3" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30"  >
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Eliminar}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
                         <!-- END Contenido-->
 
                     </ViewCell>

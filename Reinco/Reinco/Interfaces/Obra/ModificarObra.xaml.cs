@@ -181,7 +181,7 @@ namespace Reinco.Interfaces.Obra
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await DisplayAlert("Error: ", ex.Message, "Aceptar");
+                await DisplayAlert("Error: ", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
             }
             finally
             {
@@ -231,7 +231,7 @@ namespace Reinco.Interfaces.Obra
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message,"Aceptar");
+                await DisplayAlert("Error", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
             }
         }
         private async Task CargarAsistenteItem()
@@ -271,7 +271,7 @@ namespace Reinco.Interfaces.Obra
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "Aceptar");
+                await DisplayAlert("Error", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
             }
         } 
         #endregion

@@ -125,7 +125,7 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Error", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "OK");
             }
         }
         private async void CargarObrasAsistenteItems(int elementos,int ultimo)
@@ -165,7 +165,8 @@ namespace Reinco.Interfaces.Supervision
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Error", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "OK");
+                return;
             }
             ultimoId = ObraxCargoItems[ObraxCargoItems.Count - 1].idObra;
         }

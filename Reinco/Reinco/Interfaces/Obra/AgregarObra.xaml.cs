@@ -333,7 +333,7 @@ namespace Reinco.Interfaces.Obra
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await App.Current.MainPage.DisplayAlert("Agregar Obra", "Error en el dispositivo o URL incorrecto: " + ex.ToString(), "OK");
+                await App.Current.MainPage.DisplayAlert("Agregar Obra", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "OK");
                 return;
             }
             finally

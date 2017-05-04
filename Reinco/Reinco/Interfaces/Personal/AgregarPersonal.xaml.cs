@@ -385,7 +385,7 @@ namespace Reinco.Interfaces.Personal
             catch (Exception ex)
             {
                 //await mensaje.MostrarMensaje("Agregar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
-                await App.Current.MainPage.DisplayAlert("Modificar Usuario",ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert("Modificar Usuario", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "OK");
                 return;
             }
         }

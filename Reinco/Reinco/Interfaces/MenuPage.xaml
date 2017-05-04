@@ -7,7 +7,8 @@
     <StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Padding="10">
             <Image Source="logo.png" HeightRequest="55"></Image>
-            <Label Text="REINCO" FontSize="20" VerticalOptions="Center" TextColor="{StaticResource Color5}"></Label>
+            <!--<Label Text="APP Supervisión de Obras" FontSize="15" VerticalOptions="Center" TextColor="{StaticResource Color5}"></Label>-->
+            <Label Text="REINCO" FontSize="30" VerticalOptions="Center" TextColor="{StaticResource Color5}"></Label>
         </StackLayout>
         <ListView x:Name="listView" SeparatorVisibility="None" VerticalOptions="FillAndExpand">
             <ListView.ItemTemplate>

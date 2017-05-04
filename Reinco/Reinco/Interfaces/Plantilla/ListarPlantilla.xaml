@@ -40,9 +40,9 @@
                     <ViewCell>
 
                         <!-- Eliminar Plantilla -->
-                        <ViewCell.ContextActions>
+                        <!--<ViewCell.ContextActions>
                             <MenuItem Command="{Binding Eliminar}" Text="Eliminar" IsDestructive="True" />
-                        </ViewCell.ContextActions>
+                        </ViewCell.ContextActions>-->
 
                         <!-- Grid -->
                         <Grid BackgroundColor="{StaticResource Color5}" Padding="8" Margin="1">
@@ -50,8 +50,9 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
 
                             <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center" HeightRequest="30">
@@ -80,7 +81,11 @@
                                     <TapGestureRecognizer Command="{Binding EditarPlantilla}"/>
                                 </Image.GestureRecognizers>
                             </Image>
-
+                            <Image  Grid.Column="4" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30"  >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Eliminar}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
                         </Grid>
                         <!-- End Grid -->
 

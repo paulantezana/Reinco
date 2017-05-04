@@ -211,7 +211,6 @@ namespace Reinco.Interfaces.Obra
                 IsRefreshingObra = false;
             });
             #endregion
-
             this.BindingContext = this; // Contexto de los Bindings Clase Actual Importante para que pueda funcionar el refresco de la lista con Gestos
         }
         #endregion
@@ -277,6 +276,7 @@ namespace Reinco.Interfaces.Obra
                                 nombresApellidos = item.nombresApellidos,
                                 finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
                                 ocultar = true,
+                                ocultarEliminar=true,
 
                             });
                         }
@@ -353,7 +353,7 @@ namespace Reinco.Interfaces.Obra
                                 nombresApellidos = item.nombresApellidos,
                                 finalizada = item.supervision_terminada == null ? 0 : item.supervision_terminada,
                                 ocultar = true,
-
+                                ocultarEliminar = true,
                             });
                         }
                     }
@@ -376,9 +376,10 @@ namespace Reinco.Interfaces.Obra
             {
                 IsRefreshingObra = false;
             }
-            if(ObraItems.Count==1)
-                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
-            ultimoId = ObraItems[ObraItems.Count-1].idPropietarioObra;
+            //if(ObraItems.Count==1)
+            //    ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            //else
+                ultimoId = ObraItems[ObraItems.Count-1].idPropietarioObra;
             entradas++;
         }
 
@@ -406,16 +407,16 @@ namespace Reinco.Interfaces.Obra
                         foreach (var item in obras)
                         {
 
-                        if (item.nroPlantillas == 0)
-                        {
-                            Color = "#c94036";//rojo si no hay plantillas 
-                        }
-                        else
-                            Color = "#ffa20c";//ambar, obra si hay alguna plantilla
-                        if (item.supervision_terminada == 1)
-                            Color = "#77FF77";//verde si la supervision esta terminada
+                            if (item.nroPlantillas == 0)
+                            {
+                                Color = "#c94036";//rojo si no hay plantillas 
+                            }
+                            else
+                                Color = "#ffa20c";//ambar, obra si hay alguna plantilla
+                            if (item.supervision_terminada == 1)
+                                Color = "#77FF77";//verde si la supervision esta terminada
 
-                        ObraItems.Add(new ObraItem
+                            ObraItems.Add(new ObraItem
                         {
                             idObra = item.idObra,
                             nombre = item.nombre,
@@ -428,7 +429,8 @@ namespace Reinco.Interfaces.Obra
                             idPropietarioObra = item.idPropietario_Obra,
                             nombrePropietario = item.nombrePropietario == null ? "" : item.nombrePropietario,
                             nombresApellidos = item.responsable == null ? "" : item.responsable,
-                            ocultar = true
+                            ocultar = false,
+                            ocultarEliminar = false,
                         });
                     }
                   }
@@ -445,8 +447,8 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            if (ObraItems.Count == 1)
-                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            //if (ObraItems.Count == 1)
+            //    ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
             ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
@@ -493,7 +495,8 @@ namespace Reinco.Interfaces.Obra
                                 idPropietarioObra = item.idPropietario_Obra,
                                 nombrePropietario = item.nombrePropietario == null ? "" : item.nombrePropietario,
                                 nombresApellidos = item.responsable == null ? "" : item.responsable,
-                                ocultar = true
+                                ocultar = false,
+                                 ocultarEliminar = false,
                             });
                         }
                     }
@@ -510,8 +513,8 @@ namespace Reinco.Interfaces.Obra
                 await DisplayAlert("Error", ex.Message, "Aceptar");
                 return;
             }
-            if (ObraItems.Count == 1)
-                ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
+            //if (ObraItems.Count == 1)
+            //    ultimoId = ObraItems[ObraItems.Count].idPropietarioObra;
             ultimoId = ObraItems[ObraItems.Count - 1].idPropietarioObra;
             entradas++;
         }
@@ -624,7 +627,7 @@ namespace Reinco.Interfaces.Obra
                 }
                 else
                 {
-                    await App.Current.MainPage.DisplayAlert("Obras", "Error de respuesta del servicio, Contáctese con el administrador.", "Aceptar");
+                    await App.Current.MainPage.DisplayAlert("Obras", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                     return;
                 }
 

@@ -43,6 +43,7 @@
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="40"/>
+                                
                             </Grid.ColumnDefinitions>
 
 

@@ -126,7 +126,7 @@ namespace Reinco.Interfaces.Personal
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "Aceptar");
+                await DisplayAlert("Error", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador", "Aceptar");
                 return;
             }
             finally

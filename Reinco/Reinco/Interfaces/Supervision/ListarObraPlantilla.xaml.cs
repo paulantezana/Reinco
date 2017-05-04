@@ -153,6 +153,7 @@ namespace Reinco.Interfaces.Supervision
                                 idObra = item.idObra,
                                 idPlantilla = item.idPlantilla,
                                 colorPlantilla = Color,
+                                verEliminar=true,
                             });
                         }
                         // fin del listado
@@ -160,13 +161,13 @@ namespace Reinco.Interfaces.Supervision
                 }
                 else
                 {
-                    await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador.");
+                    await DisplayAlert("Iniciar Sesión", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador","Ok");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error:", ex.Message);
+                await DisplayAlert("Error:", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador","Ok");
                 return;
             }
             finally
@@ -215,6 +216,7 @@ namespace Reinco.Interfaces.Supervision
                                 idObra = item.idObra,
                                 idPlantilla = item.idPlantilla,
                                 colorPlantilla = Color,
+                                verEliminar = false,
                             });
                         }
                         // fin del listado
@@ -222,13 +224,13 @@ namespace Reinco.Interfaces.Supervision
                 }
                 else
                 {
-                    await mensaje.MostrarMensaje("Iniciar Sesión", "Error de respuesta del servicio, Contáctese con el administrador.");
+                    await DisplayAlert("Iniciar Sesión", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador","Ok");
                     return;
                 }
             }
             catch (Exception ex)
             {
-                await mensaje.MostrarMensaje("Error:", ex.Message);
+                await DisplayAlert("Error:", "Verifique su conexión a internet. Si el problema persiste, contáctese con el administrador","Ok");
                 return;
             }
             finally

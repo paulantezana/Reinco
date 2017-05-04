@@ -141,7 +141,7 @@ namespace Reinco.Interfaces
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await mensaje.MostrarMensaje("Iniciar Sesión", "Error en el dispositivo o URL incorrecto: " + ex.ToString());
+                await mensaje.MostrarMensaje("Iniciar Sesión", "Sin acceso a Internet.");
                 return;
             }
             finally
