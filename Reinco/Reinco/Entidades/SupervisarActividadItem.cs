@@ -436,7 +436,7 @@ namespace Reinco.Entidades
                 if (result != null)
                 {
                     verCheck = true;
-                   await Task.Delay(1000);
+                   await Task.Delay(3000);
                     verCheck = false;
                     return;
                 }

@@ -90,6 +90,7 @@
                                 </Label>
                                 <Image  Opacity="{Binding verCheck}"  x:Name="oculto" Grid.Column="2"  Source="Image_Checked.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"> </Image>
                                 <!-- Fila  = 0 = Columna  = 2 = -->
+                                
                                 <Switch Grid.Column="3" IsEnabled="{Binding restriccion}" IsToggled="{Binding aprobacion, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"></Switch>
 
                                 <!-- Fila  = 0 = Columna  = 3 = -->
@@ -126,22 +127,7 @@
                                                 <TapGestureRecognizer Command="{Binding verFotos}" />
                                             </StackLayout.GestureRecognizers>
                                         </StackLayout>
-                                        <!-- 
-                                        <Image Grid.Column="1" Grid.Row="0" Source="ic_camara.png" WidthRequest="30" HeightRequest="30">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding EncenderCamara}"/>
-                                            </Image.GestureRecognizers>
-                                        </Image>
-                                        -->
-
-
-                                        <!-- Zona Galeria De Fotos
-                                        <StackLayout Grid.Column="1" Grid.Row="1">
-                                            <Image Source="{Binding RutaImagen}"></Image>
-                                        </StackLayout> -->
-                                        <!-- Galeria -->
-
-
+                                       
                                     </Grid>
                                 </StackLayout>
 
@@ -156,29 +142,39 @@
 
                 <!-- Footer -->
                 <ListView.Footer>
+                   
                     <StackLayout>
                         <!-- Notas Del Supervisor -->
                         <StackLayout>
-                            <StackLayout BackgroundColor="{StaticResource Color5}" Padding="8,30,8,15">
+                            <Grid Padding="0,15,0,15" BackgroundColor="{StaticResource Color5}" Margin="0,0,0,15">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="60"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Text="Observación" Grid.Column="0" Grid.Row="0"></Label>
+                                <Image HorizontalOptions="EndAndExpand" Grid.Column="1" Grid.Row="0" Opacity="{Binding checkObservacion}"    Source="Image_Checked.png" WidthRequest="20" HeightRequest="20" ></Image>
+                                <Switch HorizontalOptions="EndAndExpand" Grid.Column="2" Grid.Row="0" x:Name="Sobservacion" IsToggled="{Binding observacion}"></Switch>
+
+
+                                <Label Text="Disposición" Grid.Column="0" Grid.Row="1"></Label>
+                                <Image HorizontalOptions="EndAndExpand" Grid.Column="1" Grid.Row="1" Opacity="{Binding checkDisposicion}"  x:Name="oculto"  Source="Image_Checked.png" WidthRequest="20" HeightRequest="20" ></Image>
+                                <Switch HorizontalOptions="EndAndExpand" Grid.Column="2" Grid.Row="1" x:Name="Sdisposicion" IsToggled="{Binding disposicion}"></Switch>
+                                </Grid>
+                        </StackLayout>
+                        <StackLayout BackgroundColor="#EEFFEE">
+                            <StackLayout  Padding="8,30,8,15" BackgroundColor="#EEFFEE">
                                 <Label Text="Nota Supervisión (Sólo Responsable)" VerticalOptions="Center" FontAttributes="Bold" FontSize="15"></Label>
                                 <Editor HeightRequest="150" BackgroundColor="#F5F5F5" x:Name="EnotaSupervision" Text="{Binding notaSupervision}"></Editor>
                             </StackLayout>
-
-
-                            <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
-                                <Label Text="Observación"></Label>
-                                <Switch HorizontalOptions="EndAndExpand" x:Name="Sobservacion" IsToggled="{Binding observacion}"></Switch>
-                            </StackLayout>
-
-
-                            <StackLayout BackgroundColor="{StaticResource Color5}" Orientation="Horizontal" Padding="8">
-                                <Label Text="Disposición"></Label>
-                                <Switch HorizontalOptions="EndAndExpand" x:Name="Sdisposicion" IsToggled="{Binding disposicion}"></Switch>
-                            </StackLayout>
-                        </StackLayout>
-
-                        <StackLayout>
-                            <Grid Padding="0,15,0,15" BackgroundColor="#EEFFEE" Margin="0,0,0,0">
+                            <Grid Padding="0,15,0,15" BackgroundColor="#EEFFEE" Margin="0,0,0,15">
+                                
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="3*"/>
@@ -201,15 +197,16 @@
                                 <Label Grid.Column="1" Grid.Row="2" HorizontalTextAlignment="Center" x:Name="fechaFirmaEntrega"></Label>
                                 <Label Grid.Column="2" Grid.Row="2" HorizontalTextAlignment="Center" x:Name="fechaFirmaConformidad"></Label>
                             </Grid>
+                            <Button Command="{Binding guardarSupervision}" x:Name="guardar" Text="Guardar" Style="{StaticResource BtnGuardar}" HorizontalOptions="Center"></Button>
                         </StackLayout>
 
                         <!-- Indicador de actividad -->
                         <ActivityIndicator IsRunning="{Binding GuardarSupervisionIsrunning}"></ActivityIndicator>
 
                         <!-- Buttons Action -->
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,0" Margin="0,0,0,20">
+                        <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="Center" Padding="0,0,0,0" Margin="0,0,0,0">
                             <Button  x:Name="btnverPdf" Text="PDF" ></Button>
-                            <Button Command="{Binding guardarSupervision}" x:Name="guardar" Text="Guardar" Style="{StaticResource BtnGuardar}"></Button>
+                            
                         </StackLayout>
                         <!-- End -->
 

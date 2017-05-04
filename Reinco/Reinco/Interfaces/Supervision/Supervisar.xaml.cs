@@ -23,22 +23,61 @@ namespace Reinco.Interfaces.Supervision
         string cargoUsuario;
         int propAsistente = 0;//si es asistente, se pone en 1
         int propGerente = 0;
+        bool cambioObservacion;
+        bool cambioDisposicion;
         int propResidente = 0;
+        int cambio = 0;//muestra si la firma cambio o no
         HttpClient Cliente = new HttpClient();
         WebService Servicio = new WebService();
         dynamic Supervision;
         #region======================== atributos=====================
         new public event PropertyChangedEventHandler PropertyChanged;
-
+        public bool CheckObservacion { get; set; }
+        public bool checkObservacion
+        {
+            set
+            {
+                if (CheckObservacion != value)
+                {
+                    CheckObservacion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("checkObservacion"));
+                }
+            }
+            get
+            {
+                return CheckObservacion;
+            }
+        }
+        public bool CheckDisposicion { get; set; }
+        public bool checkDisposicion
+        {
+            set
+            {
+                if (CheckDisposicion != value)
+                {
+                    CheckDisposicion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("checkDisposicion"));
+                }
+            }
+            get
+            {
+                return CheckDisposicion;
+            }
+        }
         public string DireccionApp { get; set; }
         public string tituloSupervisar { get; set; }
 
         public string notaSupervision { get; set; }
-
-        public bool recepcion { get; set; }
+        public bool _recepcion { get; set; }
+        public bool Recepcion { get; set; }
+        public bool recepcion{get;set;}
         public bool activarRecepcion { get; set; }
-        public bool entrega { get; set; }
+        public bool _entrega { get; set; }
+        public bool Entrega { get; set; }
+        public bool entrega{ get; set; }
         public bool activarEntrega { get; set; }
+        public bool _conformidad { get; set; }
+        public bool Conformidad { get; set; }
         public bool conformitad { get; set; }
         public bool activarConformidad { get; set; }
         public bool isRefreshingSupervisar { get; set; }
@@ -46,10 +85,64 @@ namespace Reinco.Interfaces.Supervision
         public int notificacionEnviada { get; set; }
         int IdSupervision;
         public ObservableCollection<SupervisarActividadItem> SupervisarActividadItems { get; set; }
-        public bool disposicion { get; set; }
+        public bool disposicion
+        {
+            get
+            {
+                return Disposicion;
+            }
+            set
+            {
+                if (Disposicion != value)
+                {
+                    if (_disposicion != value)
+                    {
+                        _disposicion = value;
+                        Disposicion = value;
+                        cambioDisposicion = true;
+                        GuardarObservacionDisposicion();
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("disposicion"));
+                    }
+                    
+                }
+                else
+                {
+                    Disposicion = value;
+                }
+
+            }
+            
+        }
         public bool _disposicion { get; set; }//para poder restringir el cambio si existe firma
-        public bool observacion { get; set; }
+        public bool Disposicion { get; set; }
+        public bool observacion {
+            get
+            {
+                return Observacion;
+            }
+            set
+            {
+                if (Observacion != value)
+                {
+                    if (_observacion != value)
+                    {
+                        _observacion = value;
+                        cambioObservacion = true;
+                        Observacion = value;
+                        GuardarObservacionDisposicion();
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("observacion"));
+                    }
+
+                }
+                else {
+                    Observacion = value;
+                }
+                
+            }
+            
+        }
         public bool _observacion { get; set; }
+        public bool Observacion { get; set; }
         #endregion
 
         #region ============================= Comandos =============================
@@ -141,8 +234,10 @@ namespace Reinco.Interfaces.Supervision
             // Contexto Actual Para los bindings
             this.BindingContext = this;
             notificacionEnviada = 1;
+
         }
 
+       
         private async void BtnverPdf_Clicked(object sender, EventArgs e)
         {
             //WebView wv = new WebView();
@@ -202,15 +297,26 @@ namespace Reinco.Interfaces.Supervision
                     i++;
                     
                     EnotaSupervision.Text = item.notaSupervision == null ? "" : item.notaSupervision;
-                    Sobservacion.IsToggled = item.observacion != 1 ? false : true;
-                    _observacion = item.observacion != 1 ? false : true;
-                    Sdisposicion.IsToggled = item.disposicion != 1 ? false : true;
-                    _disposicion = item.disposicion != 1 ? false : true;
+                    //
                     Srecepcion.IsToggled = item.firma_Recepcion != 1 ? false : true;
-                    activarRecepcion =item.firma_Recepcion != 1 ? false : true;
                     Sentrega.IsToggled = item.firma_Notificacion != 1 ? false : true;
-                    activarEntrega= item.firma_Notificacion != 1 ? false : true;//--------verifica firma entrega notificacion true or false
                     Sconformidad.IsToggled = item.firma_Conformidad != 1 ? false : true;
+                    observacion = item.observacion != 1 ? false : true;
+                    _observacion = item.observacion != 1 ? false : true;
+                   // Sobservacion.IsToggled = item.observacion != 1 ? false : true;
+                   
+
+                    // Sdisposicion.IsToggled = item.disposicion != 1 ? false : true;
+                    disposicion = item.disposicion != 1 ? false : true;
+                    _disposicion = item.disposicion != 1 ? false : true;
+                    //Sdisposicion.IsToggled = item.disposicion != 1 ? false : true;
+                   
+                  
+                   
+                    activarRecepcion =item.firma_Recepcion != 1 ? false : true;
+                   
+                    activarEntrega= item.firma_Notificacion != 1 ? false : true;//--------verifica firma entrega notificacion true or false
+                  
                     activarConformidad =item.firma_Conformidad != 1 ? false : true; ;//----verifica firma conformidad  true or false
                     fechaFirmaConformidad.Text = item.fecha_firma_conformidad == null ? "" : item.fecha_firma_conformidad;
                     fechaFirmaEntrega.Text = item.fecha_firma_notificacion == null ? "" : item.fecha_firma_notificacion;
@@ -292,7 +398,38 @@ namespace Reinco.Interfaces.Supervision
             try
             {
                 cambiarEstado(false);
+                    object[,] variables = new object[,] {
+                    { "idSupervision", IdSupervision} ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
+                    { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },
+                    { "firma_conformidad", conformitad==true?1:0}};
+                    dynamic result = await Servicio.MetodoGetString("ServicioSupervision.asmx", "GuardarSupervision", variables);
+                    Mensaje = Convert.ToString(result);
+                    if (result != null)
+                    {
+                        cambiarEstado(true);
+
+                        await App.Current.MainPage.DisplayAlert("Guardar Supervision", Mensaje, "Aceptar");
+                        App.ListarPlantillaSupervision.PlantillaSupervisionItems.Clear();
+                        App.ListarPlantillaSupervision.CargarPlantillaSupervision();
+                        await Navigation.PopAsync();
+                        return;
+                    }
                 
+
+                
+            }
+            catch (Exception ex)
+            {
+                cambiarEstado(true);
+                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.Message,"Aceptar");
+                return;
+            }
+        }
+        public async void GuardarObservacionDisposicion()
+        {
+            try
+            {
+                cambiarEstado(false);
                 object[,] variables = new object[,] {
                     { "idSupervision", IdSupervision} ,{ "notaSupervision", notaSupervision==null?"":notaSupervision }, { "observacion", observacion==true?1:0 },
                     { "disposicion", disposicion==true?1:0 }, { "firma_recepcion",recepcion==true?1:0  }, { "firma_entrega", entrega==true?1:0 },
@@ -302,17 +439,30 @@ namespace Reinco.Interfaces.Supervision
                 if (result != null)
                 {
                     cambiarEstado(true);
-                    await App.Current.MainPage.DisplayAlert("Guardar Supervision", Mensaje, "Aceptar");
-                    App.ListarPlantillaSupervision.PlantillaSupervisionItems.Clear();
-                    App.ListarPlantillaSupervision.CargarPlantillaSupervision();
-                    await Navigation.PopAsync();
+                    if (cambioObservacion == true) {
+                        checkObservacion = true;
+                        await Task.Delay(3000);
+                        checkObservacion = false;
+                        cambioObservacion = false;
+                    }
+                       
+                    if (cambioDisposicion == true) {
+                        checkDisposicion = true;
+                        await Task.Delay(3000);
+                        checkDisposicion = false;
+                        cambioDisposicion = false;
+                    }
+                       
                     return;
                 }
+
+
+
             }
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.Message,"Aceptar");
+                await App.Current.MainPage.DisplayAlert("Guardar Supervision", "Error en el dispositivo o URL incorrecto: " + ex.Message, "Aceptar");
                 return;
             }
         }
