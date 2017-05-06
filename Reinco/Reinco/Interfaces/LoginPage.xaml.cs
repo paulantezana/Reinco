@@ -141,7 +141,7 @@ namespace Reinco.Interfaces
             catch (Exception ex)
             {
                 cambiarEstado(true);
-                await mensaje.MostrarMensaje("Iniciar Sesión", "Sin acceso a Internet.");
+                await App.Current.MainPage.DisplayAlert("Iniciar Sesión", "Sin acceso a Internet.","Ok");
                 return;
             }
             finally

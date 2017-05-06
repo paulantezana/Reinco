@@ -45,15 +45,15 @@
                            
                             <!-- ============ Codigo Para Listar Obra ================-->
 
-                            <Grid BackgroundColor="{StaticResource Color5}" Padding="0" Margin="0">
+                            <Grid BackgroundColor="{StaticResource Color5}" Padding="0" Margin="0"  HeightRequest="50">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5"/>
                                     <!--<ColumnDefinition Width="auto"/>-->
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
                                 <BoxView Grid.Column="0" WidthRequest="5" BackgroundColor="{Binding colorObra}" x:Name="estadoObra"></BoxView>
@@ -64,30 +64,38 @@
                                     <Label Text="{Binding codigo}"></Label>
                                 </StackLayout>
 
-                                <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand" HeightRequest="30">
+                                <StackLayout Grid.Column="2" VerticalOptions="CenterAndExpand" HeightRequest="40">
                                     <Label Text="{Binding nombre}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"></Label>
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding mostrarPlantillas}"/>
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
-                               
-                                
-                                <Image IsVisible="{Binding ocultar}" Grid.Column="3" Source="ic_editar.png" WidthRequest="30" HeightRequest="30"  >
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding editarObra}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
-                                <Image  Grid.Column="4" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding ocultarEliminar}">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Eliminar}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
-                                <Image Grid.Column="5" Source="ic_plantilla_color.png" Margin="2">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding mostrarPlantillas}"/>
-                                    </Image.GestureRecognizers>
 
-                                </Image>
+                                <StackLayout Grid.Column="3" Orientation="Horizontal">
+                                    <Image IsVisible="{Binding ocultar}"  Source="ic_editar.png" WidthRequest="40" HeightRequest="40"  HorizontalOptions="EndAndExpand" Aspect="AspectFit">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding editarObra}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="4" WidthRequest="40" HeightRequest="40" Orientation="Horizontal">
+                                    <Image   Source="ic_eliminar.png" WidthRequest="40" HeightRequest="40"  IsVisible="{Binding ocultarEliminar}" Aspect="AspectFit" HorizontalOptions="EndAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Eliminar}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="5" Orientation="Horizontal">
+                                    <Image  Source="ic_plantilla_color.png" Margin="2" WidthRequest="40" HeightRequest="40"   Aspect="AspectFit" HorizontalOptions="CenterAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding mostrarPlantillas}"/>
+                                        </Image.GestureRecognizers>
+
+                                    </Image>
+                                </StackLayout>
+                                
                             </Grid>
                             <!-- ============ FIN Codigo Para Listar Obra ================-->
                         </ViewCell>

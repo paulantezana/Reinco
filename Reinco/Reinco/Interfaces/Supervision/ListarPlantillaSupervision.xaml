@@ -34,7 +34,7 @@
                     
                     <!-- Body -->
                     <ListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate >
 
                             <ViewCell>
                                 
@@ -78,22 +78,28 @@
                                             <TapGestureRecognizer Command="{Binding verActividades}"/>
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
-                                    <Image Grid.Column="4" Source="ic_editar.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                    <StackLayout Grid.Column="4" Orientation="Horizontal">
+                                    <Image  Source="ic_editar.png" WidthRequest="40" HeightRequest="40" Margin="7" Aspect="AspectFit" HorizontalOptions="CenterAndExpand">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding editarSupervision}"/>
                                         </Image.GestureRecognizers>
                                     </Image>
-                                    <Image Grid.Column="5" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                    </StackLayout >
+                                    <StackLayout  Grid.Column="5" Orientation="Horizontal">
+                                        <Image Source="ic_right.png" WidthRequest="40" HeightRequest="40" Margin="7" Aspect="AspectFit" HorizontalOptions="CenterAndExpand">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding verActividades}"/>
                                         </Image.GestureRecognizers>
                                     </Image>
-                                    <Image  Grid.Column="6" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30"  >
+                                    </StackLayout>
+                                    <StackLayout Grid.Column="6" Orientation="Horizontal">
+                                        <Image   Source="ic_eliminar.png" WidthRequest="40" HeightRequest="40"  Aspect="AspectFit" HorizontalOptions="CenterAndExpand">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding eliminar}"/>
                                         </Image.GestureRecognizers>
                                     </Image>
-                                </Grid>
+            </StackLayout>
+            </Grid>
                                 <!-- ============ FIN Codigo Para Listar supervisiones ================-->
 
 

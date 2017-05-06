@@ -69,7 +69,7 @@ namespace Reinco.Entidades
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Eliminar Usuario", "Error en el dispositivo o URL incorrecto: " + ex.Message,"Aceptar");
+                await App.Current.MainPage.DisplayAlert("Eliminar Usuario", "Sin conexión a internet, inténtelo  nuevamente.", "Aceptar");
             }
         }
         #endregion

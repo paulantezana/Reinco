@@ -23,7 +23,7 @@
                     x:Name="listViewObraPlantilla"
                     RefreshCommand="{Binding RefreshObraPlantillaCommand}"
                     IsRefreshing="{Binding IsRefreshingObraPlantilla,Mode=TwoWay}"
-                    
+
                     >
                     
                     <ListView.Header>
@@ -43,7 +43,7 @@
                                 </ViewCell.ContextActions>-->
                                 
                                 <!-- Inicio Del Contenido Grid -->
-                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8,3,8,3">
+                                <Grid BackgroundColor="{StaticResource Color5}" Padding="8,3,8,3"  >
                                   
                                     <!-- Definiendo las Columnas de la Fila -->
                                     <Grid.ColumnDefinitions>
@@ -64,13 +64,13 @@
                                             <TapGestureRecognizer Command="{Binding PlantillaSupervision}"/>
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
-                                    <Image  Grid.Column="3" Source="ic_eliminar.png" WidthRequest="30" HeightRequest="30" IsVisible="{Binding verEliminar}"  >
+                                    <Image  Grid.Column="3" Source="ic_eliminar.png" WidthRequest="40" HeightRequest="40" IsVisible="{Binding verEliminar}"  >
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Eliminar}"/>
                                         </Image.GestureRecognizers>
                                     </Image>
                                     <!-- Elemento En Tercetar columna -->
-                                    <Image Grid.Column="4" Source="ic_right.png" WidthRequest="30" HeightRequest="30" Margin="7">
+                                    <Image Grid.Column="4" Source="ic_right.png" WidthRequest="40" HeightRequest="40" Margin="7">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding PlantillaSupervision}"/>
                                         </Image.GestureRecognizers>

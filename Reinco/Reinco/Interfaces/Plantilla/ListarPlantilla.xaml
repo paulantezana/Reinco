@@ -55,18 +55,20 @@
                                 <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="20" VerticalOptions="Center" HeightRequest="30">
+                            <Label Text="{Binding codigo}" Grid.Column="0" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" HeightRequest="30">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Actividad}"/>
                                 </Label.GestureRecognizers>
                             </Label>
 
-
-                            <Label Text="{Binding nombre}" Grid.Column="1" VerticalOptions="CenterAndExpand" HeightRequest="30">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Actividad}"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                            <StackLayout Grid.Column="1" VerticalOptions="FillAndExpand">
+                                <Label Text="{Binding nombre}"   HeightRequest="30">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Actividad}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </StackLayout>
+                           
 
 
                             <Image Grid.Column="2" Source="ic_plantilla_color.png" WidthRequest="30" HeightRequest="30">
